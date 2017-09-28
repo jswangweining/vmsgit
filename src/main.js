@@ -19,6 +19,7 @@ Vue.use(VueRouter)
 
 
 import index from './view/index.vue'
+import ywxl from './view/hty_ywxl.vue'
 // import indexcommon from './view/indexcommon.vue'
 // import indexfirst from './view/indexfirst.vue'
 // import login from './view/login.vue'
@@ -59,10 +60,14 @@ import index from './view/index.vue'
 
 const router = new VueRouter({
   routes: [{
+    path: '/',
+    component: index,
+    children: [{
       path: '/',
-      component: index
-    }
-  ]
+      name: 'yxxl',
+      component: ywxl
+    }]
+  }]
 })
 
 

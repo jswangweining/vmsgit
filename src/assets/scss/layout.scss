@@ -16,35 +16,34 @@
 }
 
 html {
-  font-family: sans-serif;
+
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   height: 100%;
   font-size: 20px;
 }
-@media screen and (min-width:1367px) and (max-width:1440px) {
-  html {
-    font-size: 22px;
-  }
-}
-@media screen and (min-width:1441px) and (max-width:1600px) {
-  html {
-    font-size: 24px;
-  }
-}
-@media screen and (min-width:1601px) and (max-width:1920px) {
-  html {
-    font-size: 28px;
-  }
-}
+// @media screen and (min-width:1367px) and (max-width:1440px) {
+//   html {
+//     font-size: 22px;
+//   }
+// }
+// @media screen and (min-width:1441px) and (max-width:1600px) {
+//   html {
+//     font-size: 24px;
+//   }
+// }
+// @media screen and (min-width:1601px) and (max-width:1920px) {
+//   html {
+//     font-size: 28px;
+//   }
+// }
 
 body {
   font-family: \5FAE\8F6F\96C5\9ED1, Helvetica Neue, Helvetica, Arial, sans-serif;
   font-size: 0.7rem;
   line-height: 1.42857143;
   color: #333;
-  // background-color: $colordfff;
   height: 100%;
 }
 
@@ -52,9 +51,10 @@ button,
 input,
 select,
 textarea {
-  font-family: inherit;
-  font-size: inherit;
-  line-height: inherit;
+  font-family: \5FAE\8F6F\96C5\9ED1, Helvetica Neue, Helvetica, Arial, sans-serif;
+}
+button {
+    outline: none;
 }
 
 img {
