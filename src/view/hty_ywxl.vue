@@ -292,14 +292,141 @@
     flex: 1;
     border-bottom: 1px solid #f3f3f3;
     display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.w-ywxl-ddrtdline {
+    width: 1px;
+    height: 50%;
+    background-color: #f3f3f3;
+    position: relative;
+    &:before {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 50%;
+        margin-top: -5px;
+        width: 6px;
+        height: 10px;
+        background-image: url('../assets/img/arrowr.png');
+    }
 }
 
 .w-ywxl-ddrtditem {
-  flex: 1
+    flex: 1;
+}
+
+.w-ywxl-ddrtditem2 {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.w-ywxl-ddrtditem2p1 {
+    font-size: 0.6rem;
+}
+
+.w-ywxl-ddrtditem2p1s1 {
+    display: inline-block;
+    width: 0.5rem;
+    height: 0.5rem;
+    margin-right: 0.5rem;
+    background-color: #6c81b3;
+}
+
+.w-ywxl-ddrtditem2p1s2 {
+    display: inline-block;
+    width: 0.5rem;
+    height: 0.5rem;
+    margin-right: 0.5rem;
+    background-color: #ff7700;
+}
+
+.w-ywxl-ddrtditem2p1s3 {
+    display: inline-block;
+    width: 0.5rem;
+    height: 0.5rem;
+    margin-right: 0.5rem;
+    background-color: #2cc689;
+}
+
+.w-ywxl-ddrtditem2p2 {
+    font-size: 1.2rem;
+    color: #6c81b3;
 }
 
 .w-ywxl-ddrd {
     flex: 2;
+    display: flex;
+    flex-direction: column;
+}
+
+.w-ywxl-ddrdt {
+    height: 2rem;
+    position: relative;
+}
+
+.w-ywxl-ddrdta {
+    position: absolute;
+    height: 2rem;
+    padding-left: 1rem;
+    line-height: 2rem;
+    font-size: 0.7rem;
+    color: #333;
+    font-weight: bold;
+    position: relative;
+    &:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0.75rem;
+        left: 0.5rem;
+        display: block;
+        width: 0.25rem;
+        height: 0.6rem;
+        background-color: #ff7700;
+    }
+}
+
+.w-ywxl-ddrdtb {
+    position: absolute;
+    height: 2rem;
+    line-height: 2rem;
+    top: 0px;
+    right: 1rem;
+}
+
+.w-ywxl-ddrdtbs1 {
+    display: inline-block;
+    font-size: 0.6rem;
+    &:before {
+        content: '';
+        display: inline-block;
+        width: 0.5rem;
+        height: 0.5rem;
+        background-color: #ff7700;
+        margin-right: 0.25rem;
+    }
+}
+
+.w-ywxl-ddrdtbs2 {
+    display: inline-block;
+    font-size: 0.6rem;
+    &:before {
+        content: '';
+        display: inline-block;
+        width: 0.5rem;
+        height: 0.5rem;
+        background-color: #6c81b3;
+        margin-right: 0.25rem;
+    }
+}
+
+.w-ywxl-ddrdd {
+    flex: 1;
 }
 
 .w-ywxl-r {
@@ -315,18 +442,18 @@
 }
 
 .w-ywxl-r-t {
-    height: 2.2rem;
+    height: 1.5rem;
     font-size: 0.7rem;
     color: #333;
     font-weight: bold;
-    line-height: 2.2rem;
+    line-height: 1.5rem;
     position: relative;
     padding-left: 10px;
     &:before {
         content: '';
         position: absolute;
         left: 0;
-        top: 0.75rem;
+        top: 0.5rem;
         display: block;
         width: 0.25rem;
         height: 0.6rem;
@@ -336,7 +463,7 @@
 
 .w-ywxl-r-d {
     position: absolute;
-    top: 2.2rem;
+    top: 1.5rem;
     bottom: 0.5rem;
     left: 0.5rem;
     right: 0.5rem;
@@ -479,98 +606,121 @@
         </div>
     </div>
 
-    <div class="w-ywxl-d">
+    <div class="w-ywxl-d" v-loading.body='loading'>
         <div class="w-ywxl-dt">
             <div class="w-ywxl-dt1">
                 请选择时间维度
             </div>
             <div class="w-ywxl-dt2">
-                <radio-group v-model="radiovalue">
+                <radio-group v-model="radiovalue" @change='radiochange'>
                     <wradio label="1">当月统计</wradio>
                     <wradio label="2">全年统计</wradio>
                 </radio-group>
             </div>
         </div>
-        <transition name="fade" mode="out-in">
-            <div class="w-ywxl-dd" v-if="radiovalue=='1'" key='a1'>
-                <div class="w-ywxl-ddl">
-                    <div class="w-ywxl-ddla" @click='monthtabs(0,$event)'>
-                        <p class="w-ywxl-ddlap1">总营业收入<span>（万元）</span></p>
-                        <p class="w-ywxl-ddlap2">256</p>
-                        <p class="w-ywxl-ddlap3">同比21%
-                            <svg class="icon" aria-hidden="true">
-                                <use xlink:href="#icon-jiantou1"></use>
-                            </svg>
-                        </p>
+
+        <div class="w-ywxl-dd">
+            <div class="w-ywxl-ddl">
+                <div class="w-ywxl-ddla w-ywxl-ddlac" @click='monthtabs(0,$event)'>
+                    <p class="w-ywxl-ddlap1">总营业收入<span>（万元）</span></p>
+                    <p class="w-ywxl-ddlap2">256</p>
+                    <p class="w-ywxl-ddlap3">同比21%
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#icon-jiantou1"></use>
+                        </svg>
+                    </p>
+                </div>
+                <div class="w-ywxl-ddla" @click='monthtabs(1,$event)'>
+                    <p class="w-ywxl-ddlap1">总销售金额<span>（万元）</span></p>
+                    <p class="w-ywxl-ddlap2">256</p>
+                    <p class="w-ywxl-ddlap3">同比21%
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#icon-jiantou2"></use>
+                        </svg>
+                    </p>
+                </div>
+                <div class="w-ywxl-ddla" style="border-bottom:0" @click='monthtabs(2,$event)'>
+                    <p class="w-ywxl-ddlap1">新增会员总店<span>（家）</span></p>
+                    <p class="w-ywxl-ddlap2">256</p>
+                    <p class="w-ywxl-ddlap3">同比21%
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#icon-jiantou1"></use>
+                        </svg>
+                    </p>
+                </div>
+            </div>
+
+            <div class="w-ywxl-ddr">
+                <div class="w-ywxl-ddrt">
+                    <div class="w-ywxl-r-t">
+                        {{myChart2title}}
                     </div>
-                    <div class="w-ywxl-ddla" @click='monthtabs(1,$event)'>
-                        <p class="w-ywxl-ddlap1">总销售金额<span>（万元）</span></p>
-                        <p class="w-ywxl-ddlap2">256</p>
-                        <p class="w-ywxl-ddlap3">同比21%
-                            <svg class="icon" aria-hidden="true">
-                                <use xlink:href="#icon-jiantou2"></use>
-                            </svg>
-                        </p>
-                    </div>
-                    <div class="w-ywxl-ddla" style="border-bottom:0" @click='monthtabs(2,$event)'>
-                        <p class="w-ywxl-ddlap1">新增会员总店<span>（家）</span></p>
-                        <p class="w-ywxl-ddlap2">256</p>
-                        <p class="w-ywxl-ddlap3">同比21%
-                            <svg class="icon" aria-hidden="true">
-                                <use xlink:href="#icon-jiantou1"></use>
-                            </svg>
-                        </p>
+                    <div class="w-ywxl-ddrtd">
+                        <div class="w-ywxl-ddrtditem">
+                            <div id="main2" style=" height:100%">
+
+                            </div>
+                        </div>
+                        <div class="w-ywxl-ddrtdline">
+
+                        </div>
+                        <div class="w-ywxl-ddrtditem2">
+                            <p class="w-ywxl-ddrtditem2p1"><span class="w-ywxl-ddrtditem2p1s1"></span>进销存营业收入</p>
+                            <p class="w-ywxl-ddrtditem2p2">35</p>
+                            <p class="w-ywxl-ddrtditem2p3">同比21%
+                                <svg class="icon" aria-hidden="true">
+                                    <use xlink:href="#icon-jiantou1"></use>
+                                </svg>
+                            </p>
+                        </div>
+                        <div class="w-ywxl-ddrtditem2">
+                            <p class="w-ywxl-ddrtditem2p1"><span class="w-ywxl-ddrtditem2p1s2"></span>进销存营业收入</p>
+                            <p class="w-ywxl-ddrtditem2p2">35</p>
+                            <p class="w-ywxl-ddrtditem2p3">同比21%
+                                <svg class="icon" aria-hidden="true">
+                                    <use xlink:href="#icon-jiantou1"></use>
+                                </svg>
+                            </p>
+                        </div>
+                        <div class="w-ywxl-ddrtditem2">
+                            <p class="w-ywxl-ddrtditem2p1"><span class="w-ywxl-ddrtditem2p1s3"></span>进销存营业收入</p>
+                            <p class="w-ywxl-ddrtditem2p2">35</p>
+                            <p class="w-ywxl-ddrtditem2p3">同比21%
+                                <svg class="icon" aria-hidden="true">
+                                    <use xlink:href="#icon-jiantou2"></use>
+                                </svg>
+                            </p>
+                        </div>
+
+
                     </div>
                 </div>
-                <transition name="fade" mode="out-in">
-                    <div class="w-ywxl-ddr" v-if="monthtab==0" key='b1'>
-                        <div class="w-ywxl-ddrt">
-                            <div class="w-ywxl-r-t">
-                                总营业收入占比
-                            </div>
-                            <div class="w-ywxl-ddrtd">
-                              <div class="w-ywxl-ddrtditem">
-                                <div id="main2" style=" height:100%">
-
-                                </div>
-                              </div>
-                              <div class="w-ywxl-ddrtditem">
-2
-                              </div>
-                              <div class="w-ywxl-ddrtditem">
-3
-                              </div>
-                              <div class="w-ywxl-ddrtditem">
-4
-                              </div>
-
-                                <!-- <div class="">
-                                  1
-                                </div>
-                                <div class="">
-                                  2
-                                </div> -->
-                            </div>
+                <div class="w-ywxl-ddrd">
+                    <div class="w-ywxl-ddrdt">
+                        <div class="w-ywxl-ddrdta">
+                            {{myChart3title}}
                         </div>
-                        <div class="w-ywxl-ddrd">
-                            下
+                        <div class="w-ywxl-ddrdtb">
+                            <span class="w-ywxl-ddrdtbs1" v-if='radiovalue=="2"'>当前数据</span>
+                            <span class="w-ywxl-ddrdtbs2" v-if='radiovalue=="2"'>对比数据</span>
+                            <wselect v-model="selectvalue" placeholder="请选择" style="width:120px; color:#4a4a4a" @change='selectchange' @visible-change='visiblechange'>
+                                <woption :label='item.lable' :value='item.value' v-for='(item,index) in selectarr'>
+                                </woption>
+                            </wselect>
                         </div>
-
                     </div>
-                    <div class="w-ywxl-ddr" v-if="monthtab==1" key='b2'>
-                        2
 
-                    </div>
-                    <div class="w-ywxl-ddr" v-if="monthtab==2" key='b3'>
-                        3
+                    <div class="w-ywxl-ddrdd">
+                        <div id="main3" style="width:100%; height:100%;">
 
+                        </div>
                     </div>
-                </transition>
+
+                </div>
+
             </div>
-            <div class="w-ywxl-dd" v-if="radiovalue=='2'" key='a2'>
-                222
-            </div>
-        </transition>
+        </div>
+
 
 
     </div>
@@ -654,24 +804,52 @@ import echarts from 'echarts'
 import '../assets/fonts/iconfont'
 
 //elementui
+import Loading from 'element-ui/packages/loading/index.js'
 import rate from 'element-ui/packages/rate/src/main.vue'
 import RadioGroup from 'element-ui/packages/radio/src/radio-group.vue'
 import wradio from 'element-ui/packages/radio/src/radio.vue'
+import wselect from 'element-ui/packages/select/src/select.vue'
+import woption from 'element-ui/packages/select/src/option.vue'
 
 export default {
     name: "",
     data: () => ({
+        loading: false,
         statvalue: 3.7,
-        radiovalue: '1',
+        radiovalue: '',
+        selectchangevalue: false,
+        selectvalue: '1',
+        selectarr: [{
+            'lable': '总营业收入',
+            'value': '1'
+        }, {
+            'lable': '进销存收入',
+            'value': '2'
+        }, {
+            'lable': '服务收入',
+            'value': '3'
+        }, {
+            'lable': '金融收入',
+            'value': '4'
+        }],
         monthtab: 0,
-        yeartab: 0
+        yeartab: 0,
+        myChart1: '',
+        myChart2title: '总营业收入占比',
+        myChart2: '',
+        myChart3: '',
+        myChart3title: '总营业收入趋势'
+
     }),
     mounted() {
         let _this = this;
         this.$nextTick(function() {
-            var myChart = echarts.init(document.getElementById('main'));
-            // 指定图表的配置项和数据
+            _this.radiovalue = '1';
+            _this.myChart1 = echarts.init(document.getElementById('main'));
             var option = {
+                tooltip: {
+                    confine: true
+                },
                 radar: [{
                     indicator: [{
                         text: '综合能力',
@@ -686,7 +864,7 @@ export default {
                         text: '市净率'
                     }],
                     center: ['50%', '50%'],
-                    radius: '40%',
+                    radius: '45%',
                     startAngle: 90,
                     splitNumber: 4,
                     name: {
@@ -717,60 +895,11 @@ export default {
                     },
                     data: [{
                         value: [6.11, 50.2, 8.12, 9.22, 2.44],
-                        name: '综合能力'
+                        name: '当前平台估值'
                     }]
                 }, ]
             }
-
-            // 使用刚指定的配置项和数据显示图表。
-            myChart.setOption(option);
-
-
-            var myChart2 = echarts.init(document.getElementById('main2'));
-            var option2 = {
-                series: [{
-
-                    type: 'pie',
-                    center: ['50%', '50%'],
-                    radius: '50%',
-                    avoidLabelOverlap: false,
-                    label: {
-                        normal: {
-                            show: false,
-                            position: 'center'
-                        },
-                        // emphasis: {
-                        //     show: true,
-                        //     textStyle: {
-                        //         fontSize: '30',
-                        //         fontWeight: 'bold'
-                        //     }
-                        // }
-                    },
-                    labelLine: {
-                        normal: {
-                            show: false
-                        }
-                    },
-                    data: [{
-                        value: 335,
-                        name: '直接访问'
-                    }, {
-                        value: 310,
-                        name: '邮件营销'
-                    }, {
-                        value: 234,
-                        name: '联盟广告'
-                    }, {
-                        value: 135,
-                        name: '视频广告'
-                    }, {
-                        value: 1548,
-                        name: '搜索引擎'
-                    }]
-                }]
-            };
-            myChart2.setOption(option2);
+            _this.myChart1.setOption(option);
         })
 
     },
@@ -778,15 +907,611 @@ export default {
         monthtabs: function(index, event) {
             let _this = this;
             var el = event.target;
-            $('.w-ywxl-ddlac').removeClass('w-ywxl-ddlac')
-            $(el).hasClass('w-ywxl-ddla') ? $(el).addClass('w-ywxl-ddlac') : $(el).parentsUntil('w-ywxl-ddl').addClass('w-ywxl-ddlac')
-            _this.monthtab = index;
+            if (index == _this.monthtab) {
+                console.log('重复了')
+            } else {
+                _this.loading = true;
+                $('.w-ywxl-ddlac').removeClass('w-ywxl-ddlac')
+                $(el).hasClass('w-ywxl-ddla') ? $(el).addClass('w-ywxl-ddlac') : $(el).parentsUntil('w-ywxl-ddl').addClass('w-ywxl-ddlac')
+                _this.monthtab = index;
+
+                switch (index) {
+                    case 0:
+                        _this.myChart2title = '总营业收入占比';
+
+                        var option2 = {
+                            tooltip: {
+                                trigger: 'item',
+                                formatter: "{a} <br/>{b}: {c} ({d}%)"
+                            },
+                            series: [{
+                                name: _this.myChart2title,
+                                type: 'pie',
+                                radius: ['50%', '70%'],
+                                center: ['50%', '50%'],
+                                avoidLabelOverlap: false,
+                                color: ['#6c81b3', '#ff7700', '#2cc689'],
+                                label: {
+                                    normal: {
+                                        show: false,
+                                        position: 'center'
+                                    },
+                                },
+                                labelLine: {
+                                    normal: {
+                                        show: false
+                                    }
+                                },
+
+                                data: [{
+                                    value: 35,
+                                    name: '进销存营业收入1',
+                                }, {
+                                    value: 20,
+                                    name: '进销存营业收入2'
+                                }, {
+                                    value: 25,
+                                    name: '进销存营业收入3'
+                                }]
+                            }]
+                        };
+                        var option3 = {
+                            title: {
+                                show: false
+                            },
+                            tooltip: {
+                                trigger: 'axis',
+                                axisPointer: {
+                                    type: 'cross',
+                                    label: {
+                                        backgroundColor: '#6a7985'
+                                    }
+                                }
+                            },
+                            // color:['#ff7700','#2f4554', '#61a0a8', '#d48265', '#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3'],
+                            grid: {
+                                top: 20,
+                                left: '3%',
+                                right: '4%',
+                                bottom: '3%',
+                                containLabel: true
+                            },
+                            xAxis: [{
+                                type: 'category',
+                                boundaryGap: false,
+                                data: ['0825', '0826', '0827', '0828', '0829', '0830', '0831', '0901', '0902', '0903', '0904', '0905', '0906', '0907', '0908', '0909', '0910', '0911', '0912', '0913', '0914', '0915', '0916', '0917', '0918', '0919', '0920', '0921', '0922', '0923']
+                            }],
+                            yAxis: [{
+                                type: 'value'
+                            }],
+                            series: [{
+                                name: '联盟广告',
+                                type: 'line',
+                                stack: '总量',
+                                itemStyle: {
+                                    normal: {
+                                        color: 'rgb(255, 119, 0)'
+                                    }
+                                },
+                                areaStyle: {
+                                    normal: {
+                                        color: 'rgb(255, 119, 0)',
+                                        opacity: 0.2 // 图表中各个图区域的透明度
+
+                                    }
+                                },
+                                data: [220, 182, 191, 234, 290, 330, 310, 220, 111, 191, 234, 212, 330, 310, 345, 182, 191, 234, 290, 123, 310, 220, 182, 189, 234, 290, 330, 222, 432, 310]
+                            }]
+                        };
+                        setTimeout(function() {
+                            _this.myChart2.clear();
+                            _this.myChart2 = echarts.init(document.getElementById('main2'));
+                            _this.myChart2.setOption(option2);
+                            _this.myChart3.clear();
+                            _this.myChart3 = echarts.init(document.getElementById('main3'));
+                            _this.myChart3.setOption(option3);
+                            _this.loading = false;
+                        }, 2000);
+                        break;
+                    case 1:
+                        _this.myChart2title = '总销售金额占比';
+                        _this.selectarr = [{
+                            'lable': '销售金额',
+                            'value': '1'
+                        }, {
+                            'lable': '线上采购',
+                            'value': '2'
+                        }, {
+                            'lable': '商品+采购',
+                            'value': '3'
+                        }, {
+                            'lable': '非商品+采购',
+                            'value': '4'
+                        }];
+                        _this.selectvalue = '1';
+                        _this.myChart3title = _this.selectarr[0].lable;
+                        var option2 = {
+                            tooltip: {
+                                trigger: 'item',
+                                formatter: "{a} <br/>{b}: {c} ({d}%)"
+                            },
+                            series: [{
+                                name: _this.myChart2title,
+                                type: 'pie',
+                                radius: ['50%', '70%'],
+                                center: ['50%', '50%'],
+                                avoidLabelOverlap: false,
+                                color: ['#6c81b3', '#ff7700', '#2cc689'],
+                                label: {
+                                    normal: {
+                                        show: false,
+                                        position: 'center'
+                                    },
+                                },
+                                labelLine: {
+                                    normal: {
+                                        show: false
+                                    }
+                                },
+
+                                data: [{
+                                    value: 35,
+                                    name: '进销存营业收入1',
+                                }, {
+                                    value: 20,
+                                    name: '进销存营业收入2'
+                                }, {
+                                    value: 25,
+                                    name: '进销存营业收入3'
+                                }]
+                            }]
+                        };
+                        var option3 = {
+                            title: {
+                                show: false
+                            },
+                            tooltip: {
+                                trigger: 'axis',
+                                axisPointer: {
+                                    type: 'cross',
+                                    label: {
+                                        backgroundColor: '#6a7985'
+                                    }
+                                }
+                            },
+                            // color:['#ff7700','#2f4554', '#61a0a8', '#d48265', '#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3'],
+                            grid: {
+                                top: 20,
+                                left: '3%',
+                                right: '4%',
+                                bottom: '3%',
+                                containLabel: true
+                            },
+                            xAxis: [{
+                                type: 'category',
+                                boundaryGap: false,
+                                data: ['0825', '0826', '0827', '0828', '0829', '0830', '0831', '0901', '0902', '0903', '0904', '0905', '0906', '0907', '0908', '0909', '0910', '0911', '0912', '0913', '0914', '0915', '0916', '0917', '0918', '0919', '0920', '0921', '0922', '0923']
+                            }],
+                            yAxis: [{
+                                type: 'value'
+                            }],
+                            series: [{
+                                name: '联盟广告',
+                                type: 'line',
+                                stack: '总量',
+                                itemStyle: {
+                                    normal: {
+                                        color: 'rgb(255, 119, 0)'
+                                    }
+                                },
+                                areaStyle: {
+                                    normal: {
+                                        color: 'rgb(255, 119, 0)',
+                                        opacity: 0.2 // 图表中各个图区域的透明度
+
+                                    }
+                                },
+                                data: [220, 182, 191, 234, 290, 330, 310, 220, 111, 191, 234, 212, 330, 310, 345, 182, 191, 234, 290, 123, 310, 220, 182, 189, 234, 290, 330, 222, 432, 310]
+                            }]
+                        };
+                        setTimeout(function() {
+                            _this.myChart2.clear();
+                            _this.myChart2 = echarts.init(document.getElementById('main2'));
+                            _this.myChart2.setOption(option2);
+                            _this.myChart3.clear();
+                            _this.myChart3 = echarts.init(document.getElementById('main3'));
+                            _this.myChart3.setOption(option3);
+                            _this.loading = false;
+                        }, 2000);
+                        break;
+                    case 2:
+                        _this.myChart2title = '会员店数据统计';
+                        _this.selectarr = [{
+                            'lable': '会员总店',
+                            'value': '1'
+                        }, {
+                            'lable': '交易会员店',
+                            'value': '2'
+                        }, {
+                            'lable': '活跃会员店',
+                            'value': '3'
+                        }, {
+                            'lable': 'vip会员店',
+                            'value': '4'
+                        }];
+                        _this.selectvalue = '1';
+                        _this.myChart3title = _this.selectarr[0].lable;
+                        var option2 = {
+                            tooltip: {
+                                trigger: 'item',
+                                formatter: "{a} <br/>{b}: {c} ({d}%)"
+                            },
+                            series: [{
+                                name: _this.myChart2title,
+                                type: 'pie',
+                                radius: ['50%', '70%'],
+                                center: ['50%', '50%'],
+                                avoidLabelOverlap: false,
+                                color: ['#6c81b3', '#ff7700', '#2cc689'],
+                                label: {
+                                    normal: {
+                                        show: false,
+                                        position: 'center'
+                                    },
+                                },
+                                labelLine: {
+                                    normal: {
+                                        show: false
+                                    }
+                                },
+
+                                data: [{
+                                    value: 35,
+                                    name: '进销存营业收入1',
+                                }, {
+                                    value: 20,
+                                    name: '进销存营业收入2'
+                                }, {
+                                    value: 25,
+                                    name: '进销存营业收入3'
+                                }]
+                            }]
+                        };
+                        var option3 = {
+                            title: {
+                                show: false
+                            },
+                            tooltip: {
+                                trigger: 'axis',
+                                axisPointer: {
+                                    type: 'cross',
+                                    label: {
+                                        backgroundColor: '#6a7985'
+                                    }
+                                }
+                            },
+                            grid: {
+                                top: 20,
+                                left: '3%',
+                                right: '4%',
+                                bottom: '3%',
+                                containLabel: true
+                            },
+                            xAxis: [{
+                                type: 'category',
+                                boundaryGap: false,
+                                data: ['0825', '0826', '0827', '0828', '0829', '0830', '0831', '0901', '0902', '0903', '0904', '0905', '0906', '0907', '0908', '0909', '0910', '0911', '0912', '0913', '0914', '0915', '0916', '0917', '0918', '0919', '0920', '0921', '0922', '0923']
+                            }],
+                            yAxis: [{
+                                type: 'value'
+                            }],
+                            series: [{
+                                name: '联盟广告',
+                                type: 'line',
+                                stack: '总量',
+                                itemStyle: {
+                                    normal: {
+                                        color: 'rgb(255, 119, 0)'
+                                    }
+                                },
+                                areaStyle: {
+                                    normal: {
+                                        color: 'rgb(255, 119, 0)',
+                                        opacity: 0.2 // 图表中各个图区域的透明度
+
+                                    }
+                                },
+                                data: [220, 182, 191, 234, 290, 330, 310, 220, 111, 191, 234, 212, 330, 310, 345, 182, 191, 234, 290, 123, 310, 220, 182, 189, 234, 290, 330, 222, 432, 310]
+                            }]
+                        };
+                        setTimeout(function() {
+                            _this.myChart2.clear();
+                            _this.myChart2 = echarts.init(document.getElementById('main2'));
+                            _this.myChart2.setOption(option2);
+                            _this.myChart3.clear();
+                            _this.myChart3 = echarts.init(document.getElementById('main3'));
+                            _this.myChart3.setOption(option3);
+                            _this.loading = false;
+                        }, 2000);
+                        break;
+                    default:
+
+                }
+
+
+            }
+
+        },
+        radiochange: function(item) {
+            let _this = this;
+            _this.loading = true;
+            switch (_this.radiovalue) {
+                case '1':
+                    _this.myChart2 = echarts.init(document.getElementById('main2'));
+                    _this.myChart3 = echarts.init(document.getElementById('main3'));
+                    var option2 = {
+                        tooltip: {
+                            trigger: 'item',
+                            formatter: "{a} <br/>{b}: {c} ({d}%)"
+                        },
+                        series: [{
+                            name: _this.myChart2title,
+                            type: 'pie',
+                            radius: ['50%', '70%'],
+                            center: ['50%', '50%'],
+                            avoidLabelOverlap: false,
+                            color: ['#6c81b3', '#ff7700', '#2cc689'],
+                            label: {
+                                normal: {
+                                    show: false,
+                                    position: 'center'
+                                },
+                            },
+                            labelLine: {
+                                normal: {
+                                    show: false
+                                }
+                            },
+
+                            data: [{
+                                value: 35,
+                                name: '进销存营业收入1',
+                            }, {
+                                value: 20,
+                                name: '进销存营业收入2'
+                            }, {
+                                value: 25,
+                                name: '进销存营业收入3'
+                            }]
+                        }]
+                    };
+                    var option3 = {
+                        title: {
+                            show: false
+                        },
+                        tooltip: {
+                            trigger: 'axis',
+                            axisPointer: {
+                                type: 'cross',
+                                label: {
+                                    backgroundColor: '#6a7985'
+                                }
+                            }
+                        },
+                        // color:['#ff7700','#2f4554', '#61a0a8', '#d48265', '#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3'],
+                        grid: {
+                            top: 20,
+                            left: '3%',
+                            right: '4%',
+                            bottom: '3%',
+                            containLabel: true
+                        },
+                        xAxis: [{
+                            type: 'category',
+                            boundaryGap: false,
+                            data: ['0825', '0826', '0827', '0828', '0829', '0830', '0831', '0901', '0902', '0903', '0904', '0905', '0906', '0907', '0908', '0909', '0910', '0911', '0912', '0913', '0914', '0915', '0916', '0917', '0918', '0919', '0920', '0921', '0922', '0923']
+                        }],
+                        yAxis: [{
+                            type: 'value'
+                        }],
+                        series: [{
+                            name: '联盟广告',
+                            type: 'line',
+                            stack: '总量',
+                            itemStyle: {
+                                normal: {
+                                    color: 'rgb(255, 119, 0)'
+                                }
+                            },
+                            areaStyle: {
+                                normal: {
+                                    color: 'rgb(255, 119, 0)',
+                                    opacity: 0.2 // 图表中各个图区域的透明度
+
+                                }
+                            },
+                            data: [220, 182, 191, 234, 290, 330, 310, 220, 111, 191, 234, 212, 330, 310, 345, 182, 191, 234, 290, 123, 310, 220, 182, 189, 234, 290, 330, 222, 432, 310]
+                        }]
+                    };
+                    setTimeout(function() {
+                        _this.myChart2.clear();
+                        _this.myChart2 = echarts.init(document.getElementById('main2'));
+                        _this.myChart2.setOption(option2);
+                        _this.myChart3.clear();
+                        _this.myChart3 = echarts.init(document.getElementById('main3'));
+                        _this.myChart3.setOption(option3);
+                        _this.loading = false;
+                    }, 2000);
+                    break;
+
+                case '2':
+
+                    var option2 = {
+                        tooltip: {
+                            trigger: 'axis',
+                            axisPointer: {
+                                type: 'shadow'
+                            }
+                        },
+                        grid: {
+                            top: '0',
+                            left: '0',
+                            right: '0',
+                            bottom: '0',
+
+                        },
+                        xAxis: {
+                            type: 'value',
+                            boundaryGap: [0, 0.01]
+                        },
+                        yAxis: {
+                            type: 'category',
+                            data: ['巴西', '印尼', '美国',  '总数']
+                        },
+                        series: [{
+                            name: '2011年',
+                            type: 'bar',
+                            data: [20, 30, 50,  100]
+                        }]
+                    };
+                    var option3 = {
+                        tooltip: {
+                            trigger: 'axis',
+                            axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                            }
+                        },
+                        color: ['#ff7700', '#6c81b3'],
+                        grid: {
+                            left: '3%',
+                            right: '4%',
+                            bottom: '3%',
+                            containLabel: true
+                        },
+                        xAxis: [{
+                            type: 'category',
+                            data: ['2016-09', '2016-10', '2016-11', '2016-12', '2017-01', '2017-02', '2017-03', '2017-04', '2017-05', '2017-06', '2017-07', '2017-08']
+                        }],
+                        yAxis: [{
+                            type: 'value'
+                        }],
+                        series: [{
+                            name: '当前数据',
+                            type: 'bar',
+                            data: [320, 332, 301, 334, 390, 330, 320, 310, 330, 250, 120, 120]
+                        }, {
+                            name: '对比数据',
+                            type: 'bar',
+                            stack: '广告',
+                            data: [120, 132, 101, 134, 90, 230, 210, 350, 120, 520, 100, 120]
+                        }]
+                    };
+
+                    setTimeout(function() {
+                        _this.myChart2.clear();
+                        _this.myChart2 = echarts.init(document.getElementById('main2'));
+                        _this.myChart2.setOption(option2);
+                        _this.myChart3.clear();
+                        _this.myChart3 = echarts.init(document.getElementById('main3'));
+                        _this.myChart3.setOption(option3);
+                        _this.loading = false;
+                    }, 2000);
+                    break;
+                default:
+
+            }
+
+
+
+
+
+
+        },
+        visiblechange: function(b) {
+            let _this = this;
+            if (b) {
+                _this.selectchangevalue = true;
+            }
+
+        },
+        selectchange: function(item) {
+            let _this = this;
+
+            if (item && _this.selectchangevalue) {
+                _this.myChart3title = _this.selectarr[item - 1].lable;
+                _this.myChart3.showLoading({
+                    'color': '#ff7700'
+                });
+                var option3 = {
+                    title: {
+                        show: false
+                    },
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'cross',
+                            label: {
+                                backgroundColor: '#6a7985'
+                            }
+                        }
+                    },
+                    grid: {
+                        top: 20,
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    xAxis: [{
+                        type: 'category',
+                        boundaryGap: false,
+                        data: ['0825', '0826', '0827', '0828', '0829', '0830', '0831', '0901', '0902', '0903', '0904', '0905', '0906', '0907', '0908', '0909', '0910', '0911', '0912', '0913', '0914', '0915', '0916', '0917', '0918', '0919', '0920', '0921', '0922', '0923']
+                    }],
+                    yAxis: [{
+                        type: 'value'
+                    }],
+                    series: [{
+                        name: '金额',
+                        type: 'line',
+                        stack: '总量',
+                        itemStyle: {
+                            normal: {
+                                color: 'rgb(255, 119, 0)'
+                            }
+                        },
+                        areaStyle: {
+                            normal: {
+                                color: 'rgb(255, 119, 0)',
+                                opacity: 0.2 // 图表中各个图区域的透明度
+
+                            }
+                        },
+                        data: [220, 182, 191, 234, 290, 330, 310, 220, 111, 191, 234, 212, 330, 310, 345, 182, 191, 234, 290, 123, 310, 220, 182, 189, 234, 290, 330, 222, 432, 310]
+                    }]
+                };
+                setTimeout(function() {
+                    _this.myChart3.clear();
+                    _this.myChart3 = echarts.init(document.getElementById('main3'));
+                    _this.myChart3.hideLoading();
+
+                    _this.myChart3.setOption(option3, false, false);
+                }, 2000)
+
+
+            }
+
+            _this.selectchangevalue = false;
+
+
+
         }
     },
     components: {
         rate,
         RadioGroup,
-        wradio
+        wradio,
+        wselect,
+        woption
     }
 }
 
