@@ -79,3 +79,41 @@
   padding: 3px 10px;
   transition: border-color .2s cubic-bezier(.645, .045, .355, 1)
 }
+
+.el-dialog__headerbtn:focus .el-dialog__close, .el-dialog__headerbtn:hover .el-dialog__close {
+  color: #ff7700//
+}
+
+
+.el-message-box__headerbtn:focus .el-message-box__close, .el-message-box__headerbtn:hover .el-message-box__close {
+  color: #ff7700//
+}
+
+.el-button--primary {
+  color: #fff;
+  background-color: #ff7700;//
+  border-color: #ff7700//
+}
+
+.el-button--primary.is-active, .el-button--primary:active {
+  background: #ff993f;
+  border-color: #ff993f;
+  color: #fff
+}
+
+.el-button--primary:focus, .el-button--primary:hover {
+  background: #ff993f;//
+  border-color: #ff993f;//
+  color: #fff
+}
+
+.el-button:focus, .el-button:hover {
+  color: #ff7700;//
+  border-color: #ff7700//
+}
+
+.el-button:active {
+  color: #ff993f;//
+  border-color: #ff993f;//
+  outline: 0
+}

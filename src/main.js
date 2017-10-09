@@ -17,9 +17,14 @@ import 'element-ui/lib/theme-default/index.css'
 
 Vue.use(VueRouter)
 
+import adminApi from './util.js';
+Vue.prototype.adminApi=adminApi;
+
 
 import index from './view/index.vue'
 import ywxl from './view/hty_ywxl.vue'
+import login from './view/login.vue'
+import NotFoundComponent from './view/NotFoundComponent.vue'
 // import indexcommon from './view/indexcommon.vue'
 // import indexfirst from './view/indexfirst.vue'
 // import login from './view/login.vue'
@@ -59,15 +64,27 @@ import ywxl from './view/hty_ywxl.vue'
 
 
 const router = new VueRouter({
+  mode: 'history',
   routes: [{
-    path: '/',
-    component: index,
-    children: [{
       path: '/',
-      name: 'yxxl',
-      component: ywxl
-    }]
-  }]
+      component: index,
+      children: [{
+        path: '/',
+        name: 'yxxl',
+        component: ywxl
+      }]
+    },
+    {
+      path: '*',
+      name: 'NotFoundComponent',
+      component: NotFoundComponent
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: login
+    },
+  ]
 })
 
 

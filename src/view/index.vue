@@ -80,7 +80,7 @@
 }
 
 .w-right {
-  position: absolute;
+    position: absolute;
     left: 6.5rem;
     right: 0px;
     height: 100%;
@@ -112,7 +112,7 @@
         </ul>
 
         <div class="w-userinfo">
-            <dropdown trigger="click">
+            <dropdown trigger="click" @command='dropdownclick'>
                 <span class="el-dropdown-link">
                   <svg class="icon" aria-hidden="true">
                   <use xlink:href="#icon-yonghu"></use>
@@ -152,6 +152,7 @@ import menulist from '../components/menulist.vue'
 import dropdown from 'element-ui/packages/dropdown/src/dropdown.vue'
 import DropdownMenu from 'element-ui/packages/dropdown/src/dropdown-menu.vue'
 import DropdownItem from 'element-ui/packages/dropdown/src/dropdown-item.vue'
+import MessageBox from 'element-ui/packages/message-box/index.js'
 
 export default {
 
@@ -172,13 +173,35 @@ export default {
             $('.w-navc').removeClass('w-navc');
             $(el).addClass('w-navc');
             _this.naveactive = index;
+        },
+        dropdownclick: function(command,instance) {
+          let _this=this;
+            if (command == 'zx') {
+                MessageBox({
+                    'title': '提示',
+                    'message': '确认注销该账号并返回登录页面吗？',
+                    'type': 'warning',
+                    'showCancelButton': true,
+                    'callback': function(action) {
+                        if (action == 'confirm') {
+                            _this.adminApi.setState({});
+                            setTimeout(function() {
+                                _this.$router.push({
+                                    name: 'login'
+                                })
+                            }, 1000)
+                        }
+                    }
+                })
+            }
         }
     },
     components: {
         dropdown,
         DropdownMenu,
         DropdownItem,
-        menulist
+        menulist,
+        MessageBox
     }
 }
 

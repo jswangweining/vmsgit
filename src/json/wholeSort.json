@@ -1,0 +1,14 @@
+{
+  "code": "1",
+  "msg": "成功！",
+  "data": {
+    "valueHead": 3,
+    "valueBranch": 3,
+    "incomeHead": 1,
+    "incomeBrach": 2,
+    "saleHead": 2,
+    "saleBrach": 2,
+    "memeberHead": 3,
+    "memeberBrach": 3
+  }
+}
