@@ -1,0 +1,20 @@
+{
+  "code": "1",
+  "msg": "成功！",
+  "data": {
+    "sortNum": 0,
+    "companyNow": 33.33,
+    "headAvg": 33.33,
+    "brachAvg": 33.33,
+    "companyList": [{
+      "sortNum": 1,
+      "companyName": "测试2"
+    }, {
+      "sortNum": 2,
+      "companyName": "测试2"
+    }, {
+      "sortNum": 3,
+      "companyName": "测试1"
+    }]
+  }
+}

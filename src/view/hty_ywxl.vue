@@ -219,7 +219,7 @@
 }
 
 .w-ywxl-ddl {
-    width: 11.5rem;
+    width: 10rem;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -725,38 +725,23 @@
             </div>
             <div class="w-ywxl-dt2">
                 <radio-group v-model="radiovalue" @change='radiochange'>
-                    <wradio label="1">当月统计</wradio>
-                    <wradio label="2">全年统计</wradio>
+                    <wradio label="0">当月统计</wradio>
+                    <wradio label="1">全年统计</wradio>
                 </radio-group>
             </div>
         </div>
 
         <div class="w-ywxl-dd">
             <div class="w-ywxl-ddl">
-                <div class="w-ywxl-ddla w-ywxl-ddlac" @click='monthtabs(0,$event)'>
-                    <p class="w-ywxl-ddlap1">总营业收入<span>（万元）</span></p>
-                    <p class="w-ywxl-ddlap2">256</p>
-                    <p class="w-ywxl-ddlap3">同比21%
-                        <svg class="icon" aria-hidden="true">
+                <div class="w-ywxl-ddla" :class="[index==0?'w-ywxl-ddlac':'']" v-for='(item,index) in wholeLeft' @click='monthtabs(index,$event)'>
+                    <p class="w-ywxl-ddlap1">{{item.name}}<span v-if='index==0 || index==1'>（万元）</span><span v-if='index==2'>（家）</span></p>
+                    <p class="w-ywxl-ddlap2">{{item.num}}</p>
+                    <p class="w-ywxl-ddlap3">同比{{item.pair}}%
+                        <svg class="icon" aria-hidden="true" v-if='item.index==0'>
                             <use xlink:href="#icon-jiantou1"></use>
                         </svg>
-                    </p>
-                </div>
-                <div class="w-ywxl-ddla" @click='monthtabs(1,$event)'>
-                    <p class="w-ywxl-ddlap1">总销售金额<span>（万元）</span></p>
-                    <p class="w-ywxl-ddlap2">256</p>
-                    <p class="w-ywxl-ddlap3">同比21%
-                        <svg class="icon" aria-hidden="true">
+                        <svg class="icon" aria-hidden="true" v-if='item.index==1'>
                             <use xlink:href="#icon-jiantou2"></use>
-                        </svg>
-                    </p>
-                </div>
-                <div class="w-ywxl-ddla" style="border-bottom:0" @click='monthtabs(2,$event)'>
-                    <p class="w-ywxl-ddlap1">新增会员店总数<span>（家）</span></p>
-                    <p class="w-ywxl-ddlap2">256</p>
-                    <p class="w-ywxl-ddlap3">同比21%
-                        <svg class="icon" aria-hidden="true">
-                            <use xlink:href="#icon-jiantou1"></use>
                         </svg>
                     </p>
                 </div>
@@ -776,12 +761,15 @@
                         <div class="w-ywxl-ddrtdline">
 
                         </div>
-                        <div class="w-ywxl-ddrtditem2" v-for='(item,index) in myChart2data'>
-                            <p class="w-ywxl-ddrtditem2p1"><span class="w-ywxl-ddrtditem2p1s" v-if='index==0'></span><span class="w-ywxl-ddrtditem2p1s2" v-if='index==1'></span><span class="w-ywxl-ddrtditem2p1s3" v-if='index==2'></span>{{item.lable}}</p>
-                            <p class="w-ywxl-ddrtditem2p2">{{item.value}}</p>
-                            <p class="w-ywxl-ddrtditem2p3">同比{{item.compair}}%
-                                <svg class="icon" aria-hidden="true">
+                        <div class="w-ywxl-ddrtditem2" v-for='(item,index) in wholeTop'>
+                            <p class="w-ywxl-ddrtditem2p1"><span class="w-ywxl-ddrtditem2p1s1" v-if='index==0'></span><span class="w-ywxl-ddrtditem2p1s2" v-if='index==1'></span><span class="w-ywxl-ddrtditem2p1s3" v-if='index==2'></span>{{item.name}}</p>
+                            <p class="w-ywxl-ddrtditem2p2">{{item.num}}</p>
+                            <p class="w-ywxl-ddrtditem2p3" v-if='monthtab==0 || monthtab==1'>同比{{item.pair}}%
+                                <svg class="icon" aria-hidden="true" v-if='item.index==0'>
                                     <use xlink:href="#icon-jiantou1"></use>
+                                </svg>
+                                <svg class="icon" aria-hidden="true" v-if='item.index==1'>
+                                    <use xlink:href="#icon-jiantou2"></use>
                                 </svg>
                             </p>
                         </div>
@@ -793,10 +781,10 @@
                             {{myChart3title}}
                         </div>
                         <div class="w-ywxl-ddrdtb">
-                            <span class="w-ywxl-ddrdtbs1" v-if='monthtab=="2"'>当前数据</span>
-                            <span class="w-ywxl-ddrdtbs2" v-if='monthtab=="2"'>对比数据</span>
-                            <wselect v-model="selectvalue" placeholder="请选择" style="width:120px; color:#4a4a4a" @change='selectchange' @visible-change='visiblechange'>
-                                <woption :label='item.lable' :value='item.value' v-for='(item,index) in selectarr'>
+                            <span class="w-ywxl-ddrdtbs1" v-if='radiovalue=="1"'>当前数据</span>
+                            <span class="w-ywxl-ddrdtbs2" v-if='radiovalue=="1" && monthtab!==2'>对比数据</span>
+                            <wselect v-model="selectvalue" placeholder="请选择" style="width:150px; color:#4a4a4a" @change='selectchange' @visible-change='visiblechange'>
+                                <woption :label='item.label' :value='item.value' v-for='(item,index) in wholeName'>
                                 </woption>
                             </wselect>
                         </div>
@@ -894,30 +882,30 @@
                 </div>
             </div>
             <div class="rankingtb">
-                <radio-group v-model="dialogradiovalue">
+                <radio-group v-model="dialogradiovalue" @change='dialogradiochange'>
                     <wradio label="1">分部排名</wradio>
                     <wradio label="2">整体排名</wradio>
                 </radio-group>
 
             </div>
         </div>
-        <div class="rankingc" v-loading.body='dialogload'>
+        <div class="rankingc" v-loading='dialogload'>
             <div class="rankingca">
                 <div class="rankingca1">
                     <div class="rankingca1p1">{{dialogarr[0]}}</div>
-                    <div class="rankingca1p2">5</div>
+                    <div class="rankingca1p2">{{dialogvaluearr.sortNum}}</div>
                 </div>
                 <div class="rankingca1">
                     <div class="rankingca1p1">{{dialogarr[1]}}<span v-if='dialogvalue!==5&&dialogvalue!==6'>（万元）</span><span v-else>（家）</span></div>
-                    <div class="rankingca1p2">256</div>
+                    <div class="rankingca1p2">{{dialogvaluearr.companyNow}}</div>
                 </div>
                 <div class="rankingca1">
                     <div class="rankingca1p1">{{dialogarr[2]}}<span v-if='dialogvalue!==5&&dialogvalue!==6'>（万元）</span><span v-else>（家）</span></div>
-                    <div class="rankingca1p3">256</div>
+                    <div class="rankingca1p3">{{dialogvaluearr.brachAvg}}</div>
                 </div>
                 <div class="rankingca1" style="margin-bottom:0px;">
                     <div class="rankingca1p1">{{dialogarr[3]}}<span v-if='dialogvalue!==5&&dialogvalue!==6'>（万元）</span><span v-else>（家）</span></div>
-                    <div class="rankingca1p3">388</div>
+                    <div class="rankingca1p3">{{dialogvaluearr.headAvg}}</div>
                 </div>
             </div>
             <div class="rankingcb">
@@ -926,54 +914,21 @@
                         排名
                     </div>
                     <div class="rankingcbtb">
-                        分部公司排名
+                        分部平台公司
                     </div>
                 </div>
                 <div class="rankingcbd">
-                    <div class="rankingcbda w-active">
+                    <div class="rankingcbda" v-for="(item,index) in dialogvaluearr.companyList" :class="[dialogvaluearr.sortNum==item.sortNum?'w-active':'']">
                         <div class="rankingcbda1">
-                            1
+                            {{item.sortNum}}
                         </div>
                         <div class="rankingcbda2">
-                            紫金阳光会员测试01
+                            {{item.companyName}}
                         </div>
                     </div>
-                    <div class="rankingcbda">
-                        2
-                    </div>
-                    <div class="rankingcbda">
-                        3
-                    </div>
-                    <div class="rankingcbda">
-                        4
-                    </div>
-                    <div class="rankingcbda ">
-                        5
-                    </div>
-                    <div class="rankingcbda">
-                        1
-                    </div>
-                    <div class="rankingcbda">
-                        1
-                    </div>
-                    <div class="rankingcbda">
-                        1
-                    </div>
-                    <div class="rankingcbda">
-                        1
-                    </div>
-                    <div class="rankingcbda">
-                        1
-                    </div>
-
                 </div>
             </div>
         </div>
-
-        <!-- <div slot="footer" class="dialog-footer">
-            <wbutton @click="dialognamereset">取 消</wbutton>
-            <wbutton type="primary" @click="dialognamehandle">确 定</wbutton>
-        </div> -->
     </wdialog>
 
 </div>
@@ -1004,36 +959,33 @@ export default {
         loadingall: false,
         rankingshow: false,
         dialogradiovalue: '',
+        dialogradiovaluechange: false,
         dialogvalue: '',
         dialogtitle: '',
         dialogarr: [],
+        dialogvaluearr: {},
         dialogload: false,
         statvalue: 1,
         radiovalue: '',
         selectchangevalue: false,
-        selectvalue: '1',
-        selectarr: [],
         monthtab: 0,
-        yeartab: 0,
         topdata: {},
         wholeSort: {},
         myChart1: '',
         myChart2title: '',
-        myChart2data: [{}, {}, {}],
         myChart2: '',
         myChart3: '',
-        myChart3title: ''
+        myChart3title: '',
+        selectvalue: '1',
+        wholeName: [],
+        wholeTop: [{}, {}, {}],
+        wholeLeft: [{}, {}, {}]
 
     }),
     mounted() {
         let _this = this;
         // _this.adminApi.islogin();
-        if (!_this.$route.query.userId) {
-            _this.$router.push({
-                name: 'NotFoundComponent'
-            });
-            return;
-        }
+
         _this.userId = _this.$route.query.userId;
         this.$nextTick(function() {
             var url = _this.adminApi.host + '/htypctorg/index/handle',
@@ -1041,12 +993,12 @@ export default {
                     'userId': _this.userId
                 },
                 loading = function() {
-                    _this.loadingall = true;
+                    //_this.loadingall = true;
                 },
                 success = function(data) {
                     if (data.code == '1') {
                         _this.topdata = data.data;
-                        _this.statvalue=data.data.starNum
+                        _this.statvalue = data.data.starNum
                         _this.myChart1 = echarts.init(document.getElementById('main'));
                         var option = {
                             tooltip: {
@@ -1103,12 +1055,23 @@ export default {
                         }
                         _this.myChart1.setOption(option);
                     }
+                    if (data.code == '3001') {
+                        Message({
+                            'message': '登陆已超时',
+                            'type': 'error',
+                            'onClose': function() {
+                                _this.$router.push({
+                                    path: '/'
+                                })
+                            }
+                        });
+                    }
                 },
                 complete = function() {
                     // _this.loading = false;
                 }
             _this.adminApi.getJsonp(url, data, loading, success, complete)
-            _this.radiovalue = '1';
+            _this.radiovalue = '0';
             var url = _this.adminApi.host + '/htypctorg/index/wholeSort',
                 data = {
                     'userId': _this.userId
@@ -1135,725 +1098,706 @@ export default {
             if (index == _this.monthtab) {
                 return;
             } else {
-                _this.loading = true;
+                //_this.loading = true;
                 $('.w-ywxl-ddlac').removeClass('w-ywxl-ddlac')
                 $(el).hasClass('w-ywxl-ddla') ? $(el).addClass('w-ywxl-ddlac') : $(el).parentsUntil('w-ywxl-ddl').addClass('w-ywxl-ddlac')
                 _this.monthtab = index;
-                //console.log('请求')
-                switch (index) {
-                    case 0:
-                        _this.myChart2data = [{
-                            'lable': '进销存营业收入',
-                            'value': '35',
-                            'compair': '21'
-                        }, {
-                            'lable': '服务收入',
-                            'value': '35',
-                            'compair': '21'
-                        }, {
-                            'lable': '金融收入',
-                            'value': '35',
-                            'compair': '21'
-                        }];
-                        _this.selectarr = [{
-                            'lable': '总营业收入',
-                            'value': '1'
-                        }, {
-                            'lable': '进销存收入',
-                            'value': '2'
-                        }, {
-                            'lable': '服务收入',
-                            'value': '3'
-                        }, {
-                            'lable': '金融收入',
-                            'value': '4'
-                        }];
-                        _this.selectvalue = '1';
-                        _this.myChart2title = '总营业收入占比';
-                        _this.myChart3title = _this.selectarr[0].lable + '趋势';
-                        var option2 = {
-                            tooltip: {
-                                trigger: 'item',
-                                formatter: "{a} <br/>{b}: {c} ({d}%)"
-                            },
-                            series: [{
-                                name: _this.myChart2title,
-                                type: 'pie',
-                                radius: ['50%', '70%'],
-                                center: ['50%', '50%'],
-                                avoidLabelOverlap: false,
-                                color: ['#6c81b3', '#ff7700', '#2cc689'],
-                                label: {
-                                    normal: {
-                                        show: false,
-                                        position: 'center'
-                                    },
-                                },
-                                labelLine: {
-                                    normal: {
-                                        show: false
-                                    }
-                                },
-                                data: [{
-                                    value: 35,
-                                    name: '进销存营业收入1',
-                                }, {
-                                    value: 20,
-                                    name: '进销存营业收入2'
-                                }, {
-                                    value: 25,
-                                    name: '进销存营业收入3'
-                                }]
-                            }]
-                        };
-                        var option3 = {
-                            title: {
-                                show: false
-                            },
-                            tooltip: {
-                                trigger: 'axis',
-                                axisPointer: {
-                                    type: 'cross',
-                                    label: {
-                                        backgroundColor: '#6a7985'
-                                    }
-                                }
-                            },
-                            grid: {
-                                top: 20,
-                                left: '3%',
-                                right: '4%',
-                                bottom: '3%',
-                                containLabel: true
-                            },
-                            xAxis: [{
-                                type: 'category',
-                                boundaryGap: false,
-                                data: ['0825', '0826', '0827', '0828', '0829', '0830', '0831', '0901', '0902', '0903', '0904', '0905', '0906', '0907', '0908', '0909', '0910', '0911', '0912', '0913', '0914', '0915', '0916', '0917', '0918', '0919', '0920', '0921', '0922', '0923']
-                            }],
-                            yAxis: [{
-                                type: 'value'
-                            }],
-                            series: [{
-                                name: '联盟广告',
-                                type: 'line',
-                                stack: '总量',
-                                itemStyle: {
-                                    normal: {
-                                        color: 'rgb(255, 119, 0)'
-                                    }
-                                },
-                                areaStyle: {
-                                    normal: {
-                                        color: 'rgb(255, 119, 0)',
-                                        opacity: 0.2 // 图表中各个图区域的透明度
+                _this.selectvalue = '0';
 
-                                    }
-                                },
-                                data: [220, 182, 191, 234, 290, 330, 310, 220, 111, 191, 234, 212, 330, 310, 345, 182, 191, 234, 290, 123, 310, 220, 182, 189, 234, 290, 330, 222, 432, 310]
-                            }]
-                        };
-                        setTimeout(function() {
-                            _this.myChart2.clear();
-                            _this.myChart2 = echarts.init(document.getElementById('main2'));
-                            _this.myChart2.setOption(option2);
-                            _this.myChart3.clear();
-                            _this.myChart3 = echarts.init(document.getElementById('main3'));
-                            _this.myChart3.setOption(option3);
-                            _this.loading = false;
-                        }, 2000);
-                        break;
-                    case 1:
-                        _this.myChart2data = [{
-                            'lable': '线上采购',
-                            'value': '35',
-                            'compair': '21'
-                        }, {
-                            'lable': '商品+采购',
-                            'value': '35',
-                            'compair': '21'
-                        }, {
-                            'lable': '非商品+采购',
-                            'value': '35',
-                            'compair': '21'
-                        }];
-                        _this.selectarr = [{
-                            'lable': '销售金额',
-                            'value': '1'
-                        }, {
-                            'lable': '线上采购',
-                            'value': '2'
-                        }, {
-                            'lable': '商品+采购',
-                            'value': '3'
-                        }, {
-                            'lable': '非商品+采购',
-                            'value': '4'
-                        }];
-                        _this.selectvalue = '1';
-                        _this.myChart2title = '销售金额占比';
-                        _this.myChart3title = _this.selectarr[0].lable + '趋势';
-                        var option2 = {
-                            tooltip: {
-                                trigger: 'item',
-                                formatter: "{a} <br/>{b}: {c} ({d}%)"
-                            },
-                            series: [{
-                                name: _this.myChart2title,
-                                type: 'pie',
-                                radius: ['50%', '70%'],
-                                center: ['50%', '50%'],
-                                avoidLabelOverlap: false,
-                                color: ['#6c81b3', '#ff7700', '#2cc689'],
-                                label: {
-                                    normal: {
-                                        show: false,
-                                        position: 'center'
-                                    },
-                                },
-                                labelLine: {
-                                    normal: {
-                                        show: false
-                                    }
-                                },
+                var url = _this.adminApi.host + '/htypctorg/index/whole',
+                    data = {
+                        'userId': _this.userId,
+                        'date': parseInt(_this.radiovalue),
+                        'type': parseInt(_this.monthtab),
+                        'kind': parseInt(_this.selectvalue)
+                    },
+                    loading = function() {
+                        _this.loading = true;
+                    },
+                    success = function(data) {
+                        if (data.code == '1') {
+                            _this.wholeTop = data.data.wholeTop;
+                            _this.wholeLeft = data.data.wholeLeft;
+                            _this.wholeName = data.data.wholeName;
+                            _this.myChart2title = _this.wholeName[0].label + '占比';
+                            _this.myChart3title = _this.wholeName[0].label + '趋势';
 
-                                data: [{
-                                    value: 35,
-                                    name: '进销存营业收入1',
-                                }, {
-                                    value: 20,
-                                    name: '进销存营业收入2'
-                                }, {
-                                    value: 25,
-                                    name: '进销存营业收入3'
-                                }]
-                            }]
-                        };
-                        var option3 = {
-                            title: {
-                                show: false
-                            },
-                            tooltip: {
-                                trigger: 'axis',
-                                axisPointer: {
-                                    type: 'cross',
-                                    label: {
-                                        backgroundColor: '#6a7985'
+                            switch (_this.radiovalue) {
+                                case "0":
+                                    if(_this.monthtab==0 || _this.monthtab==1)
+                                    {
+                                      var option2 = {
+                                          tooltip: {
+                                              trigger: 'item',
+                                              formatter: "{a} <br/>{b}: {c} ({d}%)"
+                                          },
+                                          series: [{
+                                              name: _this.myChart2title,
+                                              type: 'pie',
+                                              radius: ['50%', '70%'],
+                                              center: ['50%', '50%'],
+                                              avoidLabelOverlap: false,
+                                              color: ['#6c81b3', '#ff7700', '#2cc689'],
+                                              label: {
+                                                  normal: {
+                                                      show: false,
+                                                      position: 'center'
+                                                  },
+                                              },
+                                              labelLine: {
+                                                  normal: {
+                                                      show: false
+                                                  }
+                                              },
+                                              data: data.data.wholePic
+                                          }]
+                                      };
+                                      _this.myChart2.clear();
+                                      _this.myChart2 = echarts.init(document.getElementById('main2'));
+                                      _this.myChart2.setOption(option2);
                                     }
-                                }
-                            },
-                            grid: {
-                                top: 20,
-                                left: '3%',
-                                right: '4%',
-                                bottom: '3%',
-                                containLabel: true
-                            },
-                            xAxis: [{
-                                type: 'category',
-                                boundaryGap: false,
-                                data: ['0825', '0826', '0827', '0828', '0829', '0830', '0831', '0901', '0902', '0903', '0904', '0905', '0906', '0907', '0908', '0909', '0910', '0911', '0912', '0913', '0914', '0915', '0916', '0917', '0918', '0919', '0920', '0921', '0922', '0923']
-                            }],
-                            yAxis: [{
-                                type: 'value'
-                            }],
-                            series: [{
-                                name: '联盟广告',
-                                type: 'line',
-                                stack: '总量',
-                                itemStyle: {
-                                    normal: {
-                                        color: 'rgb(255, 119, 0)'
-                                    }
-                                },
-                                areaStyle: {
-                                    normal: {
-                                        color: 'rgb(255, 119, 0)',
-                                        opacity: 0.2 // 图表中各个图区域的透明度
+                                    else {
+                                      var option2 = {
+                                          tooltip: {
+                                              trigger: 'axis',
+                                              axisPointer: {
+                                                  type: 'shadow'
+                                              }
+                                          },
+                                          grid: {
+                                              top: '0',
+                                              left: '40',
+                                              right: '0',
+                                              bottom: '0',
 
+                                          },
+                                          xAxis: {
+                                              type: 'value',
+                                              boundaryGap: [0, 0.01]
+                                          },
+                                          yAxis: {
+                                              type: 'category',
+                                              data: ['VIP', '活跃', '交易', '总数'],
+                                          },
+                                          series: [{
+                                              type: 'bar',
+                                              data: [{
+                                                  value: data.data.wholePic[3].value,
+                                                  itemStyle: {
+                                                      normal: {
+                                                          color: '#2cc689'
+                                                      }
+                                                  }
+                                              }, {
+                                                  value: data.data.wholePic[2].value,
+                                                  itemStyle: {
+                                                      normal: {
+                                                          color: '#ff7700'
+                                                      }
+                                                  }
+                                              }, {
+                                                  value: data.data.wholePic[1].value,
+                                                  itemStyle: {
+                                                      normal: {
+                                                          color: '#6c81b3'
+                                                      }
+                                                  }
+                                              }, {
+                                                  value: data.data.wholePic[0].value,
+                                                  itemStyle: {
+                                                      normal: {
+                                                          color: '#ff7700'
+                                                      }
+                                                  }
+                                              }],
+                                              barWidth: 10,
+                                          }, ]
+                                      };
+                                      _this.myChart2.clear();
+                                      _this.myChart2 = echarts.init(document.getElementById('main2'));
+                                      _this.myChart2.setOption(option2);
                                     }
-                                },
-                                data: [220, 182, 191, 234, 290, 330, 310, 220, 111, 191, 234, 212, 330, 310, 345, 182, 191, 234, 290, 123, 310, 220, 182, 189, 234, 290, 330, 222, 432, 310]
-                            }]
-                        };
-                        setTimeout(function() {
-                            _this.myChart2.clear();
-                            _this.myChart2 = echarts.init(document.getElementById('main2'));
-                            _this.myChart2.setOption(option2);
-                            _this.myChart3.clear();
-                            _this.myChart3 = echarts.init(document.getElementById('main3'));
-                            _this.myChart3.setOption(option3);
-                            _this.loading = false;
-                        }, 2000);
-                        break;
-                    case 2:
-                        _this.myChart2data = [{
-                            'lable': '交易会员店',
-                            'value': '35',
-                            'compair': '21'
-                        }, {
-                            'lable': '活跃会员店',
-                            'value': '35',
-                            'compair': '21'
-                        }, {
-                            'lable': 'vip会员店',
-                            'value': '35',
-                            'compair': '21'
-                        }];
-                        _this.selectarr = [{
-                            'lable': '会员总店',
-                            'value': '1'
-                        }, {
-                            'lable': '交易会员店',
-                            'value': '2'
-                        }, {
-                            'lable': '活跃会员店',
-                            'value': '3'
-                        }, {
-                            'lable': 'vip会员店',
-                            'value': '4'
-                        }];
-                        _this.selectvalue = '1';
-                        _this.myChart2title = '会员店数据统计';
-                        _this.myChart3title = _this.selectarr[0].lable + '趋势';
+                                    var option3 = {
+                                        title: {
+                                            show: false
+                                        },
+                                        tooltip: {
+                                            trigger: 'axis',
+                                            axisPointer: {
+                                                type: 'cross',
+                                                label: {
+                                                    backgroundColor: '#6a7985'
+                                                }
+                                            }
+                                        },
+                                        grid: {
+                                            top: 20,
+                                            left: '3%',
+                                            right: '4%',
+                                            bottom: '3%',
+                                            containLabel: true
+                                        },
+                                        xAxis: [{
+                                            type: 'category',
+                                            boundaryGap: false,
+                                            data: data.data.wholeBottomDate
+                                        }],
+                                        yAxis: [{
+                                            type: 'value'
+                                        }],
+                                        series: [{
+                                            name: '收入',
+                                            type: 'line',
+                                            stack: '总量',
+                                            itemStyle: {
+                                                normal: {
+                                                    color: 'rgb(255, 119, 0)'
+                                                }
+                                            },
+                                            areaStyle: {
+                                                normal: {
+                                                    color: 'rgb(255, 119, 0)',
+                                                    opacity: 0.2 // 图表中各个图区域的透明度
 
-                        var option2 = {
-                            tooltip: {
-                                trigger: 'axis',
-                                axisPointer: {
-                                    type: 'shadow'
-                                }
-                            },
+                                                }
+                                            },
+                                            data: data.data.wholeBottom
+                                        }]
+                                    };
+                                    _this.myChart3.clear();
+                                    _this.myChart3 = echarts.init(document.getElementById('main3'));
+                                    _this.myChart3.setOption(option3);
 
-                            grid: {
-                                top: '0',
-                                left: '40',
-                                right: '0',
-                                bottom: '0',
+                                    break;
+                                case "1":
+                                      if(_this.monthtab==0 || _this.monthtab==1)
+                                      {
+                                        var option2 = {
+                                            tooltip: {
+                                                trigger: 'item',
+                                                formatter: "{a} <br/>{b}: {c} ({d}%)"
+                                            },
+                                            series: [{
+                                                name: _this.myChart2title,
+                                                type: 'pie',
+                                                radius: ['50%', '70%'],
+                                                center: ['50%', '50%'],
+                                                avoidLabelOverlap: false,
+                                                color: ['#6c81b3', '#ff7700', '#2cc689'],
+                                                label: {
+                                                    normal: {
+                                                        show: false,
+                                                        position: 'center'
+                                                    },
+                                                },
+                                                labelLine: {
+                                                    normal: {
+                                                        show: false
+                                                    }
+                                                },
+                                                data: data.data.wholePic
+                                            }]
+                                        };
+                                        _this.myChart2.clear();
+                                        _this.myChart2 = echarts.init(document.getElementById('main2'));
+                                        _this.myChart2.setOption(option2);
+                                        var option3 = {
+                                            tooltip: {
+                                                trigger: 'axis',
+                                                axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                                    type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                                                }
+                                            },
+                                            color: ['#ff7700', '#6c81b3'],
+                                            grid: {
+                                                top: '10',
+                                                left: '3%',
+                                                right: '4%',
+                                                bottom: '3%',
+                                                containLabel: true
+                                            },
+                                            xAxis: [{
+                                                type: 'category',
+                                                data: data.data.wholeBottomDate
+                                            }],
+                                            yAxis: [{
+                                                type: 'value'
+                                            }],
+                                            series: [{
+                                                name: '当前数据',
+                                                barWidth: 10,
+                                                type: 'bar',
+                                                data:data.data.wholeBottom
+                                            }, {
+                                                name: '对比数据',
+                                                type: 'bar',
+                                                barWidth: 10,
+                                                stack: '广告',
+                                                data: data.data.wholeBottomPair
+                                            }]
+                                        };
+                                        _this.myChart3.clear();
+                                        _this.myChart3 = echarts.init(document.getElementById('main3'));
+                                        _this.myChart3.setOption(option3);
+                                      }
+                                      else {
+                                        var option2 = {
+                                            tooltip: {
+                                                trigger: 'axis',
+                                                axisPointer: {
+                                                    type: 'shadow'
+                                                }
+                                            },
+                                            grid: {
+                                                top: '0',
+                                                left: '40',
+                                                right: '0',
+                                                bottom: '0',
 
-                            },
-                            xAxis: {
-                                type: 'value',
-                                boundaryGap: [0, 0.01]
-                            },
-                            yAxis: {
-                                type: 'category',
-                                data: ['VIP', '活跃', '交易', '总数'],
-                            },
-                            series: [{
-                                type: 'bar',
-                                data: [{
-                                    value: 20,
-                                    itemStyle: {
-                                        normal: {
-                                            color: '#2cc689'
-                                        }
-                                    }
-                                }, {
-                                    value: 30,
-                                    itemStyle: {
-                                        normal: {
-                                            color: '#ff7700'
-                                        }
-                                    }
-                                }, {
-                                    value: 50,
-                                    itemStyle: {
-                                        normal: {
-                                            color: '#6c81b3'
-                                        }
-                                    }
-                                }, {
-                                    value: 100,
-                                    itemStyle: {
-                                        normal: {
-                                            color: '#ff7700'
-                                        }
-                                    }
-                                }],
-                                barWidth: 10,
+                                            },
+                                            xAxis: {
+                                                type: 'value',
+                                                boundaryGap: [0, 0.01]
+                                            },
+                                            yAxis: {
+                                                type: 'category',
+                                                data: ['VIP', '活跃', '交易', '总数'],
+                                            },
+                                            series: [{
+                                                type: 'bar',
+                                                data: [{
+                                                    value: data.data.wholePic[3].value,
+                                                    itemStyle: {
+                                                        normal: {
+                                                            color: '#2cc689'
+                                                        }
+                                                    }
+                                                }, {
+                                                    value: data.data.wholePic[2].value,
+                                                    itemStyle: {
+                                                        normal: {
+                                                            color: '#ff7700'
+                                                        }
+                                                    }
+                                                }, {
+                                                    value: data.data.wholePic[1].value,
+                                                    itemStyle: {
+                                                        normal: {
+                                                            color: '#6c81b3'
+                                                        }
+                                                    }
+                                                }, {
+                                                    value: data.data.wholePic[0].value,
+                                                    itemStyle: {
+                                                        normal: {
+                                                            color: '#ff7700'
+                                                        }
+                                                    }
+                                                }],
+                                                barWidth: 10,
+                                            }, ]
+                                        };
+                                        _this.myChart2.clear();
+                                        _this.myChart2 = echarts.init(document.getElementById('main2'));
+                                        _this.myChart2.setOption(option2);
+                                        var option3 = {
+                                            tooltip: {
+                                                trigger: 'axis',
+                                                axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                                    type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                                                }
+                                            },
+                                            color: ['#ff7700', '#6c81b3'],
+                                            grid: {
+                                                top: '10',
+                                                left: '3%',
+                                                right: '4%',
+                                                bottom: '3%',
+                                                containLabel: true
+                                            },
+                                            xAxis: [{
+                                                type: 'category',
+                                                data: data.data.wholeBottomDate
+                                            }],
+                                            yAxis: [{
+                                                type: 'value'
+                                            }],
+                                            series: [{
+                                                name: '当前数据',
+                                                barWidth: 10,
+                                                type: 'bar',
+                                                data:data.data.wholeBottom
+                                            }]
+                                        };
+                                        _this.myChart3.clear();
+                                        _this.myChart3 = echarts.init(document.getElementById('main3'));
+                                        _this.myChart3.setOption(option3);
+                                      }
 
-                            }, ]
-                        };
-                        var option3 = {
-                            tooltip: {
-                                trigger: 'axis',
-                                axisPointer: { // 坐标轴指示器，坐标轴触发有效
-                                    type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
-                                }
-                            },
-                            color: ['#ff7700', '#6c81b3'],
-                            grid: {
-                                top: '10',
-                                left: '3%',
-                                right: '4%',
-                                bottom: '3%',
-                                containLabel: true
-                            },
-                            xAxis: [{
-                                type: 'category',
-                                data: ['2016-09', '2016-10', '2016-11', '2016-12', '2017-01', '2017-02', '2017-03', '2017-04', '2017-05', '2017-06', '2017-07', '2017-08']
-                            }],
-                            yAxis: [{
-                                type: 'value'
-                            }],
-                            series: [{
-                                name: '当前数据',
-                                barWidth: 10,
-                                type: 'bar',
-                                data: [320, 332, 301, 334, 390, 330, 320, 310, 330, 250, 120, 120]
-                            }, {
-                                name: '对比数据',
-                                type: 'bar',
-                                barWidth: 10,
-                                stack: '广告',
-                                data: [120, 132, 101, 134, 90, 230, 210, 350, 120, 520, 100, 120]
-                            }]
-                        };
-                        setTimeout(function() {
-                            _this.myChart2.clear();
-                            _this.myChart2 = echarts.init(document.getElementById('main2'));
-                            _this.myChart2.setOption(option2);
-                            _this.myChart3.clear();
-                            _this.myChart3 = echarts.init(document.getElementById('main3'));
-                            _this.myChart3.setOption(option3);
-                            _this.loading = false;
-                        }, 2000);
-                        break;
-                    default:
-                }
+                                    break;
+                                default:
+
+                            }
+
+                        }
+
+                    },
+                    complete = function() {
+                        _this.loading = false;
+                    }
+                _this.adminApi.getJsonp(url, data, loading, success, complete)
+
+
             }
         },
         radiochange: function(item) {
             let _this = this;
             _this.myChart2 = echarts.init(document.getElementById('main2'));
             _this.myChart3 = echarts.init(document.getElementById('main3'));
-            //console.log('请求','曰或者年','营业额或者销售额或者门店数');
-            switch (_this.monthtab) {
-                case 0:
-                    _this.myChart2data = [{
-                        'lable': '进销存营业收入',
-                        'value': '35',
-                        'compair': '21'
-                    }, {
-                        'lable': '服务收入',
-                        'value': '35',
-                        'compair': '21'
-                    }, {
-                        'lable': '金融收入',
-                        'value': '35',
-                        'compair': '21'
-                    }];
-                    _this.selectarr = [{
-                        'lable': '总营业收入',
-                        'value': '1'
-                    }, {
-                        'lable': '进销存收入',
-                        'value': '2'
-                    }, {
-                        'lable': '服务收入',
-                        'value': '3'
-                    }, {
-                        'lable': '金融收入',
-                        'value': '4'
-                    }];
-                    _this.selectvalue = '1';
-                    _this.myChart2title = '总营业收入占比';
-                    _this.myChart3title = '总营业收入趋势';
-                    var option2 = {
-                        tooltip: {
-                            trigger: 'item',
-                            formatter: "{a} <br/>{b}: {c} ({d}%)"
-                        },
-                        series: [{
-                            name: _this.myChart2title,
-                            type: 'pie',
-                            radius: ['50%', '70%'],
-                            center: ['50%', '50%'],
-                            avoidLabelOverlap: false,
-                            color: ['#6c81b3', '#ff7700', '#2cc689'],
-                            label: {
-                                normal: {
-                                    show: false,
-                                    position: 'center'
-                                },
-                            },
-                            labelLine: {
-                                normal: {
-                                    show: false
-                                }
-                            },
 
-                            data: [{
-                                value: 35,
-                                name: _this.myChart2data[0].lable,
-                            }, {
-                                value: 20,
-                                name: _this.myChart2data[1].lable
-                            }, {
-                                value: 25,
-                                name: _this.myChart2data[2].lable
-                            }]
-                        }]
-                    };
-                    var option3 = {
-                        title: {
-                            show: false
-                        },
-                        tooltip: {
-                            trigger: 'axis',
-                            axisPointer: {
-                                type: 'cross',
-                                label: {
-                                    backgroundColor: '#6a7985'
-                                }
-                            }
-                        },
-                        grid: {
-                            top: 20,
-                            left: '3%',
-                            right: '4%',
-                            bottom: '3%',
-                            containLabel: true
-                        },
-                        xAxis: [{
-                            type: 'category',
-                            boundaryGap: false,
-                            data: ['0825', '0826', '0827', '0828', '0829', '0830', '0831', '0901', '0902', '0903', '0904', '0905', '0906', '0907', '0908', '0909', '0910', '0911', '0912', '0913', '0914', '0915', '0916', '0917', '0918', '0919', '0920', '0921', '0922', '0923']
-                        }],
-                        yAxis: [{
-                            type: 'value'
-                        }],
-                        series: [{
-                            name: '收入',
-                            type: 'line',
-                            stack: '总量',
-                            itemStyle: {
-                                normal: {
-                                    color: 'rgb(255, 119, 0)'
-                                }
-                            },
-                            areaStyle: {
-                                normal: {
-                                    color: 'rgb(255, 119, 0)',
-                                    opacity: 0.2 // 图表中各个图区域的透明度
 
-                                }
-                            },
-                            data: [220, 182, 191, 234, 290, 330, 310, 220, 111, 191, 234, 212, 330, 310, 345, 182, 191, 234, 290, 123, 310, 220, 182, 189, 234, 290, 330, 222, 432, 310]
-                        }]
-                    };
-                    setTimeout(function() {
-                        _this.myChart2.clear();
-                        _this.myChart2 = echarts.init(document.getElementById('main2'));
-                        _this.myChart2.setOption(option2);
-                        _this.myChart3.clear();
-                        _this.myChart3 = echarts.init(document.getElementById('main3'));
-                        _this.myChart3.setOption(option3);
-                        _this.loadingall = false;
-                    }, 2000);
-                    break;
-                case 1:
-                    var option2 = {
-                        tooltip: {
-                            trigger: 'item',
-                            formatter: "{a} <br/>{b}: {c} ({d}%)"
-                        },
-                        series: [{
-                            name: _this.myChart2title,
-                            type: 'pie',
-                            radius: ['50%', '70%'],
-                            center: ['50%', '50%'],
-                            avoidLabelOverlap: false,
-                            color: ['#6c81b3', '#ff7700', '#2cc689'],
-                            label: {
-                                normal: {
-                                    show: false,
-                                    position: 'center'
-                                },
-                            },
-                            labelLine: {
-                                normal: {
-                                    show: false
-                                }
-                            },
+            var url = _this.adminApi.host + '/htypctorg/index/whole',
+                data = {
+                    'userId': _this.userId,
+                    'date': parseInt(_this.radiovalue),
+                    'type': parseInt(_this.monthtab),
+                    'kind': parseInt(_this.selectvalue)
+                },
+                loading = function() {
+                    _this.loading = true;
+                },
+                success = function(data) {
+                    if (data.code == '1') {
+                        _this.wholeTop = data.data.wholeTop;
+                        _this.wholeLeft = data.data.wholeLeft;
+                        _this.wholeName = data.data.wholeName;
+                        _this.myChart2title = _this.wholeName[0].label + '占比';
+                        _this.myChart3title = _this.wholeName[0].label + '趋势';
 
-                            data: [{
-                                value: 35,
-                                name: '进销存营业收入1',
-                            }, {
-                                value: 20,
-                                name: '进销存营业收入2'
-                            }, {
-                                value: 25,
-                                name: '进销存营业收入3'
-                            }]
-                        }]
-                    };
-                    var option3 = {
-                        title: {
-                            show: false
-                        },
-                        tooltip: {
-                            trigger: 'axis',
-                            axisPointer: {
-                                type: 'cross',
-                                label: {
-                                    backgroundColor: '#6a7985'
+                        switch (_this.radiovalue) {
+                            case "0":
+                                if(_this.monthtab==0 || _this.monthtab==1)
+                                {
+                                  var option2 = {
+                                      tooltip: {
+                                          trigger: 'item',
+                                          formatter: "{a} <br/>{b}: {c} ({d}%)"
+                                      },
+                                      series: [{
+                                          name: _this.myChart2title,
+                                          type: 'pie',
+                                          radius: ['50%', '70%'],
+                                          center: ['50%', '50%'],
+                                          avoidLabelOverlap: false,
+                                          color: ['#6c81b3', '#ff7700', '#2cc689'],
+                                          label: {
+                                              normal: {
+                                                  show: false,
+                                                  position: 'center'
+                                              },
+                                          },
+                                          labelLine: {
+                                              normal: {
+                                                  show: false
+                                              }
+                                          },
+                                          data: data.data.wholePic
+                                      }]
+                                  };
+                                  _this.myChart2.clear();
+                                  _this.myChart2 = echarts.init(document.getElementById('main2'));
+                                  _this.myChart2.setOption(option2);
                                 }
-                            }
-                        },
-                        grid: {
-                            top: 20,
-                            left: '3%',
-                            right: '4%',
-                            bottom: '3%',
-                            containLabel: true
-                        },
-                        xAxis: [{
-                            type: 'category',
-                            boundaryGap: false,
-                            data: ['0825', '0826', '0827', '0828', '0829', '0830', '0831', '0901', '0902', '0903', '0904', '0905', '0906', '0907', '0908', '0909', '0910', '0911', '0912', '0913', '0914', '0915', '0916', '0917', '0918', '0919', '0920', '0921', '0922', '0923']
-                        }],
-                        yAxis: [{
-                            type: 'value'
-                        }],
-                        series: [{
-                            name: '联盟广告',
-                            type: 'line',
-                            stack: '总量',
-                            itemStyle: {
-                                normal: {
-                                    color: 'rgb(255, 119, 0)'
-                                }
-                            },
-                            areaStyle: {
-                                normal: {
-                                    color: 'rgb(255, 119, 0)',
-                                    opacity: 0.2 // 图表中各个图区域的透明度
+                                else {
+                                  var option2 = {
+                                      tooltip: {
+                                          trigger: 'axis',
+                                          axisPointer: {
+                                              type: 'shadow'
+                                          }
+                                      },
+                                      grid: {
+                                          top: '0',
+                                          left: '40',
+                                          right: '0',
+                                          bottom: '0',
 
+                                      },
+                                      xAxis: {
+                                          type: 'value',
+                                          boundaryGap: [0, 0.01]
+                                      },
+                                      yAxis: {
+                                          type: 'category',
+                                          data: ['VIP', '活跃', '交易', '总数'],
+                                      },
+                                      series: [{
+                                          type: 'bar',
+                                          data: [{
+                                              value: data.data.wholePic[3].value,
+                                              itemStyle: {
+                                                  normal: {
+                                                      color: '#2cc689'
+                                                  }
+                                              }
+                                          }, {
+                                              value: data.data.wholePic[2].value,
+                                              itemStyle: {
+                                                  normal: {
+                                                      color: '#ff7700'
+                                                  }
+                                              }
+                                          }, {
+                                              value: data.data.wholePic[1].value,
+                                              itemStyle: {
+                                                  normal: {
+                                                      color: '#6c81b3'
+                                                  }
+                                              }
+                                          }, {
+                                              value: data.data.wholePic[0].value,
+                                              itemStyle: {
+                                                  normal: {
+                                                      color: '#ff7700'
+                                                  }
+                                              }
+                                          }],
+                                          barWidth: 10,
+                                      }, ]
+                                  };
+                                  _this.myChart2.clear();
+                                  _this.myChart2 = echarts.init(document.getElementById('main2'));
+                                  _this.myChart2.setOption(option2);
                                 }
-                            },
-                            data: [220, 182, 191, 234, 290, 330, 310, 220, 111, 191, 234, 212, 330, 310, 345, 182, 191, 234, 290, 123, 310, 220, 182, 189, 234, 290, 330, 222, 432, 310]
-                        }]
-                    };
-                    setTimeout(function() {
-                        _this.myChart2.clear();
-                        _this.myChart2 = echarts.init(document.getElementById('main2'));
-                        _this.myChart2.setOption(option2);
-                        _this.myChart3.clear();
-                        _this.myChart3 = echarts.init(document.getElementById('main3'));
-                        _this.myChart3.setOption(option3);
-                        _this.loadingall = false;
-                    }, 2000);
-                    break;
-                case 2:
-                    var option2 = {
-                        tooltip: {
-                            trigger: 'axis',
-                            axisPointer: {
-                                type: 'shadow'
-                            }
-                        },
+                                var option3 = {
+                                    title: {
+                                        show: false
+                                    },
+                                    tooltip: {
+                                        trigger: 'axis',
+                                        axisPointer: {
+                                            type: 'cross',
+                                            label: {
+                                                backgroundColor: '#6a7985'
+                                            }
+                                        }
+                                    },
+                                    grid: {
+                                        top: 20,
+                                        left: '3%',
+                                        right: '4%',
+                                        bottom: '3%',
+                                        containLabel: true
+                                    },
+                                    xAxis: [{
+                                        type: 'category',
+                                        boundaryGap: false,
+                                        data: data.data.wholeBottomDate
+                                    }],
+                                    yAxis: [{
+                                        type: 'value'
+                                    }],
+                                    series: [{
+                                        name: '收入',
+                                        type: 'line',
+                                        stack: '总量',
+                                        itemStyle: {
+                                            normal: {
+                                                color: 'rgb(255, 119, 0)'
+                                            }
+                                        },
+                                        areaStyle: {
+                                            normal: {
+                                                color: 'rgb(255, 119, 0)',
+                                                opacity: 0.2 // 图表中各个图区域的透明度
 
-                        grid: {
-                            top: '0',
-                            left: '40',
-                            right: '0',
-                            bottom: '0',
+                                            }
+                                        },
+                                        data: data.data.wholeBottom
+                                    }]
+                                };
+                                _this.myChart3.clear();
+                                _this.myChart3 = echarts.init(document.getElementById('main3'));
+                                _this.myChart3.setOption(option3);
 
-                        },
-                        xAxis: {
-                            type: 'value',
-                            boundaryGap: [0, 0.01]
-                        },
-                        yAxis: {
-                            type: 'category',
-                            data: ['VIP', '活跃', '交易', '总数'],
-                        },
-                        series: [{
-                            type: 'bar',
-                            data: [{
-                                value: 20,
-                                itemStyle: {
-                                    normal: {
-                                        color: '#2cc689'
-                                    }
-                                }
-                            }, {
-                                value: 30,
-                                itemStyle: {
-                                    normal: {
-                                        color: '#ff7700'
-                                    }
-                                }
-                            }, {
-                                value: 50,
-                                itemStyle: {
-                                    normal: {
-                                        color: '#6c81b3'
-                                    }
-                                }
-                            }, {
-                                value: 100,
-                                itemStyle: {
-                                    normal: {
-                                        color: '#ff7700'
-                                    }
-                                }
-                            }],
-                            barWidth: 10,
+                                break;
+                            case "1":
+                                  if(_this.monthtab==0 || _this.monthtab==1)
+                                  {
+                                    var option2 = {
+                                        tooltip: {
+                                            trigger: 'item',
+                                            formatter: "{a} <br/>{b}: {c} ({d}%)"
+                                        },
+                                        series: [{
+                                            name: _this.myChart2title,
+                                            type: 'pie',
+                                            radius: ['50%', '70%'],
+                                            center: ['50%', '50%'],
+                                            avoidLabelOverlap: false,
+                                            color: ['#6c81b3', '#ff7700', '#2cc689'],
+                                            label: {
+                                                normal: {
+                                                    show: false,
+                                                    position: 'center'
+                                                },
+                                            },
+                                            labelLine: {
+                                                normal: {
+                                                    show: false
+                                                }
+                                            },
+                                            data: data.data.wholePic
+                                        }]
+                                    };
+                                    _this.myChart2.clear();
+                                    _this.myChart2 = echarts.init(document.getElementById('main2'));
+                                    _this.myChart2.setOption(option2);
+                                    var option3 = {
+                                        tooltip: {
+                                            trigger: 'axis',
+                                            axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                                type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                                            }
+                                        },
+                                        color: ['#ff7700', '#6c81b3'],
+                                        grid: {
+                                            top: '10',
+                                            left: '3%',
+                                            right: '4%',
+                                            bottom: '3%',
+                                            containLabel: true
+                                        },
+                                        xAxis: [{
+                                            type: 'category',
+                                            data: data.data.wholeBottomDate
+                                        }],
+                                        yAxis: [{
+                                            type: 'value'
+                                        }],
+                                        series: [{
+                                            name: '当前数据',
+                                            barWidth: 10,
+                                            type: 'bar',
+                                            data:data.data.wholeBottom
+                                        }, {
+                                            name: '对比数据',
+                                            type: 'bar',
+                                            barWidth: 10,
+                                            data: data.data.wholeBottomPair
+                                        }]
+                                    };
+                                    _this.myChart3.clear();
+                                    _this.myChart3 = echarts.init(document.getElementById('main3'));
+                                    _this.myChart3.setOption(option3);
+                                  }
+                                  else {
+                                    var option2 = {
+                                        tooltip: {
+                                            trigger: 'axis',
+                                            axisPointer: {
+                                                type: 'shadow'
+                                            }
+                                        },
+                                        grid: {
+                                            top: '0',
+                                            left: '40',
+                                            right: '0',
+                                            bottom: '0',
 
-                        }, ]
-                    };
-                    var option3 = {
-                        tooltip: {
-                            trigger: 'axis',
-                            axisPointer: { // 坐标轴指示器，坐标轴触发有效
-                                type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
-                            }
-                        },
-                        color: ['#ff7700', '#6c81b3'],
-                        grid: {
-                            top: '10',
-                            left: '3%',
-                            right: '4%',
-                            bottom: '3%',
-                            containLabel: true
-                        },
-                        xAxis: [{
-                            type: 'category',
-                            data: ['2016-09', '2016-10', '2016-11', '2016-12', '2017-01', '2017-02', '2017-03', '2017-04', '2017-05', '2017-06', '2017-07', '2017-08']
-                        }],
-                        yAxis: [{
-                            type: 'value'
-                        }],
-                        series: [{
-                            name: '当前数据',
-                            barWidth: 10,
-                            type: 'bar',
-                            data: [320, 332, 301, 334, 390, 330, 320, 310, 330, 250, 120, 120]
-                        }, {
-                            name: '对比数据',
-                            type: 'bar',
-                            barWidth: 10,
-                            stack: '广告',
-                            data: [120, 132, 101, 134, 90, 230, 210, 350, 120, 520, 100, 120]
-                        }]
-                    };
-                    setTimeout(function() {
-                        _this.myChart2.clear();
-                        _this.myChart2 = echarts.init(document.getElementById('main2'));
-                        _this.myChart2.setOption(option2);
-                        _this.myChart3.clear();
-                        _this.myChart3 = echarts.init(document.getElementById('main3'));
-                        _this.myChart3.setOption(option3);
-                        _this.loadingall = false;
-                    }, 2000);
-                    break;
-                default:
+                                        },
+                                        xAxis: {
+                                            type: 'value',
+                                            boundaryGap: [0, 0.01]
+                                        },
+                                        yAxis: {
+                                            type: 'category',
+                                            data: ['VIP', '活跃', '交易', '总数'],
+                                        },
+                                        series: [{
+                                            type: 'bar',
+                                            data: [{
+                                                value: data.data.wholePic[3].value,
+                                                itemStyle: {
+                                                    normal: {
+                                                        color: '#2cc689'
+                                                    }
+                                                }
+                                            }, {
+                                                value: data.data.wholePic[2].value,
+                                                itemStyle: {
+                                                    normal: {
+                                                        color: '#ff7700'
+                                                    }
+                                                }
+                                            }, {
+                                                value: data.data.wholePic[1].value,
+                                                itemStyle: {
+                                                    normal: {
+                                                        color: '#6c81b3'
+                                                    }
+                                                }
+                                            }, {
+                                                value: data.data.wholePic[0].value,
+                                                itemStyle: {
+                                                    normal: {
+                                                        color: '#ff7700'
+                                                    }
+                                                }
+                                            }],
+                                            barWidth: 10,
+                                        }, ]
+                                    };
+                                    _this.myChart2.clear();
+                                    _this.myChart2 = echarts.init(document.getElementById('main2'));
+                                    _this.myChart2.setOption(option2);
+                                    var option3 = {
+                                        tooltip: {
+                                            trigger: 'axis',
+                                            axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                                type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                                            }
+                                        },
+                                        color: ['#ff7700', '#6c81b3'],
+                                        grid: {
+                                            top: '10',
+                                            left: '3%',
+                                            right: '4%',
+                                            bottom: '3%',
+                                            containLabel: true
+                                        },
+                                        xAxis: [{
+                                            type: 'category',
+                                            data: data.data.wholeBottomDate
+                                        }],
+                                        yAxis: [{
+                                            type: 'value'
+                                        }],
+                                        series: [{
+                                            name: '当前数据',
+                                            barWidth: 10,
+                                            type: 'bar',
+                                            data:data.data.wholeBottom
+                                        }]
+                                    };
+                                    _this.myChart3.clear();
+                                    _this.myChart3 = echarts.init(document.getElementById('main3'));
+                                    _this.myChart3.setOption(option3);
+                                  }
 
-            }
+                                break;
+                            default:
+
+                        }
+
+
+                    }
+
+                },
+                complete = function() {
+                    _this.loading = false;
+                }
+            _this.adminApi.getJsonp(url, data, loading, success, complete)
         },
         visiblechange: function(b) {
             let _this = this;
@@ -1866,121 +1810,458 @@ export default {
             let _this = this;
 
             if (item && _this.selectchangevalue) {
-                _this.myChart3title = _this.selectarr[item - 1].lable;
-                _this.myChart3.showLoading({
-                    'color': '#ff7700'
-                });
+                var url = _this.adminApi.host + '/htypctorg/index/whole',
+                    data = {
+                        'userId': _this.userId,
+                        'date': parseInt(_this.radiovalue),
+                        'type': parseInt(_this.monthtab),
+                        'kind': parseInt(_this.selectvalue)
+                    },
+                    loading = function() {
+                        _this.myChart3.showLoading({
+                            'color': '#ff7700'
+                        });
+                    },
+                    success = function(data) {
+                        if (data.code == '1') {
+                            _this.myChart3title = _this.wholeName[item].label + '趋势';
+                            switch (_this.radiovalue) {
+                                case "0":
+                                    if(_this.monthtab==0 || _this.monthtab==1)
+                                    {
+                                      var option2 = {
+                                          tooltip: {
+                                              trigger: 'item',
+                                              formatter: "{a} <br/>{b}: {c} ({d}%)"
+                                          },
+                                          series: [{
+                                              name: _this.myChart2title,
+                                              type: 'pie',
+                                              radius: ['50%', '70%'],
+                                              center: ['50%', '50%'],
+                                              avoidLabelOverlap: false,
+                                              color: ['#6c81b3', '#ff7700', '#2cc689'],
+                                              label: {
+                                                  normal: {
+                                                      show: false,
+                                                      position: 'center'
+                                                  },
+                                              },
+                                              labelLine: {
+                                                  normal: {
+                                                      show: false
+                                                  }
+                                              },
+                                              data: data.data.wholePic
+                                          }]
+                                      };
+                                      _this.myChart2.clear();
+                                      _this.myChart2 = echarts.init(document.getElementById('main2'));
+                                      _this.myChart2.setOption(option2);
+                                    }
+                                    else {
+                                      var option2 = {
+                                          tooltip: {
+                                              trigger: 'axis',
+                                              axisPointer: {
+                                                  type: 'shadow'
+                                              }
+                                          },
+                                          grid: {
+                                              top: '0',
+                                              left: '40',
+                                              right: '0',
+                                              bottom: '0',
+
+                                          },
+                                          xAxis: {
+                                              type: 'value',
+                                              boundaryGap: [0, 0.01]
+                                          },
+                                          yAxis: {
+                                              type: 'category',
+                                              data: ['VIP', '活跃', '交易', '总数'],
+                                          },
+                                          series: [{
+                                              type: 'bar',
+                                              data: [{
+                                                  value: data.data.wholePic[3].value,
+                                                  itemStyle: {
+                                                      normal: {
+                                                          color: '#2cc689'
+                                                      }
+                                                  }
+                                              }, {
+                                                  value: data.data.wholePic[2].value,
+                                                  itemStyle: {
+                                                      normal: {
+                                                          color: '#ff7700'
+                                                      }
+                                                  }
+                                              }, {
+                                                  value: data.data.wholePic[1].value,
+                                                  itemStyle: {
+                                                      normal: {
+                                                          color: '#6c81b3'
+                                                      }
+                                                  }
+                                              }, {
+                                                  value: data.data.wholePic[0].value,
+                                                  itemStyle: {
+                                                      normal: {
+                                                          color: '#ff7700'
+                                                      }
+                                                  }
+                                              }],
+                                              barWidth: 10,
+                                          }, ]
+                                      };
+                                      _this.myChart2.clear();
+                                      _this.myChart2 = echarts.init(document.getElementById('main2'));
+                                      _this.myChart2.setOption(option2);
+                                    }
+                                    var option3 = {
+                                        title: {
+                                            show: false
+                                        },
+                                        tooltip: {
+                                            trigger: 'axis',
+                                            axisPointer: {
+                                                type: 'cross',
+                                                label: {
+                                                    backgroundColor: '#6a7985'
+                                                }
+                                            }
+                                        },
+                                        grid: {
+                                            top: 20,
+                                            left: '3%',
+                                            right: '4%',
+                                            bottom: '3%',
+                                            containLabel: true
+                                        },
+                                        xAxis: [{
+                                            type: 'category',
+                                            boundaryGap: false,
+                                            data: data.data.wholeBottomDate
+                                        }],
+                                        yAxis: [{
+                                            type: 'value'
+                                        }],
+                                        series: [{
+                                            name: '收入',
+                                            type: 'line',
+                                            stack: '总量',
+                                            itemStyle: {
+                                                normal: {
+                                                    color: 'rgb(255, 119, 0)'
+                                                }
+                                            },
+                                            areaStyle: {
+                                                normal: {
+                                                    color: 'rgb(255, 119, 0)',
+                                                    opacity: 0.2 // 图表中各个图区域的透明度
+
+                                                }
+                                            },
+                                            data: data.data.wholeBottom
+                                        }]
+                                    };
+                                    _this.myChart3.clear();
+                                    _this.myChart3 = echarts.init(document.getElementById('main3'));
+                                    _this.myChart3.setOption(option3);
+
+                                    break;
+                                case "1":
+                                      if(_this.monthtab==0 || _this.monthtab==1)
+                                      {
+                                        var option2 = {
+                                            tooltip: {
+                                                trigger: 'item',
+                                                formatter: "{a} <br/>{b}: {c} ({d}%)"
+                                            },
+                                            series: [{
+                                                name: _this.myChart2title,
+                                                type: 'pie',
+                                                radius: ['50%', '70%'],
+                                                center: ['50%', '50%'],
+                                                avoidLabelOverlap: false,
+                                                color: ['#6c81b3', '#ff7700', '#2cc689'],
+                                                label: {
+                                                    normal: {
+                                                        show: false,
+                                                        position: 'center'
+                                                    },
+                                                },
+                                                labelLine: {
+                                                    normal: {
+                                                        show: false
+                                                    }
+                                                },
+                                                data: data.data.wholePic
+                                            }]
+                                        };
+                                        _this.myChart2.clear();
+                                        _this.myChart2 = echarts.init(document.getElementById('main2'));
+                                        _this.myChart2.setOption(option2);
+                                        var option3 = {
+                                            tooltip: {
+                                                trigger: 'axis',
+                                                axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                                    type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                                                }
+                                            },
+                                            color: ['#ff7700', '#6c81b3'],
+                                            grid: {
+                                                top: '10',
+                                                left: '3%',
+                                                right: '4%',
+                                                bottom: '3%',
+                                                containLabel: true
+                                            },
+                                            xAxis: [{
+                                                type: 'category',
+                                                data: data.data.wholeBottomDate
+                                            }],
+                                            yAxis: [{
+                                                type: 'value'
+                                            }],
+                                            series: [{
+                                                name: '当前数据',
+                                                barWidth: 10,
+                                                type: 'bar',
+                                                data:data.data.wholeBottom
+                                            }, {
+                                                name: '对比数据',
+                                                type: 'bar',
+                                                barWidth: 10,
+                                                data: data.data.wholeBottomPair
+                                            }]
+                                        };
+                                        _this.myChart3.clear();
+                                        _this.myChart3 = echarts.init(document.getElementById('main3'));
+                                        _this.myChart3.setOption(option3);
+                                      }
+                                      else {
+                                        var option2 = {
+                                            tooltip: {
+                                                trigger: 'axis',
+                                                axisPointer: {
+                                                    type: 'shadow'
+                                                }
+                                            },
+                                            grid: {
+                                                top: '0',
+                                                left: '40',
+                                                right: '0',
+                                                bottom: '0',
+
+                                            },
+                                            xAxis: {
+                                                type: 'value',
+                                                boundaryGap: [0, 0.01]
+                                            },
+                                            yAxis: {
+                                                type: 'category',
+                                                data: ['VIP', '活跃', '交易', '总数'],
+                                            },
+                                            series: [{
+                                                type: 'bar',
+                                                data: [{
+                                                    value: data.data.wholePic[3].value,
+                                                    itemStyle: {
+                                                        normal: {
+                                                            color: '#2cc689'
+                                                        }
+                                                    }
+                                                }, {
+                                                    value: data.data.wholePic[2].value,
+                                                    itemStyle: {
+                                                        normal: {
+                                                            color: '#ff7700'
+                                                        }
+                                                    }
+                                                }, {
+                                                    value: data.data.wholePic[1].value,
+                                                    itemStyle: {
+                                                        normal: {
+                                                            color: '#6c81b3'
+                                                        }
+                                                    }
+                                                }, {
+                                                    value: data.data.wholePic[0].value,
+                                                    itemStyle: {
+                                                        normal: {
+                                                            color: '#ff7700'
+                                                        }
+                                                    }
+                                                }],
+                                                barWidth: 10,
+                                            }, ]
+                                        };
+                                        _this.myChart2.clear();
+                                        _this.myChart2 = echarts.init(document.getElementById('main2'));
+                                        _this.myChart2.setOption(option2);
+                                        var option3 = {
+                                            tooltip: {
+                                                trigger: 'axis',
+                                                axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                                    type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                                                }
+                                            },
+                                            color: ['#ff7700', '#6c81b3'],
+                                            grid: {
+                                                top: '10',
+                                                left: '3%',
+                                                right: '4%',
+                                                bottom: '3%',
+                                                containLabel: true
+                                            },
+                                            xAxis: [{
+                                                type: 'category',
+                                                data: data.data.wholeBottomDate
+                                            }],
+                                            yAxis: [{
+                                                type: 'value'
+                                            }],
+                                            series: [{
+                                                name: '当前数据',
+                                                barWidth: 10,
+                                                type: 'bar',
+                                                data:data.data.wholeBottom
+                                            }]
+                                        };
+                                        _this.myChart3.clear();
+                                        _this.myChart3 = echarts.init(document.getElementById('main3'));
+                                        _this.myChart3.setOption(option3);
+                                      }
+
+                                    break;
+                                default:
+
+                            }
+                        }
+
+                    },
+                    complete = function() {
+                        _this.myChart3.hideLoading();
+                    }
+                _this.adminApi.getJsonp(url, data, loading, success, complete)
+
+
                 //console.log('请求')
-                switch (_this.monthtab) {
-                    case 0:
-                    case 1:
-                        var option3 = {
-                            title: {
-                                show: false
-                            },
-                            tooltip: {
-                                trigger: 'axis',
-                                axisPointer: {
-                                    type: 'cross',
-                                    label: {
-                                        backgroundColor: '#6a7985'
-                                    }
-                                }
-                            },
-                            grid: {
-                                top: 20,
-                                left: '3%',
-                                right: '4%',
-                                bottom: '3%',
-                                containLabel: true
-                            },
-                            xAxis: [{
-                                type: 'category',
-                                boundaryGap: false,
-                                data: ['0825', '0826', '0827', '0828', '0829', '0830', '0831', '0901', '0902', '0903', '0904', '0905', '0906', '0907', '0908', '0909', '0910', '0911', '0912', '0913', '0914', '0915', '0916', '0917', '0918', '0919', '0920', '0921', '0922', '0923']
-                            }],
-                            yAxis: [{
-                                type: 'value'
-                            }],
-                            series: [{
-                                name: '金额',
-                                type: 'line',
-                                stack: '总量',
-                                itemStyle: {
-                                    normal: {
-                                        color: 'rgb(255, 119, 0)'
-                                    }
-                                },
-                                areaStyle: {
-                                    normal: {
-                                        color: 'rgb(255, 119, 0)',
-                                        opacity: 0.2 // 图表中各个图区域的透明度
-
-                                    }
-                                },
-                                data: [220, 182, 191, 234, 290, 330, 310, 220, 111, 191, 234, 212, 330, 310, 345, 182, 191, 234, 290, 123, 310, 220, 182, 189, 234, 290, 330, 222, 432, 310]
-                            }]
-                        };
-                        setTimeout(function() {
-                            _this.myChart3.clear();
-                            _this.myChart3 = echarts.init(document.getElementById('main3'));
-                            _this.myChart3.hideLoading();
-                            _this.myChart3.setOption(option3);
-                        }, 2000)
-                        break;
-
-                    case 2:
-                        var option3 = {
-                            tooltip: {
-                                trigger: 'axis',
-                                axisPointer: { // 坐标轴指示器，坐标轴触发有效
-                                    type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
-                                }
-                            },
-                            color: ['#ff7700', '#6c81b3'],
-                            grid: {
-                                top: '10',
-                                left: '3%',
-                                right: '4%',
-                                bottom: '3%',
-                                containLabel: true
-                            },
-                            xAxis: [{
-                                type: 'category',
-                                data: ['2016-09', '2016-10', '2016-11', '2016-12', '2017-01', '2017-02', '2017-03', '2017-04', '2017-05', '2017-06', '2017-07', '2017-08']
-                            }],
-                            yAxis: [{
-                                type: 'value'
-                            }],
-                            series: [{
-                                name: '当前数据',
-                                barWidth: 10,
-                                type: 'bar',
-                                data: [320, 332, 301, 334, 390, 330, 320, 310, 330, 250, 120, 120]
-                            }, {
-                                name: '对比数据',
-                                type: 'bar',
-                                barWidth: 10,
-                                stack: '广告',
-                                data: [120, 132, 101, 134, 90, 230, 210, 350, 120, 520, 100, 120]
-                            }]
-                        };
-                        setTimeout(function() {
-                            _this.myChart3.clear();
-                            _this.myChart3 = echarts.init(document.getElementById('main3'));
-                            _this.myChart3.hideLoading();
-                            _this.myChart3.setOption(option3);
-                        }, 2000)
-                        break;
-                    default:
-
-                }
+                // switch (_this.monthtab) {
+                //     case 0:
+                //     case 1:
+                //         var option3 = {
+                //             title: {
+                //                 show: false
+                //             },
+                //             tooltip: {
+                //                 trigger: 'axis',
+                //                 axisPointer: {
+                //                     type: 'cross',
+                //                     label: {
+                //                         backgroundColor: '#6a7985'
+                //                     }
+                //                 }
+                //             },
+                //             grid: {
+                //                 top: 20,
+                //                 left: '3%',
+                //                 right: '4%',
+                //                 bottom: '3%',
+                //                 containLabel: true
+                //             },
+                //             xAxis: [{
+                //                 type: 'category',
+                //                 boundaryGap: false,
+                //                 data: ['0825', '0826', '0827', '0828', '0829', '0830', '0831', '0901', '0902', '0903', '0904', '0905', '0906', '0907', '0908', '0909', '0910', '0911', '0912', '0913', '0914', '0915', '0916', '0917', '0918', '0919', '0920', '0921', '0922', '0923']
+                //             }],
+                //             yAxis: [{
+                //                 type: 'value'
+                //             }],
+                //             series: [{
+                //                 name: '金额',
+                //                 type: 'line',
+                //                 stack: '总量',
+                //                 itemStyle: {
+                //                     normal: {
+                //                         color: 'rgb(255, 119, 0)'
+                //                     }
+                //                 },
+                //                 areaStyle: {
+                //                     normal: {
+                //                         color: 'rgb(255, 119, 0)',
+                //                         opacity: 0.2 // 图表中各个图区域的透明度
+                //
+                //                     }
+                //                 },
+                //                 data: [220, 182, 191, 234, 290, 330, 310, 220, 111, 191, 234, 212, 330, 310, 345, 182, 191, 234, 290, 123, 310, 220, 182, 189, 234, 290, 330, 222, 432, 310]
+                //             }]
+                //         };
+                //         setTimeout(function() {
+                //             _this.myChart3.clear();
+                //             _this.myChart3 = echarts.init(document.getElementById('main3'));
+                //             _this.myChart3.hideLoading();
+                //             _this.myChart3.setOption(option3);
+                //         }, 2000)
+                //         break;
+                //
+                //     case 2:
+                //         var option3 = {
+                //             tooltip: {
+                //                 trigger: 'axis',
+                //                 axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                //                     type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                //                 }
+                //             },
+                //             color: ['#ff7700', '#6c81b3'],
+                //             grid: {
+                //                 top: '10',
+                //                 left: '3%',
+                //                 right: '4%',
+                //                 bottom: '3%',
+                //                 containLabel: true
+                //             },
+                //             xAxis: [{
+                //                 type: 'category',
+                //                 data: ['2016-09', '2016-10', '2016-11', '2016-12', '2017-01', '2017-02', '2017-03', '2017-04', '2017-05', '2017-06', '2017-07', '2017-08']
+                //             }],
+                //             yAxis: [{
+                //                 type: 'value'
+                //             }],
+                //             series: [{
+                //                 name: '当前数据',
+                //                 barWidth: 10,
+                //                 type: 'bar',
+                //                 data: [320, 332, 301, 334, 390, 330, 320, 310, 330, 250, 120, 120]
+                //             }, {
+                //                 name: '对比数据',
+                //                 type: 'bar',
+                //                 barWidth: 10,
+                //                 stack: '广告',
+                //                 data: [120, 132, 101, 134, 90, 230, 210, 350, 120, 520, 100, 120]
+                //             }]
+                //         };
+                //         setTimeout(function() {
+                //             _this.myChart3.clear();
+                //             _this.myChart3 = echarts.init(document.getElementById('main3'));
+                //             _this.myChart3.hideLoading();
+                //             _this.myChart3.setOption(option3);
+                //         }, 2000)
+                //         break;
+                //     default:
+                //
+                // }
 
             }
             _this.selectchangevalue = false;
         },
         opendiv: function(a, b, title) {
             let _this = this;
+            _this.loading = false;
+            _this.dialogradiovaluechange = false;
             _this.dialogradiovalue = a.toString();
             _this.dialogvalue = b;
             _this.dialogtitle = title;
@@ -2011,20 +2292,70 @@ export default {
             var url = _this.adminApi.host + '/htypctorg/index/box',
                 data = {
                     'userId': _this.userId,
-                    'type':b
+                    'type': b
                 },
                 loading = function() {
-
+                    _this.dialogload = true;
                 },
                 success = function(data) {
-                  console.log(JSON.stringify(data))
+                    _this.dialogvaluearr = data.data;
+                    _this.dialogradiovaluechange = true;
                 },
                 complete = function() {
-
+                    _this.dialogload = false;
                 }
             _this.adminApi.getJsonp(url, data, loading, success, complete)
+        },
+        dialogradiochange: function() {
+            let _this = this;
+            if (_this.dialogradiovaluechange) {
 
-            //console.log('请求')
+                if (!Number.isInteger(_this.dialogvalue / 2)) {
+                    _this.dialogvalue = parseInt(_this.dialogvalue) + 1;
+                } else {
+                    _this.dialogvalue = parseInt(_this.dialogvalue) - 1;
+                }
+                switch (_this.dialogvalue) {
+                    case 1:
+                        _this.dialogarr = ['所在分部排名', '总营业收入', '分部平均值', '总部平均值']
+                        break;
+                    case 2:
+                        _this.dialogarr = ['整体排名', '总营业收入', '分部平均值', '总部平均值']
+                        break;
+                    case 3:
+                        _this.dialogarr = ['所在分部排名', '总销售金额', '分部平均值', '总部平均值']
+                        break;
+                    case 4:
+                        _this.dialogarr = ['整体排名', '总销售金额', '分部平均值', '总部平均值']
+                        break;
+                    case 5:
+                        _this.dialogarr = ['所在分部排名', '新增会员店总数', '分部平均值', '总部平均值']
+                        break;
+                    case 6:
+                        _this.dialogarr = ['整体排名', '新增会员店总数', '分部平均值', '总部平均值']
+                        break;
+
+                    default:
+
+                }
+                var url = _this.adminApi.host + '/htypctorg/index/box',
+                    data = {
+                        'userId': _this.userId,
+                        'type': _this.dialogvalue
+                    },
+                    loading = function() {
+                        _this.dialogload = true;
+                    },
+                    success = function(data) {
+                        _this.dialogvaluearr = data.data;
+                        _this.dialogradiovaluechange = true;
+                    },
+                    complete = function() {
+                        _this.dialogload = false;
+                    }
+                _this.adminApi.getJsonp(url, data, loading, success, complete)
+
+            }
 
         }
     },

@@ -81,7 +81,7 @@
         </div>
 
         <div class="menulist" v-if='naveactive==5' key='汇天眼'>
-            <div class="menulistitem" v-for="(item,index) in subnavlist[5]" @click='subnavclick($event,item.rel)' :class="index==0 ? 'menulistitemc' : ''">
+            <div class="menulistitem" v-for="(item,index) in subnavlist[5]" @click='subnavclick($event,item.rel)'>
                 {{item.name}}
             </div>
         </div>
@@ -95,10 +95,9 @@
 import $ from 'jquery'
 
 export default {
-    props: ['naveactive'],
+    props: ['naveactive','subnamepath'],
     data: () => ({
         subnavlist: [
-
             [{
                 'name': '首页',
                 'rel': ''
@@ -196,32 +195,56 @@ export default {
             }],
             [{
                 'name': '业务效率',
-                'rel': ''
+                'rel': 'ywxl'
             }, {
                 'name': '财务效率',
-                'rel': ''
+                'rel': 'cwxl'
             }, {
                 'name': '选品定价',
-                'rel': ''
+                'rel': 'xpdj'
             }, {
                 'name': '用户分类',
-                'rel': ''
+                'rel': 'yhfl'
             }, {
                 'name': '目标用户管理',
-                'rel': ''
+                'rel': 'mbyhgl'
             }, {
                 'name': '用户行为',
-                'rel': ''
+                'rel': 'yhxw'
             }]
         ],
+
     }),
-    mounted() {},
+
+    mounted() {
+      let _this=this;
+      var arr=_this.subnavlist[_this.naveactive];
+      var res=arr.forEach(function(item,index){
+        if(item.rel==_this.subnamepath)
+        {
+            $('.menulistitemc').removeClass('menulistitemc');
+            $('.menulistitem:eq('+index+')').addClass('menulistitemc')
+        }
+      })
+
+      // var res=arr.find(function(item,index){
+      //   return item.rel==_this.subnamepath
+      // })
+      // console.log(res)
+      // for(let i=0;i++;i<arr.length)
+    },
     methods: {
         subnavclick: function(event, rel) {
             var _this = this;
             var el = event.target;
             $('.menulistitemc').removeClass('menulistitemc');
             $(el).addClass('menulistitemc');
+            _this.$router.push({
+                name: rel,
+                query:{
+                  'userId':'0801'
+                }
+            })
         }
     },
     components: {

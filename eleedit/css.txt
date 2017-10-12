@@ -117,3 +117,69 @@
   border-color: #ff993f;//
   outline: 0
 }
+
+.el-button--info {
+  color: #fff;
+  background-color: #6c81b3;//
+  border-color: #6c81b3//
+}
+
+.el-button--info:focus, .el-button--info:hover {
+  background: #7892d1;//
+  border-color: #7892d1;//
+  color: #fff
+}
+
+.el-button--info.is-active, .el-button--info:active {
+  background: #7892d1;//
+  border-color: #7892d1;//
+  color: #fff
+}
+
+.el-message {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+  min-width: 300px;
+  padding: 10px 12px;
+  box-sizing: border-box;
+  border-radius: 2px;
+  position: fixed;
+  left: 50%;
+  top: 0px;//
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
+  background-color: #fff;
+  transition: opacity .3s, transform .4s;
+  overflow: hidden
+}
+
+
+.el-form-item {
+margin: 0.5rem 0;
+}
+
+
+.el-tabs__active-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background-color: #ff7700;//
+  z-index: 1;
+  transition: transform .3s cubic-bezier(.645, .045, .355, 1);
+  list-style: none
+}
+
+.el-tabs__item.is-active {
+  font-weight: 600; //
+  color: #ff7700//
+}
+
+
+.el-tabs__header {
+  border-bottom: 1px solid #d1dbe5;
+  padding: 0;
+  position: relative;
+  /*margin: 0 0 15px*/   //
+}
+
+

@@ -85,6 +85,8 @@
     right: 0px;
     height: 100%;
     background-color: $frame_bg_colorf3;
+    overflow-x: auto;
+    overflow-y: auto;
 }
 
 .fade-enter-active,
@@ -129,7 +131,7 @@
 
     <div class="w-content">
         <div class="w-left">
-            <menulist :naveactive='naveactive'></menulist>
+            <menulist :naveactive='naveactive' :subnamepath='subnamepath'></menulist>
         </div>
         <div class="w-right">
             <transition name="fade" mode="out-in">
@@ -158,12 +160,24 @@ export default {
 
     data: () => ({
         navelist: ['首页', '商品', '订单', '会员', '促销', '汇天眼'],
-        naveactive: 5
+        naveactive: 5,
+        subnamepath:''
     }),
+
+
+    created(){
+      let _this=this;
+      if (!_this.$route.query.userId) {
+          _this.$router.push({
+              name: 'NotFoundComponent'
+          });
+          return;
+      }
+      _this.subnamepath=_this.$route.name;
+    },
     mounted() {
         var _this = this;
         _this.$nextTick(function() {
-
         })
     },
     methods: {

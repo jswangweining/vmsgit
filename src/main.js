@@ -23,6 +23,7 @@ Vue.prototype.adminApi=adminApi;
 
 import index from './view/index.vue'
 import ywxl from './view/hty_ywxl.vue'
+import xpdj from './view/hty_xpdj.vue'
 import login from './view/login.vue'
 import NotFoundComponent from './view/NotFoundComponent.vue'
 // import indexcommon from './view/indexcommon.vue'
@@ -70,8 +71,13 @@ const router = new VueRouter({
       component: index,
       children: [{
         path: '/',
-        name: 'yxxl',
+        name: 'ywxl',
         component: ywxl
+      },
+      {
+        path: '/xpdj',
+        name: 'xpdj',
+        component: xpdj
       }]
     },
     {

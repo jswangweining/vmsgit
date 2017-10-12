@@ -1,0 +1,64 @@
+{
+  "code": "1",
+  "msg": "成功！",
+  "data": {
+    "wholeLeft": [{
+      "name": "总营业收入",
+      "num": 33.33,
+      "pair": "25.0",
+      "index": 0
+    }, {
+      "name": "总销售金额",
+      "num": 33.33,
+      "pair": "25.0",
+      "index": 0
+    }, {
+      "name": "新增会员店总数",
+      "num": 3,
+      "pair": "25.0",
+      "index": 0
+    }],
+    "wholeTop": [{
+      "name": "年进销存营业收入",
+      "num": 66.66,
+      "pair": "25.0",
+      "index": 0
+    }, {
+      "name": "年服务营业收入",
+      "num": 111.11,
+      "pair": "66.67",
+      "index": 0
+    }, {
+      "name": "年金融营业收入",
+      "num": 555.55,
+      "pair": "28.57",
+      "index": 0
+    }],
+    "wholeName": [{
+      "label": "总营业收入",
+      "value": "0"
+    }, {
+      "label": "进销存营业收入",
+      "value": "1"
+    }, {
+      "label": "服务营业收入",
+      "value": "2"
+    }, {
+      "label": "金融营业收入",
+      "value": "3"
+    }],
+    "wholeBottom": ["66.66", "66.66"],
+    "wholeBottomDate": ["201705", "201709"],
+    "wholeBottomPair": ["88.88", "88.88"],
+    "wholePic": [{
+      "name": "进销存营业收入",
+      "value": "66.66"
+    }, {
+      "name": "服务营业收入",
+      "value": "111.11"
+    }, {
+      "name": "金融营业收入",
+      "value": "555.55"
+    }]
+  }
+};
