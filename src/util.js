@@ -1,6 +1,7 @@
 import $ from 'jquery'
 
 export default {
+
   //端口
   host: 'http://172.16.1.220:8080/argus',
   //获取当前状态

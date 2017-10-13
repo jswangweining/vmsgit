@@ -204,7 +204,7 @@ export default {
                 'rel': 'xpdj'
             }, {
                 'name': '用户分类',
-                'rel': 'yhfl'
+                'rel': 'yhfn'
             }, {
                 'name': '目标用户管理',
                 'rel': 'mbyhgl'
