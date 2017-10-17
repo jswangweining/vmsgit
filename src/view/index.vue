@@ -168,16 +168,19 @@ export default {
     created(){
       let _this=this;
       if (!_this.$route.query.userId) {
+
           _this.$router.push({
               name: 'NotFoundComponent'
           });
           return;
       }
+        //console.log(_this.$store.state)
       _this.subnamepath=_this.$route.name;
     },
     mounted() {
         var _this = this;
         _this.$nextTick(function() {
+
         })
     },
     methods: {

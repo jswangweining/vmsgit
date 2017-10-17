@@ -19,6 +19,7 @@ Vue.use(VueRouter)
 
 import adminApi from './util.js';
 Vue.prototype.adminApi=adminApi;
+import store from "./store/index.js";
 
 
 import index from './view/index.vue'
@@ -101,5 +102,6 @@ const router = new VueRouter({
 
 
 new Vue({
-  router
+  router,
+  store
 }).$mount('#app')

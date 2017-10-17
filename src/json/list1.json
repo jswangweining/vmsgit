@@ -1,0 +1,17 @@
+{
+  "code": "1",
+  "msg": "成功！",
+  "data": {
+    "saleProdnum": 11,
+    "saleProdDTOList": [{
+      "ppName": "空调",
+      "plName": "没底",
+      "xsPrice": 10,
+      "xsQty": 10,
+      "xsAmt": 100,
+      "xsRatio": 10,
+      "xsAvg": 0,
+      "xsAvgRatio": 0
+    }]
+  }
+}

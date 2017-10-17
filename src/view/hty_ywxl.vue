@@ -989,7 +989,7 @@ export default {
         let _this = this;
         // _this.adminApi.islogin();
 
-        _this.userId = _this.$route.query.userId;
+        _this.userId = _this.$store.state.userId;
         this.$nextTick(function() {
             var url = _this.adminApi.host + '/htypctorg/index/handle',
                 data = {

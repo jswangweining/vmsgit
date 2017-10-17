@@ -101,13 +101,21 @@
     text-align: center;
 }
 
+.el-input.is-disabled .w-dataactive {
+    color: #ff5555;
+}
+
+// input.w-dataactive {
+//
+// }
+
 </style>
 
 <template>
 
 <div v-loading.body='loadingall' style="width:100%; height:100%">
     <div class="w-pos">
-        <span>首页</span>/<span>汇天眼</span>/<span class="w-pos-active">选品定价</span>
+        <span>首页</span>/<span>汇天眼</span>/<span class="w-pos-active">选品定价</span> {{formdata.endmonth}}
     </div>
     <div class="w-con">
         <div class="w-search">
@@ -119,67 +127,83 @@
                     </radio-group>
                 </form-item>
 
-                <form-item label="选择月度：" v-if='formdata.radiovalue==1'>
-                    <date-picker type="month" v-model="formdata.startmonth" placeholder="选择开始月份" :editable='false' :picker-options="pickerOptions" @change='monthchange1' style="width:250px;">
+                <form-item label="选择月度：" v-if='formdata.radiovalue==1' class="monthrange">
+                    <date-picker type="month" v-model="formdata.startmonth" placeholder="选择开始月份" :disabled='mondisabled' :editable='false' :picker-options="pickerOptions" @change='monthchange1' style="width:250px;">
                     </date-picker>
                     <span class="w-searchs">至</span>
-                    <date-picker type="month" v-model="formdata.endmonth" placeholder="选择结束月份" :editable='false' :picker-options="pickerOptions1" @change='monthchange2' style="width:250px;">
+                    <date-picker type="month" v-model="formdata.endmonth" placeholder="选择结束月份" :disabled='mondisabled' :editable='false' :picker-options="pickerOptions1" @change='monthchange2' style="width:250px;">
                     </date-picker>
+
+                    <wbutton type="info" icon="search" size="small" @click='searchMonth()'></wbutton>
+
+                    <wbutton type="info" icon="close" size="small" @click='closeMonth()'>清空时间范围</wbutton>
                 </form-item>
 
-                <form-item label="选择年度：" v-if='formdata.radiovalue==2'>
-                    <date-picker type="year" v-model="formdata.startyear" placeholder="选择开始年份" :editable='false' :picker-options="pickerOptions" @change='yearchange1' style="width:250px;">
+                <form-item label="选择年度：" v-if='formdata.radiovalue==2' class="yearrange">
+                    <date-picker type="year" v-model="formdata.startyear" placeholder="选择开始年份" :disabled='yeardisabled' :editable='false' :picker-options="pickerOptions" @change='yearchange1' style="width:250px;">
                     </date-picker>
                     <span class="w-searchs">至</span>
-                    <date-picker type="year" v-model="formdata.endyear" placeholder="选择结束年份" :editable='false' :picker-options="pickerOptions1" @change='yearchange2' style="width:250px;">
+                    <date-picker type="year" v-model="formdata.endyear" placeholder="选择结束年份" :disabled='yeardisabled' :editable='false' :picker-options="pickerOptions1" @change='yearchange2' style="width:250px;">
                     </date-picker>
+
+                    <wbutton type="info" icon="search" size="small" @click='searchYear()'></wbutton>
+
+                    <wbutton type="info" icon="close" size="small" @click='closeYear()'>清空时间范围</wbutton>
                 </form-item>
-                <form-item>
-                    <wbutton type="info" icon="search" size="small" @click='search1()'></wbutton>
-                </form-item>
+
             </wform>
         </div>
         <div class="w-pannel">
             <div class="xpdj-t">
                 <div class="xpdj-ta">
                     <p class="xpdj-tap1">销售金额<span>（万元）</span></p>
-                    <p class="xpdj-tap2">666</p>
-                    <p class="xpdj-tap3"><span class="xpdj-tap3s1">上期金额</span><span class="xpdj-tap3s2">1444</span></p>
-                    <p class="xpdj-tap3"><span class="xpdj-tap3s1">上期同比</span><span class="xpdj-tap3s2">111%%<svg class="icon" aria-hidden="true">
+                    <p class="xpdj-tap2">{{topdata.xsAmt}}</p>
+                    <p class="xpdj-tap3"><span class="xpdj-tap3s1">上期金额</span><span class="xpdj-tap3s2">{{topdata.upperXsAmt}}</span></p>
+                    <p class="xpdj-tap3"><span class="xpdj-tap3s1">上期同比</span><span class="xpdj-tap3s2">{{topdata.xsAmtAn}}%<svg class="icon" aria-hidden="true" v-if='topdata.xsAmtSort=="0"'>
                         <use xlink:href="#icon-jiantou1"></use>
+                    </svg><svg class="icon" aria-hidden="true" v-if='topdata.xsAmtSort=="1"'>
+                        <use xlink:href="#icon-jiantou2"></use>
                     </svg></span></p>
                 </div>
                 <div class="xpdj-ta">
                     <p class="xpdj-tap1">销售数量<span>（件）</span></p>
-                    <p class="xpdj-tap2">111</p>
-                    <p class="xpdj-tap3"><span class="xpdj-tap3s1">上期金额</span><span class="xpdj-tap3s2">1444</span></p>
-                    <p class="xpdj-tap3"><span class="xpdj-tap3s1">上期同比</span><span class="xpdj-tap3s2">111%%<svg class="icon" aria-hidden="true">
+                    <p class="xpdj-tap2">{{topdata.xsQty}}</p>
+                    <p class="xpdj-tap3"><span class="xpdj-tap3s1">上期金额</span><span class="xpdj-tap3s2">{{topdata.upperXsQty}}</span></p>
+                    <p class="xpdj-tap3"><span class="xpdj-tap3s1">上期同比</span><span class="xpdj-tap3s2">{{topdata.xsQtyAn}}%<svg class="icon" aria-hidden="true" v-if='topdata.xsQtySort=="0"'>
+                        <use xlink:href="#icon-jiantou1"></use>
+                    </svg><svg class="icon" aria-hidden="true" v-if='topdata.xsQtySort=="1"'>
                         <use xlink:href="#icon-jiantou2"></use>
                     </svg></span></p>
                 </div>
                 <div class="xpdj-ta">
                     <p class="xpdj-tap1">销售毛利率</p>
-                    <p class="xpdj-tap2 xpdj-tap2red">111</p>
-                    <p class="xpdj-tap3"><span class="xpdj-tap3s1">上期金额</span><span class="xpdj-tap3s2">1444</span></p>
-                    <p class="xpdj-tap3"><span class="xpdj-tap3s1">上期同比</span><span class="xpdj-tap3s2">111%%<svg class="icon" aria-hidden="true">
+                    <p class="xpdj-tap2 xpdj-tap2red">{{topdata.xsMl}}</p>
+                    <p class="xpdj-tap3"><span class="xpdj-tap3s1">上期金额</span><span class="xpdj-tap3s2">{{topdata.upperXsMl}}</span></p>
+                    <p class="xpdj-tap3"><span class="xpdj-tap3s1">上期同比</span><span class="xpdj-tap3s2">{{topdata.xsMlAn}}%<svg class="icon" aria-hidden="true" v-if='topdata.xsMlSort=="0"'>
+                        <use xlink:href="#icon-jiantou1"></use>
+                    </svg><svg class="icon" aria-hidden="true" v-if='topdata.xsMlSort=="1"'>
                         <use xlink:href="#icon-jiantou2"></use>
                     </svg></span></p>
                 </div>
                 <div class="xpdj-ta">
                     <p class="xpdj-tap1">销售净利润<span>（万元）</span></p>
-                    <p class="xpdj-tap2 xpdj-tap2org">111</p>
-                    <p class="xpdj-tap3"><span class="xpdj-tap3s1">上期金额</span><span class="xpdj-tap3s2">1444</span></p>
-                    <p class="xpdj-tap3"><span class="xpdj-tap3s1">上期同比</span><span class="xpdj-tap3s2">111%%<svg class="icon" aria-hidden="true">
-                      <use xlink:href="#icon-jiantou2"></use>
-                  </svg></span></p>
+                    <p class="xpdj-tap2 xpdj-tap2org">{{topdata.xsLr}}</p>
+                    <p class="xpdj-tap3"><span class="xpdj-tap3s1">上期金额</span><span class="xpdj-tap3s2">{{topdata.upperXsLr}}</span></p>
+                    <p class="xpdj-tap3"><span class="xpdj-tap3s1">上期同比</span><span class="xpdj-tap3s2">{{topdata.xsLrAn}}%<svg class="icon" aria-hidden="true" v-if='topdata.xsLrSort=="0"'>
+                        <use xlink:href="#icon-jiantou1"></use>
+                    </svg><svg class="icon" aria-hidden="true" v-if='topdata.xsLrSort=="1"'>
+                        <use xlink:href="#icon-jiantou2"></use>
+                    </svg></span></p>
                 </div>
                 <div class="xpdj-ta">
                     <p class="xpdj-tap1">销售金额排名</p>
-                    <p class="xpdj-tap2 xpdj-tap2org">111</p>
-                    <p class="xpdj-tap3"><span class="xpdj-tap3s1">上期金额</span><span class="xpdj-tap3s2">1444</span></p>
-                    <p class="xpdj-tap3"><span class="xpdj-tap3s1">上期同比</span><span class="xpdj-tap3s2">111%%<svg class="icon" aria-hidden="true">
-                      <use xlink:href="#icon-jiantou2"></use>
-                  </svg></span></p>
+                    <p class="xpdj-tap2 xpdj-tap2org">{{topdata.xsRanking}}</p>
+                    <p class="xpdj-tap3"><span class="xpdj-tap3s1">上期金额</span><span class="xpdj-tap3s2">{{topdata.upperXsRanking}}</span></p>
+                    <p class="xpdj-tap3"><span class="xpdj-tap3s1">上期同比</span><span class="xpdj-tap3s2">{{topdata.xsRankingAn}}%<svg class="icon" aria-hidden="true" v-if='topdata.xsRankingSort=="0"'>
+                        <use xlink:href="#icon-jiantou1"></use>
+                    </svg><svg class="icon" aria-hidden="true" v-if='topdata.xsRankingSort=="1"'>
+                        <use xlink:href="#icon-jiantou2"></use>
+                    </svg></span></p>
                 </div>
             </div>
             <div class="xpdj-m">
@@ -187,8 +211,9 @@
                     <div class="w-ywxl-r-t">
                         公司与行业销售情况趋势图
                         <wselect v-model="selectvalue" placeholder="请选择" style="margin-left:50px;" @change='selectchange'>
-                            <woption :label='item.label' :value='item.value' v-for='(item,index) in selectarr'>
-                            </woption>
+                            <woption label='销售额' value='1'></woption>
+                            <woption label='订单数' value='2'></woption>
+                            <woption label='毛利率' value='3'></woption>
                         </wselect>
                     </div>
                 </div>
@@ -205,7 +230,7 @@
         </div>
 
         <div class="w-pannel">
-            <wtabs v-model="activeName"  v-loading='loadtab' @tab-click="tabclick">
+            <wtabs v-model="activeName" v-loading='loadtab' @tab-click="tabclick">
 
 
 
@@ -248,29 +273,29 @@
                     </div>
                     <div class="w-table">
                         <wtable border :data="tableData">
-                            <tablecolumn prop="orderId" label="订单编号" width='200' fixed>
+                            <tablecolumn prop="ppName" label="品牌" width='200' fixed>
                             </tablecolumn>
-                            <tablecolumn prop="name" label="客户名称" show-overflow-tooltip min-width='300'>
+                            <tablecolumn prop="plName" label="品类" show-overflow-tooltip min-width='300'>
                             </tablecolumn>
-                            <tablecolumn prop="money" label="订单总金额" width='150'>
+                            <tablecolumn prop="xsPrice" label="销售单价" width='150'>
                             </tablecolumn>
-                            <tablecolumn prop="num" label="商品总数" width='150'>
+                            <tablecolumn prop="xsQty" label="销售数量" width='150'>
                             </tablecolumn>
-                            <tablecolumn prop="orderTime" label="下单时间" width='150'>
+                            <tablecolumn prop="xsAmt" label="销售金额" width='150' sortable>
                             </tablecolumn>
-                            <tablecolumn prop="link" label="联系人" width='150'>
+                            <tablecolumn prop="xsRatio" label="销售金额占比" width='150'>
                             </tablecolumn>
-                            <tablecolumn prop="phone" label="联系方式" width='200'>
+                            <tablecolumn prop="xsAvg" label="平均毛利" width='200'>
                             </tablecolumn>
-                            <tablecolumn prop="zt" label="状态" fixed='right'>
+                            <tablecolumn prop="xsAvgRatio" label="平均毛利率" fixed='right'>
                             </tablecolumn>
                         </wtable>
                     </div>
                     <div class="w-pages">
-                        <wpager :total="pagetotle1" :current-page="cur_page1" layout="total, sizes, prev, pager, next, jumper" :page-sizes="[10, 15, 20]" :page-size="pagesize1"></wpager>
+                        <wpager :total="pagetotle1" :current-page="cur_page1" layout="total, sizes, prev, pager, next, jumper" :page-sizes="[10, 15, 20]" :page-size="pagesize1" @current-change="handleCurrentChange1" @size-change="handleSizeChange1"></wpager>
                     </div>
                 </wtabpane>
-                <wtabpane label="在售商铺详情分析" name="1">
+                <!-- <wtabpane label="在售商铺详情分析" name="1">
                     <div class="w-tab-search">
                         <wform :inline="true" :model="formdata3" label-position="right" class="demo-form-inline">
                             <form-item label="商品名称：">
@@ -386,7 +411,7 @@
                     </div>
                     <div class="w-pages">
                         <wpager :total="pagetotle3" :current-page="cur_page3" layout="total, sizes, prev, pager, next, jumper" :page-sizes="[10, 15, 20]" :page-size="pagesize3"></wpager>
-                    </div>
+                    </div> -->
                 </wtabpane>
 
 
@@ -400,6 +425,7 @@
 
 <script>
 
+import $ from 'jquery'
 import echarts from 'echarts'
 
 import Loading from 'element-ui/packages/loading/index.js'
@@ -433,6 +459,8 @@ export default {
             'startyear': '',
             'endyear': '',
         },
+        mondisabled: false,
+        yeardisabled: false,
         startdatevalue: '',
         startyearvalue: '',
         enddatevalue: '',
@@ -447,20 +475,8 @@ export default {
                 return time.getTime() > Date.now() - 8.64e7 || time.getTime() < new Date(2016, 0, 1, 0, 0, 0)
             }
         },
-        selectvalue: '0',
-        selectarr: [{
-            'label': '全部',
-            'value': '0'
-        }, {
-            'label': '销售额',
-            'value': '1'
-        }, {
-            'label': '订单数',
-            'value': '2'
-        }, {
-            'label': '毛利率',
-            'value': '3'
-        }],
+        selectvalue: '1',
+
         myChart: '',
         wholeBottom: ["66.66", "66.66"],
         wholeBottomDate: ["201705", "201709"],
@@ -481,98 +497,9 @@ export default {
             selectvalue2: '',
             selectvalue3: ''
         },
-        tableData: [{
-            'orderId': '20149827169441',
-            'name': '会员测试公司1会员测试公司1会员测试公司1会员测试公司1会员测试公司1会员测试公司1会员测试公司1',
-            'money': '4000',
-            'num': 50,
-            'orderTime': '2014-02-21',
-            'link': '王卫宁',
-            'phone': '18652988561',
-            'zt': '已支付'
-        }, {
-            'orderId': '20149827169442',
-            'name': '会员测试公司2',
-            'money': '4000',
-            'num': 50,
-            'orderTime': '2014-02-21',
-            'link': '王卫宁',
-            'phone': '18652988561',
-            'zt': '已支付'
-        }, {
-            'orderId': '20149827169443',
-            'name': '会员测试公司3',
-            'money': '4000',
-            'num': 50,
-            'orderTime': '2014-02-21',
-            'link': '王卫宁',
-            'phone': '18652988561',
-            'zt': '已支付'
-        }, {
-            'orderId': '20149827169444',
-            'name': '会员测试公司4',
-            'money': '4000',
-            'num': 50,
-            'orderTime': '2014-02-21',
-            'link': '王卫宁',
-            'phone': '18652988561',
-            'zt': '已支付'
-        }, {
-            'orderId': '20149827169445',
-            'name': '会员测试公司5',
-            'money': '4000',
-            'num': 50,
-            'orderTime': '2014-02-21',
-            'link': '王卫宁',
-            'phone': '18652988561',
-            'zt': '已支付'
-        }, {
-            'orderId': '20149827169446',
-            'name': '会员测试公司6',
-            'money': '4000',
-            'num': 50,
-            'orderTime': '2014-02-21',
-            'link': '王卫宁',
-            'phone': '18652988561',
-            'zt': '已支付'
-        }, {
-            'orderId': '20149827169447',
-            'name': '会员测试公司7',
-            'money': '4000',
-            'num': 50,
-            'orderTime': '2014-02-21',
-            'link': '王卫宁',
-            'phone': '18652988561',
-            'zt': '已支付'
-        }, {
-            'orderId': '20149827169448',
-            'name': '会员测试公司8',
-            'money': '4000',
-            'num': 50,
-            'orderTime': '2014-02-21',
-            'link': '王卫宁',
-            'phone': '18652988561',
-            'zt': '已支付'
-        }, {
-            'orderId': '20149827169449',
-            'name': '会员测试公司9',
-            'money': '4000',
-            'num': 50,
-            'orderTime': '2014-02-21',
-            'link': '王卫宁',
-            'phone': '18652988561',
-            'zt': '已支付'
-        }, {
-            'orderId': '20149827169440',
-            'name': '会员测试公司0',
-            'money': '4000',
-            'num': 50,
-            'orderTime': '2014-02-21',
-            'link': '王卫宁',
-            'phone': '18652988561',
-            'zt': '已支付'
-        }],
-        pagetotle1: 100,
+        tableData: [],
+        topdata: {},
+        pagetotle1: '',
         cur_page1: 1,
         pagesize1: 10,
         pagetotle2: 100,
@@ -583,73 +510,116 @@ export default {
         pagesize3: 10
     }),
     watch: {
-      // formdata: {
-      //     handler: function(val) {
-      //     },
-      //     deep: true
-      // },
-      //   formdata2: {
-      //       handler: function(val) {
-      //       },
-      //       deep: true
-      //   },
-      //   formdata3: {
-      //       handler: function(val) {
-      //       },
-      //       deep: true
-      //   },
-      //   formdata4: {
-      //       handler: function(val) {
-      //       },
-      //       deep: true
-      //   }
+        // formdata: {
+        //     handler: function(val) {
+        //     },
+        //     deep: true
+        // },
+        //   formdata2: {
+        //       handler: function(val) {
+        //       },
+        //       deep: true
+        //   },
+        //   formdata3: {
+        //       handler: function(val) {
+        //       },
+        //       deep: true
+        //   },
+        //   formdata4: {
+        //       handler: function(val) {
+        //       },
+        //       deep: true
+        //   }
+    },
+    created() {
+        let _this = this;
+        _this.userId = _this.$store.state.userId;
+
+        // var date = new Date;
+        // var year = date.getFullYear();
+        // var month = date.getMonth() + 1;
+        // month = (month < 10 ? "0" + month : month);
+        // var mydate = (year.toString() + "-" + month.toString());
+        // _this.formdata.startmonth=mydate;
+        // _this.formdata.endmonth=mydate;
+
     },
     mounted() {
         // var src='2017-01-31T16:00:00.000Z';
         // console.log(new Date(src).getTime())
         let _this = this;
         _this.$nextTick(function() {
-            var option = {
-                tooltip: {
-                    trigger: 'axis',
-                    axisPointer: { // 坐标轴指示器，坐标轴触发有效
-                        type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+            var url = 'http://199.168.3.98:8080/htyfctsaleorg/sale/all',
+                data = {
+                    'userId': '123',
+                    'xzSort': '1'
+                },
+                loading = function() {
+                    _this.loadingall = true;
+                },
+                success = function(data) {
+                    if (data.code == '1') {
+                        console.log(JSON.stringify(data));
+                        _this.topdata = data.data.saleCompareDTO;
+                        _this.tableData=data.data.saleProdListDTO.saleProdDTOList;
+                        _this.pagetotle1=data.data.saleProdListDTO.saleProdnum;
+                        var option = {
+                            tooltip: {
+                                trigger: 'axis',
+                                axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                    type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                                }
+                            },
+                            color: ['#ff7700', '#6c81b3'],
+                            grid: {
+                                top: '10',
+                                left: '3%',
+                                right: '4%',
+                                bottom: '3%',
+                                containLabel: true
+                            },
+                            xAxis: [{
+                                type: 'category',
+                                data: data.data.saleXzListDTO.xzBottomDate
+                            }],
+                            yAxis: [{
+                                type: 'value'
+                            }],
+                            series: [{
+                                name: '当前数据',
+                                barWidth: 10,
+                                type: 'bar',
+                                data: data.data.saleXzListDTO.xzBottom
+                            }, {
+                                name: '对比数据',
+                                type: 'bar',
+                                barWidth: 10,
+                                data: data.data.saleXzListDTO.xzBottomPair
+                            }]
+                        };
+                        _this.myChart = echarts.init(document.getElementById('main'));
+                        _this.myChart.setOption(option);
                     }
+
                 },
-                color: ['#ff7700', '#6c81b3'],
-                grid: {
-                    top: '10',
-                    left: '3%',
-                    right: '4%',
-                    bottom: '3%',
-                    containLabel: true
-                },
-                xAxis: [{
-                    type: 'category',
-                    data: _this.wholeBottomDate
-                }],
-                yAxis: [{
-                    type: 'value'
-                }],
-                series: [{
-                    name: '当前数据',
-                    barWidth: 10,
-                    type: 'bar',
-                    data: _this.wholeBottom
-                }, {
-                    name: '对比数据',
-                    type: 'bar',
-                    barWidth: 10,
-                    data: _this.wholeBottomPair
-                }]
-            };
-            _this.myChart = echarts.init(document.getElementById('main'));
-            _this.myChart.setOption(option);
+                complete = function() {
+                    _this.loadingall = false;
+                }
+            _this.adminApi.getJsonp(url, data, loading, success, complete)
+
         })
     },
     methods: {
         radiochange: function() {
-
+            let _this = this;
+            if (!_this.mondisabled) {
+                _this.formdata.startmonth = '';
+                _this.formdata.endmonth = '';
+            }
+            if (!_this.yeardisabled) {
+                _this.formdata.startyear = '';
+                _this.formdata.endyear = '';
+            }
         },
         monthchange1: function(val) {
             let _this = this;
@@ -657,7 +627,7 @@ export default {
             if (_this.enddatevalue) {
                 if (_this.startdatevalue > _this.enddatevalue) {
                     Message({
-                        'message': '终止时间不能低于起始时间',
+                        'message': '结束时间不能低于开始时间',
                         'type': 'error',
                     });
                     _this.formdata.startmonth = '';
@@ -671,7 +641,7 @@ export default {
             if (_this.startdatevalue) {
                 if (_this.startdatevalue > _this.enddatevalue) {
                     Message({
-                        'message': '终止时间不能低于起始时间',
+                        'message': '结束时间不能低于开始时间',
                         'type': 'error',
                     });
                     _this.formdata.endmonth = '';
@@ -684,7 +654,7 @@ export default {
             if (_this.endyearvalue) {
                 if (_this.startyearvalue > _this.endyearvalue) {
                     Message({
-                        'message': '终止时间不能低于起始时间',
+                        'message': '结束时间不能低于开始时间',
                         'type': 'error',
                     });
                     _this.formdata.startyear = '';
@@ -698,7 +668,7 @@ export default {
             if (_this.startyearvalue) {
                 if (_this.startyearvalue > _this.endyearvalue) {
                     Message({
-                        'message': '终止时间不能低于起始时间',
+                        'message': '结束时间不能低于开始时间',
                         'type': 'error',
                     });
                     _this.formdata.endyear = '';
@@ -706,31 +676,205 @@ export default {
             }
         },
         tabclick: function(tab) {
-          let _this=this;
+            let _this = this;
 
-          switch (_this.activeName) {
-            case "0":
-              console.log('111')
-              break;
-              case "1":
-              console.log('222')
-              break;
-              case "2":
-              console.log('333')
-              break;
-            default:
+            switch (_this.activeName) {
+                case "0":
+                    console.log('111')
+                    break;
+                case "1":
+                    console.log('222')
+                    break;
+                case "2":
+                    console.log('333')
+                    break;
+                default:
 
-          }
+            }
 
         },
-        search1: function() {
+        searchMonth: function() {
+            let _this = this;
+            if (_this.formdata.startmonth && !_this.formdata.endmonth) {
+                Message({
+                    'message': '请选择结束时间',
+                    'type': 'error',
+                });
 
+            } else if (!_this.formdata.startmonth && _this.formdata.endmonth) {
+                Message({
+                    'message': '请选择开始时间',
+                    'type': 'error',
+                });
+            } else {
+                $('.el-input__inner', '.el-date-editor--month').addClass('w-dataactive');
+                _this.mondisabled = true
+            }
+        },
+        closeMonth: function() {
+            let _this = this;
+            $('.el-input__inner', '.el-date-editor--month').removeClass('w-dataactive');
+            _this.mondisabled = false;
+            _this.formdata.startmonth = '';
+            _this.formdata.endmonth = '';
+        },
+        closeYear: function() {
+            let _this = this;
+            $('.el-input__inner', '.el-date-editor--year').removeClass('w-dataactive');
+            _this.yeardisabled = false;
+            _this.formdata.startyear = '';
+            _this.formdata.endyear = '';
+        },
+        searchYear: function() {
+            let _this = this;
+            if (_this.formdata.startyear && !_this.formdata.endyear) {
+                Message({
+                    'message': '请选择结束时间',
+                    'type': 'error',
+                });
+
+            } else if (!_this.formdata.startyear && _this.formdata.endyear) {
+                Message({
+                    'message': '请选择开始时间',
+                    'type': 'error',
+                });
+            } else {
+                $('.el-input__inner', '.el-date-editor--year').addClass('w-dataactive');
+                _this.yeardisabled = true
+            }
         },
         search2: function() {
 
         },
         selectchange: function(item) {
+            let _this = this;
 
+            var data = {
+                'userId':'123',
+                'sort':item
+            };
+
+            // console.log(_this.yeardisabled);
+            // console.log(_this.formdata.radiovalue)
+            if(_this.mondisabled && _this.formdata.radiovalue=='1')
+            {
+
+              data.endTime=$('.el-input__inner:eq(1)',".monthrange").val()
+            }
+            if(_this.yeardisabled && _this.formdata.radiovalue=='2')
+            {
+
+              data.endTime=$('.el-input__inner:eq(1)',".yearrange").val()+"-12"
+            }
+            // console.log(_this.formdata.endmonth)
+             console.log(data)
+            var url = 'http://199.168.3.98:8080/htyfctsaleorg/sale/xz/list',
+                loading = function() {
+                  _this.myChart.showLoading({
+                      'color': '#ff7700'
+                  });
+                },
+                success = function(data) {
+                    if (data.code == '1') {
+                        console.log(JSON.stringify(data));
+
+                        var option = {
+                            tooltip: {
+                                trigger: 'axis',
+                                axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                    type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                                }
+                            },
+                            color: ['#ff7700', '#6c81b3'],
+                            grid: {
+                                top: '10',
+                                left: '3%',
+                                right: '4%',
+                                bottom: '3%',
+                                containLabel: true
+                            },
+                            xAxis: [{
+                                type: 'category',
+                                data: data.data.xzBottomDate
+                            }],
+                            yAxis: [{
+                                type: 'value'
+                            }],
+                            series: [{
+                                name: '当前数据',
+                                barWidth: 10,
+                                type: 'bar',
+                                data: data.data.xzBottom
+                            }, {
+                                name: '对比数据',
+                                type: 'bar',
+                                barWidth: 10,
+                                data: data.data.xzBottomPair
+                            }]
+                        };
+                        _this.myChart = echarts.init(document.getElementById('main'));
+                        _this.myChart.setOption(option);
+                    }
+
+                },
+                complete = function() {
+                    _this.myChart.hideLoading();
+                }
+            _this.adminApi.getJsonp(url, data, loading, success, complete)
+
+        },
+        handleCurrentChange1:function(val){
+          let _this=this;
+          _this.cur_page1=val;
+
+          var url = 'http://199.168.3.98:8080/htyfctsaleorg/sale/prod/list',
+              data = {
+                  'userId': '123',
+                  'rows':_this.pagesize1,
+                  'sort': '1',
+                  'page':_this.cur_page1
+              },
+              loading = function() {
+                   _this.loadtab = true;
+              },
+              success = function(data) {
+                  if (data.code == '1') {
+
+                    _this.tableData=data.data.saleProdDTOList;
+                    _this.pagetotle1=data.data.saleProdnum;
+                  }
+
+              },
+              complete = function() {
+                _this.loadtab = false;
+              }
+          _this.adminApi.getJsonp(url, data, loading, success, complete)
+        },
+        handleSizeChange1:function(val){
+          let _this=this;
+          _this.pagesize1 = val;
+          var url = 'http://199.168.3.98:8080/htyfctsaleorg/sale/prod/list',
+              data = {
+                  'userId': '123',
+                  'rows':_this.pagesize1,
+                  'sort': '1',
+                  'page':1
+              },
+              loading = function() {
+                   _this.loadtab = true;
+              },
+              success = function(data) {
+                  if (data.code == '1') {
+
+                    _this.tableData=data.data.saleProdDTOList;
+                    _this.pagetotle1=data.data.saleProdnum;
+                  }
+
+              },
+              complete = function() {
+                _this.loadtab = false;
+              }
+          _this.adminApi.getJsonp(url, data, loading, success, complete)
         }
     },
     components: {
