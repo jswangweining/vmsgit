@@ -41,12 +41,12 @@
       "xsRankingSort": "1"
     },
     "saleXzListDTO": {
-      "xzBottom": ["123.0000"],
+      "xzBottom": ["123"],
       "xzBottomDate": ["20171010"],
       "xzBottomPair": ["1.00"]
     },
     "saleProdListDTO": {
-      "saleProdnum": 10,
+      "saleProdnum": 15,
       "saleProdDTOList": [{
         "ppName": "空调",
         "plName": "格里",
@@ -59,85 +59,87 @@
       }, {
         "ppName": "空调",
         "plName": "格里",
-        "xsPrice": 10,
+        "xsPrice": 11.1,
         "xsQty": 10,
-        "xsAmt": 100,
-        "xsRatio": 10,
+        "xsAmt": 111,
+        "xsRatio": 11.1,
+        "xsAvg": 0,
+        "xsAvgRatio": 0
+      }, {
+        "ppName": "空调",
+        "plName": "格",
+        "xsPrice": 12.2,
+        "xsQty": 10,
+        "xsAmt": 122,
+        "xsRatio": 12.2,
         "xsAvg": 0,
         "xsAvgRatio": 0
       }, {
         "ppName": "空调",
         "plName": "没底",
-        "xsPrice": 10,
+        "xsPrice": 13.3,
         "xsQty": 10,
-        "xsAmt": 100,
-        "xsRatio": 10,
+        "xsAmt": 133,
+        "xsRatio": 13.3,
         "xsAvg": 0,
         "xsAvgRatio": 0
       }, {
         "ppName": "空调",
         "plName": "没底",
-        "xsPrice": 10,
+        "xsPrice": 14.4,
         "xsQty": 10,
-        "xsAmt": 100,
-        "xsRatio": 10,
+        "xsAmt": 144,
+        "xsRatio": 14.4,
         "xsAvg": 0,
         "xsAvgRatio": 0
       }, {
         "ppName": "空调",
         "plName": "没底",
-        "xsPrice": 10,
+        "xsPrice": 15.5,
         "xsQty": 10,
-        "xsAmt": 100,
-        "xsRatio": 10,
+        "xsAmt": 155,
+        "xsRatio": 15.5,
         "xsAvg": 0,
         "xsAvgRatio": 0
       }, {
         "ppName": "空调",
         "plName": "没底",
-        "xsPrice": 10,
+        "xsPrice": 16.6,
         "xsQty": 10,
-        "xsAmt": 100,
-        "xsRatio": 10,
+        "xsAmt": 166,
+        "xsRatio": 16.6,
         "xsAvg": 0,
         "xsAvgRatio": 0
       }, {
         "ppName": "空调",
         "plName": "没底",
-        "xsPrice": 10,
+        "xsPrice": 17.7,
         "xsQty": 10,
-        "xsAmt": 100,
-        "xsRatio": 10,
+        "xsAmt": 177,
+        "xsRatio": 17.7,
         "xsAvg": 0,
         "xsAvgRatio": 0
       }, {
         "ppName": "空调",
         "plName": "没底",
-        "xsPrice": 10,
+        "xsPrice": 18.8,
         "xsQty": 10,
-        "xsAmt": 100,
-        "xsRatio": 10,
+        "xsAmt": 188,
+        "xsRatio": 18.8,
         "xsAvg": 0,
         "xsAvgRatio": 0
       }, {
         "ppName": "空调",
         "plName": "没底",
-        "xsPrice": 10,
+        "xsPrice": 19.9,
         "xsQty": 10,
-        "xsAmt": 100,
-        "xsRatio": 10,
-        "xsAvg": 0,
-        "xsAvgRatio": 0
-      }, {
-        "ppName": "空调",
-        "plName": "没底",
-        "xsPrice": 10,
-        "xsQty": 10,
-        "xsAmt": 100,
-        "xsRatio": 10,
+        "xsAmt": 199,
+        "xsRatio": 19.9,
         "xsAvg": 0,
         "xsAvgRatio": 0
       }]
-    }
+    },
+    "saleDetailListDTO": null,
+    "saleHotListDTO": null
   }
 }

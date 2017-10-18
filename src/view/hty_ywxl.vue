@@ -1224,7 +1224,7 @@ export default {
                                                       }
                                                   }
                                               }],
-                                              barWidth: 10,
+                                              barWidth: 5,
                                           }, ]
                                       };
                                       _this.myChart2.clear();
@@ -1339,15 +1339,39 @@ export default {
                                             }],
                                             series: [{
                                                 name: '当前数据',
-                                                barWidth: 10,
+                                                barWidth: 5,
                                                 type: 'bar',
-                                                data:data.data.wholeBottom
+                                                data:data.data.wholeBottom,
+                                                itemStyle: {
+                                                  normal: {
+                                                   color: new echarts.graphic.LinearGradient(
+                                                       0, 0, 0, 1,
+                                                       [
+                                                           {offset: 0, color: '#ff7700'},
+                                                           {offset: 0.5, color: '#ff9e48'},
+                                                           {offset: 1, color: '#ffbb7f'}
+                                                       ]
+                                                   )
+                                               },
+                                           }
                                             }, {
                                                 name: '对比数据',
                                                 type: 'bar',
-                                                barWidth: 10,
+                                                barWidth: 5,
                                                 stack: '广告',
-                                                data: data.data.wholeBottomPair
+                                                data: data.data.wholeBottomPair,
+                                                itemStyle: {
+                                               normal: {
+                                                   color: new echarts.graphic.LinearGradient(
+                                                       0, 0, 0, 1,
+                                                       [
+                                                         {offset: 0, color: '#6c81c3'},
+                                                         {offset: 0.5, color: '#91a1c6'},
+                                                         {offset: 1, color: '#b5bfd9'}
+                                                       ]
+                                                   )
+                                               },
+                                           }
                                             }]
                                         };
                                         _this.myChart3.clear();
@@ -1408,7 +1432,7 @@ export default {
                                                         }
                                                     }
                                                 }],
-                                                barWidth: 10,
+                                                barWidth: 5,
                                             }, ]
                                         };
                                         _this.myChart2.clear();
@@ -1438,9 +1462,21 @@ export default {
                                             }],
                                             series: [{
                                                 name: '当前数据',
-                                                barWidth: 10,
+                                                barWidth: 5,
                                                 type: 'bar',
-                                                data:data.data.wholeBottom
+                                                data:data.data.wholeBottom,
+                                                itemStyle: {
+                                                  normal: {
+                                                   color: new echarts.graphic.LinearGradient(
+                                                       0, 0, 0, 1,
+                                                       [
+                                                           {offset: 0, color: '#ff7700'},
+                                                           {offset: 0.5, color: '#ff9e48'},
+                                                           {offset: 1, color: '#ffbb7f'}
+                                                       ]
+                                                   )
+                                               },
+                                           }
                                             }]
                                         };
                                         _this.myChart3.clear();
@@ -1691,14 +1727,38 @@ export default {
                                         }],
                                         series: [{
                                             name: '当前数据',
-                                            barWidth: 10,
+                                            barWidth: 5,
                                             type: 'bar',
-                                            data:data.data.wholeBottom
+                                            data:data.data.wholeBottom,
+                                            itemStyle: {
+                                           normal: {
+                                               color: new echarts.graphic.LinearGradient(
+                                                   0, 0, 0, 1,
+                                                   [
+                                                       {offset: 0, color: '#ff7700'},
+                                                       {offset: 0.5, color: '#ff9e48'},
+                                                       {offset: 1, color: '#ffbb7f'}
+                                                   ]
+                                               )
+                                           },
+                                       }
                                         }, {
                                             name: '对比数据',
                                             type: 'bar',
-                                            barWidth: 10,
-                                            data: data.data.wholeBottomPair
+                                            barWidth: 5,
+                                            data: data.data.wholeBottomPair,
+                                            itemStyle: {
+                                           normal: {
+                                               color: new echarts.graphic.LinearGradient(
+                                                   0, 0, 0, 1,
+                                                   [
+                                                     {offset: 0, color: '#6c81c3'},
+                                                     {offset: 0.5, color: '#91a1c6'},
+                                                     {offset: 1, color: '#b5bfd9'}
+                                                   ]
+                                               )
+                                           },
+                                       }
                                         }]
                                     };
                                     _this.myChart3.clear();
@@ -1789,9 +1849,21 @@ export default {
                                         }],
                                         series: [{
                                             name: '当前数据',
-                                            barWidth: 10,
+                                            barWidth: 5,
                                             type: 'bar',
-                                            data:data.data.wholeBottom
+                                            data:data.data.wholeBottom,
+                                            itemStyle: {
+                                              normal: {
+                                               color: new echarts.graphic.LinearGradient(
+                                                   0, 0, 0, 1,
+                                                   [
+                                                       {offset: 0, color: '#ff7700'},
+                                                       {offset: 0.5, color: '#ff9e48'},
+                                                       {offset: 1, color: '#ffbb7f'}
+                                                   ]
+                                               )
+                                           },
+                                       }
                                         }]
                                     };
                                     _this.myChart3.clear();
@@ -1895,38 +1967,118 @@ export default {
 
                                     break;
                                 case "1":
-                                        var option3 = {
-                                            tooltip: {
-                                                trigger: 'axis',
-                                                axisPointer: { // 坐标轴指示器，坐标轴触发有效
-                                                    type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
-                                                }
-                                            },
-                                            color: ['#ff7700', '#6c81b3'],
-                                            grid: {
-                                                top: '10',
-                                                left: '3%',
-                                                right: '4%',
-                                                bottom: '3%',
-                                                containLabel: true
-                                            },
-                                            xAxis: [{
-                                                type: 'category',
-                                                data: data.data.wholeBottomDate
-                                            }],
-                                            yAxis: [{
-                                                type: 'value'
-                                            }],
-                                            series: [{
-                                                name: '当前数据',
-                                                barWidth: 10,
-                                                type: 'bar',
-                                                data:data.data.wholeBottom
-                                            }]
-                                        };
-                                        _this.myChart3.clear();
-                                        _this.myChart3 = echarts.init(document.getElementById('main3'));
-                                        _this.myChart3.setOption(option3);
+                                if(_this.monthtab==0 || _this.monthtab==1)
+                                {
+
+                                  var option3 = {
+                                      tooltip: {
+                                          trigger: 'axis',
+                                          axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                              type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                                          }
+                                      },
+                                      color: ['#ff7700', '#6c81b3'],
+                                      grid: {
+                                          top: '10',
+                                          left: '3%',
+                                          right: '4%',
+                                          bottom: '3%',
+                                          containLabel: true
+                                      },
+                                      xAxis: [{
+                                          type: 'category',
+                                          data: data.data.wholeBottomDate
+                                      }],
+                                      yAxis: [{
+                                          type: 'value'
+                                      }],
+                                      series: [{
+                                          name: '当前数据',
+                                          barWidth: 5,
+                                          type: 'bar',
+                                          data:data.data.wholeBottom,
+                                          itemStyle: {
+                                         normal: {
+                                             color: new echarts.graphic.LinearGradient(
+                                                 0, 0, 0, 1,
+                                                 [
+                                                     {offset: 0, color: '#ff7700'},
+                                                     {offset: 0.5, color: '#ff9e48'},
+                                                     {offset: 1, color: '#ffbb7f'}
+                                                 ]
+                                             )
+                                         },
+                                     }
+                                      }, {
+                                          name: '对比数据',
+                                          type: 'bar',
+                                          barWidth: 5,
+                                          data: data.data.wholeBottomPair,
+                                          itemStyle: {
+                                         normal: {
+                                             color: new echarts.graphic.LinearGradient(
+                                                 0, 0, 0, 1,
+                                                 [
+                                                   {offset: 0, color: '#6c81c3'},
+                                                   {offset: 0.5, color: '#91a1c6'},
+                                                   {offset: 1, color: '#b5bfd9'}
+                                                 ]
+                                             )
+                                         },
+                                     }
+                                      }]
+                                  };
+                                  _this.myChart3.clear();
+                                  _this.myChart3 = echarts.init(document.getElementById('main3'));
+                                  _this.myChart3.setOption(option3);
+                                }
+                                else {
+
+                                  var option3 = {
+                                      tooltip: {
+                                          trigger: 'axis',
+                                          axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                              type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                                          }
+                                      },
+                                      color: ['#ff7700', '#6c81b3'],
+                                      grid: {
+                                          top: '10',
+                                          left: '3%',
+                                          right: '4%',
+                                          bottom: '3%',
+                                          containLabel: true
+                                      },
+                                      xAxis: [{
+                                          type: 'category',
+                                          data: data.data.wholeBottomDate
+                                      }],
+                                      yAxis: [{
+                                          type: 'value'
+                                      }],
+                                      series: [{
+                                          name: '当前数据',
+                                          barWidth: 5,
+                                          type: 'bar',
+                                          data:data.data.wholeBottom,
+                                          itemStyle: {
+                                            normal: {
+                                             color: new echarts.graphic.LinearGradient(
+                                                 0, 0, 0, 1,
+                                                 [
+                                                     {offset: 0, color: '#ff7700'},
+                                                     {offset: 0.5, color: '#ff9e48'},
+                                                     {offset: 1, color: '#ffbb7f'}
+                                                 ]
+                                             )
+                                         },
+                                     }
+                                      }]
+                                  };
+                                  _this.myChart3.clear();
+                                  _this.myChart3 = echarts.init(document.getElementById('main3'));
+                                  _this.myChart3.setOption(option3);
+                                }
                                     break;
                                 default:
 

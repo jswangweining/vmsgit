@@ -211,9 +211,9 @@
                     <div class="w-ywxl-r-t">
                         公司与行业销售情况趋势图
                         <wselect v-model="selectvalue" placeholder="请选择" style="margin-left:50px;" @change='selectchange'>
-                            <woption label='销售额' value='1'></woption>
-                            <woption label='订单数' value='2'></woption>
-                            <woption label='毛利率' value='3'></woption>
+                            <woption label='销售额' value='0'></woption>
+                            <woption label='订单数' value='1'></woption>
+                            <woption label='毛利率' value='2'></woption>
                         </wselect>
                     </div>
                 </div>
@@ -238,36 +238,12 @@
 
                     <div class="w-tab-search">
                         <wform :inline="true" :model="formdata2" label-position="right" class="demo-form-inline">
-                            <!-- <form-item label="商品名称：">
-                                <winput v-model="formdata2.inpName" placeholder='订单号/客户名称/联系方式'></winput>
-                            </form-item> -->
+                            <form-item label="">
+                              <radio-group v-model="formdata2.radiovalue" @change='radiochangepp'>
+                                  <wradio label="0">品牌</wradio>
+                                  <wradio label="1">品类</wradio>
 
-                            <form-item label="品类：">
-                                <wselect v-model="formdata2.selectvalue1" placeholder="请选择">
-                                    <woption label='全部' value='0'></woption>
-                                    <woption label='爆款' value='1'></woption>
-                                    <woption label='滞款' value='2'></woption>
-                                </wselect>
-                            </form-item>
-
-                            <form-item label="品牌：">
-                                <wselect v-model="formdata2.selectvalue2" placeholder="请选择">
-                                    <woption label='全部' value='0'></woption>
-                                    <woption label='爆款' value='1'></woption>
-                                    <woption label='滞款' value='2'></woption>
-                                </wselect>
-                            </form-item>
-
-                            <!-- <form-item label="爆/滞款：">
-                                <wselect v-model="formdata2.selectvalue" placeholder="请选择">
-                                    <woption label='全部' value='0'></woption>
-                                    <woption label='爆款' value='1'></woption>
-                                    <woption label='滞款' value='2'></woption>
-                                </wselect>
-                            </form-item> -->
-
-                            <form-item>
-                                <wbutton type="info" icon="search" size="small"></wbutton>
+                              </radio-group>
                             </form-item>
                         </wform>
                     </div>
@@ -295,7 +271,7 @@
                         <wpager :total="pagetotle1" :current-page="cur_page1" layout="total, sizes, prev, pager, next, jumper" :page-sizes="[10, 15, 20]" :page-size="pagesize1" @current-change="handleCurrentChange1" @size-change="handleSizeChange1"></wpager>
                     </div>
                 </wtabpane>
-                <!-- <wtabpane label="在售商铺详情分析" name="1">
+                <wtabpane label="在售商铺详情分析" name="1">
                     <div class="w-tab-search">
                         <wform :inline="true" :model="formdata3" label-position="right" class="demo-form-inline">
                             <form-item label="商品名称：">
@@ -411,7 +387,7 @@
                     </div>
                     <div class="w-pages">
                         <wpager :total="pagetotle3" :current-page="cur_page3" layout="total, sizes, prev, pager, next, jumper" :page-sizes="[10, 15, 20]" :page-size="pagesize3"></wpager>
-                    </div> -->
+                    </div>
                 </wtabpane>
 
 
@@ -461,6 +437,7 @@ export default {
         },
         mondisabled: false,
         yeardisabled: false,
+
         startdatevalue: '',
         startyearvalue: '',
         enddatevalue: '',
@@ -475,7 +452,7 @@ export default {
                 return time.getTime() > Date.now() - 8.64e7 || time.getTime() < new Date(2016, 0, 1, 0, 0, 0)
             }
         },
-        selectvalue: '1',
+        selectvalue: '0',
 
         myChart: '',
         wholeBottom: ["66.66", "66.66"],
@@ -483,8 +460,7 @@ export default {
         wholeBottomPair: ["88.88", "88.88"],
         activeName: '0',
         formdata2: {
-            selectvalue1: '',
-            selectvalue2: ''
+            radiovalue: '0',
         },
         formdata3: {
             inpName: '',
@@ -499,7 +475,7 @@ export default {
         },
         tableData: [],
         topdata: {},
-        pagetotle1: '',
+        pagetotle1: 0,
         cur_page1: 1,
         pagesize1: 10,
         pagetotle2: 100,
@@ -534,15 +510,6 @@ export default {
     created() {
         let _this = this;
         _this.userId = _this.$store.state.userId;
-
-        // var date = new Date;
-        // var year = date.getFullYear();
-        // var month = date.getMonth() + 1;
-        // month = (month < 10 ? "0" + month : month);
-        // var mydate = (year.toString() + "-" + month.toString());
-        // _this.formdata.startmonth=mydate;
-        // _this.formdata.endmonth=mydate;
-
     },
     mounted() {
         // var src='2017-01-31T16:00:00.000Z';
@@ -552,7 +519,9 @@ export default {
             var url = 'http://199.168.3.98:8080/htyfctsaleorg/sale/all',
                 data = {
                     'userId': '123',
-                    'xzSort': '1'
+                    'xzSort': _this.selectvalue,
+                    'listSort':_this.activeName,
+                    'prodSort':_this.formdata2.radiovalue
                 },
                 loading = function() {
                     _this.loadingall = true;
@@ -606,20 +575,19 @@ export default {
                     _this.loadingall = false;
                 }
             _this.adminApi.getJsonp(url, data, loading, success, complete)
-
         })
     },
     methods: {
         radiochange: function() {
             let _this = this;
-            if (!_this.mondisabled) {
-                _this.formdata.startmonth = '';
-                _this.formdata.endmonth = '';
-            }
-            if (!_this.yeardisabled) {
-                _this.formdata.startyear = '';
-                _this.formdata.endyear = '';
-            }
+            // if (!_this.mondisabled) {
+            //     _this.formdata.startmonth = '';
+            //     _this.formdata.endmonth = '';
+            // }
+            // if (!_this.yeardisabled) {
+            //     _this.formdata.startyear = '';
+            //     _this.formdata.endyear = '';
+            // }
         },
         monthchange1: function(val) {
             let _this = this;
@@ -708,7 +676,74 @@ export default {
                 });
             } else {
                 $('.el-input__inner', '.el-date-editor--month').addClass('w-dataactive');
-                _this.mondisabled = true
+                      var starttime=$('.el-input__inner:eq(0)',".monthrange").val()+'01';
+                      var endtime=$('.el-input__inner:eq(1)',".monthrange").val()+'31';
+                var   data = {
+                      'userId': '123',
+                      'xzSort': _this.selectvalue,
+                      'listSort':_this.activeName,
+                      'startTime':starttime.replace('-',''),
+                      'endTime':endtime.replace('-','')
+                  };
+
+                  if(data.listSort=='0'){
+                    data.prodSort=_this.formdata2.radiovalue
+                  }
+
+                var url = 'http://199.168.3.98:8080/htyfctsaleorg/sale/all',
+
+                    loading = function() {
+                        _this.loadingall = true;
+                    },
+                    success = function(data) {
+                        if (data.code == '1') {
+                            _this.mondisabled = true;
+                            _this.topdata = data.data.saleCompareDTO;
+                            _this.tableData=data.data.saleProdListDTO.saleProdDTOList;
+                            _this.pagetotle1=data.data.saleProdListDTO.saleProdnum;
+                            var option = {
+                                tooltip: {
+                                    trigger: 'axis',
+                                    axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                        type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                                    }
+                                },
+                                color: ['#ff7700', '#6c81b3'],
+                                grid: {
+                                    top: '10',
+                                    left: '3%',
+                                    right: '4%',
+                                    bottom: '3%',
+                                    containLabel: true
+                                },
+                                xAxis: [{
+                                    type: 'category',
+                                    data: data.data.saleXzListDTO.xzBottomDate
+                                }],
+                                yAxis: [{
+                                    type: 'value'
+                                }],
+                                series: [{
+                                    name: '当前数据',
+                                    barWidth: 10,
+                                    type: 'bar',
+                                    data: data.data.saleXzListDTO.xzBottom
+                                }, {
+                                    name: '对比数据',
+                                    type: 'bar',
+                                    barWidth: 10,
+                                    data: data.data.saleXzListDTO.xzBottomPair
+                                }]
+                            };
+                            _this.myChart = echarts.init(document.getElementById('main'));
+                            _this.myChart.setOption(option);
+                        }
+
+                    },
+                    complete = function() {
+                        _this.loadingall = false;
+                    }
+                _this.adminApi.getJsonp(url, data, loading, success, complete)
             }
         },
         closeMonth: function() {
@@ -740,34 +775,97 @@ export default {
                 });
             } else {
                 $('.el-input__inner', '.el-date-editor--year').addClass('w-dataactive');
-                _this.yeardisabled = true
-            }
-        },
-        search2: function() {
+                var starttime=$('.el-input__inner:eq(0)',".yearrange").val()+"01"+'01';
+                var endtime=$('.el-input__inner:eq(1)',".yearrange").val()+"12"+'31';
+                var   data = {
+                      'userId': '123',
+                      'xzSort': _this.selectvalue,
+                      'listSort':_this.activeName,
+                      'startTime':starttime.replace('-',''),
+                      'endTime':endtime.replace('-','')
+                  };
 
+                  if(data.listSort=='0'){
+                    data.prodSort=_this.formdata2.radiovalue
+                  }
+
+                var url = 'http://199.168.3.98:8080/htyfctsaleorg/sale/all',
+
+                    loading = function() {
+                        _this.loadingall = true;
+                    },
+                    success = function(data) {
+                        if (data.code == '1') {
+                            _this.yeardisabled = true;
+                            _this.topdata = data.data.saleCompareDTO;
+                            _this.tableData=data.data.saleProdListDTO.saleProdDTOList;
+                            _this.pagetotle1=data.data.saleProdListDTO.saleProdnum;
+                            var option = {
+                                tooltip: {
+                                    trigger: 'axis',
+                                    axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                        type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                                    }
+                                },
+                                color: ['#ff7700', '#6c81b3'],
+                                grid: {
+                                    top: '10',
+                                    left: '3%',
+                                    right: '4%',
+                                    bottom: '3%',
+                                    containLabel: true
+                                },
+                                xAxis: [{
+                                    type: 'category',
+                                    data: data.data.saleXzListDTO.xzBottomDate
+                                }],
+                                yAxis: [{
+                                    type: 'value'
+                                }],
+                                series: [{
+                                    name: '当前数据',
+                                    barWidth: 10,
+                                    type: 'bar',
+                                    data: data.data.saleXzListDTO.xzBottom
+                                }, {
+                                    name: '对比数据',
+                                    type: 'bar',
+                                    barWidth: 10,
+                                    data: data.data.saleXzListDTO.xzBottomPair
+                                }]
+                            };
+                            _this.myChart = echarts.init(document.getElementById('main'));
+                            _this.myChart.setOption(option);
+                        }
+
+                    },
+                    complete = function() {
+                        _this.loadingall = false;
+                    }
+                _this.adminApi.getJsonp(url, data, loading, success, complete)
+                //_this.yeardisabled = true
+            }
         },
         selectchange: function(item) {
             let _this = this;
-
             var data = {
                 'userId':'123',
-                'sort':item
+                'xzSort':item
             };
-
-            // console.log(_this.yeardisabled);
-            // console.log(_this.formdata.radiovalue)
             if(_this.mondisabled && _this.formdata.radiovalue=='1')
             {
-
-              data.endTime=$('.el-input__inner:eq(1)',".monthrange").val()
+              var starttime=$('.el-input__inner:eq(0)',".monthrange").val()+'01';
+              var endtime=$('.el-input__inner:eq(1)',".monthrange").val()+'31';
+              data.startTime=starttime.replace('-','');
+              data.endTime=endtime.replace('-','')
             }
             if(_this.yeardisabled && _this.formdata.radiovalue=='2')
             {
-
-              data.endTime=$('.el-input__inner:eq(1)',".yearrange").val()+"-12"
+              var starttime=$('.el-input__inner:eq(0)',".yearrange").val()+"01"+'01';
+              var endtime=$('.el-input__inner:eq(1)',".yearrange").val()+"12"+'31';
+              data.startTime=starttime.replace('-','');
+              data.endTime=endtime.replace('-','')
             }
-            // console.log(_this.formdata.endmonth)
-             console.log(data)
             var url = 'http://199.168.3.98:8080/htyfctsaleorg/sale/xz/list',
                 loading = function() {
                   _this.myChart.showLoading({
@@ -776,8 +874,6 @@ export default {
                 },
                 success = function(data) {
                     if (data.code == '1') {
-                        console.log(JSON.stringify(data));
-
                         var option = {
                             tooltip: {
                                 trigger: 'axis',
@@ -815,7 +911,6 @@ export default {
                         _this.myChart = echarts.init(document.getElementById('main'));
                         _this.myChart.setOption(option);
                     }
-
                 },
                 complete = function() {
                     _this.myChart.hideLoading();
@@ -823,17 +918,65 @@ export default {
             _this.adminApi.getJsonp(url, data, loading, success, complete)
 
         },
+        radiochangepp:function(item){
+          let _this=this;
+          _this.cur_page1=1;
+          var data = {
+              'userId': '123',
+              'rows':_this.pagesize1,
+              'prodSort':item,
+              'page':_this.cur_page1
+          };
+          if(_this.mondisabled && _this.formdata.radiovalue=='1')
+          {
+            data.startTime=$('.el-input__inner:eq(0)',".monthrange").val()
+            data.endTime=$('.el-input__inner:eq(1)',".monthrange").val()
+          }
+          if(_this.yeardisabled && _this.formdata.radiovalue=='2')
+          {
+            data.startTime=$('.el-input__inner:eq(0)',".yearrange").val()+"-01"
+            data.endTime=$('.el-input__inner:eq(1)',".yearrange").val()+"-12"
+          }
+          var url = 'http://199.168.3.98:8080/htyfctsaleorg/sale/prod/list',
+
+              loading = function() {
+                   _this.loadtab = true;
+              },
+              success = function(data) {
+                  if (data.code == '1') {
+
+                    _this.tableData=data.data.saleProdDTOList;
+                    _this.pagetotle1=data.data.saleProdnum;
+                  }
+
+              },
+              complete = function() {
+                _this.loadtab = false;
+              }
+          _this.adminApi.getJsonp(url, data, loading, success, complete)
+
+        },
         handleCurrentChange1:function(val){
           let _this=this;
           _this.cur_page1=val;
-
+          var data = {
+              'userId': '123',
+              'rows':_this.pagesize1,
+              'page':_this.cur_page1,
+              'prodSort':_this.formdata2.radiovalue,
+          };
+          if(_this.mondisabled && _this.formdata.radiovalue=='1')
+          {
+            data.startTime=$('.el-input__inner:eq(0)',".monthrange").val()
+            data.endTime=$('.el-input__inner:eq(1)',".monthrange").val()
+          }
+          if(_this.yeardisabled && _this.formdata.radiovalue=='2')
+          {
+            data.startTime=$('.el-input__inner:eq(0)',".yearrange").val()+"-01"
+            data.endTime=$('.el-input__inner:eq(1)',".yearrange").val()+"-12"
+          }
           var url = 'http://199.168.3.98:8080/htyfctsaleorg/sale/prod/list',
-              data = {
-                  'userId': '123',
-                  'rows':_this.pagesize1,
-                  'sort': '1',
-                  'page':_this.cur_page1
-              },
+
               loading = function() {
                    _this.loadtab = true;
               },
@@ -853,13 +996,24 @@ export default {
         handleSizeChange1:function(val){
           let _this=this;
           _this.pagesize1 = val;
+          var data = {
+              'userId': '123',
+              'rows':_this.pagesize1,
+              'prodSort':_this.formdata2.radiovalue,
+              'page':1
+          };
+          if(_this.mondisabled && _this.formdata.radiovalue=='1')
+          {
+            data.startTime=$('.el-input__inner:eq(0)',".monthrange").val()
+            data.endTime=$('.el-input__inner:eq(1)',".monthrange").val()
+          }
+          if(_this.yeardisabled && _this.formdata.radiovalue=='2')
+          {
+            data.startTime=$('.el-input__inner:eq(0)',".yearrange").val()+"-01"
+            data.endTime=$('.el-input__inner:eq(1)',".yearrange").val()+"-12"
+          }
           var url = 'http://199.168.3.98:8080/htyfctsaleorg/sale/prod/list',
-              data = {
-                  'userId': '123',
-                  'rows':_this.pagesize1,
-                  'sort': '1',
-                  'page':1
-              },
+
               loading = function() {
                    _this.loadtab = true;
               },

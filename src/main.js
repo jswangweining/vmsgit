@@ -26,6 +26,7 @@ import index from './view/index.vue'
 import ywxl from './view/hty_ywxl.vue'
 import xpdj from './view/hty_xpdj.vue'
 import yhfn from './view/hty_yhfn.vue'
+import yhxw from './view/hty_yhxw.vue'
 import login from './view/login.vue'
 import NotFoundComponent from './view/NotFoundComponent.vue'
 // import indexcommon from './view/indexcommon.vue'
@@ -85,6 +86,11 @@ const router = new VueRouter({
         path: '/yhfn',
         name: 'yhfn',
         component: yhfn
+      },
+      {
+        path: '/yhxw',
+        name: 'yhxw',
+        component: yhxw
       }]
     },
     {

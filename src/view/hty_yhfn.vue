@@ -23,19 +23,7 @@
     <div class="w-con">
         <div class="w-search">
             <wform :inline="true" :model="formdata" label-position="right" class="demo-form-inline">
-                <div class="">
-                    <form-item label="转化时间：">
-                        <date-picker type="month" v-model="formdata.startmonth" placeholder="选择开始月份" :editable='false' style="width:250px;">
-                        </date-picker>
-                        <span class="w-searchs">至</span>
-                        <date-picker type="month" v-model="formdata.endmonth" placeholder="选择结束月份" :editable='false' style="width:250px;">
-                        </date-picker>
-                    </form-item>
 
-                    <form-item>
-                        <wbutton type="info" icon="search" size="small"></wbutton>
-                    </form-item>
-                </div>
 
                 <div class="">
                     <form-item label="对比方式：" style="margin-top:0px;">
@@ -45,34 +33,67 @@
                             <wradio label="2">采购量对比</wradio>
                         </radio-group>
                     </form-item>
+                </div>
 
-                    <form-item label="对比日期：" style="margin-top:0px;" v-if='formdata.radiovalue=="1"'>
-                        <date-picker type="month" v-model="formdata.startmonth2" placeholder="选择开始月份" :editable='false' style="width:250px;">
+                <div class="" v-if='formdata.radiovalue=="0"'>
+                    <form-item label="转化时间" style="margin-top:0px;">
+                        <date-picker type="month" v-model="formdata.startmonth" placeholder="选择开始月份" :editable='false' style="width:250px;">
                         </date-picker>
                         <span class="w-searchs">至</span>
-                        <date-picker type="month" v-model="formdata.endmonth2" placeholder="选择结束月份" :editable='false' style="width:250px;">
+                        <date-picker type="month" v-model="formdata.endmonth" placeholder="选择结束月份" :editable='false' style="width:250px;">
                         </date-picker>
-
-                        <wbutton type="info" size="small">对比</wbutton>
                     </form-item>
 
-                    <form-item label="选择维度：" style="margin-top:0px;" v-if='formdata.radiovalue=="2"'>
-                        <wselect v-model="formdata.selectvalue1" placeholder="请选择">
-                            <woption label='全部' value='0'></woption>
-                            <woption label='整体采购' value='1'></woption>
-                        </wselect>
-                        <wselect v-model="formdata.selectvalue2" placeholder="请选择" style="width:150px;">
-                            <woption label='全部' value='0'></woption>
-                            <woption label='50万以下' value='1'></woption>
-                        </wselect>
-                        对比
-                        <wselect v-model="formdata.selectvalue3" placeholder="请选择" style="width:150px;">
-                            <woption label='全部' value='0'></woption>
-                            <woption label='1000万以上' value='1'></woption>
-                        </wselect>
-                        <wbutton type="info" size="small">对比</wbutton>
+                    <form-item style="margin-top:0px;">
+                        <wbutton type="info" icon="search" size="small"></wbutton>
                     </form-item>
+                </div>
 
+                <div class="" v-if='formdata.radiovalue=="1"'>
+                  <form-item label="会员时间" style="margin-top:0px;">
+                      <date-picker type="month" v-model="formdata.startmonth" placeholder="选择开始月份" :editable='false' style="width:250px;">
+                      </date-picker>
+                      <span class="w-searchs">至</span>
+                      <date-picker type="month" v-model="formdata.endmonth" placeholder="选择结束月份" :editable='false' style="width:250px;">
+                      </date-picker>
+                  </form-item>
+
+                  <form-item label="时间段：" style="margin-top:0px;">
+                      <date-picker type="month" v-model="formdata.startmonth2" placeholder="选择开始月份" :editable='false' style="width:250px;">
+                      </date-picker>
+                      <span class="w-searchs">至</span>
+                      <date-picker type="month" v-model="formdata.endmonth2" placeholder="选择结束月份" :editable='false' style="width:250px;">
+                      </date-picker>
+
+                      <wbutton type="info" size="small">对比</wbutton>
+                  </form-item>
+                </div>
+
+                <div class="" v-if='formdata.radiovalue=="2"'>
+                  <form-item label="选择维度：" style="margin-top:0px;" v-if='formdata.radiovalue=="2"'>
+                      <wselect v-model="formdata.selectvalue1" placeholder="请选择">
+                          <woption label='全部' value='0'></woption>
+                          <woption label='整体采购' value='1'></woption>
+                      </wselect>
+
+                      <form-item label="会员时间" style="margin-top:0px;">
+                          <date-picker type="month" v-model="formdata.startmonth" placeholder="选择开始月份" :editable='false' style="width:250px;">
+                          </date-picker>
+                          <span class="w-searchs">至</span>
+                          <date-picker type="month" v-model="formdata.endmonth" placeholder="选择结束月份" :editable='false' style="width:250px;">
+                          </date-picker>
+                      </form-item>
+
+                      <form-item label="时间段：" style="margin-top:0px;">
+                          <date-picker type="month" v-model="formdata.startmonth2" placeholder="选择开始月份" :editable='false' style="width:250px;">
+                          </date-picker>
+                          <span class="w-searchs">至</span>
+                          <date-picker type="month" v-model="formdata.endmonth2" placeholder="选择结束月份" :editable='false' style="width:250px;">
+                          </date-picker>
+
+                          <wbutton type="info" size="small">对比</wbutton>
+                      </form-item>
+                  </form-item>
                 </div>
             </wform>
         </div>
@@ -258,14 +279,38 @@ export default {
                 }],
                 series: [{
                     name: '当前数据',
-                    barWidth: 10,
+                    barWidth: 5,
                     type: 'bar',
-                    data: _this.wholeBottom
+                    data: _this.wholeBottom,
+                    itemStyle: {
+                   normal: {
+                       color: new echarts.graphic.LinearGradient(
+                           0, 0, 0, 1,
+                           [
+                               {offset: 0, color: '#ff7700'},
+                               {offset: 0.5, color: '#ff9e48'},
+                               {offset: 1, color: '#ffbb7f'}
+                           ]
+                       )
+                   },
+               }
                 }, {
                     name: '对比数据',
                     type: 'bar',
-                    barWidth: 10,
-                    data: _this.wholeBottomPair
+                    barWidth: 5,
+                    data: _this.wholeBottomPair,
+                    itemStyle: {
+                   normal: {
+                       color: new echarts.graphic.LinearGradient(
+                           0, 0, 0, 1,
+                           [
+                               {offset: 0, color: '#6c81c3'},
+                               {offset: 0.5, color: '#91a1c6'},
+                               {offset: 1, color: '#b5bfd9'}
+                           ]
+                       )
+                   },
+               }
                 }]
             };
             var option3 = {

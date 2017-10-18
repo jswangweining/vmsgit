@@ -205,6 +205,10 @@ export default {
             }, {
                 'name': '用户分类',
                 'rel': 'yhfn'
+            },
+            {
+                'name': '用户分析',
+                'rel': 'yhfx'
             }, {
                 'name': '目标用户管理',
                 'rel': 'mbyhgl'
