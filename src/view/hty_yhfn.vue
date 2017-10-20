@@ -26,7 +26,7 @@
 
 
                 <div class="">
-                    <form-item label="对比方式：" style="margin-top:0px;">
+                    <form-item label="对比方式：">
                         <radio-group v-model="formdata.radiovalue">
                             <wradio label="0">无对比</wradio>
                             <wradio label="1">时间段对比</wradio>

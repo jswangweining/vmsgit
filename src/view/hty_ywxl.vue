@@ -368,6 +368,10 @@
     color: #333;
     font-weight: bold;
     position: relative;
+    span {
+      font-size: 0.6rem;
+      font-weight: normal;
+    }
     &:before {
         content: '';
         position: absolute;
@@ -613,11 +617,22 @@
     flex: 1;
 }
 
+.rankingcbtc {
+  width: 5rem;
+  height: 2rem;
+  border-left: 1px solid #f3f3f3;
+  text-align: center;
+}
+
 .rankingcbd {
     flex: 1;
     color: #666;
     // display: flex;
     // flex-direction: column;
+    .w-active2 {
+      border: 1px solid #4a90e2;
+      background-color: #f4f9fe;
+    }
     .w-active {
         border-top: 1px solid #ff7700;
         border-left: 1px solid #ff7700;
@@ -651,6 +666,11 @@
 
 .rankingcbda2 {
     flex: 1;
+}
+
+.rankingcbda3 {
+    width: 5rem;
+    text-align: center;
 }
 
 </style>
