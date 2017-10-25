@@ -125,7 +125,7 @@
 
 <div v-loading.body='loadingall' style="width:100%; height:100%">
     <div class="w-pos">
-        <span>首页</span>/<span>汇天眼</span>/<span class="w-pos-active">选品定价</span> {{formdata.endmonth}}
+        <span>首页</span>/<span>汇天眼</span>/<span class="w-pos-active">选品定价</span>
     </div>
     <div class="w-con">
         <div class="w-search">
@@ -167,9 +167,9 @@
             <div class="xpdj-t">
                 <div class="xpdj-ta">
                     <p class="xpdj-tap1">销售金额<span>（万元）</span></p>
-                    <p class="xpdj-tap2">{{topdata.xsAmt}}</p>
-                    <p class="xpdj-tap3"><span class="xpdj-tap3s1">上期金额</span><span class="xpdj-tap3s2">{{topdata.upperXsAmt}}</span></p>
-                    <p class="xpdj-tap3"><span class="xpdj-tap3s1">上期同比</span><span class="xpdj-tap3s2">{{topdata.xsAmtAn}}%<svg class="icon" aria-hidden="true" v-if='topdata.xsAmtSort=="0"'>
+                    <p class="xpdj-tap2">{{topdata.xsAmt || 0}}</p>
+                    <p class="xpdj-tap3"><span class="xpdj-tap3s1">上期金额</span><span class="xpdj-tap3s2">{{topdata.upperXsAmt || 0}}</span></p>
+                    <p class="xpdj-tap3"><span class="xpdj-tap3s1">上期同比</span><span class="xpdj-tap3s2">{{topdata.xsAmtAn || 0}}%<svg class="icon" aria-hidden="true" v-if='topdata.xsAmtSort=="0"'>
                         <use xlink:href="#icon-jiantou1"></use>
                     </svg><svg class="icon" aria-hidden="true" v-if='topdata.xsAmtSort=="1"'>
                         <use xlink:href="#icon-jiantou2"></use>
@@ -177,9 +177,9 @@
                 </div>
                 <div class="xpdj-ta">
                     <p class="xpdj-tap1">销售数量<span>（件）</span></p>
-                    <p class="xpdj-tap2">{{topdata.xsQty}}</p>
-                    <p class="xpdj-tap3"><span class="xpdj-tap3s1">上期金额</span><span class="xpdj-tap3s2">{{topdata.upperXsQty}}</span></p>
-                    <p class="xpdj-tap3"><span class="xpdj-tap3s1">上期同比</span><span class="xpdj-tap3s2">{{topdata.xsQtyAn}}%<svg class="icon" aria-hidden="true" v-if='topdata.xsQtySort=="0"'>
+                    <p class="xpdj-tap2">{{topdata.xsQty || 0}}</p>
+                    <p class="xpdj-tap3"><span class="xpdj-tap3s1">上期金额</span><span class="xpdj-tap3s2">{{topdata.upperXsQty || 0}}</span></p>
+                    <p class="xpdj-tap3"><span class="xpdj-tap3s1">上期同比</span><span class="xpdj-tap3s2">{{topdata.xsQtyAn || 0}}%<svg class="icon" aria-hidden="true" v-if='topdata.xsQtySort=="0"'>
                         <use xlink:href="#icon-jiantou1"></use>
                     </svg><svg class="icon" aria-hidden="true" v-if='topdata.xsQtySort=="1"'>
                         <use xlink:href="#icon-jiantou2"></use>
@@ -187,9 +187,9 @@
                 </div>
                 <div class="xpdj-ta">
                     <p class="xpdj-tap1">销售毛利率</p>
-                    <p class="xpdj-tap2 xpdj-tap2red">{{topdata.xsMl}}</p>
-                    <p class="xpdj-tap3"><span class="xpdj-tap3s1">上期金额</span><span class="xpdj-tap3s2">{{topdata.upperXsMl}}</span></p>
-                    <p class="xpdj-tap3"><span class="xpdj-tap3s1">上期同比</span><span class="xpdj-tap3s2">{{topdata.xsMlAn}}%<svg class="icon" aria-hidden="true" v-if='topdata.xsMlSort=="0"'>
+                    <p class="xpdj-tap2 xpdj-tap2red">{{topdata.xsMl || 0}}</p>
+                    <p class="xpdj-tap3"><span class="xpdj-tap3s1">上期金额</span><span class="xpdj-tap3s2">{{topdata.upperXsMl || 0}}</span></p>
+                    <p class="xpdj-tap3"><span class="xpdj-tap3s1">上期同比</span><span class="xpdj-tap3s2">{{topdata.xsMlAn || 0}}%<svg class="icon" aria-hidden="true" v-if='topdata.xsMlSort=="0"'>
                         <use xlink:href="#icon-jiantou1"></use>
                     </svg><svg class="icon" aria-hidden="true" v-if='topdata.xsMlSort=="1"'>
                         <use xlink:href="#icon-jiantou2"></use>
@@ -197,9 +197,9 @@
                 </div>
                 <div class="xpdj-ta">
                     <p class="xpdj-tap1">销售净利润<span>（万元）</span></p>
-                    <p class="xpdj-tap2 xpdj-tap2org">{{topdata.xsLr}}</p>
-                    <p class="xpdj-tap3"><span class="xpdj-tap3s1">上期金额</span><span class="xpdj-tap3s2">{{topdata.upperXsLr}}</span></p>
-                    <p class="xpdj-tap3"><span class="xpdj-tap3s1">上期同比</span><span class="xpdj-tap3s2">{{topdata.xsLrAn}}%<svg class="icon" aria-hidden="true" v-if='topdata.xsLrSort=="0"'>
+                    <p class="xpdj-tap2 xpdj-tap2org">{{topdata.xsLr || 0}}</p>
+                    <p class="xpdj-tap3"><span class="xpdj-tap3s1">上期金额</span><span class="xpdj-tap3s2">{{topdata.upperXsLr || 0}}</span></p>
+                    <p class="xpdj-tap3"><span class="xpdj-tap3s1">上期同比</span><span class="xpdj-tap3s2">{{topdata.xsLrAn || 0}}%<svg class="icon" aria-hidden="true" v-if='topdata.xsLrSort=="0"'>
                         <use xlink:href="#icon-jiantou1"></use>
                     </svg><svg class="icon" aria-hidden="true" v-if='topdata.xsLrSort=="1"'>
                         <use xlink:href="#icon-jiantou2"></use>
@@ -207,13 +207,13 @@
                 </div>
                 <div class="xpdj-ta">
                     <p class="xpdj-tap1">销售金额排名</p>
-                    <p class="xpdj-tap2 xpdj-tap2org">{{topdata.xsRanking}}</p>
-                    <p class="xpdj-tap3"><span class="xpdj-tap3s1">上期金额</span><span class="xpdj-tap3s2">{{topdata.upperXsRanking}}</span></p>
-                    <p class="xpdj-tap3"><span class="xpdj-tap3s1">上期同比</span><span class="xpdj-tap3s2">{{topdata.xsRankingAn}}%<svg class="icon" aria-hidden="true" v-if='topdata.xsRankingSort=="0"'>
+                    <p class="xpdj-tap2 xpdj-tap2org">{{topdata.xsRanking || 0}}</p>
+                    <p class="xpdj-tap3"><span class="xpdj-tap3s1">上期排名</span><span class="xpdj-tap3s2">{{topdata.upperXsRanking || 0}}</span></p>
+                    <!-- <p class="xpdj-tap3"><span class="xpdj-tap3s1">上期同比</span><span class="xpdj-tap3s2">{{topdata.xsRankingAn}}%<svg class="icon" aria-hidden="true" v-if='topdata.xsRankingSort=="0"'>
                         <use xlink:href="#icon-jiantou1"></use>
                     </svg><svg class="icon" aria-hidden="true" v-if='topdata.xsRankingSort=="1"'>
                         <use xlink:href="#icon-jiantou2"></use>
-                    </svg></span></p>
+                    </svg></span></p> -->
                 </div>
             </div>
             <div class="xpdj-m">
@@ -240,167 +240,138 @@
         </div>
 
         <div class="w-pannel">
-            <wtabs v-model="activeName" v-loading='loadtab' @tab-click="tabclick">
+            <wtabs v-model="activeName" v-loading='loadtab' @tab-click='tabclick'>
+              <wtabpane label="品牌品类销售分析" name="0" key="品牌品类销售分析">
+                <div class="w-tab-search">
+                    <wform :inline="true" :model="formdata2" label-position="right" class="demo-form-inline">
+                        <form-item label="">
+                          <radio-group v-model="formdata2.radiovalue" @change='radiochangepp'>
+                              <wradio label="0">品牌</wradio>
+                              <wradio label="1">品类</wradio>
+                          </radio-group>
+                        </form-item>
+                    </wform>
+                </div>
+                <div class="w-table">
+                    <wtable border :data="tableData">
+                        <tablecolumn prop="ppName" label="品牌" width='200' fixed>
+                        </tablecolumn>
+                        <tablecolumn prop="plName" label="品类" show-overflow-tooltip min-width='300'>
+                        </tablecolumn>
+                        <tablecolumn prop="xsPrice" label="销售单价" width='150'>
+                        </tablecolumn>
+                        <tablecolumn prop="xsQty" label="销售数量" width='150'>
+                        </tablecolumn>
+                        <tablecolumn prop="xsAmt" label="销售金额" width='150' sortable>
+                        </tablecolumn>
+                        <tablecolumn prop="xsRatio" label="销售金额占比" width='150'>
+                        </tablecolumn>
+                        <tablecolumn prop="xsAvg" label="平均毛利" width='200'>
+                        </tablecolumn>
+                        <tablecolumn prop="xsAvgRatio" label="平均毛利率" fixed='right'>
+                        </tablecolumn>
+                    </wtable>
+                </div>
+                <div class="w-pages">
+                    <wpager :total="pagetotle1" :current-page="cur_page1" layout="total, sizes, prev, pager, next, jumper" :page-sizes="[10, 15, 20]" :page-size="pagesize1" @current-change="handleCurrentChange1" @size-change="handleSizeChange1"></wpager>
+                </div>
+              </wtabpane>
+              <wtabpane label="在售商铺详情分析" name="1" key='在售商铺详情分析'>
+                <div class="w-tab-search">
+                  <wform :inline="true" :model="formdata3" label-position="right" class="demo-form-inline">
+                      <form-item label="商品名称：">
+                          <winput v-model="formdata3.inpName" placeholder='订单号/客户名称/联系方式'></winput>
+                      </form-item>
 
+                      <form-item label="品类：">
+                          <wselect v-model="formdata3.plvalue" placeholder="请选择" filterable clearable >
+                                  <woption :label='item.brandName' :value='item.sortNum' v-for='(item,index) in formdata3.plarr'></woption>
+                          </wselect>
+                      </form-item>
 
+                      <form-item label="品牌：">
+                          <wselect v-model="formdata3.ppvalue" placeholder="请选择" filterable clearable>
+                            <woption :label='item.brandName' :value='item.sortNum' v-for='(item,index) in formdata3.pparr'></woption>
+                          </wselect>
+                      </form-item>
 
-                <wtabpane label="品牌品类销售分析" name="0">
+                      <form-item label="爆/滞款：">
+                          <wselect v-model="formdata3.selectvalue3" placeholder="请选择" style="width:100px;">
+                              <woption label='爆款' value='0'></woption>
+                              <woption label='滞款' value='1'></woption>
+                          </wselect>
+                      </form-item>
 
-                    <div class="w-tab-search">
-                        <wform :inline="true" :model="formdata2" label-position="right" class="demo-form-inline">
-                            <form-item label="">
-                              <radio-group v-model="formdata2.radiovalue" @change='radiochangepp'>
-                                  <wradio label="0">品牌</wradio>
-                                  <wradio label="1">品类</wradio>
-
-                              </radio-group>
-                            </form-item>
-                        </wform>
-                    </div>
-                    <div class="w-table">
-                        <wtable border :data="tableData">
-                            <tablecolumn prop="ppName" label="品牌" width='200' fixed>
-                            </tablecolumn>
-                            <tablecolumn prop="plName" label="品类" show-overflow-tooltip min-width='300'>
-                            </tablecolumn>
-                            <tablecolumn prop="xsPrice" label="销售单价" width='150'>
-                            </tablecolumn>
-                            <tablecolumn prop="xsQty" label="销售数量" width='150'>
-                            </tablecolumn>
-                            <tablecolumn prop="xsAmt" label="销售金额" width='150' sortable>
-                            </tablecolumn>
-                            <tablecolumn prop="xsRatio" label="销售金额占比" width='150'>
-                            </tablecolumn>
-                            <tablecolumn prop="xsAvg" label="平均毛利" width='200'>
-                            </tablecolumn>
-                            <tablecolumn prop="xsAvgRatio" label="平均毛利率" fixed='right'>
-                            </tablecolumn>
-                        </wtable>
-                    </div>
-                    <div class="w-pages">
-                        <wpager :total="pagetotle1" :current-page="cur_page1" layout="total, sizes, prev, pager, next, jumper" :page-sizes="[10, 15, 20]" :page-size="pagesize1" @current-change="handleCurrentChange1" @size-change="handleSizeChange1"></wpager>
-                    </div>
-                </wtabpane>
-                <wtabpane label="在售商铺详情分析" name="1">
-                    <div class="w-tab-search">
-                        <wform :inline="true" :model="formdata3" label-position="right" class="demo-form-inline">
-                            <form-item label="商品名称：">
-                                <winput v-model="formdata3.inpName" placeholder='订单号/客户名称/联系方式'></winput>
-                            </form-item>
-
-                            <form-item label="品类：">
-                                <wselect v-model="formdata3.selectvalue2" placeholder="请选择">
-                                        <woption :label='item.brandName' :value='item.sortNum' v-for='(item,index) in formdata3.selectarr2'></woption>
-                                    <!-- <woption label='全部' value='0'></woption>
-                                    <woption label='爆款' value='1'></woption>
-                                    <woption label='滞款' value='2'></woption> -->
-                                </wselect>
-                            </form-item>
-
-                            <form-item label="品牌：">
-                                <wselect v-model="formdata3.selectvalue1" placeholder="请选择">
-                                  <woption :label='item.brandName' :value='item.sortNum' v-for='(item,index) in formdata3.selectarr1'></woption>
-                                </wselect>
-                            </form-item>
-
-                            <form-item label="爆/滞款：">
-                                <wselect v-model="formdata3.selectvalue3" placeholder="请选择" style="width:100px;">
-                                    <woption label='爆款' value='0'></woption>
-                                    <woption label='滞款' value='1'></woption>
-                                </wselect>
-                            </form-item>
-
-                            <form-item>
-                                <wbutton type="info" icon="search" size="small"></wbutton>
-                            </form-item>
-                        </wform>
-                    </div>
-                    <div class="w-table">
-                        <wtable border :data="tableData">
-                            <tablecolumn prop="orderId" label="订单编号" width='200' fixed>
-                            </tablecolumn>
-                            <tablecolumn prop="name" label="客户名称" show-overflow-tooltip min-width='300'>
-                            </tablecolumn>
-                            <tablecolumn prop="money" label="订单总金额" width='150'>
-                            </tablecolumn>
-                            <tablecolumn prop="num" label="商品总数" width='150'>
-                            </tablecolumn>
-                            <tablecolumn prop="orderTime" label="下单时间" width='150'>
-                            </tablecolumn>
-                            <tablecolumn prop="link" label="联系人" width='150'>
-                            </tablecolumn>
-                            <tablecolumn prop="phone" label="联系方式" width='200'>
-                            </tablecolumn>
-                            <tablecolumn prop="zt" label="状态" fixed='right'>
-                            </tablecolumn>
-                        </wtable>
-                    </div>
-                    <div class="w-pages">
-                        <wpager :total="pagetotle2" :current-page="cur_page2" layout="total, sizes, prev, pager, next, jumper" :page-sizes="[10, 15, 20]" :page-size="pagesize2"></wpager>
-                    </div>
-                </wtabpane>
-                <wtabpane label="爆款商品销售分析" name="2">
-                    <div class="w-tab-search">
-                        <wform :inline="true" :model="formdata4" label-position="right" class="demo-form-inline">
-
-
-                            <form-item label="品类：">
-                                <wselect v-model="formdata4.selectvalue1" placeholder="请选择">
-                                    <woption label='全部' value='0'></woption>
-                                    <woption label='爆款' value='1'></woption>
-                                    <woption label='滞款' value='2'></woption>
-                                </wselect>
-                            </form-item>
-
-                            <form-item label="品牌：">
-                                <wselect v-model="formdata4.selectvalue2" placeholder="请选择">
-                                    <woption label='全部' value='0'></woption>
-                                    <woption label='爆款' value='1'></woption>
-                                    <woption label='滞款' value='2'></woption>
-                                </wselect>
-                            </form-item>
-
-                            <form-item label="是否经营：">
-                                <wselect v-model="formdata4.selectvalue3" placeholder="请选择" style="width:100px;">
-                                    <woption label='全部' value='0'></woption>
-                                    <woption label='是' value='1'></woption>
-                                    <woption label='否' value='2'></woption>
-                                </wselect>
-                            </form-item>
-
-                            <form-item>
-                                <wbutton type="info" icon="search" size="small"></wbutton>
-                            </form-item>
-                        </wform>
-                    </div>
-                    <div class="w-table">
-                        <wtable border :data="tableData">
-                            <tablecolumn prop="orderId" label="订单编号" width='200' fixed>
-                            </tablecolumn>
-                            <tablecolumn prop="name" label="客户名称" show-overflow-tooltip min-width='300'>
-                            </tablecolumn>
-                            <tablecolumn prop="money" label="订单总金额" width='150'>
-                            </tablecolumn>
-                            <tablecolumn prop="num" label="商品总数" width='150'>
-                            </tablecolumn>
-                            <tablecolumn prop="orderTime" label="下单时间" width='150'>
-                            </tablecolumn>
-                            <tablecolumn prop="link" label="联系人" width='150'>
-                            </tablecolumn>
-                            <tablecolumn prop="phone" label="联系方式" width='200'>
-                            </tablecolumn>
-                            <tablecolumn prop="zt" label="状态" fixed='right'>
-                            </tablecolumn>
-                        </wtable>
-                    </div>
-                    <div class="w-pages">
-                        <wpager :total="pagetotle3" :current-page="cur_page3" layout="total, sizes, prev, pager, next, jumper" :page-sizes="[10, 15, 20]" :page-size="pagesize3"></wpager>
-                    </div>
-                </wtabpane>
-
-
-
+                      <form-item>
+                          <wbutton type="info" icon="search" size="small"></wbutton>
+                      </form-item>
+                  </wform>
+                </div>
+                <div class="w-table">
+                    <wtable border :data="tableData2">
+                        <tablecolumn prop="ppName" label="品牌" width='200' fixed>
+                        </tablecolumn>
+                        <tablecolumn prop="plName" label="品类" show-overflow-tooltip min-width='300'>
+                        </tablecolumn>
+                        <tablecolumn prop="xsPrice" label="销售单价" width='150'>
+                        </tablecolumn>
+                        <tablecolumn prop="xsQty" label="销售数量" width='150'>
+                        </tablecolumn>
+                        <tablecolumn prop="xsAmt" label="销售金额" width='150' sortable>
+                        </tablecolumn>
+                        <tablecolumn prop="xsRatio" label="销售金额占比" width='150'>
+                        </tablecolumn>
+                        <tablecolumn prop="xsAvg" label="平均毛利" width='200'>
+                        </tablecolumn>
+                        <tablecolumn prop="xsAvgRatio" label="平均毛利率" fixed='right'>
+                        </tablecolumn>
+                    </wtable>
+                </div>
+                <div class="w-pages">
+                    <wpager :total="pagetotle2" :current-page="cur_page2" layout="total, sizes, prev, pager, next, jumper" :page-sizes="[10, 15, 20]" :page-size="pagesize2" @current-change="handleCurrentChange1" @size-change="handleSizeChange1"></wpager>
+                </div>
+              </wtabpane>
+              <wtabpane label="爆款商品销售分析" name="2" key='爆款商品销售分析'>
+                <div class="w-tab-search">
+                  <wform :inline="true" :model="formdata4" label-position="right" class="demo-form-inline" v-show='activeName=="2"'>
+                      <form-item label="品类：">
+                          <wselect v-model="formdata4.plvalue" placeholder="请选择" filterable clearable >
+                                  <woption :label='item.brandName' :value='item.sortNum' v-for='(item,index) in formdata4.plarr'></woption>
+                          </wselect>
+                      </form-item>
+                      <form-item label="品牌：">
+                          <wselect v-model="formdata4.ppvalue" placeholder="请选择" filterable clearable >
+                            <woption :label='item.brandName' :value='item.sortNum' v-for='(item,index) in formdata4.pparr'></woption>
+                          </wselect>
+                      </form-item>
+                  </wform>
+                </div>
+                <div class="w-table">
+                    <wtable border :data="tableData">
+                        <tablecolumn prop="ppName" label="品牌" width='200' fixed>
+                        </tablecolumn>
+                        <tablecolumn prop="plName" label="品类" show-overflow-tooltip min-width='300'>
+                        </tablecolumn>
+                        <tablecolumn prop="xsPrice" label="销售单价" width='150'>
+                        </tablecolumn>
+                        <tablecolumn prop="xsQty" label="销售数量" width='150'>
+                        </tablecolumn>
+                        <tablecolumn prop="xsAmt" label="销售金额" width='150' sortable>
+                        </tablecolumn>
+                        <tablecolumn prop="xsRatio" label="销售金额占比" width='150'>
+                        </tablecolumn>
+                        <tablecolumn prop="xsAvg" label="平均毛利" width='200'>
+                        </tablecolumn>
+                        <tablecolumn prop="xsAvgRatio" label="平均毛利率" fixed='right'>
+                        </tablecolumn>
+                    </wtable>
+                </div>
+                <div class="w-pages">
+                    <wpager :total="pagetotle1" :current-page="cur_page1" layout="total, sizes, prev, pager, next, jumper" :page-sizes="[10, 15, 20]" :page-size="pagesize1" @current-change="handleCurrentChange1" @size-change="handleSizeChange1"></wpager>
+                </div>
+              </wtabpane>
             </wtabs>
+
         </div>
     </div>
 </div>
@@ -467,35 +438,65 @@ export default {
         wholeBottomDate: ["201705", "201709"],
         wholeBottomPair: ["88.88", "88.88"],
         activeName: '0',
+        tabAjax:false,
         formdata2: {
             radiovalue: '0',
         },
         formdata3: {
             inpName: '',
-            selectarr1:[],
-            selectarr2:[],
-            selectvalue1: '',
-            selectvalue2: '',
-            selectvalue3: ''
+            pparr:[],
+            plarr:[],
+            ppvalue: '',
+            plvalue: '',
+            selectvalue3: '0'
         },
         formdata4: {
-            selectvalue1: '',
-            selectvalue2: '',
-            selectvalue3: ''
+          pparr:[],
+          plarr:[],
+          ppvalue: '',
+          plvalue: '',
         },
         tableData: [],
+        tableData2: [],
         topdata: {},
         pagetotle1: 0,
         cur_page1: 1,
         pagesize1: 10,
-        pagetotle2: 100,
+        pagetotle2: 0,
         cur_page2: 1,
         pagesize2: 10,
-        pagetotle3: 100,
+        pagetotle3: 0,
         cur_page3: 1,
         pagesize3: 10
     }),
     watch: {
+      // mondisabled: false,
+      // yeardisabled: false,
+        activeName:function(val, oldVal){
+          let _this=this;
+          if(val!==oldVal)
+          {
+            _this.tabAjax=true;
+
+          }
+        },
+        mondisabled:function(val, oldVal){
+          let _this=this;
+          if(val!==oldVal && _this.formdata.radiovalue=='0')
+          {
+            _this.tabAjax=true;
+
+          }
+        },
+        yeardisabled:function(val, oldVal){
+          let _this=this;
+          if(val!==oldVal && _this.formdata.radiovalue=='1')
+          {
+            _this.tabAjax=true;
+
+          }
+        }
+
         // formdata: {
         //     handler: function(val) {
         //     },
@@ -525,30 +526,73 @@ export default {
         // var src='2017-01-31T16:00:00.000Z';
         // console.log(new Date(src).getTime())
         let _this = this;
-        _this.$nextTick(function() {
-            var url = 'http://199.168.3.98:8080/htyfctsaleorg/sale/all',
+          _this.$nextTick(function() {
+          var url = 'http://199.168.3.98:8080/htyfctsaleorg/sale/detail/query/category',
+              data = {
+
+              },
+              loading = function() {
+                  _this.loadingall = true;
+              },
+              success = function(data) {
+                  if (data.code == '1') {
+
+                    // _this.formdata3.pparr=data.data.detailBrand;
+                    _this.formdata3.plarr=data.data;
+
+                  }
+                  else {
+                        Message({
+                            'message': data.msg,
+                            'type': 'error',
+                        });
+                  }
+              },
+              complete = function() {
+                _this.loadingall = false;
+              }
+          _this.adminApi.getJsonp(url, data, loading, success, complete)
+          var url = 'http://199.168.3.98:8080/htyfctsaleorg/sale/hot/query/category',
+              data = {
+
+              },
+              loading = function() {
+                  _this.loadingall = true;
+              },
+              success = function(data) {
+                  if (data.code == '1') {
+                    _this.formdata4.plarr=data.data;
+                  }
+                  else {
+                        Message({
+                            'message': data.msg,
+                            'type': 'error',
+                        });
+                  }
+              },
+              complete = function() {
+                _this.loadingall = false;
+              }
+          _this.adminApi.getJsonp(url, data, loading, success, complete)
+          var url = 'http://199.168.3.98:8080/htyfctsaleorg/sale/all',
                 data = {
-                    'userId': '8172',
+                    'userId': _this.userId,
                     'dateType':_this.formdata.radiovalue,
-                    'startTime':'20170701',
-                    'endTime':'20170731',
                     'xzSort': _this.selectvalue,
                     'listSort':_this.activeName,
                     'prodSort':_this.formdata2.radiovalue,
-                    'detailSort':'0'
-
+                    'detailSort':_this.formdata3.selectvalue3,
+                    // 'endTime':'201707'
                 },
                 loading = function() {
                     _this.loadingall = true;
                 },
                 success = function(data) {
                     if (data.code == '1') {
-                        console.log(JSON.stringify(data));
+                        //console.log(JSON.stringify(data));
                         _this.topdata = data.data.saleCompareDTO;
                         _this.tableData=data.data.saleProdListDTO.saleProdDTOList;
                         _this.pagetotle1=data.data.saleProdListDTO.saleProdnum;
-                        _this.formdata3.selectarr1=data.data.detailBrand;
-                        _this.formdata3.selectarr2=data.data.detailCategory;
                         var option = {
                             tooltip: {
                                 trigger: 'axis',
@@ -596,7 +640,7 @@ export default {
                 complete = function() {
                     _this.loadingall = false;
                 }
-            _this.adminApi.getJsonp(url, data, loading, success, complete)
+          _this.adminApi.getJsonp(url, data, loading, success, complete)
         })
     },
     methods: {
@@ -667,13 +711,13 @@ export default {
         },
         tabclick: function(tab) {
             let _this = this;
-
+            console.log(_this.tabAjax)
             switch (_this.activeName) {
                 case "0":
                     console.log('111')
                     break;
                 case "1":
-                  alert('222222')
+                    console.log('22222')
                     break;
                 case "2":
                     console.log('333')
@@ -706,30 +750,71 @@ export default {
             }
             else {
                 $('.el-input__inner', '.el-date-editor--month').addClass('w-dataactive');
-                      var starttime=$('.el-input__inner:eq(0)',".monthrange").val()+'01';
-                      var endtime=$('.el-input__inner:eq(1)',".monthrange").val()+'31';
+                      var starttime=$('.el-input__inner:eq(0)',".monthrange").val();
+                      var endtime=$('.el-input__inner:eq(1)',".monthrange").val();
+
                 var   data = {
-                      'userId': '123',
+                      'userId': _this.userId,
                       'xzSort': _this.selectvalue,
                       'listSort':_this.activeName,
                       'startTime':starttime.replace('-',''),
-                      'endTime':endtime.replace('-','')
+                      'endTime':endtime.replace('-',''),
+                      'dateType':_this.formdata.radiovalue,
+                      'detailSort':_this.formdata3.selectvalue3,
                   };
                   if(data.listSort=='0'){
-                    data.prodSort=_this.formdata2.radiovalue
+                    _this.cur_page1=1;
+                    data.prodSort=_this.formdata2.radiovalue;
+                    data.page=_this.cur_page1;
+                    data.rows=  _this.pagesize1;
+
+                  }
+
+                  if(data.listSort=='1')
+                  {
+                    _this.cur_page2=1;
+                    data.prodSort=_this.formdata2.radiovalue;
+                    data.prodName=_this.formdata3.inpName ? _this.formdata3.inpName:'';
+                    data.ppCode=_this.formdata3.ppvalue ? _this.formdata3.ppvalue:'';
+                    data.plCode=_this.formdata3.plvalue ? _this.formdata3.plvalue:'';
+                    data.page=_this.cur_page2;
+                    data.rows=  _this.pagesize2;
+
+                  }
+                  if(data.listSort=='2')
+                  {
+                    _this.cur_page3=1;
+                    data.prodSort=_this.formdata2.radiovalue;
+                    data.ppCode=_this.formdata4.ppvalue ? _this.formdata4.ppvalue:'';
+                    data.plCode=_this.formdata4.plvalue ? _this.formdata4.plvalue:'';
+                    data.page=_this.cur_page3;
+                    data.rows=  _this.pagesize3;
                   }
 
                 var url = 'http://199.168.3.98:8080/htyfctsaleorg/sale/all',
-
                     loading = function() {
                         _this.loadingall = true;
                     },
                     success = function(data) {
                         if (data.code == '1') {
                             _this.mondisabled = true;
-                            _this.topdata = data.data.saleCompareDTO;
-                            _this.tableData=data.data.saleProdListDTO.saleProdDTOList;
-                            _this.pagetotle1=data.data.saleProdListDTO.saleProdnum;
+                            if(_this.activeName=='0')
+                            {
+                              _this.topdata = data.data.saleCompareDTO;
+                              _this.tableData=data.data.saleProdListDTO.saleProdDTOList;
+                              _this.pagetotle1=data.data.saleProdListDTO.saleProdnum;
+                            }
+
+                              if(_this.activeName=='1')
+                              {
+                                alert('1111')
+                              }
+
+                              if(_this.activeName=='2')
+                              {
+                                alert('2222')
+                              }
+
                             var option = {
                                 tooltip: {
                                     trigger: 'axis',
@@ -773,7 +858,6 @@ export default {
                                   'type': 'error',
                               });
                         }
-
                     },
                     complete = function() {
                         _this.loadingall = false;
@@ -785,14 +869,40 @@ export default {
             let _this = this;
 
             var   data = {
-                  'userId': '123',
+                  'userId': _this.userId,
                   'xzSort': _this.selectvalue,
                   'listSort':_this.activeName,
+                  'dateType':_this.formdata.radiovalue,
+                  'detailSort':_this.formdata3.selectvalue3
               };
               if(data.listSort=='0'){
-                data.prodSort=_this.formdata2.radiovalue
+                _this.cur_page1=1;
+                data.prodSort=_this.formdata2.radiovalue;
+                data.page=_this.cur_page1;
+                data.rows=  _this.pagesize1;
+
               }
 
+              if(data.listSort=='1')
+              {
+                _this.cur_page2=1;
+                data.prodSort=_this.formdata2.radiovalue;
+                data.prodName=_this.formdata3.inpName ? _this.formdata3.inpName:'';
+                data.ppCode=_this.formdata3.ppvalue ? _this.formdata3.ppvalue:'';
+                data.plCode=_this.formdata3.plvalue ? _this.formdata3.plvalue:'';
+                data.page=_this.cur_page2;
+                data.rows=  _this.pagesize2;
+
+              }
+              if(data.listSort=='2')
+              {
+                _this.cur_page3=1;
+                data.prodSort=_this.formdata2.radiovalue;
+                data.ppCode=_this.formdata4.ppvalue ? _this.formdata4.ppvalue:'';
+                data.plCode=_this.formdata4.plvalue ? _this.formdata4.plvalue:'';
+                data.page=_this.cur_page3;
+                data.rows=  _this.pagesize3;
+              }
             var url = 'http://199.168.3.98:8080/htyfctsaleorg/sale/all',
 
                 loading = function() {
@@ -860,12 +970,39 @@ export default {
         closeYear: function() {
             let _this = this;
             var   data = {
-                  'userId': '123',
+                  'userId': _this.userId,
                   'xzSort': _this.selectvalue,
                   'listSort':_this.activeName,
+                  'dateType':_this.formdata.radiovalue,
+                  'detailSort':_this.formdata3.selectvalue3
               };
               if(data.listSort=='0'){
-                data.prodSort=_this.formdata2.radiovalue
+                _this.cur_page1=1;
+                data.prodSort=_this.formdata2.radiovalue;
+                data.page=_this.cur_page1;
+                data.rows=  _this.pagesize1;
+
+              }
+
+              if(data.listSort=='1')
+              {
+                _this.cur_page2=1;
+                data.prodSort=_this.formdata2.radiovalue;
+                data.prodName=_this.formdata3.inpName ? _this.formdata3.inpName:'';
+                data.ppCode=_this.formdata3.ppvalue ? _this.formdata3.ppvalue:'';
+                data.plCode=_this.formdata3.plvalue ? _this.formdata3.plvalue:'';
+                data.page=_this.cur_page2;
+                data.rows=  _this.pagesize2;
+
+              }
+              if(data.listSort=='2')
+              {
+                _this.cur_page3=1;
+                data.prodSort=_this.formdata2.radiovalue;
+                data.ppCode=_this.formdata4.ppvalue ? _this.formdata4.ppvalue:'';
+                data.plCode=_this.formdata4.plvalue ? _this.formdata4.plvalue:'';
+                data.page=_this.cur_page3;
+                data.rows=  _this.pagesize3;
               }
 
               var url = 'http://199.168.3.98:8080/htyfctsaleorg/sale/all',
@@ -956,19 +1093,45 @@ export default {
 
             else {
                 $('.el-input__inner', '.el-date-editor--year').addClass('w-dataactive');
-                var starttime=$('.el-input__inner:eq(0)',".yearrange").val()+"01"+'01';
-                var endtime=$('.el-input__inner:eq(1)',".yearrange").val()+"12"+'31';
+                var starttime=$('.el-input__inner:eq(0)',".yearrange").val()+"01";
+                var endtime=$('.el-input__inner:eq(1)',".yearrange").val()+"12";
                 var   data = {
-                      'userId': '123',
-                      'dateType':'1',
+                      'userId': _this.userId,
+                      'dateType':_this.formdata.radiovalue,
                       'xzSort': _this.selectvalue,
                       'listSort':_this.activeName,
                       'startTime':starttime.replace('-',''),
-                      'endTime':endtime.replace('-','')
+                      'endTime':endtime.replace('-',''),
+                      'detailSort':_this.formdata3.selectvalue3
                   };
 
                   if(data.listSort=='0'){
-                    data.prodSort=_this.formdata2.radiovalue
+                    _this.cur_page1=1;
+                    data.prodSort=_this.formdata2.radiovalue;
+                    data.page=_this.cur_page1;
+                    data.rows=  _this.pagesize1;
+
+                  }
+
+                  if(data.listSort=='1')
+                  {
+                    _this.cur_page2=1;
+                    data.prodSort=_this.formdata2.radiovalue;
+                    data.prodName=_this.formdata3.inpName ? _this.formdata3.inpName:'';
+                    data.ppCode=_this.formdata3.ppvalue ? _this.formdata3.ppvalue:'';
+                    data.plCode=_this.formdata3.plvalue ? _this.formdata3.plvalue:'';
+                    data.page=_this.cur_page2;
+                    data.rows=  _this.pagesize2;
+
+                  }
+                  if(data.listSort=='2')
+                  {
+                    _this.cur_page3=1;
+                    data.prodSort=_this.formdata2.radiovalue;
+                    data.ppCode=_this.formdata4.ppvalue ? _this.formdata4.ppvalue:'';
+                    data.plCode=_this.formdata4.plvalue ? _this.formdata4.plvalue:'';
+                    data.page=_this.cur_page3;
+                    data.rows=  _this.pagesize3;
                   }
 
                 var url = 'http://199.168.3.98:8080/htyfctsaleorg/sale/all',
@@ -1036,20 +1199,21 @@ export default {
         selectchange: function(item) {
             let _this = this;
             var data = {
-                'userId':'123',
-                'xzSort':item
+                'userId':_this.userId,
+                'xzSort':item,
+                'dateType':_this.formdata2.radiovalue
             };
-            if(_this.mondisabled && _this.formdata.radiovalue=='1')
+            if(_this.mondisabled && _this.formdata.radiovalue=='0')
             {
-              var starttime=$('.el-input__inner:eq(0)',".monthrange").val()+'01';
-              var endtime=$('.el-input__inner:eq(1)',".monthrange").val()+'31';
+              var starttime=$('.el-input__inner:eq(0)',".monthrange").val();
+              var endtime=$('.el-input__inner:eq(1)',".monthrange").val();
               data.startTime=starttime.replace('-','');
               data.endTime=endtime.replace('-','')
             }
-            if(_this.yeardisabled && _this.formdata.radiovalue=='2')
+            if(_this.yeardisabled && _this.formdata.radiovalue=='1')
             {
-              var starttime=$('.el-input__inner:eq(0)',".yearrange").val()+"01"+'01';
-              var endtime=$('.el-input__inner:eq(1)',".yearrange").val()+"12"+'31';
+              var starttime=$('.el-input__inner:eq(0)',".yearrange").val()+"01";
+              var endtime=$('.el-input__inner:eq(1)',".yearrange").val()+"12";
               data.startTime=starttime.replace('-','');
               data.endTime=endtime.replace('-','')
             }
@@ -1115,22 +1279,24 @@ export default {
           let _this=this;
           _this.cur_page1=1;
           var data = {
-              'userId': '123',
+              'userId': _this.userId,
+              'dateType':_this.formdata.radiovalue,
               'rows':_this.pagesize1,
               'prodSort':item,
               'page':_this.cur_page1
           };
-          if(_this.mondisabled && _this.formdata.radiovalue=='1')
+          if(_this.mondisabled && _this.formdata.radiovalue=='0')
           {
-            var starttime=$('.el-input__inner:eq(0)',".monthrange").val()+'01';
-            var endtime=$('.el-input__inner:eq(1)',".monthrange").val()+'31';
+
+            var starttime=$('.el-input__inner:eq(0)',".monthrange").val();
+            var endtime=$('.el-input__inner:eq(1)',".monthrange").val();
             data.startTime=starttime.replace('-','');
             data.endTime=endtime.replace('-','')
           }
-          if(_this.yeardisabled && _this.formdata.radiovalue=='2')
+          if(_this.yeardisabled && _this.formdata.radiovalue=='1')
           {
-            var starttime=$('.el-input__inner:eq(0)',".yearrange").val()+"01"+'01';
-            var endtime=$('.el-input__inner:eq(1)',".yearrange").val()+"12"+'31';
+            var starttime=$('.el-input__inner:eq(0)',".yearrange").val()+"01";
+            var endtime=$('.el-input__inner:eq(1)',".yearrange").val()+"12";
             data.startTime=starttime.replace('-','');
             data.endTime=endtime.replace('-','')
           }
@@ -1163,22 +1329,24 @@ export default {
           let _this=this;
           _this.cur_page1=val;
           var data = {
-              'userId': '123',
+              'userId': _this.userId,
+              'dateType':_this.formdata.radiovalue,
               'rows':_this.pagesize1,
-              'page':_this.cur_page1,
               'prodSort':_this.formdata2.radiovalue,
+              'page':_this.cur_page1
           };
-          if(_this.mondisabled && _this.formdata.radiovalue=='1')
+
+          if(_this.mondisabled && _this.formdata.radiovalue=='0')
           {
-            var starttime=$('.el-input__inner:eq(0)',".monthrange").val()+'01';
-            var endtime=$('.el-input__inner:eq(1)',".monthrange").val()+'31';
+            var starttime=$('.el-input__inner:eq(0)',".monthrange").val();
+            var endtime=$('.el-input__inner:eq(1)',".monthrange").val();
             data.startTime=starttime.replace('-','');
             data.endTime=endtime.replace('-','')
           }
-          if(_this.yeardisabled && _this.formdata.radiovalue=='2')
+          if(_this.yeardisabled && _this.formdata.radiovalue=='1')
           {
-            var starttime=$('.el-input__inner:eq(0)',".yearrange").val()+"01"+'01';
-            var endtime=$('.el-input__inner:eq(1)',".yearrange").val()+"12"+'31';
+            var starttime=$('.el-input__inner:eq(0)',".yearrange").val()+"01";
+            var endtime=$('.el-input__inner:eq(1)',".yearrange").val()+"12";
             data.startTime=starttime.replace('-','');
             data.endTime=endtime.replace('-','')
           }
@@ -1208,23 +1376,25 @@ export default {
         handleSizeChange1:function(val){
           let _this=this;
           _this.pagesize1 = val;
+          _this.cur_page1=1;
           var data = {
-              'userId': '123',
+              'userId': _this.userId,
+              'dateType':_this.formdata.radiovalue,
               'rows':_this.pagesize1,
               'prodSort':_this.formdata2.radiovalue,
-              'page':1
+              'page':_this.cur_page1
           };
-          if(_this.mondisabled && _this.formdata.radiovalue=='1')
+          if(_this.mondisabled && _this.formdata.radiovalue=='0')
           {
-            var starttime=$('.el-input__inner:eq(0)',".monthrange").val()+'01';
-            var endtime=$('.el-input__inner:eq(1)',".monthrange").val()+'31';
+            var starttime=$('.el-input__inner:eq(0)',".monthrange").val();
+            var endtime=$('.el-input__inner:eq(1)',".monthrange").val();
             data.startTime=starttime.replace('-','');
             data.endTime=endtime.replace('-','')
           }
-          if(_this.yeardisabled && _this.formdata.radiovalue=='2')
+          if(_this.yeardisabled && _this.formdata.radiovalue=='1')
           {
-            var starttime=$('.el-input__inner:eq(0)',".yearrange").val()+"01"+'01';
-            var endtime=$('.el-input__inner:eq(1)',".yearrange").val()+"12"+'31';
+            var starttime=$('.el-input__inner:eq(0)',".yearrange").val()+"01";
+            var endtime=$('.el-input__inner:eq(1)',".yearrange").val()+"12";
             data.startTime=starttime.replace('-','');
             data.endTime=endtime.replace('-','')
           }

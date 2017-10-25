@@ -246,7 +246,7 @@ export default {
             _this.$router.push({
                 name: rel,
                 query:{
-                  'userId':'0801'
+                  'userId':'8208'
                 }
             })
         }

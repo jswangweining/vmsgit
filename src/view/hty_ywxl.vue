@@ -1008,9 +1008,8 @@ export default {
     mounted() {
         let _this = this;
         // _this.adminApi.islogin();
-
         _this.userId = _this.$store.state.userId;
-        this.$nextTick(function() {
+        _this.$nextTick(function() {
             var url = _this.adminApi.host + '/htypctorg/index/handle',
                 data = {
                     'userId': _this.userId
@@ -1078,27 +1077,11 @@ export default {
                         }
                         _this.myChart1.setOption(option);
                     }
-                    if (data.code == '2001') {
-                        Message({
-                            'message': '会员不存在',
-                            'type': 'error',
-                            'onClose': function() {
-                                _this.$router.push({
-                                    path: '/'
-                                })
-                            }
-                        });
-                    }
-                    if (data.code == '3001') {
-                        Message({
-                            'message': '登陆已超时',
-                            'type': 'error',
-                            'onClose': function() {
-                                _this.$router.push({
-                                    path: '/'
-                                })
-                            }
-                        });
+                    else {
+                          Message({
+                              'message': data.msg,
+                              'type': 'error',
+                          });
                     }
                 },
                 complete = function() {
@@ -1510,7 +1493,12 @@ export default {
                             }
 
                         }
-
+                        else {
+                              Message({
+                                  'message': data.msg,
+                                  'type': 'error',
+                              });
+                        }
                     },
                     complete = function() {
                         _this.loading = false;
@@ -1524,8 +1512,6 @@ export default {
             let _this = this;
             _this.myChart2 = echarts.init(document.getElementById('main2'));
             _this.myChart3 = echarts.init(document.getElementById('main3'));
-
-
             var url = _this.adminApi.host + '/htypctorg/index/whole',
                 data = {
                     'userId': _this.userId,
@@ -1898,7 +1884,12 @@ export default {
 
 
                     }
-
+                    else {
+                          Message({
+                              'message': data.msg,
+                              'type': 'error',
+                          });
+                    }
                 },
                 complete = function() {
                     _this.loading = false;
@@ -2104,6 +2095,12 @@ export default {
 
                             }
                         }
+                        else {
+                              Message({
+                                  'message': data.msg,
+                                  'type': 'error',
+                              });
+                        }
 
                     },
                     complete = function() {
@@ -2143,7 +2140,7 @@ export default {
                 default:
 
             }
-            _this.rankingshow = true;
+
             var url = _this.adminApi.host + '/htypctorg/index/box',
                 data = {
                     'userId': _this.userId,
@@ -2153,8 +2150,18 @@ export default {
                     _this.dialogload = true;
                 },
                 success = function(data) {
-                    _this.dialogvaluearr = data.data;
-                    _this.dialogradiovaluechange = true;
+                    if (data.code == '1') {
+                        _this.rankingshow = true;
+                      _this.dialogvaluearr = data.data;
+                      _this.dialogradiovaluechange = true;
+                    }
+                    else {
+                          Message({
+                              'message': data.msg,
+                              'type': 'error',
+                          });
+                    }
+
                 },
                 complete = function() {
                     _this.dialogload = false;
@@ -2202,8 +2209,16 @@ export default {
                         _this.dialogload = true;
                     },
                     success = function(data) {
+                      if (data.code == '1') {
                         _this.dialogvaluearr = data.data;
                         _this.dialogradiovaluechange = true;
+                      }
+                      else {
+                            Message({
+                                'message': data.msg,
+                                'type': 'error',
+                            });
+                      }
                     },
                     complete = function() {
                         _this.dialogload = false;
