@@ -280,11 +280,11 @@
                 <div class="w-tab-search">
                   <wform :inline="true" :model="formdata3" label-position="right" class="demo-form-inline">
                       <form-item label="商品名称：">
-                          <winput v-model="formdata3.inpName" placeholder='订单号/客户名称/联系方式'></winput>
+                          <winput v-model="formdata3.inpName" placeholder='订单号/客户名称/联系方式' ></winput>
                       </form-item>
 
                       <form-item label="品类：">
-                          <wselect v-model="formdata3.plvalue" placeholder="请选择" filterable clearable >
+                          <wselect v-model="formdata3.plvalue" placeholder="请选择" filterable clearable @change='plchange1'>
                                   <woption :label='item.brandName' :value='item.sortNum' v-for='(item,index) in formdata3.plarr'></woption>
                           </wselect>
                       </form-item>
@@ -303,39 +303,49 @@
                       </form-item>
 
                       <form-item>
-                          <wbutton type="info" icon="search" size="small"></wbutton>
+                          <wbutton type="info" icon="search" size="small" @click='detailsearch()'></wbutton>
                       </form-item>
                   </wform>
                 </div>
                 <div class="w-table">
                     <wtable border :data="tableData2">
-                        <tablecolumn prop="ppName" label="品牌" width='200' fixed>
+                      <tablecolumn prop="prodName" label="商品名称" show-overflow-tooltip min-width='300' fixed>
+                      </tablecolumn>
+                      <tablecolumn prop="plName" label="品类" width='200'>
+                      </tablecolumn>
+                        <tablecolumn prop="ppName" label="品牌" width='200'>
                         </tablecolumn>
-                        <tablecolumn prop="plName" label="品类" show-overflow-tooltip min-width='300'>
+                        <tablecolumn prop="sort" label="爆/滞款" width='200'>
                         </tablecolumn>
-                        <tablecolumn prop="xsPrice" label="销售单价" width='150'>
+                        <tablecolumn prop="xsPrice" label="销售单价（元）" width='150'>
+                        </tablecolumn>
+                        <tablecolumn label="价格区间（元）" width='150'>
+                          <template scope="scope">
+                            {{scope.row.minXsAmt}}-{{scope.row.maxXsAmt}}
+                          </template>
                         </tablecolumn>
                         <tablecolumn prop="xsQty" label="销售数量" width='150'>
                         </tablecolumn>
+                        <tablecolumn prop="mJcQty" label="库存数量" width='150'>
+                        </tablecolumn>
                         <tablecolumn prop="xsAmt" label="销售金额" width='150' sortable>
                         </tablecolumn>
-                        <tablecolumn prop="xsRatio" label="销售金额占比" width='150'>
+                        <tablecolumn prop="xsDd" label="订单数" width='150'>
                         </tablecolumn>
-                        <tablecolumn prop="xsAvg" label="平均毛利" width='200'>
+                        <tablecolumn prop="salesRing" label="销售额环比" width='150'>
                         </tablecolumn>
-                        <tablecolumn prop="xsAvgRatio" label="平均毛利率" fixed='right'>
-                        </tablecolumn>
+
                     </wtable>
                 </div>
                 <div class="w-pages">
-                    <wpager :total="pagetotle2" :current-page="cur_page2" layout="total, sizes, prev, pager, next, jumper" :page-sizes="[10, 15, 20]" :page-size="pagesize2" @current-change="handleCurrentChange1" @size-change="handleSizeChange1"></wpager>
+                    <wpager :total="pagetotle2" :current-page="cur_page2" layout="total, sizes, prev, pager, next, jumper" :page-sizes="[10, 15, 20]" :page-size="pagesize2" @current-change="handleCurrentChange2" @size-change="handleSizeChange2"></wpager>
                 </div>
               </wtabpane>
               <wtabpane label="爆款商品销售分析" name="2" key='爆款商品销售分析'>
                 <div class="w-tab-search">
                   <wform :inline="true" :model="formdata4" label-position="right" class="demo-form-inline" v-show='activeName=="2"'>
                       <form-item label="品类：">
-                          <wselect v-model="formdata4.plvalue" placeholder="请选择" filterable clearable >
+                          <wselect v-model="formdata4.plvalue" placeholder="请选择" filterable clearable @change='plchange2'>
                                   <woption :label='item.brandName' :value='item.sortNum' v-for='(item,index) in formdata4.plarr'></woption>
                           </wselect>
                       </form-item>
@@ -344,30 +354,33 @@
                             <woption :label='item.brandName' :value='item.sortNum' v-for='(item,index) in formdata4.pparr'></woption>
                           </wselect>
                       </form-item>
+
+                      <form-item>
+                          <wbutton type="info" icon="search" size="small" @click='hotsearch()'></wbutton>
+                      </form-item>
                   </wform>
                 </div>
                 <div class="w-table">
-                    <wtable border :data="tableData">
-                        <tablecolumn prop="ppName" label="品牌" width='200' fixed>
+                    <wtable border :data="tableData3">
+                      <tablecolumn prop="prodName" label="商品名称" show-overflow-tooltip min-width='300' fixed>
+                      </tablecolumn>
+                      <tablecolumn prop="prodCode" label="型号" width='200'>
+                      </tablecolumn>
+                      <tablecolumn prop="plName" label="品类" width='200'>
+                      </tablecolumn>
+                        <tablecolumn prop="ppName" label="品牌" width='200'>
                         </tablecolumn>
-                        <tablecolumn prop="plName" label="品类" show-overflow-tooltip min-width='300'>
+                        <tablecolumn label="价格区间（元）" width='150'>
+                          <template scope="scope">
+                            {{scope.row.minXsAmt}}-{{scope.row.maxXsAmt}}
+                          </template>
                         </tablecolumn>
-                        <tablecolumn prop="xsPrice" label="销售单价" width='150'>
-                        </tablecolumn>
-                        <tablecolumn prop="xsQty" label="销售数量" width='150'>
-                        </tablecolumn>
-                        <tablecolumn prop="xsAmt" label="销售金额" width='150' sortable>
-                        </tablecolumn>
-                        <tablecolumn prop="xsRatio" label="销售金额占比" width='150'>
-                        </tablecolumn>
-                        <tablecolumn prop="xsAvg" label="平均毛利" width='200'>
-                        </tablecolumn>
-                        <tablecolumn prop="xsAvgRatio" label="平均毛利率" fixed='right'>
+                        <tablecolumn prop="qtyAvg" label="平均月销量" width='150' sortable fixed='right'>
                         </tablecolumn>
                     </wtable>
                 </div>
                 <div class="w-pages">
-                    <wpager :total="pagetotle1" :current-page="cur_page1" layout="total, sizes, prev, pager, next, jumper" :page-sizes="[10, 15, 20]" :page-size="pagesize1" @current-change="handleCurrentChange1" @size-change="handleSizeChange1"></wpager>
+                    <wpager :total="pagetotle3" :current-page="cur_page3" layout="total, sizes, prev, pager, next, jumper" :page-sizes="[10, 15, 20]" :page-size="pagesize3" @current-change="handleCurrentChange3" @size-change="handleSizeChange3"></wpager>
                 </div>
               </wtabpane>
             </wtabs>
@@ -439,6 +452,9 @@ export default {
         wholeBottomPair: ["88.88", "88.88"],
         activeName: '0',
         tabAjax:false,
+        ajax1:true,
+        ajax2:true,
+        ajax3:true,
         formdata2: {
             radiovalue: '0',
         },
@@ -458,6 +474,7 @@ export default {
         },
         tableData: [],
         tableData2: [],
+        tableData3:[],
         topdata: {},
         pagetotle1: 0,
         cur_page1: 1,
@@ -470,33 +487,229 @@ export default {
         pagesize3: 10
     }),
     watch: {
-      // mondisabled: false,
-      // yeardisabled: false,
         activeName:function(val, oldVal){
           let _this=this;
           if(val!==oldVal)
           {
-            _this.tabAjax=true;
+            switch (val) {
+              case '0':
 
+              if(_this.ajax1)
+              {
+
+                _this.cur_page1=1;
+                var data = {
+                    'userId': _this.userId,
+                    'dateType':_this.formdata.radiovalue,
+                    'rows':_this.pagesize1,
+                    'prodSort':_this.formdata2.radiovalue,
+                    'page':_this.cur_page1
+                };
+                if(_this.mondisabled && _this.formdata.radiovalue=='0')
+                {
+
+                  var starttime=$('.el-input__inner:eq(0)',".monthrange").val();
+                  var endtime=$('.el-input__inner:eq(1)',".monthrange").val();
+                  data.startTime=starttime.replace('-','');
+                  data.endTime=endtime.replace('-','')
+                }
+                if(_this.yeardisabled && _this.formdata.radiovalue=='1')
+                {
+                  var starttime=$('.el-input__inner:eq(0)',".yearrange").val()+"01";
+                  var endtime=$('.el-input__inner:eq(1)',".yearrange").val()+"12";
+                  data.startTime=starttime.replace('-','');
+                  data.endTime=endtime.replace('-','')
+                }
+                var url = 'http://199.168.3.98:8080/htyfctsaleorg/sale/prod/list',
+
+                    loading = function() {
+                         _this.loadtab = true;
+                    },
+                    success = function(data) {
+                        if (data.code == '1') {
+                          _this.tableData=data.data.saleProdDTOList;
+                          _this.pagetotle1=data.data.saleProdnum;
+
+                        }
+                        else {
+                              Message({
+                                  'message': data.msg,
+                                  'type': 'error',
+                              });
+                        }
+
+                    },
+                    complete = function() {
+                      _this.loadtab = false;
+                    }
+                _this.adminApi.getJsonp(url, data, loading, success, complete)
+                _this.ajax1=false;
+              }
+
+                break;
+
+                case '1':
+                if(_this.ajax2)
+                {
+                  _this.cur_page2=1;
+                  var data = {
+                      'userId': _this.userId,
+                      'dateType':_this.formdata.radiovalue,
+                      'rows':_this.pagesize2,
+                      'prodSort':_this.formdata2.radiovalue,
+                      'page':_this.cur_page2,
+                      'detailSort':_this.formdata3.selectvalue3
+                  };
+                  data.prodName=_this.formdata3.inpName ? _this.formdata3.inpName:'';
+                  data.ppCode=_this.formdata3.ppvalue ? _this.formdata3.ppvalue:'';
+                  data.plCode=_this.formdata3.plvalue ? _this.formdata3.plvalue:'';
+
+                  if(_this.mondisabled && _this.formdata.radiovalue=='0')
+                  {
+
+                    var starttime=$('.el-input__inner:eq(0)',".monthrange").val();
+                    var endtime=$('.el-input__inner:eq(1)',".monthrange").val();
+                    data.startTime=starttime.replace('-','');
+                    data.endTime=endtime.replace('-','')
+                  }
+                  if(_this.yeardisabled && _this.formdata.radiovalue=='1')
+                  {
+                    var starttime=$('.el-input__inner:eq(0)',".yearrange").val()+"01";
+                    var endtime=$('.el-input__inner:eq(1)',".yearrange").val()+"12";
+                    data.startTime=starttime.replace('-','');
+                    data.endTime=endtime.replace('-','')
+                  }
+                  var url = 'http://199.168.3.98:8080/htyfctsaleorg/sale/detail/list',
+
+                      loading = function() {
+                           _this.loadtab = true;
+                      },
+                      success = function(data) {
+                          if (data.code == '1') {
+                            _this.tableData2=data.data.saleDetailDTOList;
+                             _this.pagetotle2=data.data.detainum;
+                          }
+                          else {
+                                Message({
+                                    'message': data.msg,
+                                    'type': 'error',
+                                });
+                          }
+
+                      },
+                      complete = function() {
+                        _this.loadtab = false;
+                      }
+                  _this.adminApi.getJsonp(url, data, loading, success, complete)
+                  _this.ajax2=false;
+                }
+
+                  break;
+
+                  case '2':
+                  if(_this.ajax3)
+                  {
+                    _this.cur_page3=1;
+                    var data = {
+                        'userId': _this.userId,
+                        'rows':_this.pagesize3,
+                        'page':_this.cur_page3,
+                    };
+                    data.ppCode=_this.formdata3.ppvalue ? _this.formdata3.ppvalue:'';
+                    data.plCode=_this.formdata3.plvalue ? _this.formdata3.plvalue:'';
+
+                    if(_this.mondisabled && _this.formdata.radiovalue=='0')
+                    {
+
+                      var starttime=$('.el-input__inner:eq(0)',".monthrange").val();
+                      var endtime=$('.el-input__inner:eq(1)',".monthrange").val();
+                      data.startTime=starttime.replace('-','');
+                      data.endTime=endtime.replace('-','')
+                    }
+                    if(_this.yeardisabled && _this.formdata.radiovalue=='1')
+                    {
+                      var starttime=$('.el-input__inner:eq(0)',".yearrange").val()+"01";
+                      var endtime=$('.el-input__inner:eq(1)',".yearrange").val()+"12";
+                      data.startTime=starttime.replace('-','');
+                      data.endTime=endtime.replace('-','')
+                    }
+                    var url = 'http://199.168.3.98:8080/htyfctsaleorg/sale/hot/list',
+
+                        loading = function() {
+                             _this.loadtab = true;
+                        },
+                        success = function(data) {
+                            if (data.code == '1') {
+                              _this.tableData3=data.data.saleHotDTOList;
+                               _this.pagetotle3=data.data.saleHostnum;
+                            }
+                            else {
+                                  Message({
+                                      'message': data.msg,
+                                      'type': 'error',
+                                  });
+                            }
+
+                        },
+                        complete = function() {
+                          _this.loadtab = false;
+                        }
+                    _this.adminApi.getJsonp(url, data, loading, success, complete)
+                    _this.ajax3=false;
+                  }
+
+                    break;
+              default:
+
+            }
           }
+
         },
         mondisabled:function(val, oldVal){
           let _this=this;
           if(val!==oldVal && _this.formdata.radiovalue=='0')
           {
-            _this.tabAjax=true;
-
+            if(_this.activeName=='0')
+            {
+              _this.ajax2=true;
+              _this.ajax3=true;
+            }
+            if(_this.activeName=='1')
+            {
+              _this.ajax1=true;
+              _this.ajax3=true;
+            }
+            if(_this.activeName=='2')
+            {
+              _this.ajax1=true;
+              _this.ajax2=true;
+            }
           }
+
         },
         yeardisabled:function(val, oldVal){
           let _this=this;
           if(val!==oldVal && _this.formdata.radiovalue=='1')
           {
-            _this.tabAjax=true;
+            if(_this.activeName=='0')
+            {
+              _this.ajax2=true;
+              _this.ajax3=true;
+            }
+            if(_this.activeName=='1')
+            {
+              _this.ajax1=true;
+              _this.ajax3=true;
+            }
+            if(_this.activeName=='2')
+            {
+              _this.ajax1=true;
+              _this.ajax2=true;
+            }
 
           }
-        }
 
+        }
         // formdata: {
         //     handler: function(val) {
         //     },
@@ -593,6 +806,7 @@ export default {
                         _this.topdata = data.data.saleCompareDTO;
                         _this.tableData=data.data.saleProdListDTO.saleProdDTOList;
                         _this.pagetotle1=data.data.saleProdListDTO.saleProdnum;
+                        _this.ajax1=false;
                         var option = {
                             tooltip: {
                                 trigger: 'axis',
@@ -711,16 +925,16 @@ export default {
         },
         tabclick: function(tab) {
             let _this = this;
-            console.log(_this.tabAjax)
+
             switch (_this.activeName) {
                 case "0":
-                    console.log('111')
+
                     break;
                 case "1":
-                    console.log('22222')
+
                     break;
                 case "2":
-                    console.log('333')
+
                     break;
                 default:
 
@@ -798,21 +1012,23 @@ export default {
                     success = function(data) {
                         if (data.code == '1') {
                             _this.mondisabled = true;
+                            _this.topdata = data.data.saleCompareDTO;
                             if(_this.activeName=='0')
                             {
-                              _this.topdata = data.data.saleCompareDTO;
                               _this.tableData=data.data.saleProdListDTO.saleProdDTOList;
                               _this.pagetotle1=data.data.saleProdListDTO.saleProdnum;
                             }
 
                               if(_this.activeName=='1')
                               {
-                                alert('1111')
+                                  _this.tableData2=data.data.saleDetailListDTO.saleDetailDTOList;
+                                  _this.pagetotle2=data.data.saleDetailListDTO.detainum;
                               }
 
                               if(_this.activeName=='2')
                               {
-                                alert('2222')
+                                _this.tableData3=data.data.saleHotListDTO.saleHotDTOList;
+                                _this.pagetotle3=data.data.saleHotListDTO.saleHostnum;
                               }
 
                             var option = {
@@ -862,7 +1078,8 @@ export default {
                     complete = function() {
                         _this.loadingall = false;
                     }
-                _this.adminApi.getJsonp(url, data, loading, success, complete)
+                _this.adminApi.getJsonp(url, data, loading, success, complete);
+
             }
         },
         closeMonth: function() {
@@ -914,9 +1131,26 @@ export default {
                         $('.el-input__inner', '.el-date-editor--month').removeClass('w-dataactive');
                         _this.formdata.startmonth='';
                         _this.formdata.endmonth='';
+
                         _this.topdata = data.data.saleCompareDTO;
-                        _this.tableData=data.data.saleProdListDTO.saleProdDTOList;
-                        _this.pagetotle1=data.data.saleProdListDTO.saleProdnum;
+                        if(_this.activeName=='0')
+                        {
+                          _this.tableData=data.data.saleProdListDTO.saleProdDTOList;
+                          _this.pagetotle1=data.data.saleProdListDTO.saleProdnum;
+                        }
+
+                          if(_this.activeName=='1')
+                          {
+                              _this.tableData2=data.data.saleDetailListDTO.saleDetailDTOList;
+                              _this.pagetotle2=data.data.saleDetailListDTO.detainum;
+                          }
+
+                          if(_this.activeName=='2')
+                          {
+                            _this.tableData3=data.data.saleHotListDTO.saleHotDTOList;
+                            _this.pagetotle3=data.data.saleHotListDTO.saleHostnum;
+                          }
+
                         var option = {
                             tooltip: {
                                 trigger: 'axis',
@@ -1016,9 +1250,24 @@ export default {
                         _this.yeardisabled = false;
                         _this.formdata.startyear = '';
                         _this.formdata.endyear = '';
-                          _this.topdata = data.data.saleCompareDTO;
+                        _this.topdata = data.data.saleCompareDTO;
+                        if(_this.activeName=='0')
+                        {
                           _this.tableData=data.data.saleProdListDTO.saleProdDTOList;
                           _this.pagetotle1=data.data.saleProdListDTO.saleProdnum;
+                        }
+
+                          if(_this.activeName=='1')
+                          {
+                              _this.tableData2=data.data.saleDetailListDTO.saleDetailDTOList;
+                              _this.pagetotle2=data.data.saleDetailListDTO.detainum;
+                          }
+
+                          if(_this.activeName=='2')
+                          {
+                            _this.tableData3=data.data.saleHotListDTO.saleHotDTOList;
+                            _this.pagetotle3=data.data.saleHotListDTO.saleHostnum;
+                          }
                           var option = {
                               tooltip: {
                                   trigger: 'axis',
@@ -1143,8 +1392,23 @@ export default {
                         if (data.code == '1') {
                             _this.yeardisabled = true;
                             _this.topdata = data.data.saleCompareDTO;
-                            _this.tableData=data.data.saleProdListDTO.saleProdDTOList;
-                            _this.pagetotle1=data.data.saleProdListDTO.saleProdnum;
+                            if(_this.activeName=='0')
+                            {
+                              _this.tableData=data.data.saleProdListDTO.saleProdDTOList;
+                              _this.pagetotle1=data.data.saleProdListDTO.saleProdnum;
+                            }
+
+                              if(_this.activeName=='1')
+                              {
+                                  _this.tableData2=data.data.saleDetailListDTO.saleDetailDTOList;
+                                  _this.pagetotle2=data.data.saleDetailListDTO.detainum;
+                              }
+
+                              if(_this.activeName=='2')
+                              {
+                                _this.tableData3=data.data.saleHotListDTO.saleHotDTOList;
+                                _this.pagetotle3=data.data.saleHotListDTO.saleHostnum;
+                              }
                             var option = {
                                 tooltip: {
                                     trigger: 'axis',
@@ -1276,6 +1540,7 @@ export default {
 
         },
         radiochangepp:function(item){
+
           let _this=this;
           _this.cur_page1=1;
           var data = {
@@ -1324,6 +1589,160 @@ export default {
               }
           _this.adminApi.getJsonp(url, data, loading, success, complete)
 
+        },
+        plchange1:function(item){
+          let _this=this;
+          var url = 'http://199.168.3.98:8080/htyfctsaleorg/sale/query/brand',
+              data = {
+                  'type': _this.activeName,
+                  'plCode':item
+              },
+              loading = function() {
+                  _this.loading = true;
+              },
+              success = function(data) {
+                  if (data.code == '1') {
+                    _this.formdata3.ppvalue='';
+                    _this.formdata3.pparr=data.data;
+                  }
+                  else {
+                        Message({
+                            'message': data.msg,
+                            'type': 'error',
+                        });
+                  }
+              },
+              complete = function() {
+                  _this.loading = false;
+              }
+          _this.adminApi.getJsonp(url, data, loading, success, complete)
+        },
+        plchange2:function(item){
+          let _this=this;
+          var url = 'http://199.168.3.98:8080/htyfctsaleorg/sale/query/brand',
+              data = {
+                  'type': _this.activeName,
+                  'plCode':item
+              },
+              loading = function() {
+                  _this.loading = true;
+              },
+              success = function(data) {
+                  if (data.code == '1') {
+                    _this.formdata4.ppvalue='';
+                    _this.formdata4.pparr=data.data;
+                  }
+                  else {
+                        Message({
+                            'message': data.msg,
+                            'type': 'error',
+                        });
+                  }
+              },
+              complete = function() {
+                  _this.loading = false;
+              }
+          _this.adminApi.getJsonp(url, data, loading, success, complete)
+        },
+        detailsearch:function(){
+          let _this=this;
+          _this.cur_page2=1;
+          var data = {
+              'userId': _this.userId,
+              'dateType':_this.formdata.radiovalue,
+              'rows':_this.pagesize2,
+              'prodSort':_this.formdata2.radiovalue,
+              'page':_this.cur_page2,
+              'detailSort':_this.formdata3.selectvalue3
+          };
+          data.prodName=_this.formdata3.inpName ? _this.formdata3.inpName:'';
+          data.ppCode=_this.formdata3.ppvalue ? _this.formdata3.ppvalue:'';
+          data.plCode=_this.formdata3.plvalue ? _this.formdata3.plvalue:'';
+
+          if(_this.mondisabled && _this.formdata.radiovalue=='0')
+          {
+            var starttime=$('.el-input__inner:eq(0)',".monthrange").val();
+            var endtime=$('.el-input__inner:eq(1)',".monthrange").val();
+            data.startTime=starttime.replace('-','');
+            data.endTime=endtime.replace('-','')
+          }
+          if(_this.yeardisabled && _this.formdata.radiovalue=='1')
+          {
+            var starttime=$('.el-input__inner:eq(0)',".yearrange").val()+"01";
+            var endtime=$('.el-input__inner:eq(1)',".yearrange").val()+"12";
+            data.startTime=starttime.replace('-','');
+            data.endTime=endtime.replace('-','')
+          }
+          var url = 'http://199.168.3.98:8080/htyfctsaleorg/sale/detail/list',
+
+              loading = function() {
+                   _this.loadtab = true;
+              },
+              success = function(data) {
+                  if (data.code == '1') {
+                    _this.tableData2=data.data.saleDetailDTOList;
+                     _this.pagetotle2=data.data.detainum;
+                  }
+                  else {
+                        Message({
+                            'message': data.msg,
+                            'type': 'error',
+                        });
+                  }
+              },
+              complete = function() {
+                _this.loadtab = false;
+              }
+          _this.adminApi.getJsonp(url, data, loading, success, complete)
+        },
+        hotsearch:function(){
+          let _this=this;
+          _this.cur_page3=1;
+          var data = {
+              'userId': _this.userId,
+              'rows':_this.pagesize3,
+              'page':_this.cur_page3,
+          };
+          data.ppCode=_this.formdata4.ppvalue ? _this.formdata4.ppvalue:'';
+          data.plCode=_this.formdata4.plvalue ? _this.formdata4.plvalue:'';
+
+          if(_this.mondisabled && _this.formdata.radiovalue=='0')
+          {
+
+            var starttime=$('.el-input__inner:eq(0)',".monthrange").val();
+            var endtime=$('.el-input__inner:eq(1)',".monthrange").val();
+            data.startTime=starttime.replace('-','');
+            data.endTime=endtime.replace('-','')
+          }
+          if(_this.yeardisabled && _this.formdata.radiovalue=='1')
+          {
+            var starttime=$('.el-input__inner:eq(0)',".yearrange").val()+"01";
+            var endtime=$('.el-input__inner:eq(1)',".yearrange").val()+"12";
+            data.startTime=starttime.replace('-','');
+            data.endTime=endtime.replace('-','')
+          }
+          var url = 'http://199.168.3.98:8080/htyfctsaleorg/sale/hot/list',
+
+              loading = function() {
+                   _this.loadtab = true;
+              },
+              success = function(data) {
+                  if (data.code == '1') {
+                    _this.tableData3=data.data.saleHotDTOList;
+                     _this.pagetotle3=data.data.saleHostnum;
+                  }
+                  else {
+                        Message({
+                            'message': data.msg,
+                            'type': 'error',
+                        });
+                  }
+
+              },
+              complete = function() {
+                _this.loadtab = false;
+              }
+          _this.adminApi.getJsonp(url, data, loading, success, complete)
         },
         handleCurrentChange1:function(val){
           let _this=this;
@@ -1415,6 +1834,214 @@ export default {
                             'type': 'error',
                         });
                   }
+              },
+              complete = function() {
+                _this.loadtab = false;
+              }
+          _this.adminApi.getJsonp(url, data, loading, success, complete)
+        },
+        handleCurrentChange2:function(val){
+          let _this=this;
+          _this.cur_page2=val;
+          var data = {
+              'userId': _this.userId,
+              'dateType':_this.formdata.radiovalue,
+              'rows':_this.pagesize2,
+              'prodSort':_this.formdata2.radiovalue,
+              'page':_this.cur_page2,
+              'detailSort':_this.formdata3.selectvalue3
+          };
+          data.prodName=_this.formdata3.inpName ? _this.formdata3.inpName:'';
+          data.ppCode=_this.formdata3.ppvalue ? _this.formdata3.ppvalue:'';
+          data.plCode=_this.formdata3.plvalue ? _this.formdata3.plvalue:'';
+
+          if(_this.mondisabled && _this.formdata.radiovalue=='0')
+          {
+
+            var starttime=$('.el-input__inner:eq(0)',".monthrange").val();
+            var endtime=$('.el-input__inner:eq(1)',".monthrange").val();
+            data.startTime=starttime.replace('-','');
+            data.endTime=endtime.replace('-','')
+          }
+          if(_this.yeardisabled && _this.formdata.radiovalue=='1')
+          {
+            var starttime=$('.el-input__inner:eq(0)',".yearrange").val()+"01";
+            var endtime=$('.el-input__inner:eq(1)',".yearrange").val()+"12";
+            data.startTime=starttime.replace('-','');
+            data.endTime=endtime.replace('-','')
+          }
+          var url = 'http://199.168.3.98:8080/htyfctsaleorg/sale/detail/list',
+
+              loading = function() {
+                   _this.loadtab = true;
+              },
+              success = function(data) {
+                  if (data.code == '1') {
+                    _this.tableData2=data.data.saleDetailDTOList;
+                     _this.pagetotle2=data.data.detainum;
+                  }
+                  else {
+                        Message({
+                            'message': data.msg,
+                            'type': 'error',
+                        });
+                  }
+
+              },
+              complete = function() {
+                _this.loadtab = false;
+              }
+          _this.adminApi.getJsonp(url, data, loading, success, complete)
+        },
+        handleSizeChange2:function(val){
+          let _this=this;
+          _this.pagesize2 = val;
+          _this.cur_page2=1;
+          var data = {
+              'userId': _this.userId,
+              'dateType':_this.formdata.radiovalue,
+              'rows':_this.pagesize2,
+              'prodSort':_this.formdata2.radiovalue,
+              'page':_this.cur_page2,
+              'detailSort':_this.formdata3.selectvalue3
+          };
+          data.prodName=_this.formdata3.inpName ? _this.formdata3.inpName:'';
+          data.ppCode=_this.formdata3.ppvalue ? _this.formdata3.ppvalue:'';
+          data.plCode=_this.formdata3.plvalue ? _this.formdata3.plvalue:'';
+
+          if(_this.mondisabled && _this.formdata.radiovalue=='0')
+          {
+
+            var starttime=$('.el-input__inner:eq(0)',".monthrange").val();
+            var endtime=$('.el-input__inner:eq(1)',".monthrange").val();
+            data.startTime=starttime.replace('-','');
+            data.endTime=endtime.replace('-','')
+          }
+          if(_this.yeardisabled && _this.formdata.radiovalue=='1')
+          {
+            var starttime=$('.el-input__inner:eq(0)',".yearrange").val()+"01";
+            var endtime=$('.el-input__inner:eq(1)',".yearrange").val()+"12";
+            data.startTime=starttime.replace('-','');
+            data.endTime=endtime.replace('-','')
+          }
+          var url = 'http://199.168.3.98:8080/htyfctsaleorg/sale/detail/list',
+
+              loading = function() {
+                   _this.loadtab = true;
+              },
+              success = function(data) {
+                  if (data.code == '1') {
+                    _this.tableData2=data.data.saleDetailDTOList;
+                     _this.pagetotle2=data.data.detainum;
+
+                  }
+                  else {
+                        Message({
+                            'message': data.msg,
+                            'type': 'error',
+                        });
+                  }
+
+              },
+              complete = function() {
+                _this.loadtab = false;
+              }
+          _this.adminApi.getJsonp(url, data, loading, success, complete)
+
+        },
+        handleCurrentChange3:function(val){
+          let _this=this;
+          _this.cur_page3=val;
+          var data = {
+              'userId': _this.userId,
+              'rows':_this.pagesize3,
+              'page':_this.cur_page3,
+          };
+          data.ppCode=_this.formdata3.ppvalue ? _this.formdata3.ppvalue:'';
+          data.plCode=_this.formdata3.plvalue ? _this.formdata3.plvalue:'';
+
+          if(_this.mondisabled && _this.formdata.radiovalue=='0')
+          {
+
+            var starttime=$('.el-input__inner:eq(0)',".monthrange").val();
+            var endtime=$('.el-input__inner:eq(1)',".monthrange").val();
+            data.startTime=starttime.replace('-','');
+            data.endTime=endtime.replace('-','')
+          }
+          if(_this.yeardisabled && _this.formdata.radiovalue=='1')
+          {
+            var starttime=$('.el-input__inner:eq(0)',".yearrange").val()+"01";
+            var endtime=$('.el-input__inner:eq(1)',".yearrange").val()+"12";
+            data.startTime=starttime.replace('-','');
+            data.endTime=endtime.replace('-','')
+          }
+          var url = 'http://199.168.3.98:8080/htyfctsaleorg/sale/hot/list',
+
+              loading = function() {
+                   _this.loadtab = true;
+              },
+              success = function(data) {
+                  if (data.code == '1') {
+                    _this.tableData3=data.data.saleHotDTOList;
+                     _this.pagetotle3=data.data.saleHostnum;
+                  }
+                  else {
+                        Message({
+                            'message': data.msg,
+                            'type': 'error',
+                        });
+                  }
+
+              },
+              complete = function() {
+                _this.loadtab = false;
+              }
+          _this.adminApi.getJsonp(url, data, loading, success, complete)
+        },
+        handleSizeChange3:function(val){
+          let _this=this;
+          _this.pagesize3 = val;
+          _this.cur_page3=1;
+          var data = {
+              'userId': _this.userId,
+              'rows':_this.pagesize3,
+              'page':_this.cur_page3,
+          };
+          data.ppCode=_this.formdata3.ppvalue ? _this.formdata3.ppvalue:'';
+          data.plCode=_this.formdata3.plvalue ? _this.formdata3.plvalue:'';
+
+          if(_this.mondisabled && _this.formdata.radiovalue=='0')
+          {
+
+            var starttime=$('.el-input__inner:eq(0)',".monthrange").val();
+            var endtime=$('.el-input__inner:eq(1)',".monthrange").val();
+            data.startTime=starttime.replace('-','');
+            data.endTime=endtime.replace('-','')
+          }
+          if(_this.yeardisabled && _this.formdata.radiovalue=='1')
+          {
+            var starttime=$('.el-input__inner:eq(0)',".yearrange").val()+"01";
+            var endtime=$('.el-input__inner:eq(1)',".yearrange").val()+"12";
+            data.startTime=starttime.replace('-','');
+            data.endTime=endtime.replace('-','')
+          }
+          var url = 'http://199.168.3.98:8080/htyfctsaleorg/sale/hot/list',
+
+              loading = function() {
+                   _this.loadtab = true;
+              },
+              success = function(data) {
+                  if (data.code == '1') {
+                    _this.tableData3=data.data.saleHotDTOList;
+                     _this.pagetotle3=data.data.saleHostnum;
+                  }
+                  else {
+                        Message({
+                            'message': data.msg,
+                            'type': 'error',
+                        });
+                  }
+
               },
               complete = function() {
                 _this.loadtab = false;
