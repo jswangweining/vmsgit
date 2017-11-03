@@ -85,8 +85,8 @@
     right: 0px;
     height: 100%;
     background-color: $frame_bg_colorf3;
-    overflow-x: auto;
-    overflow-y: auto;
+    // overflow-x: auto;
+    // overflow-y: auto;
 }
 
 .fade-enter-active,
@@ -166,6 +166,7 @@ export default {
 
 
     created(){
+
       let _this=this;
       if (!_this.$route.query.userId) {
 
@@ -174,6 +175,9 @@ export default {
           });
           return;
       }
+
+      _this.$store.commit('changeUserId', _this.$route.query.userId)
+        // _this.userId = _this.$store.state.userId;
         //console.log(_this.$store.state)
       _this.subnamepath=_this.$route.name;
     },

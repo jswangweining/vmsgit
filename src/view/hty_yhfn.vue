@@ -12,11 +12,18 @@
     margin-bottom: 1rem;
 }
 
+.bodyscroll {
+    width: 100%;
+    height: 100%;
+    overflow-x: auto;
+    overflow-y: auto;
+}
+
 </style>
 
 <template>
 
-<div v-loading.body='loadingall' style="width:100%; height:100%">
+<div class="bodyscroll" v-loading.body='loadingall'>
     <div class="w-pos">
         <span>首页</span>/<span>汇天眼</span>/<span class="w-pos-active">用户分类</span> {{formdata.date}}
     </div>
@@ -67,28 +74,35 @@
                 </div>
 
                 <div class="" v-if='formdata.radiovalue=="2"'>
-                    <form-item label="选择维度：" style="margin-top:0px;" v-if='formdata.radiovalue=="2"'>
-                        <wselect v-model="formdata.selectvalue1" placeholder="请选择">
-                            <woption label='全部' value='0'></woption>
-                            <woption label='整体采购' value='1'></woption>
+                    <form-item label="选择维度：" style="margin-top:0px;" v-if='formdata.radiovalue=="2"' @change='demension'>
+                        <wselect v-model="formdata.selectvalue1" placeholder="请选择" @change='demension'>
+                            <woption label='整体采购' value='0'></woption>
+                            <woption label='线上采购' value='1'></woption>
+                            <woption label='商城登陆频次' value='2'></woption>
+                            <woption label='超级老板登陆频次' value='3'></woption>
+                            <woption label='上架商品' value='4'></woption>
+                            <woption label='贷款金额' value='5'></woption>
                         </wselect>
 
-                        <form-item label="查询时间" style="margin-top:0px;">
-                            <date-picker type="month" v-model="formdata.startmonth" placeholder="选择开始月份" :editable='false' style="width:250px;">
+                        <form-item label="查询时间" style="margin-top:0px;" class="radio2Month">
+                            <date-picker type="month" v-model="formdata.startmonth3" placeholder="选择开始月份" :editable='false' :picker-options="pickerOptions1" style="width:250px;" @change='monthchange3'>
                             </date-picker>
                             <span class="w-searchs">至</span>
-                            <date-picker type="month" v-model="formdata.endmonth" placeholder="选择结束月份" :editable='false' style="width:250px;">
+                            <date-picker type="month" v-model="formdata.endmonth3" placeholder="选择结束月份" :editable='false' :picker-options="pickerOptions1" style="width:250px;" @change='monthchange4'>
                             </date-picker>
                         </form-item>
 
                         <form-item label="维度：" style="margin-top:0px;">
-                            <date-picker type="month" v-model="formdata.startmonth2" placeholder="选择开始月份" :editable='false' style="width:250px;">
-                            </date-picker>
-                            <span class="w-searchs">至</span>
-                            <date-picker type="month" v-model="formdata.endmonth2" placeholder="选择结束月份" :editable='false' style="width:250px;">
-                            </date-picker>
+                            <wselect v-model="formdata.wd1" placeholder="请选择" filterable clearable>
+                                <woption :label='item' :value='index' v-for='(item,index) in formdata.wd1Arr'></woption>
+                            </wselect>
+                            -
+                            <wselect v-model="formdata.wd2" placeholder="请选择" filterable clearable>
+                                <woption :label='item' :value='index' v-for='(item,index) in formdata.wd2Arr'></woption>
+                            </wselect>
 
-                            <wbutton type="info" size="small">对比</wbutton>
+
+                            <wbutton type="info" size="small" @click='yhfnSearch3()'>对比</wbutton>
                         </form-item>
                     </form-item>
                 </div>
@@ -237,9 +251,13 @@ export default {
             'endmonth': '',
             'startmonth2': '',
             'endmonth2': '',
+            'startmonth3': '',
+            'endmonth3': '',
             'selectvalue1': '0',
-            'selectvalue2': '0',
-            'selectvalue3': '0'
+            'wd1': '',
+            'wd2': '',
+            'wd1Arr': '',
+            'wd2Arr': ''
         },
         dispair: false,
         pickerOptions1: {
@@ -295,7 +313,9 @@ export default {
         myChart5: '',
         myChart6: '',
         startdatevalue: '',
-        enddatevalue: ''
+        enddatevalue: '',
+        startdatevalue2: '',
+        enddatevalue2: ''
     }),
     computed: {},
     created() {
@@ -615,6 +635,31 @@ export default {
                     'width': '625px'
                 })
             })
+            if (_this.formdata.radiovalue == '2' && _this.formdata.wd1Arr == '') {
+                var url = _this.adminApi.host + '/htycustall/cust/step',
+                    data = {
+                        'dimension': '1'
+                    },
+                    loading = function() {
+
+                    },
+                    success = function(data) {
+                        if (data.code == '1') {
+                            console.log(JSON.stringify(data))
+                            _this.formdata.wd1Arr = data.data;
+                            _this.formdata.wd2Arr = data.data;
+                        } else {
+                            Message({
+                                'message': data.msg,
+                                'type': 'error',
+                            });
+                        }
+                    },
+                    complete = function() {
+
+                    }
+                _this.adminApi.getJsonp(url, data, loading, success, complete)
+            }
 
         },
         monthchange1: function(val) {
@@ -627,6 +672,7 @@ export default {
                         'type': 'error',
                     });
                     _this.formdata.startmonth = '';
+                    _this.formdata.endmonth = '';
                 }
             }
         },
@@ -639,7 +685,36 @@ export default {
                         'message': '结束时间不能低于开始时间',
                         'type': 'error',
                     });
+                    _this.formdata.startmonth = '';
                     _this.formdata.endmonth = '';
+                }
+            }
+        },
+        monthchange3: function(val) {
+            let _this = this;
+            _this.startdatevalue2 = new Date(val).getTime();
+            if (_this.enddatevalue2) {
+                if (_this.startdatevalue2 > _this.enddatevalue2) {
+                    Message({
+                        'message': '结束时间不能低于开始时间',
+                        'type': 'error',
+                    });
+                    _this.formdata.startmonth3 = '';
+                    _this.formdata.endmonth3 = '';
+                }
+            }
+        },
+        monthchange4: function(val) {
+            let _this = this;
+            _this.enddatevalue2 = new Date(val).getTime();;
+            if (_this.startdatevalue2) {
+                if (_this.startdatevalue2 > _this.enddatevalue2) {
+                    Message({
+                        'message': '结束时间不能低于开始时间',
+                        'type': 'error',
+                    });
+                    _this.formdata.startmonth3 = '';
+                    _this.formdata.endmonth3 = '';
                 }
             }
         },
@@ -679,7 +754,7 @@ export default {
                     },
                     success = function(data) {
                         if (data.code == '1') {
-                          _this.dispair = false;
+                            _this.dispair = false;
                             var option1 = {
                                 tooltip: {
                                     trigger: 'axis',
@@ -1405,6 +1480,465 @@ export default {
                 }
             _this.adminApi.getJsonp(url, data, loading, success, complete)
         },
+        yhfnSearch3: function() {
+            let _this = this;
+            console.log(_this.formdata.wd1)
+            if (_this.formdata.wd1 === '' || _this.formdata.wd2 === '') {
+                Message({
+                    'message': '请选择两个对比维度',
+                    'type': 'error',
+                });
+                return
+            }
+
+
+            var data = {
+                'userId': _this.userId,
+                'type': _this.formdata.radiovalue,
+                'demension': _this.formdata.selectvalue1,
+                'pairFirstDimenSion': _this.formdata.wd1,
+                'pairSecondDimenion': _this.formdata.wd2
+            };
+
+            if (_this.formdata.startmonth3) {
+                var starttime = $('.el-input__inner:eq(0)', ".radio2Month").val();
+                data.searchStartTime = starttime.replace('-', '');
+            }
+            if (_this.formdata.endmonth3) {
+
+                var endtime = $('.el-input__inner:eq(1)', ".radio2Month").val();
+                data.searchEndTime = endtime.replace('-', '');
+            }
+
+            var url = _this.adminApi.host + '/htycustall/cust/kind',
+
+                loading = function() {
+                    _this.loadingall = true;
+                },
+                success = function(data) {
+                    if (data.code == '1') {
+                        _this.dispair = true;
+
+                        var option1 = {
+                            tooltip: {
+                                trigger: 'axis',
+                                axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                    type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                                }
+                            },
+                            color: ['#ff7700', '#6c81b3'],
+                            grid: {
+                                top: '10',
+                                left: '3%',
+                                right: '4%',
+                                bottom: '3%',
+                                containLabel: true
+                            },
+                            xAxis: [{
+                                type: 'category',
+                                data: data.data.chartBottom1
+                            }],
+                            yAxis: [{
+                                type: 'value'
+                            }],
+                            series: [{
+                                name: '当前数据',
+                                barWidth: 5,
+                                type: 'bar',
+                                data: data.data.chartDate1,
+                                itemStyle: {
+                                    normal: {
+                                        color: new echarts.graphic.LinearGradient(
+                                            0, 0, 0, 1, [{
+                                                offset: 0,
+                                                color: '#ff7700'
+                                            }, {
+                                                offset: 0.5,
+                                                color: '#ff9e48'
+                                            }, {
+                                                offset: 1,
+                                                color: '#ffbb7f'
+                                            }]
+                                        )
+                                    },
+                                }
+                            }, {
+                                name: '对比数据',
+                                type: 'bar',
+                                barWidth: 5,
+                                data: data.data.chartPair1,
+                                itemStyle: {
+                                    normal: {
+                                        color: new echarts.graphic.LinearGradient(
+                                            0, 0, 0, 1, [{
+                                                offset: 0,
+                                                color: '#6c81c3'
+                                            }, {
+                                                offset: 0.5,
+                                                color: '#91a1c6'
+                                            }, {
+                                                offset: 1,
+                                                color: '#b5bfd9'
+                                            }]
+                                        )
+                                    },
+                                }
+                            }]
+                        };
+                        _this.myChart1.clear();
+                        _this.myChart1 = echarts.init(document.getElementById('main1'));
+                        _this.myChart1.setOption(option1);
+                        var option2 = {
+                            tooltip: {
+                                trigger: 'axis',
+                                axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                    type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                                }
+                            },
+                            color: ['#ff7700', '#6c81b3'],
+                            grid: {
+                                top: '10',
+                                left: '3%',
+                                right: '4%',
+                                bottom: '3%',
+                                containLabel: true
+                            },
+                            xAxis: [{
+                                type: 'category',
+                                data: data.data.chartBottom2
+                            }],
+                            yAxis: [{
+                                type: 'value'
+                            }],
+                            series: [{
+                                name: '当前数据',
+                                barWidth: 5,
+                                type: 'bar',
+                                data: data.data.chartDate2,
+                                itemStyle: {
+                                    normal: {
+                                        color: new echarts.graphic.LinearGradient(
+                                            0, 0, 0, 1, [{
+                                                offset: 0,
+                                                color: '#ff7700'
+                                            }, {
+                                                offset: 0.5,
+                                                color: '#ff9e48'
+                                            }, {
+                                                offset: 1,
+                                                color: '#ffbb7f'
+                                            }]
+                                        )
+                                    },
+                                }
+                            }, {
+                                name: '对比数据',
+                                type: 'bar',
+                                barWidth: 5,
+                                data: data.data.chartPair2,
+                                itemStyle: {
+                                    normal: {
+                                        color: new echarts.graphic.LinearGradient(
+                                            0, 0, 0, 1, [{
+                                                offset: 0,
+                                                color: '#6c81c3'
+                                            }, {
+                                                offset: 0.5,
+                                                color: '#91a1c6'
+                                            }, {
+                                                offset: 1,
+                                                color: '#b5bfd9'
+                                            }]
+                                        )
+                                    },
+                                }
+                            }]
+                        };
+                        _this.myChart2.clear();
+                        _this.myChart2 = echarts.init(document.getElementById('main2'));
+                        _this.myChart2.setOption(option2);
+                        var option3 = {
+                            title: {
+                                show: false
+                            },
+                            tooltip: {
+                                trigger: 'axis',
+                                axisPointer: {
+                                    type: 'cross',
+                                    label: {
+                                        backgroundColor: '#6a7985'
+                                    }
+                                }
+                            },
+                            grid: {
+                                top: 20,
+                                left: '3%',
+                                right: '4%',
+                                bottom: '3%',
+                                containLabel: true
+                            },
+                            xAxis: [{
+                                type: 'category',
+                                boundaryGap: false,
+                                data: data.data.chartBottom3
+                            }],
+                            yAxis: [{
+                                type: 'value'
+                            }],
+                            series: [{
+                                name: '收入',
+                                type: 'line',
+                                stack: '总量',
+                                itemStyle: {
+                                    normal: {
+                                        color: 'rgb(255, 119, 0)'
+                                    }
+                                },
+
+                                data: data.data.chartDate3
+                            }, {
+                                name: '收入',
+                                type: 'line',
+                                stack: '总量',
+                                itemStyle: {
+                                    normal: {
+                                        color: 'rgb(108, 129, 179)'
+                                    }
+                                },
+
+                                data: data.data.chartPair3
+                            }]
+                        };
+                        _this.myChart3.clear();
+                        _this.myChart3 = echarts.init(document.getElementById('main3'));
+                        _this.myChart3.setOption(option3);
+                        var option4 = {
+                            title: {
+                                show: false
+                            },
+                            tooltip: {
+                                trigger: 'axis',
+                                axisPointer: {
+                                    type: 'cross',
+                                    label: {
+                                        backgroundColor: '#6a7985'
+                                    }
+                                }
+                            },
+                            grid: {
+                                top: 20,
+                                left: '3%',
+                                right: '4%',
+                                bottom: '3%',
+                                containLabel: true
+                            },
+                            xAxis: [{
+                                type: 'category',
+                                boundaryGap: false,
+                                data: data.data.chartBottom4
+                            }],
+                            yAxis: [{
+                                type: 'value'
+                            }],
+                            series: [{
+                                name: '收入',
+                                type: 'line',
+                                stack: '总量',
+                                itemStyle: {
+                                    normal: {
+                                        color: 'rgb(255, 119, 0)'
+                                    }
+                                },
+
+                                data: data.data.chartDate4
+                            }, {
+                                name: '收入',
+                                type: 'line',
+                                stack: '总量',
+                                itemStyle: {
+                                    normal: {
+                                        color: 'rgb(108, 129, 179)'
+                                    }
+                                },
+
+                                data: data.data.chartPair4
+                            }]
+                        };
+                        _this.myChart4.clear();
+                        _this.myChart4 = echarts.init(document.getElementById('main4'));
+                        _this.myChart4.setOption(option4);
+                        var option5 = {
+                            title: {
+                                show: false
+                            },
+                            tooltip: {
+                                trigger: 'axis',
+                                axisPointer: {
+                                    type: 'cross',
+                                    label: {
+                                        backgroundColor: '#6a7985'
+                                    }
+                                }
+                            },
+                            grid: {
+                                top: 20,
+                                left: '3%',
+                                right: '4%',
+                                bottom: '3%',
+                                containLabel: true
+                            },
+                            xAxis: [{
+                                type: 'category',
+                                boundaryGap: false,
+                                data: data.data.chartBottom5
+                            }],
+                            yAxis: [{
+                                type: 'value'
+                            }],
+                            series: [{
+                                name: '收入',
+                                type: 'line',
+                                stack: '总量',
+                                itemStyle: {
+                                    normal: {
+                                        color: 'rgb(255, 119, 0)'
+                                    }
+                                },
+                                areaStyle: {
+                                    normal: {
+                                        color: 'rgb(255, 119, 0)',
+                                        opacity: 0.2 // 图表中各个图区域的透明度
+
+                                    }
+                                },
+                                data: data.data.chartDate5
+                            }, {
+                                name: '收入',
+                                type: 'line',
+                                stack: '总量',
+                                itemStyle: {
+                                    normal: {
+                                        color: 'rgb(108, 129, 179)'
+                                    }
+                                },
+                                areaStyle: {
+                                    normal: {
+                                        color: 'rgb(108, 129, 179)',
+                                        opacity: 0.2 // 图表中各个图区域的透明度
+
+                                    }
+                                },
+                                data: data.data.chartPair5
+                            }]
+                        };
+                        _this.myChart5.clear();
+                        _this.myChart5 = echarts.init(document.getElementById('main5'));
+                        _this.myChart5.setOption(option5);
+                        var option6 = {
+                            title: {
+                                show: false
+                            },
+                            tooltip: {
+                                trigger: 'axis',
+                                axisPointer: {
+                                    type: 'cross',
+                                    label: {
+                                        backgroundColor: '#6a7985'
+                                    }
+                                }
+                            },
+                            grid: {
+                                top: 20,
+                                left: '3%',
+                                right: '4%',
+                                bottom: '3%',
+                                containLabel: true
+                            },
+                            xAxis: [{
+                                type: 'category',
+                                boundaryGap: false,
+                                data: data.data.chartBottom6
+                            }],
+                            yAxis: [{
+                                type: 'value'
+                            }],
+                            series: [{
+                                name: '收入',
+                                type: 'line',
+                                stack: '总量',
+                                itemStyle: {
+                                    normal: {
+                                        color: 'rgb(255, 119, 0)'
+                                    }
+                                },
+                                areaStyle: {
+                                    normal: {
+                                        color: 'rgb(255, 119, 0)',
+                                        opacity: 0.2 // 图表中各个图区域的透明度
+
+                                    }
+                                },
+                                data: data.data.chartDate6
+                            }, {
+                                name: '收入',
+                                type: 'line',
+                                stack: '总量',
+                                itemStyle: {
+                                    normal: {
+                                        color: 'rgb(108, 129, 179)'
+                                    }
+                                },
+                                areaStyle: {
+                                    normal: {
+                                        color: 'rgb(108, 129, 179)',
+                                        opacity: 0.2 // 图表中各个图区域的透明度
+
+                                    }
+                                },
+                                data: data.data.chartPair6
+                            }]
+                        };
+                        _this.myChart6.clear();
+                        _this.myChart6 = echarts.init(document.getElementById('main6'));
+                        _this.myChart6.setOption(option6);
+                    } else {
+                        Message({
+                            'message': data.msg,
+                            'type': 'error',
+                        });
+                    }
+                },
+                complete = function() {
+                    _this.loadingall = false;
+                }
+            _this.adminApi.getJsonp(url, data, loading, success, complete)
+        },
+        demension: function(val) {
+            let _this = this;
+            var url = _this.adminApi.host + '/htycustall/cust/step',
+                data = {
+                    'dimension': val
+                },
+                loading = function() {
+
+                },
+                success = function(data) {
+                    if (data.code == '1') {
+
+                        _this.formdata.wd1Arr = data.data;
+                        _this.formdata.wd2Arr = data.data;
+                    } else {
+                        Message({
+                            'message': data.msg,
+                            'type': 'error',
+                        });
+                    }
+                },
+                complete = function() {
+
+                }
+            _this.adminApi.getJsonp(url, data, loading, success, complete)
+        }
     },
     components: {
         wform,

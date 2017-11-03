@@ -70,7 +70,7 @@ import NotFoundComponent from './view/NotFoundComponent.vue'
 
 
 const router = new VueRouter({
-  mode: 'history',
+  // mode: 'history',
   routes: [{
       path: '/',
       component: index,

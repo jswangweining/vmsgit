@@ -6,7 +6,7 @@
 
 <template>
 
-<div v-loading.body='loadingall' style="width:100%; height:100%">
+<div v-loading.body='loadingall' class="bodyscroll">
     <div class="w-pos">
         <span>首页</span>/<span>汇天眼</span>/<span class="w-pos-active">用户分析</span>
     </div>

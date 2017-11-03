@@ -9,6 +9,14 @@ const state = {
 }
 
 
+
+
 export default new Vuex.Store({
-	state
+	state,
+  mutations: {
+    changeUserId (state,id) {
+      // 变更状态
+      state.userId=id;
+    }
+  }
 });

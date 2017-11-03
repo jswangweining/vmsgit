@@ -6,7 +6,7 @@
 
 <template>
 
-<div v-loading.body='loadingall' style="width:100%; height:100%">
+<div v-loading.body='loadingall' class="bodyscroll">
     <div class="w-pos">
         <span>首页</span>/<span>汇天眼</span>/<span class="w-pos-active">用户行为</span>
     </div>
@@ -26,7 +26,7 @@
                           <radio-group v-model="formdata1.radiovalue">
                               <wradio label="0">全国</wradio>
                               <wradio label="1">本省</wradio>
-                              <wradio label="1">本市</wradio>
+                              <wradio label="2">本市</wradio>
                           </radio-group>
                         </form-item>
                         <form-item>
@@ -37,27 +37,7 @@
 
                 </div>
               </wtabpane>
-              <wtabpane label="选品定价" name="1">
-                <div class="w-tab-search">
-                    <wform :inline="true" :model="formdata1" label-position="right" class="demo-form-inline">
-                        <form-item label="周期">
-                          <date-picker type="daterange" v-model="formdata1.data" placeholder="选择周期" :editable='false' :picker-options="pickerOptions">
-                          </date-picker>
-                        </form-item>
 
-                        <form-item label="范围">
-                          <radio-group v-model="formdata1.radiovalue">
-                              <wradio label="0">全国</wradio>
-                              <wradio label="1">本省</wradio>
-                              <wradio label="1">本市</wradio>
-                          </radio-group>
-                        </form-item>
-                        <form-item>
-                        <wbutton type="info" icon="search" size="small"></wbutton>
-                      </form-item>
-                    </wform>
-                </div>
-              </wtabpane>
           </wtabs>
         </div>
 
