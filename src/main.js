@@ -24,6 +24,7 @@ import store from "./store/index.js";
 
 import index from './view/index.vue'
 import ywxl from './view/hty_ywxl.vue'
+import cwxl from './view/hty_cwxl.vue'
 import xpdj from './view/hty_xpdj.vue'
 import yhfn from './view/hty_yhfn.vue'
 import yhfx from './view/hty_yhfx.vue'
@@ -78,6 +79,11 @@ const router = new VueRouter({
         path: '/',
         name: 'ywxl',
         component: ywxl
+      },
+      {
+        path: '/cwxl',
+        name: 'cwxl',
+        component: cwxl
       },
       {
         path: '/xpdj',

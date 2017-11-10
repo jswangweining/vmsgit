@@ -16,15 +16,15 @@
 
     <div class="w-con">
         <div class="w-pannel" style="padding:0.5rem 1rem;">
-            <wtabs v-model="activeName" v-loading='loadtab'>
+            <wtabs v-model="activeName" v-loading='loadtab' @tab-click='tabclick'>
                 <wtabpane label="活跃会员店分析" name="0">
                     <div class="w-tab-search">
                         <wform :inline="true" :model="formdata1" label-position="right" class="demo-form-inline">
                             <div class="">
                                 <form-item label="分析类型">
-                                    <radio-group v-model="formdata1.radiovalue">
-                                        <wradio label="0">活跃会员店TOP10</wradio>
-                                        <wradio label="1">高潜会员店TOP10</wradio>
+                                    <radio-group v-model="formdata1.radiovalue" @change='mbyhglChange'>
+                                        <wradio label="0">高潜会员店TOP10</wradio>
+                                        <wradio label="1">活跃会员店TOP10</wradio>
                                     </radio-group>
                                 </form-item>
                                 <form-item style="float:right; color:#6c81b3">
@@ -44,35 +44,36 @@
                                     </wcheckboxgroup>
                                 </form-item>
                                 <form-item style="float:right;">
-                                    <wbutton type="info" size="small">导出</wbutton>
+                                    <wbutton type="info" size="small" @click='outE1()'>导出</wbutton>
                                 </form-item>
                             </div>
                         </wform>
                     </div>
                     <div class="w-table">
-                        <wtable border :data="tableData">
-                          <tablecolumn prop="pm" label="排名" width='200' fixed>
-                          </tablecolumn>
-                          <tablecolumn prop="mc" label="会员店名称" show-overflow-tooltip min-width='200'>
-                          </tablecolumn>
-                          <tablecolumn prop="ztcg" label="整体采购（元）" width='200' v-if='formdata1.checkList.indexOf("整体采购")>=0'>
-                          </tablecolumn>
-                          <tablecolumn prop="xscg" label="线上采购（元）" width='200' v-if='formdata1.checkList.indexOf("线上采购")>=0'>
-                          </tablecolumn>
-                          <tablecolumn prop="scdl" label="商城登录" width='200' v-if='formdata1.checkList.indexOf("商城登录")>=0'>
-                          </tablecolumn>
-                          <tablecolumn prop="lbdl" label="超级老板登录" width='200' >
-                          </tablecolumn>
-                          <tablecolumn prop="spsj" label="商品上架" width='100' v-if='formdata1.checkList.indexOf("商品上架")>=0'>
-                          </tablecolumn>
-                          <tablecolumn prop="dkje" label="贷款金额" width='100' v-if='formdata1.checkList.indexOf("贷款金额")>=0'>
-                          </tablecolumn>
-                          <tablecolumn prop="yxfs" label="有效粉丝" width='100' v-if='formdata1.checkList.indexOf("有效粉丝")>=0'>
-                          </tablecolumn>
+                        <wtable border :data="tableData1">
+                            <tablecolumn label="排名" width='200' fixed>
+                                <template scope="scope">
+                                    {{scope.$index+1}}
+                                </template>
+                            </tablecolumn>
+                            <tablecolumn prop="custName" label="会员店名称" show-overflow-tooltip min-width='200'>
+                            </tablecolumn>
+                            <tablecolumn prop="amtAll" label="整体采购（元）" width='200' v-if='formdata1.checkList.indexOf("整体采购")>=0'>
+                            </tablecolumn>
+                            <tablecolumn prop="amtOnline" label="线上采购（元）" width='200' v-if='formdata1.checkList.indexOf("线上采购")>=0'>
+                            </tablecolumn>
+                            <tablecolumn prop="qtyB2b" label="商城登录" width='200' v-if='formdata1.checkList.indexOf("商城登录")>=0'>
+                            </tablecolumn>
+                            <tablecolumn prop="qtyBoss" label="超级老板登录" width='200'>
+                            </tablecolumn>
+                            <tablecolumn prop="qtyHzg" label="商品上架" width='100' v-if='formdata1.checkList.indexOf("商品上架")>=0'>
+                            </tablecolumn>
+                            <tablecolumn prop="amtDk" label="贷款金额" width='100' v-if='formdata1.checkList.indexOf("贷款金额")>=0'>
+                            </tablecolumn>
+                            <tablecolumn prop="qtyFs" label="有效粉丝" width='100' v-if='formdata1.checkList.indexOf("有效粉丝")>=0'>
+                            </tablecolumn>
+
                         </wtable>
-                    </div>
-                    <div class="w-pages">
-                        <wpager :total="pagetotle1" :current-page="cur_page1" layout="total, sizes, prev, pager, next, jumper" :page-sizes="[10, 15, 20]" :page-size="pagesize1"></wpager>
                     </div>
                 </wtabpane>
 
@@ -81,9 +82,9 @@
                         <wform :inline="true" :model="formdata1" label-position="right" class="demo-form-inline">
                             <div class="">
                                 <form-item label="分析类型">
-                                    <radio-group v-model="formdata1.radiovalue">
-                                        <wradio label="0">活跃会员店TOP10</wradio>
-                                        <wradio label="1">高潜会员店TOP10</wradio>
+                                    <radio-group v-model="formdata1.radiovalue2" @change='mbyhglChange2'>
+                                        <wradio label="0">高潜VIP会员店TOP10</wradio>
+                                        <wradio label="1">VIP会员店TOP10</wradio>
                                     </radio-group>
                                 </form-item>
                                 <form-item style="float:right; color:#6c81b3">
@@ -92,46 +93,34 @@
                                 </form-item>
                             </div>
                             <div class="">
-                                <form-item label="显示字段" style="margin:0px;">
-                                    <wcheckboxgroup v-model='formdata1.checkList'>
-                                        <wcheckbox label="整体采购"></wcheckbox>
-                                        <wcheckbox label="线上采购"></wcheckbox>
-                                        <wcheckbox label="商城登录"></wcheckbox>
-                                        <wcheckbox label="商品上架"></wcheckbox>
-                                        <wcheckbox label="贷款金额"></wcheckbox>
-                                        <wcheckbox label="有效粉丝"></wcheckbox>
-                                    </wcheckboxgroup>
-                                </form-item>
                                 <form-item style="float:right;">
-                                    <wbutton type="info" size="small">导出</wbutton>
+                                    <wbutton type="info" size="small" @click='outE2()'>导出</wbutton>
                                 </form-item>
                             </div>
                         </wform>
                     </div>
                     <div class="w-table">
-                        <wtable border :data="tableData">
-                          <tablecolumn prop="pm" label="排名" width='200' fixed>
-                          </tablecolumn>
-                          <tablecolumn prop="mc" label="会员店名称" show-overflow-tooltip min-width='200'>
-                          </tablecolumn>
-                          <tablecolumn prop="ztcg" label="整体采购（元）" width='200' v-if='formdata1.checkList.indexOf("整体采购")>=0'>
-                          </tablecolumn>
-                          <tablecolumn prop="xscg" label="线上采购（元）" width='200' v-if='formdata1.checkList.indexOf("线上采购")>=0'>
-                          </tablecolumn>
-                          <tablecolumn prop="scdl" label="商城登录" width='200' v-if='formdata1.checkList.indexOf("商城登录")>=0'>
-                          </tablecolumn>
-                          <tablecolumn prop="lbdl" label="超级老板登录" width='200' >
-                          </tablecolumn>
-                          <tablecolumn prop="spsj" label="商品上架" width='100' v-if='formdata1.checkList.indexOf("商品上架")>=0'>
-                          </tablecolumn>
-                          <tablecolumn prop="dkje" label="贷款金额" width='100' v-if='formdata1.checkList.indexOf("贷款金额")>=0'>
-                          </tablecolumn>
-                          <tablecolumn prop="yxfs" label="有效粉丝" width='100' v-if='formdata1.checkList.indexOf("有效粉丝")>=0'>
-                          </tablecolumn>
+                        <wtable border :data="tableData2">
+                            <tablecolumn label="排名" width='80' fixed>
+                                <template scope="scope">
+                                    {{scope.$index+1}}
+                                </template>
+                            </tablecolumn>
+                            <tablecolumn prop="custName" label="会员店名称" show-overflow-tooltip min-width='200'>
+                            </tablecolumn>
+                            <tablecolumn prop="expireTime" label="结束日期" width='200'>
+                            </tablecolumn>
+                            <tablecolumn prop="areaProName" label="省" width='150'>
+                            </tablecolumn>
+                            <tablecolumn prop="areaCityName" label="市" width='150'>
+                            </tablecolumn>
+                            <tablecolumn prop="areaCountyName" label="县" width='150'>
+                            </tablecolumn>
+                            <tablecolumn prop="areaTownName" label="镇" width='150'>
+                            </tablecolumn>
+                            <tablecolumn prop="custManagerName" label="客户经理" width='200'>
+                            </tablecolumn>
                         </wtable>
-                    </div>
-                    <div class="w-pages">
-                        <wpager :total="pagetotle1" :current-page="cur_page1" layout="total, sizes, prev, pager, next, jumper" :page-sizes="[10, 15, 20]" :page-size="pagesize1"></wpager>
                     </div>
                 </wtabpane>
 
@@ -140,56 +129,51 @@
                         <wform :inline="true" :model="formdata1" label-position="right" class="demo-form-inline">
                             <div class="">
                                 <form-item label="分析类型">
-                                    <radio-group v-model="formdata1.radiovalue">
+                                    <radio-group v-model="formdata3.radiovalue3" @change='mbyhglChange3'>
                                         <wradio label="0">销售占比TOP10</wradio>
                                         <wradio label="1">购买频次TOP10</wradio>
-                                        <wradio label="1">购买市场间隔TOP10</wradio>
+                                        <wradio label="2">购买市场间隔TOP10</wradio>
                                     </radio-group>
                                 </form-item>
 
-                                <form-item label="选择月份">
-                                  <date-picker type="month" v-model="formdata3.startmonth" placeholder="选择开始月份" :editable='false' style="width:250px;">
-                                  </date-picker>
-                                    <wbutton type="info" icon="search" size="small"></wbutton>
+                                <form-item label="选择月份" class="monthrange">
+                                    <date-picker type="month" v-model="formdata3.startmonth" placeholder="选择开始月份" :editable='false' :picker-options="pickerOptions" style="width:250px;">
+                                    </date-picker>
+                                    <wbutton type="info" icon="search" size="small" @click='mbyhglSearch()'></wbutton>
                                 </form-item>
 
                                 <form-item style="float:right;">
-                                    <wbutton type="info" size="small">导出</wbutton>
+                                    <wbutton type="info" size="small" @click='outE3()'>导出</wbutton>
                                 </form-item>
                             </div>
 
                         </wform>
                     </div>
                     <div class="w-table">
-                        <wtable border :data="tableData">
-                          <tablecolumn prop="pm" label="排名" width='200' fixed>
+                        <wtable border :data="tableData3">
+                          <tablecolumn label="排名" width='80' fixed>
+                              <template scope="scope">
+                                  {{scope.$index+1}}
+                              </template>
                           </tablecolumn>
-                          <tablecolumn prop="mc" label="会员店名称" show-overflow-tooltip min-width='200'>
+                          <tablecolumn prop="custName" label="会员店名称" show-overflow-tooltip min-width='200'>
                           </tablecolumn>
-                          <tablecolumn prop="ztcg" label="整体采购（元）" width='200'>
+                          <tablecolumn prop="xsAmt" label="销售额" width='200'>
                           </tablecolumn>
-                          <tablecolumn prop="xscg" label="线上采购（元）" width='200'>
+                          <tablecolumn prop="sellPoint" label="销售额占比" width='200'>
                           </tablecolumn>
-                          <tablecolumn prop="scdl" label="商城登录" width='200'>
+                          <tablecolumn prop="lastDate" label="最近一次购买日期" width='200'>
                           </tablecolumn>
-                          <tablecolumn prop="lbdl" label="超级老板登录" width='200' >
+                          <tablecolumn prop="lastTime" label="间隔天数" width='200'>
                           </tablecolumn>
-                          <tablecolumn prop="spsj" label="商品上架" width='100'>
-                          </tablecolumn>
-                          <tablecolumn prop="dkje" label="贷款金额" width='100'>
-                          </tablecolumn>
-                          <tablecolumn prop="yxfs" label="有效粉丝" width='100'>
-                          </tablecolumn>
-                          <tablecolumn  label="近六个月趋势" width='200' align='center'>
-                            <template scope="scope">
-                              <wbutton type="info" size="small" icon='view' @click='tableView(scope.$index)'>查看</wbutton>
-                            </template>
-                          </tablecolumn>
+                            <tablecolumn label="近六个月趋势" width='200' align='center'>
+                                <template scope="scope">
+                                    <wbutton type="info" size="small" icon='view' @click='tableView(scope.row.custCode)'>查看</wbutton>
+                                </template>
+                            </tablecolumn>
                         </wtable>
                     </div>
-                    <div class="w-pages">
-                        <wpager :total="pagetotle1" :current-page="cur_page1" layout="total, sizes, prev, pager, next, jumper" :page-sizes="[10, 15, 20]" :page-size="pagesize1"></wpager>
-                    </div>
+
                 </wtabpane>
             </wtabs>
         </div>
@@ -199,147 +183,45 @@
 
 
     <wdialog v-model="tabledialog">
-      <div class="rankingt" slot='title'>
-          <div class="rankingta">
-              <div class="w-ywxl-r-t">
-                  销售占比会员店TOP近6个月趋势
-              </div>
-          </div>
-      </div>
-      <div class="rankingc" v-loading='dialogload'>
-          <div class="rankingcb">
-              <div class="rankingcbt">
-                  <div class="rankingcbta">
-                      排名
-                  </div>
-                  <div class="rankingcbtb">
-                      会员店
-                  </div>
-                  <div class="rankingcbtc">
-                      销售占比
-                  </div>
-              </div>
-              <div class="rankingcbd">
-                <div class="rankingcbda" style="height:1.5rem;">
-                    <div class="rankingcbda1">
-                      1
+        <div class="rankingt" slot='title'>
+            <div class="rankingta">
+                <div class="w-ywxl-r-t">
+                    销售占比会员店TOP近6个月趋势
+                </div>
+            </div>
+        </div>
+        <div class="rankingc" v-loading='dialogload'>
+            <div class="rankingcb">
+                <div class="rankingcbt">
+                    <div class="rankingcbta">
+                        排名
                     </div>
-                    <div class="rankingcbda2">
-                      资金阳光会员测试01
+                    <div class="rankingcbtb">
+                        会员店
                     </div>
-                    <div class="rankingcbda3">
-                      10%
+                    <div class="rankingcbtc">
+                        销售占比
                     </div>
                 </div>
-                <div class="rankingcbda w-active2" style="height:1.5rem;" >
-                    <div class="rankingcbda1">
-                      2
+                <div class="rankingcbd">
+                    <div class="rankingcbda" style="height:1.5rem;" v-for='(item,index) in sortList'>
+                        <div class="rankingcbda1">
+                            {{index+1}}
+                        </div>
+                        <div class="rankingcbda2">
+                            {{item.custName}}
+                        </div>
+                        <div class="rankingcbda3">
+                            {{item.sellPoint}}%
+                        </div>
                     </div>
-                    <div class="rankingcbda2">
-                      资金阳光会员测试02
 
-                    </div>
-                    <div class="rankingcbda3">
-                      10%
-                    </div>
                 </div>
-                <div class="rankingcbda" style="height:1.5rem;">
-                    <div class="rankingcbda1">
-                      3
-                    </div>
-                    <div class="rankingcbda2">
-                      资金阳光会员测试03
-                    </div>
-                    <div class="rankingcbda3">
-                      10%
-                    </div>
-                </div>
-                <div class="rankingcbda" style="height:1.5rem;">
-                    <div class="rankingcbda1">
-                      4
-                    </div>
-                    <div class="rankingcbda2">
-                      资金阳光会员测试04
-                    </div>
-                    <div class="rankingcbda3">
-                      10%
-                    </div>
-                </div>
-                <div class="rankingcbda" style="height:1.5rem;">
-                    <div class="rankingcbda1">
-                      5
-                    </div>
-                    <div class="rankingcbda2">
-                      资金阳光会员测试05
-                    </div>
-                    <div class="rankingcbda3">
-                      10%
-                    </div>
-                </div>
-                <div class="rankingcbda" style="height:1.5rem;">
-                    <div class="rankingcbda1">
-                      6
-                    </div>
-                    <div class="rankingcbda2">
-                      资金阳光会员测试06
-                    </div>
-                    <div class="rankingcbda3">
-                      10%
-                    </div>
-                </div>
-                <div class="rankingcbda" style="height:1.5rem;">
-                    <div class="rankingcbda1">
-                      7
-                    </div>
-                    <div class="rankingcbda2">
-                      资金阳光会员测试07
-
-
-
-                    </div>
-                    <div class="rankingcbda3">
-                      10%
-                    </div>
-                </div>
-                <div class="rankingcbda" style="height:1.5rem;">
-                    <div class="rankingcbda1">
-                      8
-                    </div>
-                    <div class="rankingcbda2">
-                      资金阳光会员测试08
-                    </div>
-                    <div class="rankingcbda3">
-                      10%
-                    </div>
-                </div>
-                <div class="rankingcbda" style="height:1.5rem;">
-                    <div class="rankingcbda1">
-                      9
-                    </div>
-                    <div class="rankingcbda2">
-                      资金阳光会员测试09
-                    </div>
-                    <div class="rankingcbda3">
-                      10%
-                    </div>
-                </div>
-                <div class="rankingcbda" style="height:1.5rem;">
-                    <div class="rankingcbda1">
-                      10
-                    </div>
-                    <div class="rankingcbda2">
-                      资金阳光会员测试10
-                    </div>
-                    <div class="rankingcbda3">
-                      10%
-                    </div>
-                </div>
-              </div>
-          </div>
-          <div class="rankingcb" style="margin-left:0.5rem; border:1px solid #d7d7d7;">
-            <div id="main" style="width:100%; height:100%"></div>
-          </div>
-      </div>
+            </div>
+            <div class="rankingcb" style="margin-left:0.5rem; border:1px solid #d7d7d7;">
+                <div id="main" style="width:100%; height:100%"></div>
+            </div>
+        </div>
     </wdialog>
 </div>
 
@@ -364,213 +246,401 @@ import wtable from 'element-ui/packages/table/src/table.vue'
 import tablecolumn from 'element-ui/packages/table/src/table-column.js'
 import wpager from 'element-ui/packages/pagination/src/pagination.js'
 import DatePicker from 'element-ui/packages/date-picker/src/picker/date-picker.js'
+import Message from 'element-ui/packages/Message/index.js'
 import wdialog from 'element-ui/packages/dialog/src/component.vue'
 
 export default {
     name: "",
     data: () => ({
         loadingall: false,
-        dialogload:false,
+        dialogload: false,
         loadtab: false,
-        tabledialog:false,
+        tabledialog: false,
         activeName: '0',
         formdata1: {
             'radiovalue': '0',
-            'checkList': ['整体采购','线上采购','商城登录','商品上架','贷款金额','有效粉丝']
+            'radiovalue2': '0',
+            'checkList': ['整体采购', '线上采购', '商城登录', '商品上架', '贷款金额', '有效粉丝']
         },
-        formdata3:{
-          'startmonth':'',
-          'endmonth':'',
+        formdata3: {
+            'radiovalue3': '0',
+            'startmonth': '',
         },
-        tableData:[{
-          'pm':'1',
-          'mc':'会员测试公司01',
-          'ztcg':'4000',
-          'xscg':'4000',
-          'scdl':'500',
-          'lbdl':'500',
-          'spsj':'500',
-          'dkje':'500',
-          'yxfs':'500'
-        },{
-          'pm':'2',
-          'mc':'会员测试公司02',
-          'ztcg':'4000',
-          'xscg':'4000',
-          'scdl':'500',
-          'lbdl':'500',
-          'spsj':'500',
-          'dkje':'500',
-          'yxfs':'500'
-        },{
-          'pm':'3',
-          'mc':'会员测试公司03',
-          'ztcg':'4000',
-          'xscg':'4000',
-          'scdl':'500',
-          'lbdl':'500',
-          'spsj':'500',
-          'dkje':'500',
-          'yxfs':'500'
-        },{
-          'pm':'4',
-          'mc':'会员测试公司04',
-          'ztcg':'4000',
-          'xscg':'4000',
-          'scdl':'500',
-          'lbdl':'500',
-          'spsj':'500',
-          'dkje':'500',
-          'yxfs':'500'
-        },{
-          'pm':'5',
-          'mc':'会员测试公司05',
-          'ztcg':'4000',
-          'xscg':'4000',
-          'scdl':'500',
-          'lbdl':'500',
-          'spsj':'500',
-          'dkje':'500',
-          'yxfs':'500'
-        },{
-          'pm':'6',
-          'mc':'会员测试公司06',
-          'ztcg':'4000',
-          'xscg':'4000',
-          'scdl':'500',
-          'lbdl':'500',
-          'spsj':'500',
-          'dkje':'500',
-          'yxfs':'500'
-        },{
-          'pm':'7',
-          'mc':'会员测试公司07',
-          'ztcg':'4000',
-          'xscg':'4000',
-          'scdl':'500',
-          'lbdl':'500',
-          'spsj':'500',
-          'dkje':'500',
-          'yxfs':'500'
-        },{
-          'pm':'8',
-          'mc':'会员测试公司08',
-          'ztcg':'4000',
-          'xscg':'4000',
-          'scdl':'500',
-          'lbdl':'500',
-          'spsj':'500',
-          'dkje':'500',
-          'yxfs':'500'
-        },{
-          'pm':'9',
-          'mc':'会员测试公司09',
-          'ztcg':'4000',
-          'xscg':'4000',
-          'scdl':'500',
-          'lbdl':'500',
-          'spsj':'500',
-          'dkje':'500',
-          'yxfs':'500'
-        },{
-          'pm':'10',
-          'mc':'会员测试公司10',
-          'ztcg':'4000',
-          'xscg':'4000',
-          'scdl':'500',
-          'lbdl':'500',
-          'spsj':'500',
-          'dkje':'500',
-          'yxfs':'500'
-        }],
-        pagetotle1: 100,
-        cur_page1: 1,
-        pagesize1: 10,
-          myChart:'',
+        pickerOptions: {
+            disabledDate(time) {
+                return time.getTime() > Date.now() - 8.64e7 || time.getTime() < new Date(2016, 0, 1, 0, 0, 0)
+            }
+        },
+        sortList:[],
+        tableData1: [],
+        tableData2: [],
+        tableData3: [],
+        myChart: '',
         wholeBottomPair: ["88.88", "88.88"],
         wholeBottom: ["66.66", "66.66"],
         wholeBottomDate: ["201705", "201709"],
     }),
+    watch: {
+        activeName: function(val, oldVal) {
+            let _this = this;
+            switch (val) {
+                case '0':
+                    var url = _this.adminApi.host + '/htycustall/cust/manager',
+                        data = {
+                            userId: _this.userId,
+                            pageType: _this.activeName,
+                            aliveType: _this.formdata1.radiovalue,
+                            // time:'201709'
+
+                        },
+                        loading = function() {
+                            _this.loadtab = true;
+                        },
+                        success = function(data) {
+                            if (data.code == '1') {
+
+                                _this.tableData1 = data.data;
+                            } else {
+                                Message({
+                                    'message': data.msg,
+                                    'type': 'error',
+                                });
+                            }
+                        },
+                        complete = function() {
+                            _this.loadtab = false;
+                        }
+                    _this.adminApi.getJsonp(url, data, loading, success, complete)
+                    break;
+                case '1':
+                    var url = _this.adminApi.host + '/htycustall/cust/manager',
+                        data = {
+                            userId: _this.userId,
+                            pageType: _this.activeName,
+                            aliveType: _this.formdata1.radiovalue2,
+                            // time:'201709'
+                        },
+                        loading = function() {
+                            _this.loadtab = true;
+                        },
+                        success = function(data) {
+                            if (data.code == '1') {
+                                _this.tableData2 = data.data;
+                            } else {
+                                Message({
+                                    'message': data.msg,
+                                    'type': 'error',
+                                });
+                            }
+                        },
+                        complete = function() {
+                            _this.loadtab = false;
+                        }
+                    _this.adminApi.getJsonp(url, data, loading, success, complete)
+                    break;
+                case '2':
+                    var data = {
+                        userId: _this.userId,
+                        sortType: _this.formdata3.radiovalue3,
+                        dateTime: ''
+                    };
+                    if (_this.formdata3.startmonth) {
+                        var starttime = $('.el-input__inner:eq(0)', ".monthrange").val();
+                        data.dateTime = starttime.replace('-', '');
+                    }
+                    var url = _this.adminApi.host + '/htycustall/cust/month',
+                        loading = function() {
+                            _this.loadtab = true;
+                        },
+                        success = function(data) {
+                            if (data.code == '1') {
+                                _this.tableData3 = data.data;
+                            } else {
+                                Message({
+                                    'message': data.msg,
+                                    'type': 'error',
+                                });
+                            }
+                        },
+                        complete = function() {
+                            _this.loadtab = false;
+                        }
+                    _this.adminApi.getJsonp(url, data, loading, success, complete)
+                    break;
+                default:
+
+            }
+        }
+    },
+    created() {
+        let _this = this;
+        _this.userId = _this.$store.state.userId;
+    },
     mounted() {
         let _this = this;
         _this.$nextTick(function() {
 
+            var url = _this.adminApi.host + '/htycustall/cust/manager',
+                data = {
+                    userId: _this.userId,
+                    pageType: _this.activeName,
+                    aliveType: _this.formdata1.radiovalue,
+                    // time:'201709'
+                },
+                loading = function() {
+                    _this.loadtab = true;
+                },
+                success = function(data) {
+                    if (data.code == '1') {
+                        _this.tableData1 = data.data;
+                    } else {
+                        Message({
+                            'message': data.msg,
+                            'type': 'error',
+                        });
+                    }
+                },
+                complete = function() {
+                    _this.loadtab = false;
+                }
+            _this.adminApi.getJsonp(url, data, loading, success, complete)
         })
     },
     methods: {
-      tableView(index) {
-        let _this=this;
-        _this.tabledialog=true;
-          _this.$nextTick(function() {
-            var option3 = {
-                title: {
-                    show: false
+        tableView: function(code) {
+            let _this = this;
+             _this.tabledialog = true;
+            var url = _this.adminApi.host + '/htycustall/cust/banner',
+                data = {
+                    userId: _this.userId,
+                    custCode:code
+                    // time:'201709'
                 },
-                tooltip: {
-                    trigger: 'axis',
-                    axisPointer: {
-                        type: 'cross',
-                        label: {
-                            backgroundColor: '#6a7985'
-                        }
+                loading = function() {
+                    _this.dialogload=true
+
+                },
+                success = function(data) {
+                    if (data.code == '1') {
+                         _this.sortList = data.data.sortList;
+
+                         _this.$nextTick(function() {
+                           var option3 = {
+                               title: {
+                                   show: false
+                               },
+                               tooltip: {
+                                   trigger: 'axis',
+                                   axisPointer: {
+                                       type: 'cross',
+                                       label: {
+                                           backgroundColor: '#6a7985'
+                                       }
+                                   }
+                               },
+                               grid: {
+                                   top: 20,
+                                   left: '3%',
+                                   right: '4%',
+                                   bottom: '3%',
+                                   containLabel: true
+                               },
+                               xAxis: [{
+                                   type: 'category',
+                                   boundaryGap: false,
+                                   data: data.data.listName
+                               }],
+                               yAxis: [{
+                                   type: 'value'
+                               }],
+                               series: [{
+                                   name: '收入',
+                                   type: 'line',
+                                   stack: '总量',
+                                   itemStyle: {
+                                       normal: {
+                                           color: 'rgb(255, 119, 0)'
+                                       }
+                                   },
+                                   areaStyle: {
+                                       normal: {
+                                           color: 'rgb(255, 119, 0)',
+                                           opacity: 0.2 // 图表中各个图区域的透明度
+
+                                       }
+                                   },
+                                   data: data.data.listDate
+                               }, ]
+                           };
+
+                           _this.myChart = echarts.init(document.getElementById('main'));
+                           _this.myChart.setOption(option3);
+                         })
+                    } else {
+                        Message({
+                            'message': data.msg,
+                            'type': 'error',
+                        });
                     }
                 },
-                grid: {
-                    top: 20,
-                    left: '3%',
-                    right: '4%',
-                    bottom: '3%',
-                    containLabel: true
-                },
-                xAxis: [{
-                    type: 'category',
-                    boundaryGap: false,
-                    data: _this.wholeBottomDate
-                }],
-                yAxis: [{
-                    type: 'value'
-                }],
-                series: [{
-                    name: '收入',
-                    type: 'line',
-                    stack: '总量',
-                    itemStyle: {
-                        normal: {
-                            color: 'rgb(255, 119, 0)'
-                        }
-                    },
-                    areaStyle: {
-                        normal: {
-                            color: 'rgb(255, 119, 0)',
-                            opacity: 0.2 // 图表中各个图区域的透明度
+                complete = function() {
+                  _this.dialogload=false
+                }
+            _this.adminApi.getJsonp(url, data, loading, success, complete)
 
-                        }
-                    },
-                    data: _this.wholeBottom
-                },
-                {
-                    name: '收入',
-                    type: 'line',
-                    stack: '总量',
-                    itemStyle: {
-                        normal: {
-                            color: 'rgb(108, 129, 179)'
-                        }
-                    },
-                    areaStyle: {
-                        normal: {
-                            color: 'rgb(108, 129, 179)',
-                            opacity: 0.2 // 图表中各个图区域的透明度
 
-                        }
-                    },
-                    data: _this.wholeBottomPair
-                }]
-            };
-            _this.myChart = echarts.init(document.getElementById('main'));
-            _this.myChart.setOption(option3);
-          })
-      }
+
+        },
+        tabclick: function(tab) {
+            let _this = this;
+        },
+        mbyhglChange: function() {
+            let _this = this;
+            var url = _this.adminApi.host + '/htycustall/cust/manager',
+                data = {
+                    userId: _this.userId,
+                    pageType: _this.activeName,
+                    aliveType: _this.formdata1.radiovalue,
+                    // time:'201709'
+                },
+                loading = function() {
+                    _this.loadtab = true;
+                },
+                success = function(data) {
+                    if (data.code == '1') {
+
+                        _this.tableData1 = data.data;
+                    } else {
+                        Message({
+                            'message': data.msg,
+                            'type': 'error',
+                        });
+                    }
+                },
+                complete = function() {
+                    _this.loadtab = false;
+                }
+            _this.adminApi.getJsonp(url, data, loading, success, complete)
+        },
+        mbyhglChange2: function() {
+            let _this = this;
+            var url = _this.adminApi.host + '/htycustall/cust/manager',
+                data = {
+                    userId: _this.userId,
+                    pageType: _this.activeName,
+                    aliveType: _this.formdata1.radiovalue2,
+                    // time:'201709'
+                },
+                loading = function() {
+                    _this.loadtab = true;
+                },
+                success = function(data) {
+                    if (data.code == '1') {
+
+                        _this.tableData2 = data.data;
+                    } else {
+                        Message({
+                            'message': data.msg,
+                            'type': 'error',
+                        });
+                    }
+                },
+                complete = function() {
+                    _this.loadtab = false;
+                }
+            _this.adminApi.getJsonp(url, data, loading, success, complete)
+        },
+        mbyhglChange3:function(){
+          let _this=this;
+          var data = {
+              userId: _this.userId,
+              sortType: _this.formdata3.radiovalue3,
+              dateTime: ''
+          };
+
+          if (_this.formdata3.startmonth) {
+              var starttime = $('.el-input__inner:eq(0)', ".monthrange").val();
+              data.dateTime = starttime.replace('-', '');
+          }
+          var url = _this.adminApi.host + '/htycustall/cust/month',
+
+              loading = function() {
+                  _this.loadtab = true;
+              },
+              success = function(data) {
+                  if (data.code == '1') {
+                      _this.tableData3 = data.data;
+                  } else {
+                      Message({
+                          'message': data.msg,
+                          'type': 'error',
+                      });
+                  }
+              },
+              complete = function() {
+                  _this.loadtab = false;
+              }
+          _this.adminApi.getJsonp(url, data, loading, success, complete)
+        },
+        mbyhglSearch:function(){
+          let _this=this;
+          if(!_this.formdata3.startmonth)
+          {
+            Message({
+                'message': '请选择月份查询',
+                'type': 'error',
+            });
+            return;
+          }
+          var starttime = $('.el-input__inner:eq(0)', ".monthrange").val();
+          var data = {
+              userId: _this.userId,
+              sortType: _this.formdata3.radiovalue3,
+              dateTime: starttime.replace('-', '')
+          };
+
+          var url = _this.adminApi.host + '/htycustall/cust/month',
+
+              loading = function() {
+                  _this.loadtab = true;
+              },
+              success = function(data) {
+                  if (data.code == '1') {
+                      _this.tableData3 = data.data;
+                  } else {
+                      Message({
+                          'message': data.msg,
+                          'type': 'error',
+                      });
+                  }
+              },
+              complete = function() {
+                  _this.loadtab = false;
+              }
+          _this.adminApi.getJsonp(url, data, loading, success, complete)
+
+        },
+        outE1:function(){
+          let _this=this;
+          window.location.href=_this.adminApi.host+'/htycustall/cust/manager/downLoad?userId='+_this.userId+'&aliveType='+ _this.formdata1.radiovalue+'&pageType='+_this.activeName;
+        },
+        outE2:function(){
+          let _this=this;
+          window.location.href=_this.adminApi.host+'/htycustall/cust/manager/downLoad?userId='+_this.userId+'&aliveType='+ _this.formdata1.radiovalue2+'&pageType='+_this.activeName;
+        },
+        outE3:function(){
+          let _this=this;
+          var data = {
+              userId: _this.userId,
+              sortType: _this.formdata3.radiovalue3,
+              dateTime: ''
+          };
+          if (_this.formdata3.startmonth) {
+              var starttime = $('.el-input__inner:eq(0)', ".monthrange").val();
+              data.dateTime = starttime.replace('-', '');
+          }
+          window.location.href=_this.adminApi.host+'/htycustall/cust/month/downLoad?userId='+data.userId+'&sortType='+ data.sortType+'&dateTime='+data.dateTime;
+        }
     },
     components: {
         wtabs,
@@ -586,6 +656,7 @@ export default {
         tablecolumn,
         wpager,
         DatePicker,
+        Message,
         wdialog
     }
 }

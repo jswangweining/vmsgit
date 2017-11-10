@@ -1003,7 +1003,6 @@ export default {
         wholeName: [],
         wholeTop: [{}, {}, {}],
         wholeLeft: [{}, {}, {}]
-
     }),
     mounted() {
         let _this = this;

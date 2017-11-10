@@ -25,7 +25,7 @@
 
 <div class="bodyscroll" v-loading.body='loadingall'>
     <div class="w-pos">
-        <span>首页</span>/<span>汇天眼</span>/<span class="w-pos-active">用户分类</span> {{formdata.date}}
+        <span>首页</span>/<span>汇天眼</span>/<span class="w-pos-active">用户分类</span>
     </div>
     <div class="w-con">
         <div class="w-search">
@@ -43,7 +43,7 @@
                 </div>
 
                 <div class="" v-if='formdata.radiovalue=="0"'>
-                    <form-item label="转化时间" style="margin-top:0px;" class="radio0Month">
+                    <form-item label="查询时间" style="margin-top:0px;" class="radio0Month">
                         <date-picker type="month" v-model="formdata.startmonth" placeholder="选择开始月份" :editable='false' :picker-options="pickerOptions1" @change='monthchange1' style="width:250px;">
                         </date-picker>
                         <span class="w-searchs">至</span>
@@ -85,14 +85,14 @@
                         </wselect>
 
                         <form-item label="查询时间" style="margin-top:0px;" class="radio2Month">
-                            <date-picker type="month" v-model="formdata.startmonth3" placeholder="选择开始月份" :editable='false' :picker-options="pickerOptions1" style="width:250px;" @change='monthchange3'>
+                            <date-picker type="month" v-model="formdata.startmonth3" placeholder="选择开始月份" :editable='false' :picker-options="pickerOptions1" style="width:250px;" >
                             </date-picker>
                             <span class="w-searchs">至</span>
-                            <date-picker type="month" v-model="formdata.endmonth3" placeholder="选择结束月份" :editable='false' :picker-options="pickerOptions1" style="width:250px;" @change='monthchange4'>
+                            <date-picker type="month" v-model="formdata.endmonth3" placeholder="选择结束月份" :editable='false' :picker-options="pickerOptions1" style="width:250px;">
                             </date-picker>
                         </form-item>
 
-                        <form-item label="维度：" style="margin-top:0px;">
+                        <form-item label="维度：" style="margin-top:0px;" v-if='wdshow'>
                             <wselect v-model="formdata.wd1" placeholder="请选择" filterable clearable>
                                 <woption :label='item' :value='index' v-for='(item,index) in formdata.wd1Arr'></woption>
                             </wselect>
@@ -259,6 +259,7 @@ export default {
             'wd1Arr': '',
             'wd2Arr': ''
         },
+        wdshow:false,
         dispair: false,
         pickerOptions1: {
             disabledDate(time) {
@@ -268,7 +269,7 @@ export default {
 
         pickerOptions3: {
             disabledDate(time) {
-                    return time.getTime() >= Date.now() || time.getTime() < new Date(2016, 0, 1, 0, 0, 0)
+                    return time.getTime() >= Date.now()
                 },
                 shortcuts: [{
                     text: '本日',
@@ -303,9 +304,6 @@ export default {
                     }
                 }]
         },
-        wholeBottom: ["66.66", "66.66"],
-        wholeBottomDate: ["201705", "201709"],
-        wholeBottomPair: ["88.88", "88.88"],
         myChart1: '',
         myChart2: '',
         myChart3: '',
@@ -318,6 +316,32 @@ export default {
         enddatevalue2: ''
     }),
     computed: {},
+    watch:{
+      formdata: {
+              handler: function(val) {
+                  if (val.startmonth3 && val.endmonth3) {
+                    this.startdatevalue2 = new Date(val.startmonth3).getTime();
+                    this.enddatevalue2 = new Date(val.endmonth3).getTime();
+                    if(this.startdatevalue2 > this.enddatevalue2)
+                    {
+                              Message({
+                                  'message': '结束时间不能低于开始时间',
+                                  'type': 'error',
+                              });
+                              this.formdata.startmonth3 = '';
+                              this.formdata.endmonth3 = '';
+                              return;
+                    }
+                    this.wdshow=true;
+
+                  }
+                  else {
+                    this.wdshow=false;
+                  }
+              },
+              deep: true
+          }
+    },
     created() {
         let _this = this;
         _this.userId = _this.$store.state.userId;
@@ -638,14 +662,13 @@ export default {
             if (_this.formdata.radiovalue == '2' && _this.formdata.wd1Arr == '') {
                 var url = _this.adminApi.host + '/htycustall/cust/step',
                     data = {
-                        'dimension': '1'
+                        'dimension': '0'
                     },
                     loading = function() {
 
                     },
                     success = function(data) {
                         if (data.code == '1') {
-                            console.log(JSON.stringify(data))
                             _this.formdata.wd1Arr = data.data;
                             _this.formdata.wd2Arr = data.data;
                         } else {
@@ -1495,9 +1518,9 @@ export default {
             var data = {
                 'userId': _this.userId,
                 'type': _this.formdata.radiovalue,
-                'demension': _this.formdata.selectvalue1,
-                'pairFirstDimenSion': _this.formdata.wd1,
-                'pairSecondDimenion': _this.formdata.wd2
+                'dimension': _this.formdata.selectvalue1,
+                'pairFirstDimension': _this.formdata.wd1,
+                'pairSecondDimension': _this.formdata.wd2
             };
 
             if (_this.formdata.startmonth3) {

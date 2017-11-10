@@ -254,10 +254,17 @@
                     </div>
                     <div class="w-table">
                         <wtable border :data="tableData">
-                            <tablecolumn prop="ppName" label="品牌" width='200' fixed>
+                            <tablecolumn prop="ppName" label="品牌" width='200' fixed v-if='formdata2.radiovalue=="0"' :key='1'>
                             </tablecolumn>
-                            <tablecolumn prop="plName" label="品类" show-overflow-tooltip min-width='300'>
+                            <tablecolumn prop="plName" label="品类" show-overflow-tooltip min-width='300' v-if='formdata2.radiovalue=="0"' :key='2'>
                             </tablecolumn>
+
+
+                            <tablecolumn prop="plName" label="品类" fixed width='200' v-if='formdata2.radiovalue=="1"' :key='3'>
+                            </tablecolumn>
+                            <tablecolumn prop="ppName" label="品牌" show-overflow-tooltip min-width='300' v-if='formdata2.radiovalue=="1"' :key='4'>
+                            </tablecolumn>
+
                             <tablecolumn prop="xsPrice" label="销售单价" width='150'>
                             </tablecolumn>
                             <tablecolumn prop="xsQty" label="销售数量" width='150'>
@@ -1754,6 +1761,8 @@ export default {
             data.prodName = _this.formdata3.inpName ? _this.formdata3.inpName : '';
             data.ppCode = _this.formdata3.ppvalue ? _this.formdata3.ppvalue : '';
             data.plCode = _this.formdata3.plvalue ? _this.formdata3.plvalue : '';
+
+
 
             if (_this.mondisabled && _this.formdata.radiovalue == '0') {
 
