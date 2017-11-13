@@ -510,6 +510,34 @@ export default {
                 _this.loadingall = false;
             }
         _this.adminApi.getJsonp(url, data, loading, success, complete)
+        $(window).resize(function() {
+          if(_this.myChart1)
+          {
+            _this.myChart1.resize();
+          }
+          if(_this.myChart2)
+          {
+            _this.myChart2.resize();
+          }
+          if(_this.myChart3)
+          {
+            _this.myChart3.resize();
+          }
+          if(_this.myChart4)
+          {
+            _this.myChart4.resize();
+          }
+          if(_this.myChart5)
+          {
+            _this.myChart5.resize();
+          }
+          if(_this.myChart6)
+          {
+            _this.myChart6.resize();
+          }
+
+
+        });
       })
     },
     methods: {

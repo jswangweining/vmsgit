@@ -13,10 +13,10 @@
 }
 
 .bodyscroll {
-    width: 100%;
+
     height: 100%;
-    overflow-x: auto;
-    overflow-y: auto;
+    // overflow-x: auto;
+    // overflow-y: auto;
 }
 
 </style>
@@ -85,10 +85,10 @@
                         </wselect>
 
                         <form-item label="查询时间" style="margin-top:0px;" class="radio2Month">
-                            <date-picker type="month" v-model="formdata.startmonth3" placeholder="选择开始月份" :editable='false' :picker-options="pickerOptions1" style="width:250px;" >
+                            <date-picker type="month" v-model="formdata2.startmonth3" placeholder="选择开始月份" :editable='false' :picker-options="pickerOptions1" style="width:250px;" >
                             </date-picker>
                             <span class="w-searchs">至</span>
-                            <date-picker type="month" v-model="formdata.endmonth3" placeholder="选择结束月份" :editable='false' :picker-options="pickerOptions1" style="width:250px;">
+                            <date-picker type="month" v-model="formdata2.endmonth3" placeholder="选择结束月份" :editable='false' :picker-options="pickerOptions1" style="width:250px;">
                             </date-picker>
                         </form-item>
 
@@ -102,7 +102,15 @@
                             </wselect>
 
 
-                            <wbutton type="info" size="small" @click='yhfnSearch3()'>对比</wbutton>
+                        </form-item>
+
+                        <form-item label="" style="margin-top:0px;">
+                          <wtooltip class="item" effect="dark"  placement="top"   content="请选择查询时间段" :disabled='wdshow'>
+                            <div style="display:inline-block">
+                              <wbutton type="info" size="small" @click='yhfnSearch3()' :disabled='!wdshow'>对比</wbutton>
+                            </div>
+
+                       </wtooltip>
                         </form-item>
                     </form-item>
                 </div>
@@ -239,6 +247,8 @@ import Message from 'element-ui/packages/Message/index.js'
 import wbutton from 'element-ui/packages/button/src/button.vue'
 import wselect from 'element-ui/packages/select/src/select.vue'
 import woption from 'element-ui/packages/select/src/option.vue'
+import wtooltip from 'element-ui/packages/tooltip/index.js'
+
 
 export default {
     data: () => ({
@@ -251,13 +261,17 @@ export default {
             'endmonth': '',
             'startmonth2': '',
             'endmonth2': '',
-            'startmonth3': '',
-            'endmonth3': '',
+
             'selectvalue1': '0',
             'wd1': '',
             'wd2': '',
             'wd1Arr': '',
             'wd2Arr': ''
+        },
+
+        formdata2:{
+          'startmonth3': '',
+          'endmonth3': '',
         },
         wdshow:false,
         dispair: false,
@@ -317,8 +331,9 @@ export default {
     }),
     computed: {},
     watch:{
-      formdata: {
+      formdata2: {
               handler: function(val) {
+                let _this=this;
                   if (val.startmonth3 && val.endmonth3) {
                     this.startdatevalue2 = new Date(val.startmonth3).getTime();
                     this.enddatevalue2 = new Date(val.endmonth3).getTime();
@@ -328,15 +343,49 @@ export default {
                                   'message': '结束时间不能低于开始时间',
                                   'type': 'error',
                               });
-                              this.formdata.startmonth3 = '';
-                              this.formdata.endmonth3 = '';
+                              this.formdata2.startmonth3 = '';
+                              this.formdata2.endmonth3 = '';
                               return;
                     }
-                    this.wdshow=true;
+                      this.wdshow=true;
+
+                      _this.$nextTick(function() {
+                        var starttime = $('.el-input__inner:eq(0)', ".radio2Month").val();
+                        var endtime = $('.el-input__inner:eq(1)', ".radio2Month").val();
+
+                        var url = _this.adminApi.host + '/htycustall/cust/step',
+                            data = {
+                                'dimension': _this.formdata.selectvalue1,
+                                'searchStartTime':starttime.replace('-', ''),
+                                'searchEndTime':endtime.replace('-', '')
+                            },
+                            loading = function() {
+
+                            },
+                            success = function(data) {
+                                if (data.code == '1') {
+                                    _this.formdata.wd1Arr = data.data;
+                                    _this.formdata.wd2Arr = data.data;
+                                } else {
+                                    Message({
+                                        'message': data.msg,
+                                        'type': 'error',
+                                    });
+                                }
+                            },
+                            complete = function() {
+
+                            }
+                        _this.adminApi.getJsonp(url, data, loading, success, complete)
+                      })
+
 
                   }
                   else {
+
                     this.wdshow=false;
+                    _this.formdata.wd1Arr='';
+                      _this.formdata.wd2Arr = ''
                   }
               },
               deep: true
@@ -482,7 +531,7 @@ export default {
                                 type: 'value'
                             }],
                             series: [{
-                                name: '收入',
+                                name: '当前数据',
                                 type: 'line',
                                 stack: '总量',
                                 itemStyle: {
@@ -525,7 +574,7 @@ export default {
                                 type: 'value'
                             }],
                             series: [{
-                                name: '收入',
+                                name: '当前数据',
                                 type: 'line',
                                 stack: '总量',
                                 itemStyle: {
@@ -568,7 +617,7 @@ export default {
                                 type: 'value'
                             }],
                             series: [{
-                                name: '收入',
+                                name: '当前数据',
                                 type: 'line',
                                 stack: '总量',
                                 itemStyle: {
@@ -617,7 +666,7 @@ export default {
                                 type: 'value'
                             }],
                             series: [{
-                                name: '收入',
+                                name: '当前数据',
                                 type: 'line',
                                 stack: '总量',
                                 itemStyle: {
@@ -648,6 +697,35 @@ export default {
                     _this.loadingall = false;
                 }
             _this.adminApi.getJsonp(url, data, loading, success, complete)
+
+            $(window).resize(function() {
+              if(_this.myChart1)
+              {
+                _this.myChart1.resize();
+              }
+              if(_this.myChart2)
+              {
+                _this.myChart2.resize();
+              }
+              if(_this.myChart3)
+              {
+                _this.myChart3.resize();
+              }
+              if(_this.myChart4)
+              {
+                _this.myChart4.resize();
+              }
+              if(_this.myChart5)
+              {
+                _this.myChart5.resize();
+              }
+              if(_this.myChart6)
+              {
+                _this.myChart6.resize();
+              }
+
+
+            });
         })
 
     },
@@ -660,28 +738,7 @@ export default {
                 })
             })
             if (_this.formdata.radiovalue == '2' && _this.formdata.wd1Arr == '') {
-                var url = _this.adminApi.host + '/htycustall/cust/step',
-                    data = {
-                        'dimension': '0'
-                    },
-                    loading = function() {
 
-                    },
-                    success = function(data) {
-                        if (data.code == '1') {
-                            _this.formdata.wd1Arr = data.data;
-                            _this.formdata.wd2Arr = data.data;
-                        } else {
-                            Message({
-                                'message': data.msg,
-                                'type': 'error',
-                            });
-                        }
-                    },
-                    complete = function() {
-
-                    }
-                _this.adminApi.getJsonp(url, data, loading, success, complete)
             }
 
         },
@@ -722,8 +779,8 @@ export default {
                         'message': '结束时间不能低于开始时间',
                         'type': 'error',
                     });
-                    _this.formdata.startmonth3 = '';
-                    _this.formdata.endmonth3 = '';
+                    _this.formdata2.startmonth3 = '';
+                    _this.formdata2.endmonth3 = '';
                 }
             }
         },
@@ -736,8 +793,8 @@ export default {
                         'message': '结束时间不能低于开始时间',
                         'type': 'error',
                     });
-                    _this.formdata.startmonth3 = '';
-                    _this.formdata.endmonth3 = '';
+                    _this.formdata2.startmonth3 = '';
+                    _this.formdata2.endmonth3 = '';
                 }
             }
         },
@@ -903,7 +960,7 @@ export default {
                                     type: 'value'
                                 }],
                                 series: [{
-                                    name: '收入',
+                                    name: '当前数据',
                                     type: 'line',
                                     stack: '总量',
                                     itemStyle: {
@@ -947,7 +1004,7 @@ export default {
                                     type: 'value'
                                 }],
                                 series: [{
-                                    name: '收入',
+                                    name: '当前数据',
                                     type: 'line',
                                     stack: '总量',
                                     itemStyle: {
@@ -991,7 +1048,7 @@ export default {
                                     type: 'value'
                                 }],
                                 series: [{
-                                    name: '收入',
+                                    name: '当前数据',
                                     type: 'line',
                                     stack: '总量',
                                     itemStyle: {
@@ -1041,7 +1098,7 @@ export default {
                                     type: 'value'
                                 }],
                                 series: [{
-                                    name: '收入',
+                                    name: '当前数据',
                                     type: 'line',
                                     stack: '总量',
                                     itemStyle: {
@@ -1276,7 +1333,7 @@ export default {
                                 type: 'value'
                             }],
                             series: [{
-                                name: '收入',
+                                name: '当前数据',
                                 type: 'line',
                                 stack: '总量',
                                 itemStyle: {
@@ -1287,7 +1344,7 @@ export default {
 
                                 data: data.data.chartDate3
                             }, {
-                                name: '收入',
+                                name: '当前数据',
                                 type: 'line',
                                 stack: '总量',
                                 itemStyle: {
@@ -1331,7 +1388,7 @@ export default {
                                 type: 'value'
                             }],
                             series: [{
-                                name: '收入',
+                                name: '当前数据',
                                 type: 'line',
                                 stack: '总量',
                                 itemStyle: {
@@ -1342,7 +1399,7 @@ export default {
 
                                 data: data.data.chartDate4
                             }, {
-                                name: '收入',
+                                name: '当前数据',
                                 type: 'line',
                                 stack: '总量',
                                 itemStyle: {
@@ -1386,7 +1443,7 @@ export default {
                                 type: 'value'
                             }],
                             series: [{
-                                name: '收入',
+                                name: '当前数据',
                                 type: 'line',
                                 stack: '总量',
                                 itemStyle: {
@@ -1403,7 +1460,7 @@ export default {
                                 },
                                 data: data.data.chartDate5
                             }, {
-                                name: '收入',
+                                name: '当前数据',
                                 type: 'line',
                                 stack: '总量',
                                 itemStyle: {
@@ -1453,7 +1510,7 @@ export default {
                                 type: 'value'
                             }],
                             series: [{
-                                name: '收入',
+                                name: '当前数据',
                                 type: 'line',
                                 stack: '总量',
                                 itemStyle: {
@@ -1470,7 +1527,7 @@ export default {
                                 },
                                 data: data.data.chartDate6
                             }, {
-                                name: '收入',
+                                name: '当前数据',
                                 type: 'line',
                                 stack: '总量',
                                 itemStyle: {
@@ -1505,7 +1562,6 @@ export default {
         },
         yhfnSearch3: function() {
             let _this = this;
-            console.log(_this.formdata.wd1)
             if (_this.formdata.wd1 === '' || _this.formdata.wd2 === '') {
                 Message({
                     'message': '请选择两个对比维度',
@@ -1523,11 +1579,11 @@ export default {
                 'pairSecondDimension': _this.formdata.wd2
             };
 
-            if (_this.formdata.startmonth3) {
+            if (_this.formdata2.startmonth3) {
                 var starttime = $('.el-input__inner:eq(0)', ".radio2Month").val();
                 data.searchStartTime = starttime.replace('-', '');
             }
-            if (_this.formdata.endmonth3) {
+            if (_this.formdata2.endmonth3) {
 
                 var endtime = $('.el-input__inner:eq(1)', ".radio2Month").val();
                 data.searchEndTime = endtime.replace('-', '');
@@ -1709,7 +1765,7 @@ export default {
                                 type: 'value'
                             }],
                             series: [{
-                                name: '收入',
+                                name: '当前数据',
                                 type: 'line',
                                 stack: '总量',
                                 itemStyle: {
@@ -1720,7 +1776,7 @@ export default {
 
                                 data: data.data.chartDate3
                             }, {
-                                name: '收入',
+                                name: '当前数据',
                                 type: 'line',
                                 stack: '总量',
                                 itemStyle: {
@@ -1764,7 +1820,7 @@ export default {
                                 type: 'value'
                             }],
                             series: [{
-                                name: '收入',
+                                name: '当前数据',
                                 type: 'line',
                                 stack: '总量',
                                 itemStyle: {
@@ -1775,7 +1831,7 @@ export default {
 
                                 data: data.data.chartDate4
                             }, {
-                                name: '收入',
+                                name: '当前数据',
                                 type: 'line',
                                 stack: '总量',
                                 itemStyle: {
@@ -1819,7 +1875,7 @@ export default {
                                 type: 'value'
                             }],
                             series: [{
-                                name: '收入',
+                                name: '当前数据',
                                 type: 'line',
                                 stack: '总量',
                                 itemStyle: {
@@ -1836,7 +1892,7 @@ export default {
                                 },
                                 data: data.data.chartDate5
                             }, {
-                                name: '收入',
+                                name: '当前数据',
                                 type: 'line',
                                 stack: '总量',
                                 itemStyle: {
@@ -1886,7 +1942,7 @@ export default {
                                 type: 'value'
                             }],
                             series: [{
-                                name: '收入',
+                                name: '当前数据',
                                 type: 'line',
                                 stack: '总量',
                                 itemStyle: {
@@ -1903,7 +1959,7 @@ export default {
                                 },
                                 data: data.data.chartDate6
                             }, {
-                                name: '收入',
+                                name: '当前数据',
                                 type: 'line',
                                 stack: '总量',
                                 itemStyle: {
@@ -1972,7 +2028,8 @@ export default {
         Message,
         wbutton,
         wselect,
-        woption
+        woption,
+        wtooltip
     }
 }
 

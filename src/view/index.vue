@@ -2,7 +2,12 @@
 
 @import "../assets/scss/common.scss";
 .w-layout {
+    // min-height: 650px;
     height: 100%;
+    min-width: 1300px;
+    display: flex;
+    flex-direction: column;
+
 }
 
 .w-hearder {
@@ -60,15 +65,16 @@
 }
 
 .w-content {
-    position: absolute;
-    width: 100%;
-    height: auto;
-    top: 2rem;
-    bottom: 0;
+    flex: 1;
+    display: flex;
+    // position: absolute;
+    // width: 100%;
+    // height: auto;
+    // top: 2rem;
+    // bottom: 0;
 }
 
 .w-left {
-    position: absolute;
     width: 6.5rem;
     height: 100%;
     background-color: $left_bg_color;
@@ -80,13 +86,11 @@
 }
 
 .w-right {
-    position: absolute;
-    left: 6.5rem;
-    right: 0px;
+    flex: 1;
     height: 100%;
     background-color: $frame_bg_colorf3;
-    // overflow-x: auto;
-    // overflow-y: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .fade-enter-active,

@@ -820,6 +820,16 @@ export default {
                     _this.loadingall = false;
                 }
             _this.adminApi.getJsonp(url, data, loading, success, complete)
+
+            $(window).resize(function() {
+              if(_this.myChart)
+              {
+                _this.myChart.resize();
+              }
+
+
+
+            });
         })
     },
     methods: {

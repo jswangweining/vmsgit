@@ -19,11 +19,6 @@
 }
 
 .w-ywxl-t {
-    position: absolute;
-    top: 2.2rem;
-    left: 0.5rem;
-    right: 12rem;
-    width: auto;
     height: 7.5rem;
     border: 1px solid #d7d7d7;
     background-color: #fcfcfc;
@@ -31,11 +26,20 @@
     justify-content: space-between;
 }
 
+@media screen and (min-width:1601px) {
+    .w-ywxl-t {
+        height:9.5rem;
+    }
+}
+
 .w-ywxl-titem1 {
     flex: 1;
     margin: 10px;
     background-color: #fff;
-    border: 1px solid #f3f3f3
+    border: 1px solid #f3f3f3;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .w-ywxl-titema {
@@ -108,6 +112,12 @@
     float: left;
 }
 
+@media screen and (min-width:1601px) {
+  .w-ywxl-titem2itemline {
+      height: 7.5rem;
+  }
+}
+
 .w-ywxl-titem2itemcss3 {
     width: 4.4rem;
     height: 4.4rem;
@@ -117,7 +127,13 @@
     margin-top: 1rem;
     position: relative;
     left: 50%;
-    margin-left: -2rem;
+    margin-left: -3rem;
+}
+
+@media screen and (min-width:1601px) {
+  .w-ywxl-titem2itemcss3 {
+      margin-top: 2rem;
+  }
 }
 
 .w-ywxl-titem2itemcss3a {
@@ -182,13 +198,8 @@
 }
 
 .w-ywxl-d {
-    position: absolute;
-    top: 10.2rem;
-    bottom: 0.5rem;
-    left: 0.5rem;
-    right: 12rem;
-    width: auto;
-    height: auto;
+    margin-top: 0.5rem;
+    flex: 1;
     background-color: #fff;
     border: 1px solid #d7d7d7;
     display: flex;
@@ -369,8 +380,8 @@
     font-weight: bold;
     position: relative;
     span {
-      font-size: 0.6rem;
-      font-weight: normal;
+        font-size: 0.6rem;
+        font-weight: normal;
     }
     &:before {
         content: '';
@@ -423,18 +434,6 @@
     flex: 1;
 }
 
-.w-ywxl-r {
-    position: absolute;
-    right: 0.5rem;
-    top: 2.2rem;
-    width: 11rem;
-    bottom: 0.5rem;
-    height: auto;
-    border: 1px solid #d7d7d7;
-    padding: 0 0.5rem;
-    background-color: #fff;
-}
-
 .w-ywxl-r-t {
     height: 1.5rem;
     font-size: 0.7rem;
@@ -456,12 +455,7 @@
 }
 
 .w-ywxl-r-d {
-    position: absolute;
-    top: 1.5rem;
-    bottom: 0.5rem;
-    left: 0.5rem;
-    right: 0.5rem;
-    height: auto;
+    flex: 1;
     display: flex;
     flex-direction: column;
     align-content: space-between;
@@ -618,10 +612,10 @@
 }
 
 .rankingcbtc {
-  width: 5rem;
-  height: 2rem;
-  border-left: 1px solid #f3f3f3;
-  text-align: center;
+    width: 5rem;
+    height: 2rem;
+    border-left: 1px solid #f3f3f3;
+    text-align: center;
 }
 
 .rankingcbd {
@@ -630,8 +624,8 @@
     // display: flex;
     // flex-direction: column;
     .w-active2 {
-      border: 1px solid #4a90e2;
-      background-color: #f4f9fe;
+        border: 1px solid #4a90e2;
+        background-color: #f4f9fe;
     }
     .w-active {
         border-top: 1px solid #ff7700;
@@ -673,228 +667,268 @@
     text-align: center;
 }
 
+.w-con1 {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.w-con2 {
+    flex: 1;
+    display: flex;
+}
+
+.w-con2l {
+    flex: 1;
+    display: flex;
+    margin: 0 0.5rem 0.5rem 0.5rem;
+    flex-direction: column;
+}
+
+.w-con2r {
+    margin-right: 0.5rem;
+    width: 11rem;
+    margin-bottom: 0.5rem;
+    border: 1px solid #d7d7d7;
+    padding: 0 0.5rem;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+}
+
 </style>
 
 <template>
 
-<div v-loading.body='loadingall' class="bodyscroll">
-    <div class="w-pos">
-        <span>首页</span>/<span>汇天眼</span>/<span class="w-pos-active">业务效率</span>
-    </div>
-
-    <div class="w-ywxl-t">
-        <div class="w-ywxl-titem1">
-            <div class="w-ywxl-titema">
-                当前平台估值（万）
-            </div>
-            <div class="w-ywxl-titemb">
-                {{topdata.ptgz}}
-            </div>
-            <div class="w-ywxl-titemc">
-                <rate v-model="statvalue" disabled>
-                </rate>
-            </div>
-        </div>
-        <div class="w-ywxl-titem2">
-            <div class="w-ywxl-titem2item">
-                <div id="main" style=" height:6rem;">
-
-                </div>
-            </div>
-            <div class="w-ywxl-titem2item">
-                <div class="w-ywxl-titem2itemline">
-
-                </div>
-                <div class="w-ywxl-titem2itemcss3">
-
-                    <div class="w-ywxl-titem2itemcss3a">
-
-                    </div>
-                    <div class="w-ywxl-titem2itemcss3b">
-                        <span class="w-ywxl-titem2itemcss3bs1">综合能力</span>
-                        <span class="w-ywxl-titem2itemcss3bs2">{{topdata.zhnl}}</span>
-                    </div>
-                </div>
-
-            </div>
-            <div class="w-ywxl-titem2item w-ywxl-titem3item">
-                <div class="w-ywxl-titem2itema">
-                    <span class="w-ywxl-titem2itemas1">市盈率（万）</span>
-                    <span class="w-ywxl-titem2itemas2">{{topdata.pegz}}</span>
-                </div>
-                <div class="w-ywxl-titem2itema">
-                    <span class="w-ywxl-titem2itemas1">市净率（万）</span>
-                    <span class="w-ywxl-titem2itemas2">{{topdata.pbgz}}</span>
-                </div>
-                <div class="w-ywxl-titem2itema">
-                    <span class="w-ywxl-titem2itemas1">市销率（万）</span>
-                    <span class="w-ywxl-titem2itemas2">{{topdata.psgz}}</span>
-                </div>
-                <div class="w-ywxl-titem2itema">
-                    <span class="w-ywxl-titem2itemas1">会员店价值（万）</span>
-                    <span class="w-ywxl-titem2itemas2">{{topdata.cvmgz}}</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="w-ywxl-d" v-loading.body='loading'>
-        <div class="w-ywxl-dt">
-            <div class="w-ywxl-dt1">
-                请选择时间维度
-            </div>
-            <div class="w-ywxl-dt2">
-                <radio-group v-model="radiovalue" @change='radiochange'>
-                    <wradio label="0">当月统计</wradio>
-                    <wradio label="1">全年统计</wradio>
-                </radio-group>
-            </div>
+<div v-loading.body='loadingall' class="bodyscroll"  style="min-height:650px;">
+    <div class="w-con1">
+        <div class="w-pos">
+            <span>首页</span>/<span>汇天眼</span>/<span class="w-pos-active">业务效率</span>
         </div>
 
-        <div class="w-ywxl-dd">
-            <div class="w-ywxl-ddl">
-                <div class="w-ywxl-ddla" :class="[index==0?'w-ywxl-ddlac':'']" v-for='(item,index) in wholeLeft' @click='monthtabs(index,$event)'>
-                    <p class="w-ywxl-ddlap1">{{item.name}}<span v-if='index==0 || index==1'>（万元）</span><span v-if='index==2'>（家）</span></p>
-                    <p class="w-ywxl-ddlap2">{{item.num}}</p>
-                    <p class="w-ywxl-ddlap3">同比{{item.pair}}%
-                        <svg class="icon" aria-hidden="true" v-if='item.index==0'>
-                            <use xlink:href="#icon-jiantou1"></use>
-                        </svg>
-                        <svg class="icon" aria-hidden="true" v-if='item.index==1'>
-                            <use xlink:href="#icon-jiantou2"></use>
-                        </svg>
-                    </p>
-                </div>
-            </div>
-
-            <div class="w-ywxl-ddr">
-                <div class="w-ywxl-ddrt">
-                    <div class="w-ywxl-r-t">
-                        {{myChart2title}}
+        <div class="w-con2">
+            <div class="w-con2l">
+                <div class="w-ywxl-t">
+                    <div class="w-ywxl-titem1">
+                        <div class="w-ywxl-titema">
+                            当前平台估值（万）
+                        </div>
+                        <div class="w-ywxl-titemb">
+                            {{topdata.ptgz}}
+                        </div>
+                        <div class="w-ywxl-titemc">
+                            <rate v-model="statvalue" disabled>
+                            </rate>
+                        </div>
                     </div>
-                    <div class="w-ywxl-ddrtd">
-                        <div class="w-ywxl-ddrtditem">
-                            <div id="main2" style=" height:100%">
+                    <div class="w-ywxl-titem2">
+                        <div class="w-ywxl-titem2item">
+                            <div id="main" style=" height:100%;">
 
                             </div>
                         </div>
-                        <div class="w-ywxl-ddrtdline">
+                        <div class="w-ywxl-titem2item" >
+                            <div class="w-ywxl-titem2itemline">
+
+                            </div>
+                            <div class="w-ywxl-titem2itemcss3">
+
+                                <div class="w-ywxl-titem2itemcss3a">
+
+                                </div>
+                                <div class="w-ywxl-titem2itemcss3b">
+                                    <span class="w-ywxl-titem2itemcss3bs1">综合能力</span>
+                                    <span class="w-ywxl-titem2itemcss3bs2">{{topdata.zhnl}}</span>
+                                </div>
+                            </div>
 
                         </div>
-                        <div class="w-ywxl-ddrtditem2" v-for='(item,index) in wholeTop'>
-                            <p class="w-ywxl-ddrtditem2p1"><span class="w-ywxl-ddrtditem2p1s1" v-if='index==0'></span><span class="w-ywxl-ddrtditem2p1s2" v-if='index==1'></span><span class="w-ywxl-ddrtditem2p1s3" v-if='index==2'></span>{{item.name}}</p>
-                            <p class="w-ywxl-ddrtditem2p2">{{item.num}}</p>
-                            <p class="w-ywxl-ddrtditem2p3" v-if='monthtab==0 || monthtab==1'>同比{{item.pair}}%
-                                <svg class="icon" aria-hidden="true" v-if='item.index==0'>
-                                    <use xlink:href="#icon-jiantou1"></use>
-                                </svg>
-                                <svg class="icon" aria-hidden="true" v-if='item.index==1'>
-                                    <use xlink:href="#icon-jiantou2"></use>
-                                </svg>
-                            </p>
-                            <p class="w-ywxl-ddrtditem2p3" v-if='monthtab==2'>{{item.pair}}
-
-                            </p>
+                        <div class="w-ywxl-titem2item w-ywxl-titem3item">
+                            <div class="w-ywxl-titem2itema">
+                                <span class="w-ywxl-titem2itemas1">市盈率（万）</span>
+                                <span class="w-ywxl-titem2itemas2">{{topdata.pegz}}</span>
+                            </div>
+                            <div class="w-ywxl-titem2itema">
+                                <span class="w-ywxl-titem2itemas1">市净率（万）</span>
+                                <span class="w-ywxl-titem2itemas2">{{topdata.pbgz}}</span>
+                            </div>
+                            <div class="w-ywxl-titem2itema">
+                                <span class="w-ywxl-titem2itemas1">市销率（万）</span>
+                                <span class="w-ywxl-titem2itemas2">{{topdata.psgz}}</span>
+                            </div>
+                            <div class="w-ywxl-titem2itema">
+                                <span class="w-ywxl-titem2itemas1">会员店价值（万）</span>
+                                <span class="w-ywxl-titem2itemas2">{{topdata.cvmgz}}</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="w-ywxl-ddrd">
-                    <div class="w-ywxl-ddrdt">
-                        <div class="w-ywxl-ddrdta">
-                            {{myChart3title}}
+                <div class="w-ywxl-d" v-loading.body='loading'>
+                    <div class="w-ywxl-dt">
+                        <div class="w-ywxl-dt1">
+                            请选择时间维度
                         </div>
-                        <div class="w-ywxl-ddrdtb">
-                            <span class="w-ywxl-ddrdtbs1" v-if='radiovalue=="1"'>当前数据</span>
-                            <span class="w-ywxl-ddrdtbs2" v-if='radiovalue=="1" && monthtab!==2'>对比数据</span>
-                            <wselect v-model="selectvalue" placeholder="请选择" style="width:150px; color:#4a4a4a" @change='selectchange' @visible-change='visiblechange'>
-                                <woption :label='item.label' :value='item.value' v-for='(item,index) in wholeName'>
-                                </woption>
-                            </wselect>
+                        <div class="w-ywxl-dt2">
+                            <radio-group v-model="radiovalue" @change='radiochange'>
+                                <wradio label="0">当月统计</wradio>
+                                <wradio label="1">全年统计</wradio>
+                            </radio-group>
                         </div>
                     </div>
 
-                    <div class="w-ywxl-ddrdd">
-                        <div id="main3" style="width:100%; height:100%;">
+                    <div class="w-ywxl-dd">
+                        <div class="w-ywxl-ddl">
+                            <div class="w-ywxl-ddla" :class="[index==0?'w-ywxl-ddlac':'']" v-for='(item,index) in wholeLeft' @click='monthtabs(index,$event)'>
+                                <p class="w-ywxl-ddlap1">{{item.name}}<span v-if='index==0 || index==1'>（万元）</span><span v-if='index==2'>（家）</span></p>
+                                <p class="w-ywxl-ddlap2">{{item.num}}</p>
+                                <p class="w-ywxl-ddlap3">同比{{item.pair}}%
+                                    <svg class="icon" aria-hidden="true" v-if='item.index==0'>
+                                        <use xlink:href="#icon-jiantou1"></use>
+                                    </svg>
+                                    <svg class="icon" aria-hidden="true" v-if='item.index==1'>
+                                        <use xlink:href="#icon-jiantou2"></use>
+                                    </svg>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="w-ywxl-ddr">
+                            <div class="w-ywxl-ddrt">
+                                <div class="w-ywxl-r-t">
+                                    {{myChart2title}}
+                                </div>
+                                <div class="w-ywxl-ddrtd">
+                                    <div class="w-ywxl-ddrtditem">
+                                        <div id="main2" style=" height:100%">
+
+                                        </div>
+                                    </div>
+                                    <div class="w-ywxl-ddrtdline">
+
+                                    </div>
+                                    <div class="w-ywxl-ddrtditem2" v-for='(item,index) in wholeTop'>
+                                        <p class="w-ywxl-ddrtditem2p1"><span class="w-ywxl-ddrtditem2p1s1" v-if='index==0'></span><span class="w-ywxl-ddrtditem2p1s2" v-if='index==1'></span><span class="w-ywxl-ddrtditem2p1s3" v-if='index==2'></span>{{item.name}}</p>
+                                        <p class="w-ywxl-ddrtditem2p2">{{item.num}}</p>
+                                        <p class="w-ywxl-ddrtditem2p3" v-if='monthtab==0 || monthtab==1'>同比{{item.pair}}%
+                                            <svg class="icon" aria-hidden="true" v-if='item.index==0'>
+                                                <use xlink:href="#icon-jiantou1"></use>
+                                            </svg>
+                                            <svg class="icon" aria-hidden="true" v-if='item.index==1'>
+                                                <use xlink:href="#icon-jiantou2"></use>
+                                            </svg>
+                                        </p>
+                                        <p class="w-ywxl-ddrtditem2p3" v-if='monthtab==2'>{{item.pair}}
+
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="w-ywxl-ddrd">
+                                <div class="w-ywxl-ddrdt">
+                                    <div class="w-ywxl-ddrdta">
+                                        {{myChart3title}}
+                                    </div>
+                                    <div class="w-ywxl-ddrdtb">
+                                        <span class="w-ywxl-ddrdtbs1" v-if='radiovalue=="1"'>当前数据</span>
+                                        <span class="w-ywxl-ddrdtbs2" v-if='radiovalue=="1" && monthtab!==2'>对比数据</span>
+                                        <wselect v-model="selectvalue" placeholder="请选择" style="width:150px; color:#4a4a4a" @change='selectchange' @visible-change='visiblechange'>
+                                            <woption :label='item.label' :value='item.value' v-for='(item,index) in wholeName'>
+                                            </woption>
+                                        </wselect>
+                                    </div>
+                                </div>
+
+                                <div class="w-ywxl-ddrdd">
+                                    <div id="main3" style="width:100%; height:100%;">
+
+                                    </div>
+                                </div>
+
+                            </div>
 
                         </div>
                     </div>
+
+
 
                 </div>
-
+            </div>
+            <div class="w-con2r">
+                <div class="w-ywxl-r-t">
+                    平台公司排名
+                </div>
+                <div class="w-ywxl-r-d">
+                    <div class="w-ywxl-r-ditem">
+                        <div class="w-ywxl-r-ditema">
+                            <div class="w-ywxl-r-ditemb">
+                                当前平台估值
+                            </div>
+                            <div class="w-ywxl-r-ditemc">
+                                <button type="button" name="button" class="w-ywxl-r-ditemcbtn">
+                                    分部排名&nbsp;&nbsp;<span class="w-ywxl-r-ditemcbtns1">{{wholeSort.valueBranch}}</span>名
+                                </button>
+                                <button type="button" name="button" class="w-ywxl-r-ditemcbtn">
+                                    整体排名&nbsp;&nbsp;<span class="w-ywxl-r-ditemcbtns2">{{wholeSort.valueHead}}</span>名
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-ywxl-r-ditem">
+                        <div class="w-ywxl-r-ditema">
+                            <div class="w-ywxl-r-ditemb">
+                                总营业收入
+                            </div>
+                            <div class="w-ywxl-r-ditemc">
+                                <button type="button" name="button" class="w-ywxl-r-ditemcbtn w-ywxl-r-ditemcbtn1" @click='opendiv(1,1,"总营业收入排名")'>
+                                    分部排名&nbsp;&nbsp;<span class="w-ywxl-r-ditemcbtns1">{{wholeSort.incomeBrach}}</span>名
+                                </button>
+                                <button type="button" name="button" class="w-ywxl-r-ditemcbtn w-ywxl-r-ditemcbtn1" @click='opendiv(2,2,"总营业收入排名")'>
+                                    整体排名&nbsp;&nbsp;<span class="w-ywxl-r-ditemcbtns2">{{wholeSort.incomeHead}}</span>名
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-ywxl-r-ditem">
+                        <div class="w-ywxl-r-ditema">
+                            <div class="w-ywxl-r-ditemb">
+                                总销售金额
+                            </div>
+                            <div class="w-ywxl-r-ditemc">
+                                <button type="button" name="button" class="w-ywxl-r-ditemcbtn w-ywxl-r-ditemcbtn1" @click='opendiv(1,3,"总销售金额排名")'>
+                                    分部排名&nbsp;&nbsp;<span class="w-ywxl-r-ditemcbtns1">{{wholeSort.saleBrach}}</span>名
+                                </button>
+                                <button type="button" name="button" class="w-ywxl-r-ditemcbtn w-ywxl-r-ditemcbtn1" @click='opendiv(2,4,"总销售金额排名")'>
+                                    整体排名&nbsp;&nbsp;<span class="w-ywxl-r-ditemcbtns2">{{wholeSort.saleHead}}</span>名
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-ywxl-r-ditem">
+                        <div class="w-ywxl-r-ditema">
+                            <div class="w-ywxl-r-ditemb">
+                                新增会员店总数
+                            </div>
+                            <div class="w-ywxl-r-ditemc">
+                                <button type="button" name="button" class="w-ywxl-r-ditemcbtn w-ywxl-r-ditemcbtn1" @click='opendiv(1,5,"新增会员店总数排名")'>
+                                    分部排名&nbsp;&nbsp;<span class="w-ywxl-r-ditemcbtns1">{{wholeSort.memeberBrach}}</span>名
+                                </button>
+                                <button type="button" name="button" class="w-ywxl-r-ditemcbtn w-ywxl-r-ditemcbtn1" @click='opendiv(2,6,"新增会员店总数排名")'>
+                                    整体排名&nbsp;&nbsp;<span class="w-ywxl-r-ditemcbtns2">{{wholeSort.memeberHead}}</span>名
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-
-
-
     </div>
 
-    <div class="w-ywxl-r">
-        <div class="w-ywxl-r-t">
-            平台公司排名
-        </div>
-        <div class="w-ywxl-r-d">
-            <div class="w-ywxl-r-ditem">
-                <div class="w-ywxl-r-ditema">
-                    <div class="w-ywxl-r-ditemb">
-                        当前平台估值
-                    </div>
-                    <div class="w-ywxl-r-ditemc">
-                        <button type="button" name="button" class="w-ywxl-r-ditemcbtn">
-                            分部排名&nbsp;&nbsp;<span class="w-ywxl-r-ditemcbtns1">{{wholeSort.valueBranch}}</span>名
-                        </button>
-                        <button type="button" name="button" class="w-ywxl-r-ditemcbtn">
-                            整体排名&nbsp;&nbsp;<span class="w-ywxl-r-ditemcbtns2">{{wholeSort.valueHead}}</span>名
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="w-ywxl-r-ditem">
-                <div class="w-ywxl-r-ditema">
-                    <div class="w-ywxl-r-ditemb">
-                        总营业收入
-                    </div>
-                    <div class="w-ywxl-r-ditemc">
-                        <button type="button" name="button" class="w-ywxl-r-ditemcbtn w-ywxl-r-ditemcbtn1" @click='opendiv(1,1,"总营业收入排名")'>
-                            分部排名&nbsp;&nbsp;<span class="w-ywxl-r-ditemcbtns1">{{wholeSort.incomeBrach}}</span>名
-                        </button>
-                        <button type="button" name="button" class="w-ywxl-r-ditemcbtn w-ywxl-r-ditemcbtn1" @click='opendiv(2,2,"总营业收入排名")'>
-                            整体排名&nbsp;&nbsp;<span class="w-ywxl-r-ditemcbtns2">{{wholeSort.incomeHead}}</span>名
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="w-ywxl-r-ditem">
-                <div class="w-ywxl-r-ditema">
-                    <div class="w-ywxl-r-ditemb">
-                        总销售金额
-                    </div>
-                    <div class="w-ywxl-r-ditemc">
-                        <button type="button" name="button" class="w-ywxl-r-ditemcbtn w-ywxl-r-ditemcbtn1" @click='opendiv(1,3,"总销售金额排名")'>
-                            分部排名&nbsp;&nbsp;<span class="w-ywxl-r-ditemcbtns1">{{wholeSort.saleBrach}}</span>名
-                        </button>
-                        <button type="button" name="button" class="w-ywxl-r-ditemcbtn w-ywxl-r-ditemcbtn1" @click='opendiv(2,4,"总销售金额排名")'>
-                            整体排名&nbsp;&nbsp;<span class="w-ywxl-r-ditemcbtns2">{{wholeSort.saleHead}}</span>名
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="w-ywxl-r-ditem">
-                <div class="w-ywxl-r-ditema">
-                    <div class="w-ywxl-r-ditemb">
-                        新增会员店总数
-                    </div>
-                    <div class="w-ywxl-r-ditemc">
-                        <button type="button" name="button" class="w-ywxl-r-ditemcbtn w-ywxl-r-ditemcbtn1" @click='opendiv(1,5,"新增会员店总数排名")'>
-                            分部排名&nbsp;&nbsp;<span class="w-ywxl-r-ditemcbtns1">{{wholeSort.memeberBrach}}</span>名
-                        </button>
-                        <button type="button" name="button" class="w-ywxl-r-ditemcbtn w-ywxl-r-ditemcbtn1" @click='opendiv(2,6,"新增会员店总数排名")'>
-                            整体排名&nbsp;&nbsp;<span class="w-ywxl-r-ditemcbtns2">{{wholeSort.memeberHead}}</span>名
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
+
+
+
+
+
 
     <wdialog v-model="rankingshow">
         <div class="rankingt" slot='title'>
@@ -1018,6 +1052,7 @@ export default {
                 },
                 success = function(data) {
                     if (data.code == '1') {
+
                         _this.topdata = data.data;
                         _this.statvalue = data.data.starNum
                         _this.myChart1 = echarts.init(document.getElementById('main'));
@@ -1026,20 +1061,27 @@ export default {
                                 confine: true
                             },
                             radar: [{
+
                                 indicator: [{
                                     text: '综合能力',
-                                    color: '#ff7700'
+                                    color: '#ff7700',
+                                    max:data.data.maxZhnl
+
                                 }, {
-                                    text: '会员店价值'
+                                    text: '会员店价值',
+                                    max:data.data.maxCvmgz
                                 }, {
-                                    text: '市盈率'
+                                    text: '市盈率',
+                                    max:data.data.maxPegz
                                 }, {
-                                    text: '市销率'
+                                    text: '市销率',
+                                    max:data.data.maxPsgz
                                 }, {
-                                    text: '市净率'
+                                    text: '市净率',
+                                    max:data.data.maxPbgz
                                 }],
-                                center: ['50%', '50%'],
-                                radius: '45%',
+                                center: screen.width>1600 ? ['50%', '55%']:['50%', '50%'],
+                                radius: screen.width>1600 ? '70%':'50%',
                                 startAngle: 90,
                                 splitNumber: 4,
                                 name: {
@@ -1075,12 +1117,11 @@ export default {
                             }, ]
                         }
                         _this.myChart1.setOption(option);
-                    }
-                    else {
-                          Message({
-                              'message': data.msg,
-                              'type': 'error',
-                          });
+                    } else {
+                        Message({
+                            'message': data.msg,
+                            'type': 'error',
+                        });
                     }
                 },
                 complete = function() {
@@ -1104,6 +1145,22 @@ export default {
 
                 }
             _this.adminApi.getJsonp(url, data, loading, success, complete)
+            $(window).resize(function() {
+              if(_this.myChart1)
+              {
+                _this.myChart1.resize();
+              }
+              if(_this.myChart2)
+              {
+                _this.myChart2.resize();
+              }
+              if(_this.myChart3)
+              {
+                _this.myChart3.resize();
+              }
+
+
+            });
         })
 
     },
@@ -1140,98 +1197,96 @@ export default {
 
                             switch (_this.radiovalue) {
                                 case "0":
-                                    if(_this.monthtab==0 || _this.monthtab==1)
-                                    {
-                                      var option2 = {
-                                          tooltip: {
-                                              trigger: 'item',
-                                              formatter: "{a} <br/>{b}: {c} ({d}%)"
-                                          },
-                                          series: [{
-                                              name: _this.myChart2title,
-                                              type: 'pie',
-                                              radius: ['50%', '70%'],
-                                              center: ['50%', '50%'],
-                                              avoidLabelOverlap: false,
-                                              color: ['#6c81b3', '#ff7700', '#2cc689'],
-                                              label: {
-                                                  normal: {
-                                                      show: false,
-                                                      position: 'center'
-                                                  },
-                                              },
-                                              labelLine: {
-                                                  normal: {
-                                                      show: false
-                                                  }
-                                              },
-                                              data: data.data.wholePic
-                                          }]
-                                      };
-                                      _this.myChart2.clear();
-                                      _this.myChart2 = echarts.init(document.getElementById('main2'));
-                                      _this.myChart2.setOption(option2);
-                                    }
-                                    else {
-                                      var option2 = {
-                                          tooltip: {
-                                              trigger: 'axis',
-                                              axisPointer: {
-                                                  type: 'shadow'
-                                              }
-                                          },
-                                          grid: {
-                                              top: '0',
-                                              left: '40',
-                                              right: '0',
-                                              bottom: '0',
+                                    if (_this.monthtab == 0 || _this.monthtab == 1) {
+                                        var option2 = {
+                                            tooltip: {
+                                                trigger: 'item',
+                                                formatter: "{a} <br/>{b}: {c} ({d}%)"
+                                            },
+                                            series: [{
+                                                name: _this.myChart2title,
+                                                type: 'pie',
+                                                radius: ['50%', '70%'],
+                                                center: ['50%', '50%'],
+                                                avoidLabelOverlap: false,
+                                                color: ['#6c81b3', '#ff7700', '#2cc689'],
+                                                label: {
+                                                    normal: {
+                                                        show: false,
+                                                        position: 'center'
+                                                    },
+                                                },
+                                                labelLine: {
+                                                    normal: {
+                                                        show: false
+                                                    }
+                                                },
+                                                data: data.data.wholePic
+                                            }]
+                                        };
+                                        _this.myChart2.clear();
+                                        _this.myChart2 = echarts.init(document.getElementById('main2'));
+                                        _this.myChart2.setOption(option2);
+                                    } else {
+                                        var option2 = {
+                                            tooltip: {
+                                                trigger: 'axis',
+                                                axisPointer: {
+                                                    type: 'shadow'
+                                                }
+                                            },
+                                            grid: {
+                                                top: '0',
+                                                left: '40',
+                                                right: '0',
+                                                bottom: '0',
 
-                                          },
-                                          xAxis: {
-                                              type: 'value',
-                                              boundaryGap: [0, 0.01]
-                                          },
-                                          yAxis: {
-                                              type: 'category',
-                                              data: ['VIP', '活跃', '交易', '总数'],
-                                          },
-                                          series: [{
-                                              type: 'bar',
-                                              data: [{
-                                                  value: data.data.wholePic[3].value,
-                                                  itemStyle: {
-                                                      normal: {
-                                                          color: '#2cc689'
-                                                      }
-                                                  }
-                                              }, {
-                                                  value: data.data.wholePic[2].value,
-                                                  itemStyle: {
-                                                      normal: {
-                                                          color: '#ff7700'
-                                                      }
-                                                  }
-                                              }, {
-                                                  value: data.data.wholePic[1].value,
-                                                  itemStyle: {
-                                                      normal: {
-                                                          color: '#6c81b3'
-                                                      }
-                                                  }
-                                              }, {
-                                                  value: data.data.wholePic[0].value,
-                                                  itemStyle: {
-                                                      normal: {
-                                                          color: '#ff7700'
-                                                      }
-                                                  }
-                                              }],
-                                              barWidth: 5,
-                                          }, ]
-                                      };
-                                      _this.myChart2.clear();
-                                      _this.myChart2 = echarts.init(document.getElementById('main2'));
-                                      _this.myChart2.setOption(option2);
+                                            },
+                                            xAxis: {
+                                                type: 'value',
+                                                boundaryGap: [0, 0.01]
+                                            },
+                                            yAxis: {
+                                                type: 'category',
+                                                data: ['VIP', '活跃', '交易', '总数'],
+                                            },
+                                            series: [{
+                                                type: 'bar',
+                                                data: [{
+                                                    value: data.data.wholePic[3].value,
+                                                    itemStyle: {
+                                                        normal: {
+                                                            color: '#2cc689'
+                                                        }
+                                                    }
+                                                }, {
+                                                    value: data.data.wholePic[2].value,
+                                                    itemStyle: {
+                                                        normal: {
+                                                            color: '#ff7700'
+                                                        }
+                                                    }
+                                                }, {
+                                                    value: data.data.wholePic[1].value,
+                                                    itemStyle: {
+                                                        normal: {
+                                                            color: '#6c81b3'
+                                                        }
+                                                    }
+                                                }, {
+                                                    value: data.data.wholePic[0].value,
+                                                    itemStyle: {
+                                                        normal: {
+                                                            color: '#ff7700'
+                                                        }
+                                                    }
+                                                }],
+                                                barWidth: 5,
+                                            }, ]
+                                        };
+                                        _this.myChart2.clear();
+                                        _this.myChart2 = echarts.init(document.getElementById('main2'));
+                                        _this.myChart2.setOption(option2);
                                     }
                                     var option3 = {
                                         title: {
@@ -1286,8 +1341,7 @@ export default {
 
                                     break;
                                 case "1":
-                                      if(_this.monthtab==0 || _this.monthtab==1)
-                                      {
+                                    if (_this.monthtab == 0 || _this.monthtab == 1) {
                                         var option2 = {
                                             tooltip: {
                                                 trigger: 'item',
@@ -1343,19 +1397,23 @@ export default {
                                                 name: '当前数据',
                                                 barWidth: 5,
                                                 type: 'bar',
-                                                data:data.data.wholeBottom,
+                                                data: data.data.wholeBottom,
                                                 itemStyle: {
-                                                  normal: {
-                                                   color: new echarts.graphic.LinearGradient(
-                                                       0, 0, 0, 1,
-                                                       [
-                                                           {offset: 0, color: '#ff7700'},
-                                                           {offset: 0.5, color: '#ff9e48'},
-                                                           {offset: 1, color: '#ffbb7f'}
-                                                       ]
-                                                   )
-                                               },
-                                           }
+                                                    normal: {
+                                                        color: new echarts.graphic.LinearGradient(
+                                                            0, 0, 0, 1, [{
+                                                                offset: 0,
+                                                                color: '#ff7700'
+                                                            }, {
+                                                                offset: 0.5,
+                                                                color: '#ff9e48'
+                                                            }, {
+                                                                offset: 1,
+                                                                color: '#ffbb7f'
+                                                            }]
+                                                        )
+                                                    },
+                                                }
                                             }, {
                                                 name: '对比数据',
                                                 type: 'bar',
@@ -1363,24 +1421,27 @@ export default {
                                                 stack: '广告',
                                                 data: data.data.wholeBottomPair,
                                                 itemStyle: {
-                                               normal: {
-                                                   color: new echarts.graphic.LinearGradient(
-                                                       0, 0, 0, 1,
-                                                       [
-                                                         {offset: 0, color: '#6c81c3'},
-                                                         {offset: 0.5, color: '#91a1c6'},
-                                                         {offset: 1, color: '#b5bfd9'}
-                                                       ]
-                                                   )
-                                               },
-                                           }
+                                                    normal: {
+                                                        color: new echarts.graphic.LinearGradient(
+                                                            0, 0, 0, 1, [{
+                                                                offset: 0,
+                                                                color: '#6c81c3'
+                                                            }, {
+                                                                offset: 0.5,
+                                                                color: '#91a1c6'
+                                                            }, {
+                                                                offset: 1,
+                                                                color: '#b5bfd9'
+                                                            }]
+                                                        )
+                                                    },
+                                                }
                                             }]
                                         };
                                         _this.myChart3.clear();
                                         _this.myChart3 = echarts.init(document.getElementById('main3'));
                                         _this.myChart3.setOption(option3);
-                                      }
-                                      else {
+                                    } else {
                                         var option2 = {
                                             tooltip: {
                                                 trigger: 'axis',
@@ -1466,37 +1527,40 @@ export default {
                                                 name: '当前数据',
                                                 barWidth: 5,
                                                 type: 'bar',
-                                                data:data.data.wholeBottom,
+                                                data: data.data.wholeBottom,
                                                 itemStyle: {
-                                                  normal: {
-                                                   color: new echarts.graphic.LinearGradient(
-                                                       0, 0, 0, 1,
-                                                       [
-                                                           {offset: 0, color: '#ff7700'},
-                                                           {offset: 0.5, color: '#ff9e48'},
-                                                           {offset: 1, color: '#ffbb7f'}
-                                                       ]
-                                                   )
-                                               },
-                                           }
+                                                    normal: {
+                                                        color: new echarts.graphic.LinearGradient(
+                                                            0, 0, 0, 1, [{
+                                                                offset: 0,
+                                                                color: '#ff7700'
+                                                            }, {
+                                                                offset: 0.5,
+                                                                color: '#ff9e48'
+                                                            }, {
+                                                                offset: 1,
+                                                                color: '#ffbb7f'
+                                                            }]
+                                                        )
+                                                    },
+                                                }
                                             }]
                                         };
                                         _this.myChart3.clear();
                                         _this.myChart3 = echarts.init(document.getElementById('main3'));
                                         _this.myChart3.setOption(option3);
-                                      }
+                                    }
 
                                     break;
                                 default:
 
                             }
 
-                        }
-                        else {
-                              Message({
-                                  'message': data.msg,
-                                  'type': 'error',
-                              });
+                        } else {
+                            Message({
+                                'message': data.msg,
+                                'type': 'error',
+                            });
                         }
                     },
                     complete = function() {
@@ -1531,98 +1595,96 @@ export default {
 
                         switch (_this.radiovalue) {
                             case "0":
-                                if(_this.monthtab==0 || _this.monthtab==1)
-                                {
-                                  var option2 = {
-                                      tooltip: {
-                                          trigger: 'item',
-                                          formatter: "{a} <br/>{b}: {c} ({d}%)"
-                                      },
-                                      series: [{
-                                          name: _this.myChart2title,
-                                          type: 'pie',
-                                          radius: ['50%', '70%'],
-                                          center: ['50%', '50%'],
-                                          avoidLabelOverlap: false,
-                                          color: ['#6c81b3', '#ff7700', '#2cc689'],
-                                          label: {
-                                              normal: {
-                                                  show: false,
-                                                  position: 'center'
-                                              },
-                                          },
-                                          labelLine: {
-                                              normal: {
-                                                  show: false
-                                              }
-                                          },
-                                          data: data.data.wholePic
-                                      }]
-                                  };
-                                  _this.myChart2.clear();
-                                  _this.myChart2 = echarts.init(document.getElementById('main2'));
-                                  _this.myChart2.setOption(option2);
-                                }
-                                else {
-                                  var option2 = {
-                                      tooltip: {
-                                          trigger: 'axis',
-                                          axisPointer: {
-                                              type: 'shadow'
-                                          }
-                                      },
-                                      grid: {
-                                          top: '0',
-                                          left: '40',
-                                          right: '0',
-                                          bottom: '0',
+                                if (_this.monthtab == 0 || _this.monthtab == 1) {
+                                    var option2 = {
+                                        tooltip: {
+                                            trigger: 'item',
+                                            formatter: "{a} <br/>{b}: {c} ({d}%)"
+                                        },
+                                        series: [{
+                                            name: _this.myChart2title,
+                                            type: 'pie',
+                                            radius: ['50%', '70%'],
+                                            center: ['50%', '50%'],
+                                            avoidLabelOverlap: false,
+                                            color: ['#6c81b3', '#ff7700', '#2cc689'],
+                                            label: {
+                                                normal: {
+                                                    show: false,
+                                                    position: 'center'
+                                                },
+                                            },
+                                            labelLine: {
+                                                normal: {
+                                                    show: false
+                                                }
+                                            },
+                                            data: data.data.wholePic
+                                        }]
+                                    };
+                                    _this.myChart2.clear();
+                                    _this.myChart2 = echarts.init(document.getElementById('main2'));
+                                    _this.myChart2.setOption(option2);
+                                } else {
+                                    var option2 = {
+                                        tooltip: {
+                                            trigger: 'axis',
+                                            axisPointer: {
+                                                type: 'shadow'
+                                            }
+                                        },
+                                        grid: {
+                                            top: '0',
+                                            left: '40',
+                                            right: '0',
+                                            bottom: '0',
 
-                                      },
-                                      xAxis: {
-                                          type: 'value',
-                                          boundaryGap: [0, 0.01]
-                                      },
-                                      yAxis: {
-                                          type: 'category',
-                                          data: ['VIP', '活跃', '交易', '总数'],
-                                      },
-                                      series: [{
-                                          type: 'bar',
-                                          data: [{
-                                              value: data.data.wholePic[3].value,
-                                              itemStyle: {
-                                                  normal: {
-                                                      color: '#2cc689'
-                                                  }
-                                              }
-                                          }, {
-                                              value: data.data.wholePic[2].value,
-                                              itemStyle: {
-                                                  normal: {
-                                                      color: '#ff7700'
-                                                  }
-                                              }
-                                          }, {
-                                              value: data.data.wholePic[1].value,
-                                              itemStyle: {
-                                                  normal: {
-                                                      color: '#6c81b3'
-                                                  }
-                                              }
-                                          }, {
-                                              value: data.data.wholePic[0].value,
-                                              itemStyle: {
-                                                  normal: {
-                                                      color: '#ff7700'
-                                                  }
-                                              }
-                                          }],
-                                          barWidth: 10,
-                                      }, ]
-                                  };
-                                  _this.myChart2.clear();
-                                  _this.myChart2 = echarts.init(document.getElementById('main2'));
-                                  _this.myChart2.setOption(option2);
+                                        },
+                                        xAxis: {
+                                            type: 'value',
+                                            boundaryGap: [0, 0.01]
+                                        },
+                                        yAxis: {
+                                            type: 'category',
+                                            data: ['VIP', '活跃', '交易', '总数'],
+                                        },
+                                        series: [{
+                                            type: 'bar',
+                                            data: [{
+                                                value: data.data.wholePic[3].value,
+                                                itemStyle: {
+                                                    normal: {
+                                                        color: '#2cc689'
+                                                    }
+                                                }
+                                            }, {
+                                                value: data.data.wholePic[2].value,
+                                                itemStyle: {
+                                                    normal: {
+                                                        color: '#ff7700'
+                                                    }
+                                                }
+                                            }, {
+                                                value: data.data.wholePic[1].value,
+                                                itemStyle: {
+                                                    normal: {
+                                                        color: '#6c81b3'
+                                                    }
+                                                }
+                                            }, {
+                                                value: data.data.wholePic[0].value,
+                                                itemStyle: {
+                                                    normal: {
+                                                        color: '#ff7700'
+                                                    }
+                                                }
+                                            }],
+                                            barWidth: 10,
+                                        }, ]
+                                    };
+                                    _this.myChart2.clear();
+                                    _this.myChart2 = echarts.init(document.getElementById('main2'));
+                                    _this.myChart2.setOption(option2);
                                 }
                                 var option3 = {
                                     title: {
@@ -1677,8 +1739,7 @@ export default {
 
                                 break;
                             case "1":
-                                  if(_this.monthtab==0 || _this.monthtab==1)
-                                  {
+                                if (_this.monthtab == 0 || _this.monthtab == 1) {
                                     var option2 = {
                                         tooltip: {
                                             trigger: 'item',
@@ -1734,43 +1795,50 @@ export default {
                                             name: '当前数据',
                                             barWidth: 5,
                                             type: 'bar',
-                                            data:data.data.wholeBottom,
+                                            data: data.data.wholeBottom,
                                             itemStyle: {
-                                           normal: {
-                                               color: new echarts.graphic.LinearGradient(
-                                                   0, 0, 0, 1,
-                                                   [
-                                                       {offset: 0, color: '#ff7700'},
-                                                       {offset: 0.5, color: '#ff9e48'},
-                                                       {offset: 1, color: '#ffbb7f'}
-                                                   ]
-                                               )
-                                           },
-                                       }
+                                                normal: {
+                                                    color: new echarts.graphic.LinearGradient(
+                                                        0, 0, 0, 1, [{
+                                                            offset: 0,
+                                                            color: '#ff7700'
+                                                        }, {
+                                                            offset: 0.5,
+                                                            color: '#ff9e48'
+                                                        }, {
+                                                            offset: 1,
+                                                            color: '#ffbb7f'
+                                                        }]
+                                                    )
+                                                },
+                                            }
                                         }, {
                                             name: '对比数据',
                                             type: 'bar',
                                             barWidth: 5,
                                             data: data.data.wholeBottomPair,
                                             itemStyle: {
-                                           normal: {
-                                               color: new echarts.graphic.LinearGradient(
-                                                   0, 0, 0, 1,
-                                                   [
-                                                     {offset: 0, color: '#6c81c3'},
-                                                     {offset: 0.5, color: '#91a1c6'},
-                                                     {offset: 1, color: '#b5bfd9'}
-                                                   ]
-                                               )
-                                           },
-                                       }
+                                                normal: {
+                                                    color: new echarts.graphic.LinearGradient(
+                                                        0, 0, 0, 1, [{
+                                                            offset: 0,
+                                                            color: '#6c81c3'
+                                                        }, {
+                                                            offset: 0.5,
+                                                            color: '#91a1c6'
+                                                        }, {
+                                                            offset: 1,
+                                                            color: '#b5bfd9'
+                                                        }]
+                                                    )
+                                                },
+                                            }
                                         }]
                                     };
                                     _this.myChart3.clear();
                                     _this.myChart3 = echarts.init(document.getElementById('main3'));
                                     _this.myChart3.setOption(option3);
-                                  }
-                                  else {
+                                } else {
                                     var option2 = {
                                         tooltip: {
                                             trigger: 'axis',
@@ -1856,25 +1924,29 @@ export default {
                                             name: '当前数据',
                                             barWidth: 5,
                                             type: 'bar',
-                                            data:data.data.wholeBottom,
+                                            data: data.data.wholeBottom,
                                             itemStyle: {
-                                              normal: {
-                                               color: new echarts.graphic.LinearGradient(
-                                                   0, 0, 0, 1,
-                                                   [
-                                                       {offset: 0, color: '#ff7700'},
-                                                       {offset: 0.5, color: '#ff9e48'},
-                                                       {offset: 1, color: '#ffbb7f'}
-                                                   ]
-                                               )
-                                           },
-                                       }
+                                                normal: {
+                                                    color: new echarts.graphic.LinearGradient(
+                                                        0, 0, 0, 1, [{
+                                                            offset: 0,
+                                                            color: '#ff7700'
+                                                        }, {
+                                                            offset: 0.5,
+                                                            color: '#ff9e48'
+                                                        }, {
+                                                            offset: 1,
+                                                            color: '#ffbb7f'
+                                                        }]
+                                                    )
+                                                },
+                                            }
                                         }]
                                     };
                                     _this.myChart3.clear();
                                     _this.myChart3 = echarts.init(document.getElementById('main3'));
                                     _this.myChart3.setOption(option3);
-                                  }
+                                }
 
                                 break;
                             default:
@@ -1882,12 +1954,11 @@ export default {
                         }
 
 
-                    }
-                    else {
-                          Message({
-                              'message': data.msg,
-                              'type': 'error',
-                          });
+                    } else {
+                        Message({
+                            'message': data.msg,
+                            'type': 'error',
+                        });
                     }
                 },
                 complete = function() {
@@ -1977,128 +2048,137 @@ export default {
 
                                     break;
                                 case "1":
-                                if(_this.monthtab==0 || _this.monthtab==1)
-                                {
+                                    if (_this.monthtab == 0 || _this.monthtab == 1) {
 
-                                  var option3 = {
-                                      tooltip: {
-                                          trigger: 'axis',
-                                          axisPointer: { // 坐标轴指示器，坐标轴触发有效
-                                              type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
-                                          }
-                                      },
-                                      color: ['#ff7700', '#6c81b3'],
-                                      grid: {
-                                          top: '10',
-                                          left: '3%',
-                                          right: '4%',
-                                          bottom: '3%',
-                                          containLabel: true
-                                      },
-                                      xAxis: [{
-                                          type: 'category',
-                                          data: data.data.wholeBottomDate
-                                      }],
-                                      yAxis: [{
-                                          type: 'value'
-                                      }],
-                                      series: [{
-                                          name: '当前数据',
-                                          barWidth: 5,
-                                          type: 'bar',
-                                          data:data.data.wholeBottom,
-                                          itemStyle: {
-                                         normal: {
-                                             color: new echarts.graphic.LinearGradient(
-                                                 0, 0, 0, 1,
-                                                 [
-                                                     {offset: 0, color: '#ff7700'},
-                                                     {offset: 0.5, color: '#ff9e48'},
-                                                     {offset: 1, color: '#ffbb7f'}
-                                                 ]
-                                             )
-                                         },
-                                     }
-                                      }, {
-                                          name: '对比数据',
-                                          type: 'bar',
-                                          barWidth: 5,
-                                          data: data.data.wholeBottomPair,
-                                          itemStyle: {
-                                         normal: {
-                                             color: new echarts.graphic.LinearGradient(
-                                                 0, 0, 0, 1,
-                                                 [
-                                                   {offset: 0, color: '#6c81c3'},
-                                                   {offset: 0.5, color: '#91a1c6'},
-                                                   {offset: 1, color: '#b5bfd9'}
-                                                 ]
-                                             )
-                                         },
-                                     }
-                                      }]
-                                  };
-                                  _this.myChart3.clear();
-                                  _this.myChart3 = echarts.init(document.getElementById('main3'));
-                                  _this.myChart3.setOption(option3);
-                                }
-                                else {
+                                        var option3 = {
+                                            tooltip: {
+                                                trigger: 'axis',
+                                                axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                                    type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                                                }
+                                            },
+                                            color: ['#ff7700', '#6c81b3'],
+                                            grid: {
+                                                top: '10',
+                                                left: '3%',
+                                                right: '4%',
+                                                bottom: '3%',
+                                                containLabel: true
+                                            },
+                                            xAxis: [{
+                                                type: 'category',
+                                                data: data.data.wholeBottomDate
+                                            }],
+                                            yAxis: [{
+                                                type: 'value'
+                                            }],
+                                            series: [{
+                                                name: '当前数据',
+                                                barWidth: 5,
+                                                type: 'bar',
+                                                data: data.data.wholeBottom,
+                                                itemStyle: {
+                                                    normal: {
+                                                        color: new echarts.graphic.LinearGradient(
+                                                            0, 0, 0, 1, [{
+                                                                offset: 0,
+                                                                color: '#ff7700'
+                                                            }, {
+                                                                offset: 0.5,
+                                                                color: '#ff9e48'
+                                                            }, {
+                                                                offset: 1,
+                                                                color: '#ffbb7f'
+                                                            }]
+                                                        )
+                                                    },
+                                                }
+                                            }, {
+                                                name: '对比数据',
+                                                type: 'bar',
+                                                barWidth: 5,
+                                                data: data.data.wholeBottomPair,
+                                                itemStyle: {
+                                                    normal: {
+                                                        color: new echarts.graphic.LinearGradient(
+                                                            0, 0, 0, 1, [{
+                                                                offset: 0,
+                                                                color: '#6c81c3'
+                                                            }, {
+                                                                offset: 0.5,
+                                                                color: '#91a1c6'
+                                                            }, {
+                                                                offset: 1,
+                                                                color: '#b5bfd9'
+                                                            }]
+                                                        )
+                                                    },
+                                                }
+                                            }]
+                                        };
+                                        _this.myChart3.clear();
+                                        _this.myChart3 = echarts.init(document.getElementById('main3'));
+                                        _this.myChart3.setOption(option3);
+                                    } else {
 
-                                  var option3 = {
-                                      tooltip: {
-                                          trigger: 'axis',
-                                          axisPointer: { // 坐标轴指示器，坐标轴触发有效
-                                              type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
-                                          }
-                                      },
-                                      color: ['#ff7700', '#6c81b3'],
-                                      grid: {
-                                          top: '10',
-                                          left: '3%',
-                                          right: '4%',
-                                          bottom: '3%',
-                                          containLabel: true
-                                      },
-                                      xAxis: [{
-                                          type: 'category',
-                                          data: data.data.wholeBottomDate
-                                      }],
-                                      yAxis: [{
-                                          type: 'value'
-                                      }],
-                                      series: [{
-                                          name: '当前数据',
-                                          barWidth: 5,
-                                          type: 'bar',
-                                          data:data.data.wholeBottom,
-                                          itemStyle: {
-                                            normal: {
-                                             color: new echarts.graphic.LinearGradient(
-                                                 0, 0, 0, 1,
-                                                 [
-                                                     {offset: 0, color: '#ff7700'},
-                                                     {offset: 0.5, color: '#ff9e48'},
-                                                     {offset: 1, color: '#ffbb7f'}
-                                                 ]
-                                             )
-                                         },
-                                     }
-                                      }]
-                                  };
-                                  _this.myChart3.clear();
-                                  _this.myChart3 = echarts.init(document.getElementById('main3'));
-                                  _this.myChart3.setOption(option3);
-                                }
+                                        var option3 = {
+                                            tooltip: {
+                                                trigger: 'axis',
+                                                axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                                    type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                                                }
+                                            },
+                                            color: ['#ff7700', '#6c81b3'],
+                                            grid: {
+                                                top: '10',
+                                                left: '3%',
+                                                right: '4%',
+                                                bottom: '3%',
+                                                containLabel: true
+                                            },
+                                            xAxis: [{
+                                                type: 'category',
+                                                data: data.data.wholeBottomDate
+                                            }],
+                                            yAxis: [{
+                                                type: 'value'
+                                            }],
+                                            series: [{
+                                                name: '当前数据',
+                                                barWidth: 5,
+                                                type: 'bar',
+                                                data: data.data.wholeBottom,
+                                                itemStyle: {
+                                                    normal: {
+                                                        color: new echarts.graphic.LinearGradient(
+                                                            0, 0, 0, 1, [{
+                                                                offset: 0,
+                                                                color: '#ff7700'
+                                                            }, {
+                                                                offset: 0.5,
+                                                                color: '#ff9e48'
+                                                            }, {
+                                                                offset: 1,
+                                                                color: '#ffbb7f'
+                                                            }]
+                                                        )
+                                                    },
+                                                }
+                                            }]
+                                        };
+                                        _this.myChart3.clear();
+                                        _this.myChart3 = echarts.init(document.getElementById('main3'));
+                                        _this.myChart3.setOption(option3);
+                                    }
                                     break;
                                 default:
 
                             }
-                        }
-                        else {
-                              Message({
-                                  'message': data.msg,
-                                  'type': 'error',
-                              });
+                        } else {
+                            Message({
+                                'message': data.msg,
+                                'type': 'error',
+                            });
                         }
 
                     },
@@ -2151,14 +2231,13 @@ export default {
                 success = function(data) {
                     if (data.code == '1') {
                         _this.rankingshow = true;
-                      _this.dialogvaluearr = data.data;
-                      _this.dialogradiovaluechange = true;
-                    }
-                    else {
-                          Message({
-                              'message': data.msg,
-                              'type': 'error',
-                          });
+                        _this.dialogvaluearr = data.data;
+                        _this.dialogradiovaluechange = true;
+                    } else {
+                        Message({
+                            'message': data.msg,
+                            'type': 'error',
+                        });
                     }
 
                 },
@@ -2208,16 +2287,15 @@ export default {
                         _this.dialogload = true;
                     },
                     success = function(data) {
-                      if (data.code == '1') {
-                        _this.dialogvaluearr = data.data;
-                        _this.dialogradiovaluechange = true;
-                      }
-                      else {
+                        if (data.code == '1') {
+                            _this.dialogvaluearr = data.data;
+                            _this.dialogradiovaluechange = true;
+                        } else {
                             Message({
                                 'message': data.msg,
                                 'type': 'error',
                             });
-                      }
+                        }
                     },
                     complete = function() {
                         _this.dialogload = false;

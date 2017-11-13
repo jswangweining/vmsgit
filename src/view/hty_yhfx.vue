@@ -287,7 +287,6 @@ export default {
                           data: _this.jsondata.map
                       }]
                   };
-
                   _this.myChart2 = echarts.init(document.getElementById('main2'));
                   _this.myChart2.setOption(option2);
                 } else {
@@ -301,7 +300,18 @@ export default {
                 _this.loadingall = false;
             }
         _this.adminApi.getJsonp(url, data, loading, success, complete)
+        $(window).resize(function() {
+          if(_this.myChart)
+          {
+            _this.myChart.resize();
+          }
+          if(_this.myChart2)
+          {
+            _this.myChart2.resize();
+          }
+      
 
+        });
 
       })
 
