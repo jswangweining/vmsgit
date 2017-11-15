@@ -5,6 +5,11 @@
     cursor: pointer;
 }
 
+.w-ywxl-r-t span.span1 {
+margin-left: 0.5rem;
+font-size: 12px;
+}
+
 </style>
 
 <template>
@@ -51,12 +56,12 @@
                     </div>
                     <div class="w-table">
                         <wtable border :data="tableData1">
-                            <tablecolumn label="排名" width='200' fixed>
+                            <tablecolumn label="排名" width='80' fixed>
                                 <template scope="scope">
                                     {{scope.$index+1}}
                                 </template>
                             </tablecolumn>
-                            <tablecolumn prop="custName" label="会员店名称" show-overflow-tooltip min-width='200'>
+                            <tablecolumn prop="custName" label="会员店名称" show-overflow-tooltip min-width='200' fixed>
                             </tablecolumn>
                             <tablecolumn prop="amtAll" label="整体采购（元）" width='200' v-if='formdata1.checkList.indexOf("整体采购")>=0'>
                             </tablecolumn>
@@ -68,7 +73,7 @@
                             </tablecolumn>
                             <tablecolumn prop="qtyHzg" label="商品上架" width='100' v-if='formdata1.checkList.indexOf("商品上架")>=0'>
                             </tablecolumn>
-                            <tablecolumn prop="amtDk" label="贷款金额" width='100' v-if='formdata1.checkList.indexOf("贷款金额")>=0'>
+                            <tablecolumn prop="amtDk" label="贷款金额" width='200' v-if='formdata1.checkList.indexOf("贷款金额")>=0'>
                             </tablecolumn>
                             <tablecolumn prop="qtyFs" label="有效粉丝" width='100' v-if='formdata1.checkList.indexOf("有效粉丝")>=0'>
                             </tablecolumn>
@@ -106,7 +111,7 @@
                                     {{scope.$index+1}}
                                 </template>
                             </tablecolumn>
-                            <tablecolumn prop="custName" label="会员店名称" show-overflow-tooltip min-width='200'>
+                            <tablecolumn prop="custName" label="会员店名称" show-overflow-tooltip min-width='200' fixed>
                             </tablecolumn>
                             <tablecolumn prop="expireTime" label="结束日期" width='200'>
                             </tablecolumn>
@@ -156,19 +161,21 @@
                                   {{scope.$index+1}}
                               </template>
                           </tablecolumn>
-                          <tablecolumn prop="custName" label="会员店名称" show-overflow-tooltip min-width='200'>
+                          <tablecolumn prop="custName" label="会员店名称" fixed show-overflow-tooltip min-width='200'>
                           </tablecolumn>
                           <tablecolumn prop="xsAmt" label="销售额" width='200'>
                           </tablecolumn>
                           <tablecolumn prop="sellPoint" label="销售额占比" width='200'>
                           </tablecolumn>
+                          <tablecolumn prop="xsQty" label="购买频次" width='200'>
+                          </tablecolumn>
                           <tablecolumn prop="lastDate" label="最近一次购买日期" width='200'>
                           </tablecolumn>
                           <tablecolumn prop="lastTime" label="间隔天数" width='200'>
                           </tablecolumn>
-                            <tablecolumn label="近六个月趋势" width='200' align='center'>
+                            <tablecolumn label="近六个月趋势" width='200' align='center' fixed='right'>
                                 <template scope="scope">
-                                    <wbutton type="info" size="small" icon='view' @click='tableView(scope.row.custCode)'>查看</wbutton>
+                                    <wbutton type="info" size="small" icon='view' @click='tableView(scope.row.custCode,scope.row.custName)'>查看</wbutton>
                                 </template>
                             </tablecolumn>
                         </wtable>
@@ -186,7 +193,7 @@
         <div class="rankingt" slot='title'>
             <div class="rankingta">
                 <div class="w-ywxl-r-t">
-                    销售占比会员店TOP近6个月趋势
+                    销售占比会员店TOP近6个月趋势 <span class='span1'>{{tabledialogtitle}}</span>
                 </div>
             </div>
         </div>
@@ -199,8 +206,14 @@
                     <div class="rankingcbtb">
                         会员店
                     </div>
-                    <div class="rankingcbtc">
-                        销售占比
+                    <div class="rankingcbtc" v-if='formdata3.radiovalue3=="0"'>
+                        销售金额
+                    </div>
+                    <div class="rankingcbtc" v-if='formdata3.radiovalue3=="1"'>
+                        购买频次
+                    </div>
+                    <div class="rankingcbtc" v-if='formdata3.radiovalue3=="2"'>
+                        最后购买日期
                     </div>
                 </div>
                 <div class="rankingcbd">
@@ -211,8 +224,14 @@
                         <div class="rankingcbda2">
                             {{item.custName}}
                         </div>
-                        <div class="rankingcbda3">
-                            {{item.sellPoint}}%
+                        <div class="rankingcbda3" v-if='formdata3.radiovalue3=="0"'>
+                            {{item.xsAmt}}
+                        </div>
+                        <div class="rankingcbda3" v-if='formdata3.radiovalue3=="1"'>
+                            {{item.xsQty}}
+                        </div>
+                        <div class="rankingcbda3" v-if='formdata3.radiovalue3=="2"'>
+                            {{item.lastDate}}
                         </div>
                     </div>
 
@@ -256,6 +275,7 @@ export default {
         dialogload: false,
         loadtab: false,
         tabledialog: false,
+        tabledialogtitle:'',
         activeName: '0',
         formdata1: {
             'radiovalue': '0',
@@ -374,46 +394,107 @@ export default {
     },
     created() {
         let _this = this;
-        _this.userId = _this.$store.state.userId;
+        if (!_this.$route.query.userId || !_this.$route.query.ticket || !_this.$route.query.userName) {
+            _this.$router.push({
+                name: 'NotFoundComponent'
+            });
+            return;
+        }
+    },
+    computed:{
+      dialogChartTitle:function(){
+        let _this=this;
+        switch (_this.formdata3.radiovalue3) {
+          case '0':
+          return '销售金额'
+            break;
+
+            case '1':
+            return '购买频次'
+              break;
+
+              case '2':
+              return '销售金额'
+                break;
+          default:
+
+        }
+      }
     },
     mounted() {
         let _this = this;
-        _this.$nextTick(function() {
+        var url = _this.adminApi.host+'/login/validate',
+            data = {
+                userId: _this.$route.query.userId,
+                ticket: _this.$route.query.ticket
+            },
+            loading = function() {
+                _this.loadingall = true;
+            },
+            success = function(data) {
+                if (data.code == '2') {
 
-            var url = _this.adminApi.host + '/htycustall/cust/manager',
-                data = {
-                    userId: _this.userId,
-                    pageType: _this.activeName,
-                    aliveType: _this.formdata1.radiovalue,
-                    // time:'201709'
-                },
-                loading = function() {
-                    _this.loadtab = true;
-                },
-                success = function(data) {
-                    if (data.code == '1') {
-                        _this.tableData1 = data.data;
-                    } else {
-                        Message({
-                            'message': data.msg,
-                            'type': 'error',
-                        });
-                    }
-                },
-                complete = function() {
-                    _this.loadtab = false;
+                  _this.userId = _this.$route.query.userId;
+                  _this.$emit('userInfo',_this.$route.query.userName,data.data.vmsUrl);
+                  var data={
+                     'userId':_this.$route.query.userId,
+                     'ticket':_this.$route.query.ticket,
+                     'userName':_this.$route.query.userName,
+                   }
+                   _this.$store.commit('changeUserId',data)
+                   _this.$nextTick(function() {
+
+                       var url = _this.adminApi.host + '/htycustall/cust/manager',
+                           data = {
+                               userId: _this.userId,
+                               pageType: _this.activeName,
+                               aliveType: _this.formdata1.radiovalue,
+                               // time:'201709'
+                           },
+                           loading = function() {
+                               _this.loadtab = true;
+                           },
+                           success = function(data) {
+                               if (data.code == '1') {
+                                   _this.tableData1 = data.data;
+                               } else {
+                                   Message({
+                                       'message': data.msg,
+                                       'type': 'error',
+                                   });
+                               }
+                           },
+                           complete = function() {
+                               _this.loadtab = false;
+                           }
+                       _this.adminApi.getJsonp(url, data, loading, success, complete)
+                   })
+                } else {
+                    Message({
+                        'message': data.msg,
+                        'type': 'error',
+                        'onClose':function(){
+                          window.location.href=data.data.vmsUrl+'/login';
+                        }
+                    });
                 }
-            _this.adminApi.getJsonp(url, data, loading, success, complete)
-        })
+            },
+            complete = function() {
+               _this.loadingall = false;
+            }
+        _this.adminApi.getJsonp(url, data, loading, success, complete)
+
     },
     methods: {
-        tableView: function(code) {
+        tableView: function(code,name) {
             let _this = this;
              _this.tabledialog = true;
+             _this.tabledialogtitle=name;
             var url = _this.adminApi.host + '/htycustall/cust/banner',
                 data = {
                     userId: _this.userId,
-                    custCode:code
+                    custCode:code,
+                    sortType:_this.formdata3.radiovalue3
                     // time:'201709'
                 },
                 loading = function() {
@@ -427,7 +508,8 @@ export default {
                          _this.$nextTick(function() {
                            var option3 = {
                                title: {
-                                   show: false
+                                   show: true,
+                                   text:_this.dialogChartTitle
                                },
                                tooltip: {
                                    trigger: 'axis',
@@ -439,7 +521,7 @@ export default {
                                    }
                                },
                                grid: {
-                                   top: 20,
+                                   top: '50',
                                    left: '3%',
                                    right: '4%',
                                    bottom: '3%',
@@ -448,10 +530,31 @@ export default {
                                xAxis: [{
                                    type: 'category',
                                    boundaryGap: false,
-                                   data: data.data.listName
+                                   data: data.data.listName,
+                                   axisLine:{
+                                     lineStyle:{
+                                       color:'#eee'
+                                     }
+                                   },
+                                   axisLabel:{
+                                     color:'#333'
+                                   },
                                }],
                                yAxis: [{
-                                   type: 'value'
+                                   type: 'value',
+                                   axisLine:{
+                                     lineStyle:{
+                                       color:'#eee'
+                                     }
+                                   },
+                                   axisLabel:{
+                                     color:'#333'
+                                   },
+                                   splitLine:{
+                                     lineStyle:{
+                                       color: ['#eee'],
+                                     }
+                                   }
                                }],
                                series: [{
                                    name: '收入',

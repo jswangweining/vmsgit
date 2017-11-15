@@ -28,7 +28,7 @@
 
 @media screen and (min-width:1601px) {
     .w-ywxl-t {
-        height:9.5rem;
+        height: 9.5rem;
     }
 }
 
@@ -113,9 +113,9 @@
 }
 
 @media screen and (min-width:1601px) {
-  .w-ywxl-titem2itemline {
-      height: 7.5rem;
-  }
+    .w-ywxl-titem2itemline {
+        height: 7.5rem;
+    }
 }
 
 .w-ywxl-titem2itemcss3 {
@@ -131,9 +131,9 @@
 }
 
 @media screen and (min-width:1601px) {
-  .w-ywxl-titem2itemcss3 {
-      margin-top: 2rem;
-  }
+    .w-ywxl-titem2itemcss3 {
+        margin-top: 2rem;
+    }
 }
 
 .w-ywxl-titem2itemcss3a {
@@ -700,7 +700,7 @@
 
 <template>
 
-<div v-loading.body='loadingall' class="bodyscroll"  style="min-height:650px;">
+<div v-loading.body='loadingall' class="bodyscroll" style="min-height:600px;">
     <div class="w-con1">
         <div class="w-pos">
             <span>首页</span>/<span>汇天眼</span>/<span class="w-pos-active">业务效率</span>
@@ -727,7 +727,7 @@
 
                             </div>
                         </div>
-                        <div class="w-ywxl-titem2item" >
+                        <div class="w-ywxl-titem2item">
                             <div class="w-ywxl-titem2itemline">
 
                             </div>
@@ -930,7 +930,7 @@
 
 
 
-    <wdialog v-model="rankingshow">
+    <wdialog v-model="rankingshow" :top="dialogTop">
         <div class="rankingt" slot='title'>
 
             <div class="rankingta">
@@ -1014,6 +1014,7 @@ export default {
         userId: '',
         loading: false,
         loadingall: false,
+
         rankingshow: false,
         dialogradiovalue: '',
         dialogradiovaluechange: false,
@@ -1038,130 +1039,189 @@ export default {
         wholeTop: [{}, {}, {}],
         wholeLeft: [{}, {}, {}]
     }),
-    mounted() {
+
+    created() {
         let _this = this;
-        // _this.adminApi.islogin();
-        _this.userId = _this.$store.state.userId;
-        _this.$nextTick(function() {
-            var url = _this.adminApi.host + '/htypctorg/index/handle',
-                data = {
-                    'userId': _this.userId
-                },
-                loading = function() {
-                    //_this.loadingall = true;
-                },
-                success = function(data) {
-                    if (data.code == '1') {
-
-                        _this.topdata = data.data;
-                        _this.statvalue = data.data.starNum
-                        _this.myChart1 = echarts.init(document.getElementById('main'));
-                        var option = {
-                            tooltip: {
-                                confine: true
-                            },
-                            radar: [{
-
-                                indicator: [{
-                                    text: '综合能力',
-                                    color: '#ff7700',
-                                    max:data.data.maxZhnl
-
-                                }, {
-                                    text: '会员店价值',
-                                    max:data.data.maxCvmgz
-                                }, {
-                                    text: '市盈率',
-                                    max:data.data.maxPegz
-                                }, {
-                                    text: '市销率',
-                                    max:data.data.maxPsgz
-                                }, {
-                                    text: '市净率',
-                                    max:data.data.maxPbgz
-                                }],
-                                center: screen.width>1600 ? ['50%', '55%']:['50%', '50%'],
-                                radius: screen.width>1600 ? '70%':'50%',
-                                startAngle: 90,
-                                splitNumber: 4,
-                                name: {
-
-                                    formatter: '{value}',
-                                    textStyle: {
-                                        color: '#999'
-                                    }
-                                }
-                            }],
-                            series: [{
-                                type: 'radar',
-                                tooltip: {
-                                    trigger: 'item'
-                                },
-                                itemStyle: {
-                                    normal: {
-                                        color: "rgba(255,199,1)", // 图表中各个图区域的边框线拐点颜色
-                                        lineStyle: {
-                                            color: "#ff7700" // 图表中各个图区域的边框线颜色
-                                        },
-                                        areaStyle: {
-                                            type: 'default',
-                                            opacity: 0.5, // 图表中各个图区域的透明度
-                                            color: "#ff7700" // 图表中各个图区域的颜色
-                                        }
-                                    }
-                                },
-                                data: [{
-                                    value: [_this.topdata.zhnl, _this.topdata.cvmgz, _this.topdata.pegz, _this.topdata.psgz, _this.topdata.pbgz],
-                                    name: '当前平台估值'
-                                }]
-                            }, ]
-                        }
-                        _this.myChart1.setOption(option);
-                    } else {
-                        Message({
-                            'message': data.msg,
-                            'type': 'error',
-                        });
-                    }
-                },
-                complete = function() {
-                    // _this.loading = false;
-                }
-            _this.adminApi.getJsonp(url, data, loading, success, complete)
-            _this.radiovalue = '0';
-            var url = _this.adminApi.host + '/htypctorg/index/wholeSort',
-                data = {
-                    'userId': _this.userId
-                },
-                loading = function() {
-
-                },
-                success = function(data) {
-                    if (data.code == '1') {
-                        _this.wholeSort = data.data
-                    }
-                },
-                complete = function() {
-
-                }
-            _this.adminApi.getJsonp(url, data, loading, success, complete)
-            $(window).resize(function() {
-              if(_this.myChart1)
-              {
-                _this.myChart1.resize();
-              }
-              if(_this.myChart2)
-              {
-                _this.myChart2.resize();
-              }
-              if(_this.myChart3)
-              {
-                _this.myChart3.resize();
-              }
-
-
+        if (!_this.$route.query.userId || !_this.$route.query.ticket || !_this.$route.query.userName) {
+            _this.$router.push({
+                name: 'NotFoundComponent'
             });
-        })
+            return;
+        }
+    },
+    computed: {
+        dialogTop: function() {
+            return screen.width > 1600 ? '30%' : '15%'
+        },
+
+    },
+    watch: {
+
+    },
+    mounted() {
+      let _this=this;
+      var url = _this.adminApi.host+'/login/validate',
+          data = {
+              userId: _this.$route.query.userId,
+              ticket: _this.$route.query.ticket
+          },
+          loading = function() {
+              _this.loadingall = true;
+          },
+          success = function(data) {
+              if (data.code == '2') {
+
+                _this.userId = _this.$route.query.userId;
+                _this.$emit('userInfo',_this.$route.query.userName,data.data.vmsUrl);
+                var data={
+                   'userId':_this.$route.query.userId,
+                   'ticket':_this.$route.query.ticket,
+                   'userName':_this.$route.query.userName,
+                 }
+                 _this.$store.commit('changeUserId',data)
+
+                _this.$nextTick(function() {
+                    var url = _this.adminApi.host + '/htypctorg/index/handle',
+                        data = {
+                            'userId': _this.userId
+                        },
+                        loading = function() {
+                            //_this.loadingall = true;
+                        },
+                        success = function(data) {
+                            if (data.code == '1') {
+
+                                _this.topdata = data.data;
+                                _this.statvalue = data.data.starNum
+                                _this.myChart1 = echarts.init(document.getElementById('main'));
+                                var option = {
+                                    tooltip: {
+                                        confine: true
+                                    },
+                                    radar: {
+                                        indicator: [{
+                                            text: '综合能力',
+                                            color: '#ff7700',
+                                            max: data.data.maxZhnl
+                                        }, {
+                                            text: '会员店价值',
+                                            max: data.data.maxCvmgz
+                                        }, {
+                                            text: '市盈率',
+                                            max: data.data.maxPegz
+                                        }, {
+                                            text: '市销率',
+                                            max: data.data.maxPsgz
+                                        }, {
+                                            text: '市净率',
+                                            max: data.data.maxPbgz
+                                        }],
+                                        center: screen.width > 1600 ? ['50%', '55%'] : ['50%', '50%'],
+                                        radius: screen.width > 1600 ? '70%' : '50%',
+                                        startAngle: 90,
+                                        splitNumber: 4,
+                                        name: {
+                                            formatter: '{value}',
+                                            textStyle: {
+                                                color: '#999'
+                                            }
+                                        },
+                                        splitLine: {
+                                            lineStyle: {
+                                                color: ['#eee']
+                                            }
+                                        },
+                                        splitArea: {
+                                            show: false
+                                        },
+                                        axisLine: {
+                                            lineStyle: {
+                                                color: '#eee'
+                                            }
+                                        }
+                                    },
+                                    series: [{
+                                        type: 'radar',
+                                        tooltip: {
+                                            trigger: 'item'
+                                        },
+                                        itemStyle: {
+                                            normal: {
+                                                color: "rgba(255,199,1)", // 图表中各个图区域的边框线拐点颜色
+                                                lineStyle: {
+                                                    color: "#ff7700" // 图表中各个图区域的边框线颜色
+                                                },
+                                                areaStyle: {
+                                                    type: 'default',
+                                                    opacity: 0.5, // 图表中各个图区域的透明度
+                                                    color: "#ff7700" // 图表中各个图区域的颜色
+                                                }
+                                            }
+                                        },
+                                        data: [{
+                                            value: [_this.topdata.zhnl, _this.topdata.cvmgz, _this.topdata.pegz, _this.topdata.psgz, _this.topdata.pbgz],
+                                            name: '当前平台估值'
+                                        }]
+                                    }, ]
+                                }
+                                _this.myChart1.setOption(option);
+                            } else {
+                                Message({
+                                    'message': data.msg,
+                                    'type': 'error',
+                                });
+                            }
+                        },
+                        complete = function() {
+                            // _this.loading = false;
+                        }
+                    _this.adminApi.getJsonp(url, data, loading, success, complete)
+                    _this.radiovalue = '0';
+                    var url = _this.adminApi.host + '/htypctorg/index/wholeSort',
+                        data = {
+                            'userId': _this.userId
+                        },
+                        loading = function() {
+
+                        },
+                        success = function(data) {
+                            if (data.code == '1') {
+                                _this.wholeSort = data.data
+                            }
+                        },
+                        complete = function() {
+
+                        }
+                    _this.adminApi.getJsonp(url, data, loading, success, complete)
+                    $(window).resize(function() {
+                        if (_this.myChart1) {
+                            _this.myChart1.resize();
+                        }
+                        if (_this.myChart2) {
+                            _this.myChart2.resize();
+                        }
+                        if (_this.myChart3) {
+                            _this.myChart3.resize();
+                        }
+
+
+                    });
+                })
+
+              } else {
+                  Message({
+                      'message': data.msg,
+                      'type': 'error',
+                      'onClose':function(){
+                        window.location.href=data.data.vmsUrl+'/login';
+                      }
+                  });
+              }
+          },
+          complete = function() {
+             _this.loadingall = false;
+          }
+      _this.adminApi.getJsonp(url, data, loading, success, complete)
 
     },
     methods: {
@@ -1172,8 +1232,8 @@ export default {
                 return;
             } else {
                 //_this.loading = true;
-                $('.w-ywxl-ddlac').removeClass('w-ywxl-ddlac')
-                $(el).hasClass('w-ywxl-ddla') ? $(el).addClass('w-ywxl-ddlac') : $(el).parentsUntil('w-ywxl-ddl').addClass('w-ywxl-ddlac')
+                $('.w-ywxl-ddlac').removeClass('w-ywxl-ddlac');
+                $(el).hasClass('w-ywxl-ddla') ? $(el).addClass('w-ywxl-ddlac') : $(el).parentsUntil('.w-ywxl-ddl').addClass('w-ywxl-ddlac')
                 _this.monthtab = index;
                 _this.selectvalue = '0';
 
@@ -1236,19 +1296,35 @@ export default {
                                                 }
                                             },
                                             grid: {
-                                                top: '0',
+                                                top: '10',
                                                 left: '40',
                                                 right: '0',
                                                 bottom: '0',
-
                                             },
                                             xAxis: {
                                                 type: 'value',
-                                                boundaryGap: [0, 0.01]
+                                                boundaryGap: [0, 0.01],
+                                                splitLine: {
+                                                    lineStyle: {
+                                                        color: ['#eee'],
+                                                    }
+                                                }
+
                                             },
                                             yAxis: {
                                                 type: 'category',
                                                 data: ['VIP', '活跃', '交易', '总数'],
+                                                axisLine: {
+                                                    lineStyle: {
+                                                        color: '#eee'
+                                                    }
+                                                },
+                                                axisLabel: {
+                                                    color: '#333'
+                                                },
+
+
+
                                             },
                                             series: [{
                                                 type: 'bar',
@@ -1281,7 +1357,7 @@ export default {
                                                         }
                                                     }
                                                 }],
-                                                barWidth: 5,
+                                                barWidth: 10,
                                             }, ]
                                         };
                                         _this.myChart2.clear();
@@ -1311,10 +1387,33 @@ export default {
                                         xAxis: [{
                                             type: 'category',
                                             boundaryGap: false,
-                                            data: data.data.wholeBottomDate
+                                            data: data.data.wholeBottomDate,
+                                            axisLine: {
+                                                lineStyle: {
+                                                    color: '#eee'
+                                                }
+                                            },
+                                            axisLabel: {
+                                                color: '#333'
+                                            },
+
+
                                         }],
                                         yAxis: [{
-                                            type: 'value'
+                                            type: 'value',
+                                            axisLine: {
+                                                lineStyle: {
+                                                    color: '#eee'
+                                                }
+                                            },
+                                            axisLabel: {
+                                                color: '#333'
+                                            },
+                                            splitLine: {
+                                                lineStyle: {
+                                                    color: ['#eee'],
+                                                }
+                                            }
                                         }],
                                         series: [{
                                             name: '收入',
@@ -1388,10 +1487,31 @@ export default {
                                             },
                                             xAxis: [{
                                                 type: 'category',
-                                                data: data.data.wholeBottomDate
+                                                data: data.data.wholeBottomDate,
+                                                axisLine: {
+                                                    lineStyle: {
+                                                        color: '#eee'
+                                                    }
+                                                },
+                                                axisLabel: {
+                                                    color: '#333'
+                                                },
                                             }],
                                             yAxis: [{
-                                                type: 'value'
+                                                type: 'value',
+                                                axisLine: {
+                                                    lineStyle: {
+                                                        color: '#eee'
+                                                    }
+                                                },
+                                                axisLabel: {
+                                                    color: '#333'
+                                                },
+                                                splitLine: {
+                                                    lineStyle: {
+                                                        color: ['#eee'],
+                                                    }
+                                                }
                                             }],
                                             series: [{
                                                 name: '当前数据',
@@ -1418,7 +1538,6 @@ export default {
                                                 name: '对比数据',
                                                 type: 'bar',
                                                 barWidth: 5,
-                                                stack: '广告',
                                                 data: data.data.wholeBottomPair,
                                                 itemStyle: {
                                                     normal: {
@@ -1450,19 +1569,35 @@ export default {
                                                 }
                                             },
                                             grid: {
-                                                top: '0',
+                                                top: '10',
                                                 left: '40',
                                                 right: '0',
                                                 bottom: '0',
-
                                             },
                                             xAxis: {
                                                 type: 'value',
-                                                boundaryGap: [0, 0.01]
+                                                boundaryGap: [0, 0.01],
+                                                splitLine: {
+                                                    lineStyle: {
+                                                        color: ['#eee'],
+                                                    }
+                                                }
+
                                             },
                                             yAxis: {
                                                 type: 'category',
                                                 data: ['VIP', '活跃', '交易', '总数'],
+                                                axisLine: {
+                                                    lineStyle: {
+                                                        color: '#eee'
+                                                    }
+                                                },
+                                                axisLabel: {
+                                                    color: '#333'
+                                                },
+
+
+
                                             },
                                             series: [{
                                                 type: 'bar',
@@ -1495,7 +1630,7 @@ export default {
                                                         }
                                                     }
                                                 }],
-                                                barWidth: 5,
+                                                barWidth: 10,
                                             }, ]
                                         };
                                         _this.myChart2.clear();
@@ -1518,10 +1653,31 @@ export default {
                                             },
                                             xAxis: [{
                                                 type: 'category',
-                                                data: data.data.wholeBottomDate
+                                                data: data.data.wholeBottomDate,
+                                                axisLine: {
+                                                    lineStyle: {
+                                                        color: '#eee'
+                                                    }
+                                                },
+                                                axisLabel: {
+                                                    color: '#333'
+                                                },
                                             }],
                                             yAxis: [{
-                                                type: 'value'
+                                                type: 'value',
+                                                axisLine: {
+                                                    lineStyle: {
+                                                        color: '#eee'
+                                                    }
+                                                },
+                                                axisLabel: {
+                                                    color: '#333'
+                                                },
+                                                splitLine: {
+                                                    lineStyle: {
+                                                        color: ['#eee'],
+                                                    }
+                                                }
                                             }],
                                             series: [{
                                                 name: '当前数据',
@@ -1626,6 +1782,7 @@ export default {
                                     _this.myChart2 = echarts.init(document.getElementById('main2'));
                                     _this.myChart2.setOption(option2);
                                 } else {
+
                                     var option2 = {
                                         tooltip: {
                                             trigger: 'axis',
@@ -1634,19 +1791,35 @@ export default {
                                             }
                                         },
                                         grid: {
-                                            top: '0',
+                                            top: '10',
                                             left: '40',
                                             right: '0',
                                             bottom: '0',
-
                                         },
                                         xAxis: {
                                             type: 'value',
-                                            boundaryGap: [0, 0.01]
+                                            boundaryGap: [0, 0.01],
+                                            splitLine: {
+                                                lineStyle: {
+                                                    color: ['#eee'],
+                                                }
+                                            }
+
                                         },
                                         yAxis: {
                                             type: 'category',
                                             data: ['VIP', '活跃', '交易', '总数'],
+                                            axisLine: {
+                                                lineStyle: {
+                                                    color: '#eee'
+                                                }
+                                            },
+                                            axisLabel: {
+                                                color: '#333'
+                                            },
+
+
+
                                         },
                                         series: [{
                                             type: 'bar',
@@ -1709,10 +1882,33 @@ export default {
                                     xAxis: [{
                                         type: 'category',
                                         boundaryGap: false,
-                                        data: data.data.wholeBottomDate
+                                        data: data.data.wholeBottomDate,
+                                        axisLine: {
+                                            lineStyle: {
+                                                color: '#eee'
+                                            }
+                                        },
+                                        axisLabel: {
+                                            color: '#333'
+                                        },
+
+
                                     }],
                                     yAxis: [{
-                                        type: 'value'
+                                        type: 'value',
+                                        axisLine: {
+                                            lineStyle: {
+                                                color: '#eee'
+                                            }
+                                        },
+                                        axisLabel: {
+                                            color: '#333'
+                                        },
+                                        splitLine: {
+                                            lineStyle: {
+                                                color: ['#eee'],
+                                            }
+                                        }
                                     }],
                                     series: [{
                                         name: '收入',
@@ -1786,10 +1982,31 @@ export default {
                                         },
                                         xAxis: [{
                                             type: 'category',
-                                            data: data.data.wholeBottomDate
+                                            data: data.data.wholeBottomDate,
+                                            axisLine: {
+                                                lineStyle: {
+                                                    color: '#eee'
+                                                }
+                                            },
+                                            axisLabel: {
+                                                color: '#333'
+                                            },
                                         }],
                                         yAxis: [{
-                                            type: 'value'
+                                            type: 'value',
+                                            axisLine: {
+                                                lineStyle: {
+                                                    color: '#eee'
+                                                }
+                                            },
+                                            axisLabel: {
+                                                color: '#333'
+                                            },
+                                            splitLine: {
+                                                lineStyle: {
+                                                    color: ['#eee'],
+                                                }
+                                            }
                                         }],
                                         series: [{
                                             name: '当前数据',
@@ -1847,19 +2064,35 @@ export default {
                                             }
                                         },
                                         grid: {
-                                            top: '0',
+                                            top: '10',
                                             left: '40',
                                             right: '0',
                                             bottom: '0',
-
                                         },
                                         xAxis: {
                                             type: 'value',
-                                            boundaryGap: [0, 0.01]
+                                            boundaryGap: [0, 0.01],
+                                            splitLine: {
+                                                lineStyle: {
+                                                    color: ['#eee'],
+                                                }
+                                            }
+
                                         },
                                         yAxis: {
                                             type: 'category',
                                             data: ['VIP', '活跃', '交易', '总数'],
+                                            axisLine: {
+                                                lineStyle: {
+                                                    color: '#eee'
+                                                }
+                                            },
+                                            axisLabel: {
+                                                color: '#333'
+                                            },
+
+
+
                                         },
                                         series: [{
                                             type: 'bar',
@@ -1915,10 +2148,31 @@ export default {
                                         },
                                         xAxis: [{
                                             type: 'category',
-                                            data: data.data.wholeBottomDate
+                                            data: data.data.wholeBottomDate,
+                                            axisLine: {
+                                                lineStyle: {
+                                                    color: '#eee'
+                                                }
+                                            },
+                                            axisLabel: {
+                                                color: '#333'
+                                            },
                                         }],
                                         yAxis: [{
-                                            type: 'value'
+                                            type: 'value',
+                                            axisLine: {
+                                                lineStyle: {
+                                                    color: '#eee'
+                                                }
+                                            },
+                                            axisLabel: {
+                                                color: '#333'
+                                            },
+                                            splitLine: {
+                                                lineStyle: {
+                                                    color: ['#eee'],
+                                                }
+                                            }
                                         }],
                                         series: [{
                                             name: '当前数据',
@@ -2018,10 +2272,33 @@ export default {
                                         xAxis: [{
                                             type: 'category',
                                             boundaryGap: false,
-                                            data: data.data.wholeBottomDate
+                                            data: data.data.wholeBottomDate,
+                                            axisLine: {
+                                                lineStyle: {
+                                                    color: '#eee'
+                                                }
+                                            },
+                                            axisLabel: {
+                                                color: '#333'
+                                            },
+
+
                                         }],
                                         yAxis: [{
-                                            type: 'value'
+                                            type: 'value',
+                                            axisLine: {
+                                                lineStyle: {
+                                                    color: '#eee'
+                                                }
+                                            },
+                                            axisLabel: {
+                                                color: '#333'
+                                            },
+                                            splitLine: {
+                                                lineStyle: {
+                                                    color: ['#eee'],
+                                                }
+                                            }
                                         }],
                                         series: [{
                                             name: '收入',
@@ -2067,10 +2344,31 @@ export default {
                                             },
                                             xAxis: [{
                                                 type: 'category',
-                                                data: data.data.wholeBottomDate
+                                                data: data.data.wholeBottomDate,
+                                                axisLine: {
+                                                    lineStyle: {
+                                                        color: '#eee'
+                                                    }
+                                                },
+                                                axisLabel: {
+                                                    color: '#333'
+                                                },
                                             }],
                                             yAxis: [{
-                                                type: 'value'
+                                                type: 'value',
+                                                axisLine: {
+                                                    lineStyle: {
+                                                        color: '#eee'
+                                                    }
+                                                },
+                                                axisLabel: {
+                                                    color: '#333'
+                                                },
+                                                splitLine: {
+                                                    lineStyle: {
+                                                        color: ['#eee'],
+                                                    }
+                                                }
                                             }],
                                             series: [{
                                                 name: '当前数据',
@@ -2138,10 +2436,31 @@ export default {
                                             },
                                             xAxis: [{
                                                 type: 'category',
-                                                data: data.data.wholeBottomDate
+                                                data: data.data.wholeBottomDate,
+                                                axisLine: {
+                                                    lineStyle: {
+                                                        color: '#eee'
+                                                    }
+                                                },
+                                                axisLabel: {
+                                                    color: '#333'
+                                                },
                                             }],
                                             yAxis: [{
-                                                type: 'value'
+                                                type: 'value',
+                                                axisLine: {
+                                                    lineStyle: {
+                                                        color: '#eee'
+                                                    }
+                                                },
+                                                axisLabel: {
+                                                    color: '#333'
+                                                },
+                                                splitLine: {
+                                                    lineStyle: {
+                                                        color: ['#eee'],
+                                                    }
+                                                }
                                             }],
                                             series: [{
                                                 name: '当前数据',

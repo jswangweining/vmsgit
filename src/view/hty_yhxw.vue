@@ -217,328 +217,367 @@ export default {
     }),
     created() {
         let _this = this;
-        _this.userId = _this.$store.state.userId;
+        if (!_this.$route.query.userId || !_this.$route.query.ticket || !_this.$route.query.userName) {
+            _this.$router.push({
+                name: 'NotFoundComponent'
+            });
+            return;
+        }
     },
     mounted() {
       let _this = this;
-      _this.$nextTick(function() {
-        let _this=this;
-        var url =  _this.adminApi.host+'/userBehavior/behavior/whole',
-            data = {
-                'userId': _this.userId,
-                'radio':_this.formdata1.radiovalue,
-                // 'startTime':'20170505',
-                // 'endTime':'20170506'
-            },
-            loading = function() {
-                _this.loadingall = true;
-            },
-            success = function(data) {
-                if (data.code == '1') {
-                  var option1 = {
-                      tooltip: {
-                          trigger: 'axis',
-                          axisPointer: {
-                              type: 'shadow'
-                          }
-                      },
-                      grid: {
-                          top: '0',
-                          left: '10',
-                          right: '10',
-                          bottom: '10',
-                           containLabel: true
+      var url = _this.adminApi.host+'/login/validate',
+          data = {
+              userId: _this.$route.query.userId,
+              ticket: _this.$route.query.ticket
+          },
+          loading = function() {
+              _this.loadingall = true;
+          },
+          success = function(data) {
+              if (data.code == '2') {
 
-                      },
-                      xAxis: {
-                          type: 'value',
-                          boundaryGap: [0, 0.01]
-                      },
-                      yAxis: {
-                          type: 'category',
-                          data: data.data.b2bLndPageList,
-                          inverse:true,
+                _this.userId = _this.$route.query.userId;
+                _this.$emit('userInfo',_this.$route.query.userName,data.data.vmsUrl);
+                var data={
+                   'userId':_this.$route.query.userId,
+                   'ticket':_this.$route.query.ticket,
+                   'userName':_this.$route.query.userName,
+                 }
+                 _this.$store.commit('changeUserId',data)
+                 _this.$nextTick(function() {
+                   let _this=this;
+                   var url =  _this.adminApi.host+'/userBehavior/behavior/whole',
+                       data = {
+                           'userId': _this.userId,
+                           'radio':_this.formdata1.radiovalue,
+                           // 'startTime':'20170505',
+                           // 'endTime':'20170506'
+                       },
+                       loading = function() {
+                           _this.loadingall = true;
+                       },
+                       success = function(data) {
+                           if (data.code == '1') {
+                             var option1 = {
+                                 tooltip: {
+                                     trigger: 'axis',
+                                     axisPointer: {
+                                         type: 'shadow'
+                                     }
+                                 },
+                                 grid: {
+                                     top: '0',
+                                     left: '10',
+                                     right: '10',
+                                     bottom: '10',
+                                      containLabel: true
 
-                      },
+                                 },
+                                 xAxis: {
+                                     type: 'value',
+                                     boundaryGap: [0, 0.01]
+                                 },
+                                 yAxis: {
+                                     type: 'category',
+                                     data: data.data.b2bLndPageList,
+                                     inverse:true,
 
-                      series: [{
-                          type: 'bar',
-                          itemStyle: {
-                         normal: {
-                             color: new echarts.graphic.LinearGradient(
-                                 1, 0, 0, 0,
-                                 [
-                                     {offset: 0, color: '#6c81c3'},
-                                     {offset: 0.5, color: '#91a1c6'},
-                                     {offset: 1, color: '#b5bfd9'}
-                                 ]
-                             )
-                         },
-                     },
-                          data: data.data.b2bLndPageNumList,
-                          barWidth: 5,
-                      }, ]
-                  };
-                  _this.myChart1 = echarts.init(document.getElementById('main1'));
-                  _this.myChart1.setOption(option1);
-                  var option2 = {
-                      tooltip: {
-                          trigger: 'axis',
-                          axisPointer: {
-                              type: 'shadow'
-                          }
-                      },
-                      grid: {
-                          top: '0',
-                          left: '10',
-                          right: '10',
-                          bottom: '10',
-                           containLabel: true
+                                 },
 
-                      },
-                      xAxis: {
-                          type: 'value',
-                          boundaryGap: [0, 0.01]
-                      },
-                      yAxis: {
-                          type: 'category',
-                          data: data.data.b2bSearchKeyList,
-                            inverse:true,
-                      },
-                      series: [{
-                          type: 'bar',
-                          itemStyle: {
-                         normal: {
-                             color: new echarts.graphic.LinearGradient(
-                                 1, 0, 0, 0,
-                                 [
-                                     {offset: 0, color: '#6c81c3'},
-                                     {offset: 0.5, color: '#91a1c6'},
-                                     {offset: 1, color: '#b5bfd9'}
-                                 ]
-                             )
-                         },
-                     },
-                          data: data.data.b2bSearchKeyNumList,
-                          barWidth: 5,
-                      }, ]
-                  };
-                  _this.myChart2 = echarts.init(document.getElementById('main2'));
-                  _this.myChart2.setOption(option2);
-                  var option3 = {
-                      tooltip: {
-                          trigger: 'axis',
-                          axisPointer: {
-                              type: 'shadow'
-                          }
-                      },
-                      grid: {
-                          top: '0',
-                          left: '10',
-                          right: '10',
-                          bottom: '10',
-                          containLabel: true
-                      },
-                      xAxis: {
-                          type: 'value',
-                          boundaryGap: [0, 0.01]
-                      },
-                      yAxis: {
-                          type: 'category',
-                          data: data.data.b2bItemAccessList,
-                            inverse:true,
-                      },
-                      series: [{
-                          type: 'bar',
-                          itemStyle: {
-                         normal: {
-                             color: new echarts.graphic.LinearGradient(
-                                 1, 0, 0, 0,
-                                 [
-                                     {offset: 0, color: '#ff7700'},
-                                     {offset: 0.5, color: '#ff9e48'},
-                                     {offset: 1, color: '#ffbb7f'}
-                                 ]
-                             )
-                         },
-                     },
-                          data: data.data.b2bItemAccessNumList,
-                          barWidth: 5,
-                      }, ]
-                  };
-                  _this.myChart3 = echarts.init(document.getElementById('main3'));
-                  _this.myChart3.setOption(option3);
-                  var option4 = {
-                      tooltip: {
-                          trigger: 'axis',
-                          axisPointer: {
-                              type: 'shadow'
-                          }
-                      },
-                      grid: {
-                          top: '0',
-                          left: '10',
-                          right: '10',
-                          bottom: '10',
-                          containLabel: true
+                                 series: [{
+                                     type: 'bar',
+                                     itemStyle: {
+                                    normal: {
+                                        color: new echarts.graphic.LinearGradient(
+                                            1, 0, 0, 0,
+                                            [
+                                                {offset: 0, color: '#6c81c3'},
+                                                {offset: 0.5, color: '#91a1c6'},
+                                                {offset: 1, color: '#b5bfd9'}
+                                            ]
+                                        )
+                                    },
+                                },
+                                     data: data.data.b2bLndPageNumList,
+                                     barWidth: 5,
+                                 }, ]
+                             };
+                             _this.myChart1 = echarts.init(document.getElementById('main1'));
+                             _this.myChart1.setOption(option1);
+                             var option2 = {
+                                 tooltip: {
+                                     trigger: 'axis',
+                                     axisPointer: {
+                                         type: 'shadow'
+                                     }
+                                 },
+                                 grid: {
+                                     top: '0',
+                                     left: '10',
+                                     right: '10',
+                                     bottom: '10',
+                                      containLabel: true
 
-                      },
-                      xAxis: {
-                          type: 'value',
-                          boundaryGap: [0, 0.01]
-                      },
-                      yAxis: {
-                          type: 'category',
-                          data: data.data.b2bSaleCityProdyList,
-                            inverse:true,
-                      },
-                      series: [{
-                          type: 'bar',
-                          itemStyle: {
-                         normal: {
-                             color: new echarts.graphic.LinearGradient(
-                                 1, 0, 0, 0,
-                                 [
-                                     {offset: 0, color: '#ff7700'},
-                                     {offset: 0.5, color: '#ff9e48'},
-                                     {offset: 1, color: '#ffbb7f'}
-                                 ]
-                             )
-                         },
-                     },
-                          data: data.data.b2bSaleCityProdNumList,
-                          barWidth: 5,
-                      }, ]
-                  };
-                  _this.myChart4 = echarts.init(document.getElementById('main4'));
-                  _this.myChart4.setOption(option4);
-                  var option5 = {
-                      tooltip: {
-                          trigger: 'axis',
-                          axisPointer: {
-                              type: 'shadow'
-                          }
-                      },
-                      grid: {
-                          top: '0',
-                          left: '10',
-                          right: '10',
-                          bottom: '10',
-                          containLabel: true
-                      },
-                      xAxis: {
-                          type: 'value',
-                          boundaryGap: [0, 0.01]
-                      },
-                      yAxis: {
-                          type: 'category',
-                          data: data.data.b2bConvFunnelList,
-                            inverse:true,
-                      },
-                      series: [{
-                          type: 'bar',
-                          itemStyle: {
-                         normal: {
-                             color: new echarts.graphic.LinearGradient(
-                                 1, 0, 0, 0,
-                                 [
-                                     {offset: 0, color: '#6c81c3'},
-                                     {offset: 0.5, color: '#91a1c6'},
-                                     {offset: 1, color: '#b5bfd9'}
-                                 ]
-                             )
-                         },
-                     },
-                          data: data.data.b2bConvFunnelNumList,
-                          barWidth: 5,
-                      }, ]
-                  };
-                  _this.myChart5 = echarts.init(document.getElementById('main5'));
-                  _this.myChart5.setOption(option5);
-                  var option6 = {
-                      tooltip: {
-                          trigger: 'axis',
-                          axisPointer: {
-                              type: 'shadow'
-                          }
-                      },
-                      grid: {
-                          top: '0',
-                          left: '10',
-                          right: '10',
-                          bottom: '10',
-                          containLabel: true
-                      },
-                      xAxis: {
-                          type: 'value',
-                          boundaryGap: [0, 0.01]
-                      },
-                      yAxis: {
-                          type: 'category',
-                          data: data.data.b2bRepeatBuyList,
-                            inverse:true,
-                      },
-                      series: [{
-                          type: 'bar',
-                          itemStyle: {
-                         normal: {
-                             color: new echarts.graphic.LinearGradient(
-                                 1, 0, 0, 0,
-                                 [
-                                     {offset: 0, color: '#6c81c3'},
-                                     {offset: 0.5, color: '#91a1c6'},
-                                     {offset: 1, color: '#b5bfd9'}
-                                 ]
-                             )
-                         },
-                     },
-                          data: data.data.b2bRepeatBuyNumList,
-                          barWidth: 5,
-                      }, ]
-                  };
-                  _this.myChart6 = echarts.init(document.getElementById('main6'));
-                  _this.myChart6.setOption(option6);
-                }
-                else {
-                    Message({
-                        'message': data.msg,
-                        'type': 'error',
-                    });
-                }
-            },
-            complete = function() {
-                _this.loadingall = false;
-            }
-        _this.adminApi.getJsonp(url, data, loading, success, complete)
-        $(window).resize(function() {
-          if(_this.myChart1)
-          {
-            _this.myChart1.resize();
+                                 },
+                                 xAxis: {
+                                     type: 'value',
+                                     boundaryGap: [0, 0.01]
+                                 },
+                                 yAxis: {
+                                     type: 'category',
+                                     data: data.data.b2bSearchKeyList,
+                                       inverse:true,
+                                 },
+                                 series: [{
+                                     type: 'bar',
+                                     itemStyle: {
+                                    normal: {
+                                        color: new echarts.graphic.LinearGradient(
+                                            1, 0, 0, 0,
+                                            [
+                                                {offset: 0, color: '#6c81c3'},
+                                                {offset: 0.5, color: '#91a1c6'},
+                                                {offset: 1, color: '#b5bfd9'}
+                                            ]
+                                        )
+                                    },
+                                },
+                                     data: data.data.b2bSearchKeyNumList,
+                                     barWidth: 5,
+                                 }, ]
+                             };
+                             _this.myChart2 = echarts.init(document.getElementById('main2'));
+                             _this.myChart2.setOption(option2);
+                             var option3 = {
+                                 tooltip: {
+                                     trigger: 'axis',
+                                     axisPointer: {
+                                         type: 'shadow'
+                                     }
+                                 },
+                                 grid: {
+                                     top: '0',
+                                     left: '10',
+                                     right: '10',
+                                     bottom: '10',
+                                     containLabel: true
+                                 },
+                                 xAxis: {
+                                     type: 'value',
+                                     boundaryGap: [0, 0.01]
+                                 },
+                                 yAxis: {
+                                     type: 'category',
+                                     data: data.data.b2bItemAccessList,
+                                       inverse:true,
+                                 },
+                                 series: [{
+                                     type: 'bar',
+                                     itemStyle: {
+                                    normal: {
+                                        color: new echarts.graphic.LinearGradient(
+                                            1, 0, 0, 0,
+                                            [
+                                                {offset: 0, color: '#ff7700'},
+                                                {offset: 0.5, color: '#ff9e48'},
+                                                {offset: 1, color: '#ffbb7f'}
+                                            ]
+                                        )
+                                    },
+                                },
+                                     data: data.data.b2bItemAccessNumList,
+                                     barWidth: 5,
+                                 }, ]
+                             };
+                             _this.myChart3 = echarts.init(document.getElementById('main3'));
+                             _this.myChart3.setOption(option3);
+                             var option4 = {
+                                 tooltip: {
+                                     trigger: 'axis',
+                                     axisPointer: {
+                                         type: 'shadow'
+                                     }
+                                 },
+                                 grid: {
+                                     top: '0',
+                                     left: '10',
+                                     right: '10',
+                                     bottom: '10',
+                                     containLabel: true
+
+                                 },
+                                 xAxis: {
+                                     type: 'value',
+                                     boundaryGap: [0, 0.01]
+                                 },
+                                 yAxis: {
+                                     type: 'category',
+                                     data: data.data.b2bSaleCityProdyList,
+                                       inverse:true,
+                                 },
+                                 series: [{
+                                     type: 'bar',
+                                     itemStyle: {
+                                    normal: {
+                                        color: new echarts.graphic.LinearGradient(
+                                            1, 0, 0, 0,
+                                            [
+                                                {offset: 0, color: '#ff7700'},
+                                                {offset: 0.5, color: '#ff9e48'},
+                                                {offset: 1, color: '#ffbb7f'}
+                                            ]
+                                        )
+                                    },
+                                },
+                                     data: data.data.b2bSaleCityProdNumList,
+                                     barWidth: 5,
+                                 }, ]
+                             };
+                             _this.myChart4 = echarts.init(document.getElementById('main4'));
+                             _this.myChart4.setOption(option4);
+                             var option5 = {
+                                 tooltip: {
+                                     trigger: 'axis',
+                                     axisPointer: {
+                                         type: 'shadow'
+                                     }
+                                 },
+                                 grid: {
+                                     top: '0',
+                                     left: '10',
+                                     right: '10',
+                                     bottom: '10',
+                                     containLabel: true
+                                 },
+                                 xAxis: {
+                                     type: 'value',
+                                     boundaryGap: [0, 0.01]
+                                 },
+                                 yAxis: {
+                                     type: 'category',
+                                     data: data.data.b2bConvFunnelList,
+                                       inverse:true,
+                                 },
+                                 series: [{
+                                     type: 'bar',
+                                     itemStyle: {
+                                    normal: {
+                                        color: new echarts.graphic.LinearGradient(
+                                            1, 0, 0, 0,
+                                            [
+                                                {offset: 0, color: '#6c81c3'},
+                                                {offset: 0.5, color: '#91a1c6'},
+                                                {offset: 1, color: '#b5bfd9'}
+                                            ]
+                                        )
+                                    },
+                                },
+                                     data: data.data.b2bConvFunnelNumList,
+                                     barWidth: 5,
+                                 }, ]
+                             };
+                             _this.myChart5 = echarts.init(document.getElementById('main5'));
+                             _this.myChart5.setOption(option5);
+                             var option6 = {
+                                 tooltip: {
+                                     trigger: 'axis',
+                                     axisPointer: {
+                                         type: 'shadow'
+                                     }
+                                 },
+                                 grid: {
+                                     top: '0',
+                                     left: '10',
+                                     right: '10',
+                                     bottom: '10',
+                                     containLabel: true
+                                 },
+                                 xAxis: {
+                                     type: 'value',
+                                     boundaryGap: [0, 0.01]
+                                 },
+                                 yAxis: {
+                                     type: 'category',
+                                     data: data.data.b2bRepeatBuyList,
+                                       inverse:true,
+                                 },
+                                 series: [{
+                                     type: 'bar',
+                                     itemStyle: {
+                                    normal: {
+                                        color: new echarts.graphic.LinearGradient(
+                                            1, 0, 0, 0,
+                                            [
+                                                {offset: 0, color: '#6c81c3'},
+                                                {offset: 0.5, color: '#91a1c6'},
+                                                {offset: 1, color: '#b5bfd9'}
+                                            ]
+                                        )
+                                    },
+                                },
+                                     data: data.data.b2bRepeatBuyNumList,
+                                     barWidth: 5,
+                                 }, ]
+                             };
+                             _this.myChart6 = echarts.init(document.getElementById('main6'));
+                             _this.myChart6.setOption(option6);
+                           }
+                           else {
+                               Message({
+                                   'message': data.msg,
+                                   'type': 'error',
+                               });
+                           }
+                       },
+                       complete = function() {
+                           _this.loadingall = false;
+                       }
+                   _this.adminApi.getJsonp(url, data, loading, success, complete)
+                   $(window).resize(function() {
+                     if(_this.myChart1)
+                     {
+                       _this.myChart1.resize();
+                     }
+                     if(_this.myChart2)
+                     {
+                       _this.myChart2.resize();
+                     }
+                     if(_this.myChart3)
+                     {
+                       _this.myChart3.resize();
+                     }
+                     if(_this.myChart4)
+                     {
+                       _this.myChart4.resize();
+                     }
+                     if(_this.myChart5)
+                     {
+                       _this.myChart5.resize();
+                     }
+                     if(_this.myChart6)
+                     {
+                       _this.myChart6.resize();
+                     }
+
+
+                   });
+                 })
+              } else {
+                  Message({
+                      'message': data.msg,
+                      'type': 'error',
+                      'onClose':function(){
+                        window.location.href=data.data.vmsUrl+'/login';
+                      }
+                  });
+              }
+          },
+          complete = function() {
+             _this.loadingall = false;
           }
-          if(_this.myChart2)
-          {
-            _this.myChart2.resize();
-          }
-          if(_this.myChart3)
-          {
-            _this.myChart3.resize();
-          }
-          if(_this.myChart4)
-          {
-            _this.myChart4.resize();
-          }
-          if(_this.myChart5)
-          {
-            _this.myChart5.resize();
-          }
-          if(_this.myChart6)
-          {
-            _this.myChart6.resize();
-          }
+      _this.adminApi.getJsonp(url, data, loading, success, complete)
 
-
-        });
-      })
     },
     methods: {
       yhxwSearch:function(){

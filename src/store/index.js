@@ -4,8 +4,10 @@ import Vuex from "vuex";
 Vue.use(Vuex);
 
 const state = {
-  'userId':'8208',
-  'isLogin':true
+  'userId':'',
+  'ticket':'',
+  "userName":'',
+  'isLogin':false
 }
 
 
@@ -14,9 +16,16 @@ const state = {
 export default new Vuex.Store({
 	state,
   mutations: {
-    changeUserId (state,id) {
+    changeUserId (state,data) {
       // 变更状态
-      state.userId=id;
+      state.userId=data.userId;
+      state.ticket=data.ticket;
+      state.userName=data.userName;
+
+    },
+    loginout (state) {
+      //登陆不成功
+      state.isLogin=false;
     }
   }
 });

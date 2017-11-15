@@ -1,6 +1,14 @@
 <style lang="scss">
 
-
+.xpdj-tap5 {
+    color: #999;
+    font-size: 0.6rem;
+    text-align: center;
+    span {
+        color: #ff7700;
+        margin: 0 0.25rem;
+    }
+}
 
 </style>
 
@@ -51,32 +59,32 @@
               <div class="xpdj-ta">
                   <p class="xpdj-tap1">整体采购<span>（万元）</span></p>
                   <p class="xpdj-tap2">{{jsondata.amtAll || 0}}</p>
-                  <p class="xpdj-tap4">超过分部<span>{{jsondata.amtAllNum || 0}}%</span>的平台公司</p>
+                  <p class="xpdj-tap5">超过分部<span>{{jsondata.amtAllNum || 0}}%</span>的平台公司</p>
               </div>
               <div class="xpdj-ta">
                   <p class="xpdj-tap1">线上采购<span>（万元）</span></p>
                   <p class="xpdj-tap2">{{jsondata.amtOnline || 0}}</p>
-                  <p class="xpdj-tap4">超过分部<span>{{jsondata.amtOnlineNum || 0}}%</span>的平台公司</p>
+                  <p class="xpdj-tap5">超过分部<span>{{jsondata.amtOnlineNum || 0}}%</span>的平台公司</p>
               </div>
               <div class="xpdj-ta">
                   <p class="xpdj-tap1">商城登录<span>（次）</span></p>
                   <p class="xpdj-tap2 xpdj-tap2red">{{jsondata.qtyB2b || 0}}</p>
-                  <p class="xpdj-tap4">超过分部<span>{{jsondata.qtyB2bNum || 0}}%</span>的平台公司</p>
+                  <p class="xpdj-tap5">超过分部<span>{{jsondata.qtyB2bNum || 0}}%</span>的平台公司</p>
               </div>
               <div class="xpdj-ta">
                   <p class="xpdj-tap1">超级老板登录<span>（次）</span></p>
                   <p class="xpdj-tap2 xpdj-tap2org">{{jsondata.qtyBoss || 0}}</p>
-                  <p class="xpdj-tap4">超过分部<span>{{jsondata.qtyBossNum || 0}}%</span>的平台公司</p>
+                  <p class="xpdj-tap5">超过分部<span>{{jsondata.qtyBossNum || 0}}%</span>的平台公司</p>
               </div>
               <div class="xpdj-ta">
                   <p class="xpdj-tap1">商品上架<span>（个）</span></p>
                   <p class="xpdj-tap2 xpdj-tap2red">{{jsondata.qtyHzg || 0}}</p>
-                  <p class="xpdj-tap4">超过分部<span>{{jsondata.qtyHzgNum || 0}}%</span>的平台公司</p>
+                  <p class="xpdj-tap5">超过分部<span>{{jsondata.qtyHzgNum || 0}}%</span>的平台公司</p>
               </div>
               <div class="xpdj-ta">
                   <p class="xpdj-tap1">贷款金额<span>（元）</span></p>
                   <p class="xpdj-tap2 xpdj-tap2org">{{jsondata.amtDk || 0}}</p>
-                  <p class="xpdj-tap4">超过分部<span>{{jsondata.amtDkNum || 0}}%</span>的平台公司</p>
+                  <p class="xpdj-tap5">超过分部<span>{{jsondata.amtDkNum || 0}}%</span>的平台公司</p>
               </div>
             </div>
         </div>
@@ -182,138 +190,287 @@ export default {
     }),
     created() {
         let _this = this;
-        _this.userId = _this.$store.state.userId;
+        if (!_this.$route.query.userId || !_this.$route.query.ticket || !_this.$route.query.userName) {
+            _this.$router.push({
+                name: 'NotFoundComponent'
+            });
+            return;
+        }
     },
     mounted() {
       let _this=this;
-      _this.$nextTick(function() {
+      var url = _this.adminApi.host+'/login/validate',
+          data = {
+              userId: _this.$route.query.userId,
+              ticket: _this.$route.query.ticket
+          },
+          loading = function() {
+              _this.loadingall = true;
+          },
+          success = function(data) {
+              if (data.code == '2') {
 
-        var url = _this.adminApi.host + '/htycustall/cust/Analysis',
-            data = {
-              userId:_this.userId,
-              type:_this.formdata.radiovalue1,
-              bossType:_this.formdata.radiovalue2
+                _this.userId = _this.$route.query.userId;
+                _this.$emit('userInfo',_this.$route.query.userName,data.data.vmsUrl);
+                var data={
+                   'userId':_this.$route.query.userId,
+                   'ticket':_this.$route.query.ticket,
+                   'userName':_this.$route.query.userName,
+                 }
+                 _this.$store.commit('changeUserId',data)
+                 _this.$nextTick(function() {
+                     _this.myChart = echarts.init(document.getElementById('main'));
+                   var url = _this.adminApi.host + '/htycustall/cust/Analysis',
+                       data = {
+                         userId:_this.userId,
+                         type:_this.formdata.radiovalue1,
+                         bossType:_this.formdata.radiovalue2
 
-            },
-            loading = function() {
-                _this.loadingall = true;
-            },
-            success = function(data) {
-                if (data.code == '1') {
-                  _this.jsondata=data.data;
-                  var option = {
-                      tooltip: {
-                          trigger: 'axis',
-                          axisPointer: { // 坐标轴指示器，坐标轴触发有效
-                              type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
-                          }
-                      },
-                      color: ['#ff7700', '#6c81b3'],
-                      grid: {
-                          top: '10',
-                          left: '3%',
-                          right: '4%',
-                          bottom: '3%',
-                          containLabel: true
-                      },
-                      xAxis: [{
-                          type: 'category',
-                          data: _this.jsondata.listName
-                      }],
-                      yAxis: [{
-                          type: 'value'
-                      }],
-                      series: [{
-                          name: '当前数据',
-                          barWidth: 5,
-                          type: 'bar',
-                          data: _this.jsondata.listDate,
-                          itemStyle: {
-                         normal: {
-                             color: new echarts.graphic.LinearGradient(
-                                 0, 0, 0, 1,
-                                 [
-                                     {offset: 0, color: '#ff7700'},
-                                     {offset: 0.5, color: '#ff9e48'},
-                                     {offset: 1, color: '#ffbb7f'}
-                                 ]
-                             )
-                         },
+                       },
+                       loading = function() {
+                           _this.loadingall = true;
+                       },
+                       success = function(data) {
+                           if (data.code == '1') {
+                             _this.jsondata=data.data;
+                             // var option = {
+                             //     tooltip: {
+                             //         trigger: 'axis',
+                             //         axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                             //             type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                             //         }
+                             //     },
+                             //     color: ['#ff7700', '#6c81b3'],
+                             //     grid: {
+                             //         top: '10',
+                             //         left: '3%',
+                             //         right: '4%',
+                             //         bottom: '3%',
+                             //         containLabel: true
+                             //     },
+                             //     xAxis: [{
+                             //         type: 'category',
+                             //         data: _this.jsondata.listName
+                             //     }],
+                             //     yAxis: [{
+                             //         type: 'value'
+                             //     }],
+                             //     series: [{
+                             //         name: '当前数据',
+                             //         barWidth: 5,
+                             //         type: 'bar',
+                             //         data: _this.jsondata.listDate,
+                             //         itemStyle: {
+                             //        normal: {
+                             //            color: new echarts.graphic.LinearGradient(
+                             //                0, 0, 0, 1,
+                             //                [
+                             //                    {offset: 0, color: '#ff7700'},
+                             //                    {offset: 0.5, color: '#ff9e48'},
+                             //                    {offset: 1, color: '#ffbb7f'}
+                             //                ]
+                             //            )
+                             //        },
+                             //    }
+                             //     }, {
+                             //         name: '分部平均值',
+                             //         type: 'bar',
+                             //         barWidth: 5,
+                             //         data: _this.jsondata.listPair,
+                             //         itemStyle: {
+                             //        normal: {
+                             //            color: new echarts.graphic.LinearGradient(
+                             //                0, 0, 0, 1,
+                             //                [
+                             //                    {offset: 0, color: '#6c81c3'},
+                             //                    {offset: 0.5, color: '#91a1c6'},
+                             //                    {offset: 1, color: '#b5bfd9'}
+                             //                ]
+                             //            )
+                             //        },
+                             //    }
+                             //     }]
+                             // };
+                             // _this.myChart = echarts.init(document.getElementById('main'));
+                             // _this.myChart.setOption(option);
+                             var option2 = {
+                                 tooltip: {
+                                     trigger: 'item',
+                                     formatter: "{a} <br/>{b}: ({d}%)"
+                                 },
+                                 series: [{
+                                     name: '会员采购占比',
+                                     type: 'pie',
+                                     radius: ['50%', '70%'],
+                                     center: ['50%', '50%'],
+                                     avoidLabelOverlap: false,
+                                     color: ['#ff7700', '#ff5555', '#2cc689','#6c81b3'],
+                                     label: {
+                                         normal: {
+                                             show: false,
+                                             position: 'center'
+                                         },
+                                     },
+                                     labelLine: {
+                                         normal: {
+                                             show: false
+                                         }
+                                     },
+                                     data: _this.jsondata.map
+                                 }]
+                             };
+                             _this.myChart2 = echarts.init(document.getElementById('main2'));
+                             _this.myChart2.setOption(option2);
+                           } else {
+                               Message({
+                                   'message': data.msg,
+                                   'type': 'error',
+                               });
+                           }
+                       },
+                       complete = function() {
+                           _this.loadingall = false;
+                       }
+                   _this.adminApi.getJsonp(url, data, loading, success, complete)
+
+                   var url = _this.adminApi.host + '/htycustall/cust/AnalysisVertical',
+                       data = {
+                         userId:_this.userId,
+                         type:_this.formdata.radiovalue1,
+                         bossType:_this.formdata.radiovalue2
+
+                       },
+                       loading = function() {
+                         _this.myChart.showLoading({
+                             'color': '#ff7700'
+                         });
+                       },
+                       success = function(data) {
+                           if (data.code == '1') {
+                             _this.jsondata=data.data;
+                             var option = {
+                                 tooltip: {
+                                     trigger: 'axis',
+                                     axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                         type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                                     }
+                                 },
+                                 color: ['#ff7700', '#6c81b3'],
+                                 grid: {
+                                     top: '10',
+                                     left: '3%',
+                                     right: '4%',
+                                     bottom: '3%',
+                                     containLabel: true
+                                 },
+                                 xAxis: [{
+                                     type: 'category',
+                                     data: _this.jsondata.listName,
+                                     axisLine:{
+                                       lineStyle:{
+                                         color:'#eee'
+                                       }
+                                     },
+                                     axisLabel:{
+                                       color:'#333'
+                                     },
+
+                                 }],
+                                 yAxis: [{
+                                     type: 'value',
+                                     axisLine:{
+                                       lineStyle:{
+                                         color:'#eee'
+                                       }
+                                     },
+                                     axisLabel:{
+                                       color:'#333'
+                                     },
+                                     splitLine:{
+                                       lineStyle:{
+                                         color: ['#eee'],
+                                       }
+                                     }
+                                 }],
+                                 series: [{
+                                     name: '当前数据',
+                                     barWidth: 5,
+                                     type: 'bar',
+                                     data: _this.jsondata.listDate,
+                                     itemStyle: {
+                                    normal: {
+                                        color: new echarts.graphic.LinearGradient(
+                                            0, 0, 0, 1,
+                                            [
+                                                {offset: 0, color: '#ff7700'},
+                                                {offset: 0.5, color: '#ff9e48'},
+                                                {offset: 1, color: '#ffbb7f'}
+                                            ]
+                                        )
+                                    },
+                                }
+                                 }, {
+                                     name: '分部平均值',
+                                     type: 'bar',
+                                     barWidth: 5,
+                                     data: _this.jsondata.listPair,
+                                     itemStyle: {
+                                    normal: {
+                                        color: new echarts.graphic.LinearGradient(
+                                            0, 0, 0, 1,
+                                            [
+                                                {offset: 0, color: '#6c81c3'},
+                                                {offset: 0.5, color: '#91a1c6'},
+                                                {offset: 1, color: '#b5bfd9'}
+                                            ]
+                                        )
+                                    },
+                                }
+                                 }]
+                             };
+                             _this.myChart = echarts.init(document.getElementById('main'));
+                             _this.myChart.setOption(option);
+
+                           } else {
+                               Message({
+                                   'message': data.msg,
+                                   'type': 'error',
+                               });
+                           }
+                       },
+                       complete = function() {
+                           _this.myChart.hideLoading();
+                       }
+                   _this.adminApi.getJsonp(url, data, loading, success, complete)
+                   $(window).resize(function() {
+                     if(_this.myChart)
+                     {
+                       _this.myChart.resize();
                      }
-                      }, {
-                          name: '分部平均值',
-                          type: 'bar',
-                          barWidth: 5,
-                          data: _this.jsondata.listPair,
-                          itemStyle: {
-                         normal: {
-                             color: new echarts.graphic.LinearGradient(
-                                 0, 0, 0, 1,
-                                 [
-                                     {offset: 0, color: '#6c81c3'},
-                                     {offset: 0.5, color: '#91a1c6'},
-                                     {offset: 1, color: '#b5bfd9'}
-                                 ]
-                             )
-                         },
+                     if(_this.myChart2)
+                     {
+                       _this.myChart2.resize();
                      }
-                      }]
-                  };
-                  _this.myChart = echarts.init(document.getElementById('main'));
-                  _this.myChart.setOption(option);
-                  var option2 = {
-                      tooltip: {
-                          trigger: 'item',
-                          formatter: "{a} <br/>{b}: ({d}%)"
-                      },
-                      series: [{
-                          name: '会员采购占比',
-                          type: 'pie',
-                          radius: ['50%', '70%'],
-                          center: ['50%', '50%'],
-                          avoidLabelOverlap: false,
-                          color: ['#ff7700', '#ff5555', '#2cc689','#6c81b3'],
-                          label: {
-                              normal: {
-                                  show: false,
-                                  position: 'center'
-                              },
-                          },
-                          labelLine: {
-                              normal: {
-                                  show: false
-                              }
-                          },
-                          data: _this.jsondata.map
-                      }]
-                  };
-                  _this.myChart2 = echarts.init(document.getElementById('main2'));
-                  _this.myChart2.setOption(option2);
-                } else {
-                    Message({
-                        'message': data.msg,
-                        'type': 'error',
-                    });
-                }
-            },
-            complete = function() {
-                _this.loadingall = false;
-            }
-        _this.adminApi.getJsonp(url, data, loading, success, complete)
-        $(window).resize(function() {
-          if(_this.myChart)
-          {
-            _this.myChart.resize();
-          }
-          if(_this.myChart2)
-          {
-            _this.myChart2.resize();
-          }
-      
 
-        });
 
-      })
+                   });
+
+                 })
+              } else {
+                  Message({
+                      'message': data.msg,
+                      'type': 'error',
+                      'onClose':function(){
+                        window.location.href=data.data.vmsUrl+'/login';
+                      }
+                  });
+              }
+          },
+          complete = function() {
+             _this.loadingall = false;
+          }
+      _this.adminApi.getJsonp(url, data, loading, success, complete)
+
 
     },
     methods: {
@@ -492,7 +649,7 @@ export default {
             var endtime = $('.el-input__inner:eq(1)', ".radio0Month").val();
             data.endTime=endtime.replace('-', '');
         }
-        var url = _this.adminApi.host + '/htycustall/cust/Analysis',
+        var url = _this.adminApi.host + '/htycustall/cust/AnalysisVertical',
 
             loading = function() {
               _this.myChart.showLoading({
@@ -519,10 +676,32 @@ export default {
                       },
                       xAxis: [{
                           type: 'category',
-                          data: _this.jsondata.listName
+                          data: _this.jsondata.listName,
+                          axisLine:{
+                            lineStyle:{
+                              color:'#eee'
+                            }
+                          },
+                          axisLabel:{
+                            color:'#333'
+                          },
+
                       }],
                       yAxis: [{
-                          type: 'value'
+                          type: 'value',
+                          axisLine:{
+                            lineStyle:{
+                              color:'#eee'
+                            }
+                          },
+                          axisLabel:{
+                            color:'#333'
+                          },
+                          splitLine:{
+                            lineStyle:{
+                              color: ['#eee'],
+                            }
+                          }
                       }],
                       series: [{
                           name: '当前数据',

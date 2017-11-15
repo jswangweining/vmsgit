@@ -8,7 +8,7 @@
 
 .w-pannelitema {
     width: 49%;
-    border: 1px solid #d7d7d7;
+    border: 1px solid #f3f3f3;
     margin-bottom: 1rem;
 }
 
@@ -37,7 +37,7 @@
                         <radio-group v-model="formdata.radiovalue" @change='radiochange'>
                             <wradio label="0">无对比</wradio>
                             <wradio label="1">时间段对比</wradio>
-                            <wradio label="2">采购量对比</wradio>
+                            <wradio label="2">维度对比</wradio>
                         </radio-group>
                     </form-item>
                 </div>
@@ -393,340 +393,381 @@ export default {
     },
     created() {
         let _this = this;
-        _this.userId = _this.$store.state.userId;
+        if (!_this.$route.query.userId || !_this.$route.query.ticket || !_this.$route.query.userName) {
+            _this.$router.push({
+                name: 'NotFoundComponent'
+            });
+            return;
+        }
     },
     mounted() {
         let _this = this;
-        _this.$nextTick(function() {
-            var url = _this.adminApi.host + '/htycustall/cust/kind',
-                data = {
-                    'userId': _this.userId,
-                    'type': _this.formdata.radiovalue
-                },
-                loading = function() {
-                    _this.loadingall = true;
-                },
-                success = function(data) {
-                    if (data.code == '1') {
-                        var option1 = {
-                            tooltip: {
-                                trigger: 'axis',
-                                axisPointer: { // 坐标轴指示器，坐标轴触发有效
-                                    type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
-                                }
-                            },
-                            color: ['#ff7700', '#6c81b3'],
-                            grid: {
-                                top: '10',
-                                left: '3%',
-                                right: '4%',
-                                bottom: '3%',
-                                containLabel: true
-                            },
-                            xAxis: [{
-                                type: 'category',
-                                data: data.data.chartBottom1
-                            }],
-                            yAxis: [{
-                                type: 'value'
-                            }],
-                            series: [{
-                                name: '当前数据',
-                                barWidth: 5,
-                                type: 'bar',
-                                data: data.data.chartDate1,
-                                itemStyle: {
-                                    normal: {
-                                        color: new echarts.graphic.LinearGradient(
-                                            0, 0, 0, 1, [{
-                                                offset: 0,
-                                                color: '#ff7700'
-                                            }, {
-                                                offset: 0.5,
-                                                color: '#ff9e48'
-                                            }, {
-                                                offset: 1,
-                                                color: '#ffbb7f'
-                                            }]
-                                        )
-                                    },
-                                }
-                            }]
-                        };
-                        _this.myChart1 = echarts.init(document.getElementById('main1'));
-                        _this.myChart1.setOption(option1);
-                        var option2 = {
-                            tooltip: {
-                                trigger: 'axis',
-                                axisPointer: { // 坐标轴指示器，坐标轴触发有效
-                                    type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
-                                }
-                            },
-                            color: ['#ff7700', '#6c81b3'],
-                            grid: {
-                                top: '10',
-                                left: '3%',
-                                right: '4%',
-                                bottom: '3%',
-                                containLabel: true
-                            },
-                            xAxis: [{
-                                type: 'category',
-                                data: data.data.chartBottom2
-                            }],
-                            yAxis: [{
-                                type: 'value'
-                            }],
-                            series: [{
-                                name: '当前数据',
-                                barWidth: 5,
-                                type: 'bar',
-                                data: data.data.chartDate2,
-                                itemStyle: {
-                                    normal: {
-                                        color: new echarts.graphic.LinearGradient(
-                                            0, 0, 0, 1, [{
-                                                offset: 0,
-                                                color: '#ff7700'
-                                            }, {
-                                                offset: 0.5,
-                                                color: '#ff9e48'
-                                            }, {
-                                                offset: 1,
-                                                color: '#ffbb7f'
-                                            }]
-                                        )
-                                    },
-                                }
-                            }]
-                        };
-                        _this.myChart2 = echarts.init(document.getElementById('main2'));
-                        _this.myChart2.setOption(option2);
-                        var option3 = {
-                            title: {
-                                show: false
-                            },
-                            tooltip: {
-                                trigger: 'axis',
-                                axisPointer: {
-                                    type: 'cross',
-                                    label: {
-                                        backgroundColor: '#6a7985'
-                                    }
-                                }
-                            },
-                            grid: {
-                                top: 20,
-                                left: '3%',
-                                right: '4%',
-                                bottom: '3%',
-                                containLabel: true
-                            },
-                            xAxis: [{
-                                type: 'category',
-                                boundaryGap: false,
-                                data: data.data.chartBottom3
-                            }],
-                            yAxis: [{
-                                type: 'value'
-                            }],
-                            series: [{
-                                name: '当前数据',
-                                type: 'line',
-                                stack: '总量',
-                                itemStyle: {
-                                    normal: {
-                                        color: 'rgb(255, 119, 0)'
-                                    }
-                                },
+        var url = _this.adminApi.host+'/login/validate',
+            data = {
+                userId: _this.$route.query.userId,
+                ticket: _this.$route.query.ticket
+            },
+            loading = function() {
+                _this.loadingall = true;
+            },
+            success = function(data) {
+                if (data.code == '2') {
 
-                                data: data.data.chartDate3
-                            }]
-                        };
-                        _this.myChart3 = echarts.init(document.getElementById('main3'));
-                        _this.myChart3.setOption(option3);
-                        var option4 = {
-                            title: {
-                                show: false
-                            },
-                            tooltip: {
-                                trigger: 'axis',
-                                axisPointer: {
-                                    type: 'cross',
-                                    label: {
-                                        backgroundColor: '#6a7985'
-                                    }
-                                }
-                            },
-                            grid: {
-                                top: 20,
-                                left: '3%',
-                                right: '4%',
-                                bottom: '3%',
-                                containLabel: true
-                            },
-                            xAxis: [{
-                                type: 'category',
-                                boundaryGap: false,
-                                data: data.data.chartBottom4
-                            }],
-                            yAxis: [{
-                                type: 'value'
-                            }],
-                            series: [{
-                                name: '当前数据',
-                                type: 'line',
-                                stack: '总量',
-                                itemStyle: {
-                                    normal: {
-                                        color: 'rgb(255, 119, 0)'
-                                    }
-                                },
+                  _this.userId = _this.$route.query.userId;
+                  _this.$emit('userInfo',_this.$route.query.userName,data.data.vmsUrl);
+                  var data={
+                     'userId':_this.$route.query.userId,
+                     'ticket':_this.$route.query.ticket,
+                     'userName':_this.$route.query.userName,
+                   }
+                   _this.$store.commit('changeUserId',data)
+                   _this.$nextTick(function() {
+                       var url = _this.adminApi.host + '/htycustall/cust/kind',
+                           data = {
+                               'userId': _this.userId,
+                               'type': _this.formdata.radiovalue
+                           },
+                           loading = function() {
+                               _this.loadingall = true;
+                           },
+                           success = function(data) {
+                               if (data.code == '1') {
+                                   var option1 = {
+                                       tooltip: {
+                                           trigger: 'axis',
+                                           axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                               type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                                           }
+                                       },
+                                       color: ['#ff7700', '#6c81b3'],
+                                       grid: {
+                                           top: '10',
+                                           left: '3%',
+                                           right: '4%',
+                                           bottom: '3%',
+                                           containLabel: true
+                                       },
+                                       xAxis: [{
+                                           type: 'category',
+                                           data: data.data.chartBottom1
+                                       }],
+                                       yAxis: [{
+                                           type: 'value'
+                                       }],
+                                       series: [{
+                                           name: '当前数据',
+                                           barWidth: 5,
+                                           type: 'bar',
+                                           data: data.data.chartDate1,
+                                           itemStyle: {
+                                               normal: {
+                                                   color: new echarts.graphic.LinearGradient(
+                                                       0, 0, 0, 1, [{
+                                                           offset: 0,
+                                                           color: '#ff7700'
+                                                       }, {
+                                                           offset: 0.5,
+                                                           color: '#ff9e48'
+                                                       }, {
+                                                           offset: 1,
+                                                           color: '#ffbb7f'
+                                                       }]
+                                                   )
+                                               },
+                                           }
+                                       }]
+                                   };
+                                   _this.myChart1 = echarts.init(document.getElementById('main1'));
+                                   _this.myChart1.setOption(option1);
+                                   var option2 = {
+                                       tooltip: {
+                                           trigger: 'axis',
+                                           axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                               type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                                           }
+                                       },
+                                       color: ['#ff7700', '#6c81b3'],
+                                       grid: {
+                                           top: '10',
+                                           left: '3%',
+                                           right: '4%',
+                                           bottom: '3%',
+                                           containLabel: true
+                                       },
+                                       xAxis: [{
+                                           type: 'category',
+                                           data: data.data.chartBottom2
+                                       }],
+                                       yAxis: [{
+                                           type: 'value'
+                                       }],
+                                       series: [{
+                                           name: '当前数据',
+                                           barWidth: 5,
+                                           type: 'bar',
+                                           data: data.data.chartDate2,
+                                           itemStyle: {
+                                               normal: {
+                                                   color: new echarts.graphic.LinearGradient(
+                                                       0, 0, 0, 1, [{
+                                                           offset: 0,
+                                                           color: '#ff7700'
+                                                       }, {
+                                                           offset: 0.5,
+                                                           color: '#ff9e48'
+                                                       }, {
+                                                           offset: 1,
+                                                           color: '#ffbb7f'
+                                                       }]
+                                                   )
+                                               },
+                                           }
+                                       }]
+                                   };
+                                   _this.myChart2 = echarts.init(document.getElementById('main2'));
+                                   _this.myChart2.setOption(option2);
+                                   var option3 = {
+                                       title: {
+                                           show: false
+                                       },
+                                       tooltip: {
+                                           trigger: 'axis',
+                                           axisPointer: {
+                                               type: 'cross',
+                                               label: {
+                                                   backgroundColor: '#6a7985'
+                                               }
+                                           }
+                                       },
+                                       grid: {
+                                           top: 20,
+                                           left: '3%',
+                                           right: '4%',
+                                           bottom: '3%',
+                                           containLabel: true
+                                       },
+                                       xAxis: [{
+                                           type: 'category',
+                                           boundaryGap: false,
+                                           data: data.data.chartBottom3
+                                       }],
+                                       yAxis: [{
+                                           type: 'value'
+                                       }],
+                                       series: [{
+                                           name: '当前数据',
+                                           type: 'line',
+                                           stack: '总量',
+                                           itemStyle: {
+                                               normal: {
+                                                   color: 'rgb(255, 119, 0)'
+                                               }
+                                           },
 
-                                data: data.data.chartDate4
-                            }]
-                        };
-                        _this.myChart4 = echarts.init(document.getElementById('main4'));
-                        _this.myChart4.setOption(option4);
-                        var option5 = {
-                            title: {
-                                show: false
-                            },
-                            tooltip: {
-                                trigger: 'axis',
-                                axisPointer: {
-                                    type: 'cross',
-                                    label: {
-                                        backgroundColor: '#6a7985'
-                                    }
-                                }
-                            },
-                            grid: {
-                                top: 20,
-                                left: '3%',
-                                right: '4%',
-                                bottom: '3%',
-                                containLabel: true
-                            },
-                            xAxis: [{
-                                type: 'category',
-                                boundaryGap: false,
-                                data: data.data.chartBottom5
-                            }],
-                            yAxis: [{
-                                type: 'value'
-                            }],
-                            series: [{
-                                name: '当前数据',
-                                type: 'line',
-                                stack: '总量',
-                                itemStyle: {
-                                    normal: {
-                                        color: 'rgb(255, 119, 0)'
-                                    }
-                                },
-                                areaStyle: {
-                                    normal: {
-                                        color: 'rgb(255, 119, 0)',
-                                        opacity: 0.2 // 图表中各个图区域的透明度
+                                           data: data.data.chartDate3
+                                       }]
+                                   };
+                                   _this.myChart3 = echarts.init(document.getElementById('main3'));
+                                   _this.myChart3.setOption(option3);
+                                   var option4 = {
+                                       title: {
+                                           show: false
+                                       },
+                                       tooltip: {
+                                           trigger: 'axis',
+                                           axisPointer: {
+                                               type: 'cross',
+                                               label: {
+                                                   backgroundColor: '#6a7985'
+                                               }
+                                           }
+                                       },
+                                       grid: {
+                                           top: 20,
+                                           left: '3%',
+                                           right: '4%',
+                                           bottom: '3%',
+                                           containLabel: true
+                                       },
+                                       xAxis: [{
+                                           type: 'category',
+                                           boundaryGap: false,
+                                           data: data.data.chartBottom4
+                                       }],
+                                       yAxis: [{
+                                           type: 'value'
+                                       }],
+                                       series: [{
+                                           name: '当前数据',
+                                           type: 'line',
+                                           stack: '总量',
+                                           itemStyle: {
+                                               normal: {
+                                                   color: 'rgb(255, 119, 0)'
+                                               }
+                                           },
 
-                                    }
-                                },
-                                data: data.data.chartDate5
-                            }, ]
-                        };
-                        _this.myChart5 = echarts.init(document.getElementById('main5'));
-                        _this.myChart5.setOption(option5);
-                        var option6 = {
-                            title: {
-                                show: false
-                            },
-                            tooltip: {
-                                trigger: 'axis',
-                                axisPointer: {
-                                    type: 'cross',
-                                    label: {
-                                        backgroundColor: '#6a7985'
-                                    }
-                                }
-                            },
-                            grid: {
-                                top: 20,
-                                left: '3%',
-                                right: '4%',
-                                bottom: '3%',
-                                containLabel: true
-                            },
-                            xAxis: [{
-                                type: 'category',
-                                boundaryGap: false,
-                                data: data.data.chartBottom6
-                            }],
-                            yAxis: [{
-                                type: 'value'
-                            }],
-                            series: [{
-                                name: '当前数据',
-                                type: 'line',
-                                stack: '总量',
-                                itemStyle: {
-                                    normal: {
-                                        color: 'rgb(255, 119, 0)'
-                                    }
-                                },
-                                areaStyle: {
-                                    normal: {
-                                        color: 'rgb(255, 119, 0)',
-                                        opacity: 0.2 // 图表中各个图区域的透明度
+                                           data: data.data.chartDate4
+                                       }]
+                                   };
+                                   _this.myChart4 = echarts.init(document.getElementById('main4'));
+                                   _this.myChart4.setOption(option4);
+                                   var option5 = {
+                                       title: {
+                                           show: false
+                                       },
+                                       tooltip: {
+                                           trigger: 'axis',
+                                           axisPointer: {
+                                               type: 'cross',
+                                               label: {
+                                                   backgroundColor: '#6a7985'
+                                               }
+                                           }
+                                       },
+                                       grid: {
+                                           top: 20,
+                                           left: '3%',
+                                           right: '4%',
+                                           bottom: '3%',
+                                           containLabel: true
+                                       },
+                                       xAxis: [{
+                                           type: 'category',
+                                           boundaryGap: false,
+                                           data: data.data.chartBottom5
+                                       }],
+                                       yAxis: [{
+                                           type: 'value'
+                                       }],
+                                       series: [{
+                                           name: '当前数据',
+                                           type: 'line',
+                                           stack: '总量',
+                                           itemStyle: {
+                                               normal: {
+                                                   color: 'rgb(255, 119, 0)'
+                                               }
+                                           },
+                                           areaStyle: {
+                                               normal: {
+                                                   color: 'rgb(255, 119, 0)',
+                                                   opacity: 0.2 // 图表中各个图区域的透明度
 
-                                    }
-                                },
-                                data: data.data.chartDate6
-                            }, ]
-                        };
-                        _this.myChart6 = echarts.init(document.getElementById('main6'));
-                        _this.myChart6.setOption(option6);
-                    } else {
-                        Message({
-                            'message': data.msg,
-                            'type': 'error',
-                        });
-                    }
-                },
-                complete = function() {
-                    _this.loadingall = false;
+                                               }
+                                           },
+                                           data: data.data.chartDate5
+                                       }, ]
+                                   };
+                                   _this.myChart5 = echarts.init(document.getElementById('main5'));
+                                   _this.myChart5.setOption(option5);
+                                   var option6 = {
+                                       title: {
+                                           show: false
+                                       },
+                                       tooltip: {
+                                           trigger: 'axis',
+                                           axisPointer: {
+                                               type: 'cross',
+                                               label: {
+                                                   backgroundColor: '#6a7985'
+                                               }
+                                           }
+                                       },
+                                       grid: {
+                                           top: 20,
+                                           left: '3%',
+                                           right: '4%',
+                                           bottom: '3%',
+                                           containLabel: true
+                                       },
+                                       xAxis: [{
+                                           type: 'category',
+                                           boundaryGap: false,
+                                           data: data.data.chartBottom6
+                                       }],
+                                       yAxis: [{
+                                           type: 'value'
+                                       }],
+                                       series: [{
+                                           name: '当前数据',
+                                           type: 'line',
+                                           stack: '总量',
+                                           itemStyle: {
+                                               normal: {
+                                                   color: 'rgb(255, 119, 0)'
+                                               }
+                                           },
+                                           areaStyle: {
+                                               normal: {
+                                                   color: 'rgb(255, 119, 0)',
+                                                   opacity: 0.2 // 图表中各个图区域的透明度
+
+                                               }
+                                           },
+                                           data: data.data.chartDate6
+                                       }, ]
+                                   };
+                                   _this.myChart6 = echarts.init(document.getElementById('main6'));
+                                   _this.myChart6.setOption(option6);
+                               } else {
+                                   Message({
+                                       'message': data.msg,
+                                       'type': 'error',
+                                   });
+                               }
+                           },
+                           complete = function() {
+                               _this.loadingall = false;
+                           }
+                       _this.adminApi.getJsonp(url, data, loading, success, complete)
+
+                       $(window).resize(function() {
+                         if(_this.myChart1)
+                         {
+                           _this.myChart1.resize();
+                         }
+                         if(_this.myChart2)
+                         {
+                           _this.myChart2.resize();
+                         }
+                         if(_this.myChart3)
+                         {
+                           _this.myChart3.resize();
+                         }
+                         if(_this.myChart4)
+                         {
+                           _this.myChart4.resize();
+                         }
+                         if(_this.myChart5)
+                         {
+                           _this.myChart5.resize();
+                         }
+                         if(_this.myChart6)
+                         {
+                           _this.myChart6.resize();
+                         }
+
+
+                       });
+                   })
+
+
+                } else {
+                    Message({
+                        'message': data.msg,
+                        'type': 'error',
+                        'onClose':function(){
+                          window.location.href=data.data.vmsUrl+'/login';
+                        }
+                    });
                 }
-            _this.adminApi.getJsonp(url, data, loading, success, complete)
+            },
+            complete = function() {
+               _this.loadingall = false;
+            }
+        _this.adminApi.getJsonp(url, data, loading, success, complete)
 
-            $(window).resize(function() {
-              if(_this.myChart1)
-              {
-                _this.myChart1.resize();
-              }
-              if(_this.myChart2)
-              {
-                _this.myChart2.resize();
-              }
-              if(_this.myChart3)
-              {
-                _this.myChart3.resize();
-              }
-              if(_this.myChart4)
-              {
-                _this.myChart4.resize();
-              }
-              if(_this.myChart5)
-              {
-                _this.myChart5.resize();
-              }
-              if(_this.myChart6)
-              {
-                _this.myChart6.resize();
-              }
-
-
-            });
-        })
 
     },
     methods: {

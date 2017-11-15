@@ -178,7 +178,7 @@
                 <div class="xpdj-ta">
                     <p class="xpdj-tap1">销售数量<span>（件）</span></p>
                     <p class="xpdj-tap2">{{topdata.xsQty || 0}}</p>
-                    <p class="xpdj-tap3"><span class="xpdj-tap3s1">上期金额</span><span class="xpdj-tap3s2">{{topdata.upperXsQty || 0}}</span></p>
+                    <p class="xpdj-tap3"><span class="xpdj-tap3s1">上期数量</span><span class="xpdj-tap3s2">{{topdata.upperXsQty || 0}}</span></p>
                     <p class="xpdj-tap3"><span class="xpdj-tap3s1">上期同比</span><span class="xpdj-tap3s2">{{topdata.xsQtyAn || 0}}%<svg class="icon" aria-hidden="true" v-if='topdata.xsQtySort=="0"'>
                         <use xlink:href="#icon-jiantou1"></use>
                     </svg><svg class="icon" aria-hidden="true" v-if='topdata.xsQtySort=="1"'>
@@ -187,8 +187,8 @@
                 </div>
                 <div class="xpdj-ta">
                     <p class="xpdj-tap1">销售毛利率</p>
-                    <p class="xpdj-tap2 xpdj-tap2red">{{topdata.xsMl || 0}}</p>
-                    <p class="xpdj-tap3"><span class="xpdj-tap3s1">上期金额</span><span class="xpdj-tap3s2">{{topdata.upperXsMl || 0}}</span></p>
+                    <p class="xpdj-tap2 xpdj-tap2red">{{topdata.xsMl || 0}}%</p>
+                    <p class="xpdj-tap3"><span class="xpdj-tap3s1">上期毛利率</span><span class="xpdj-tap3s2">{{topdata.upperXsMl || 0}}%</span></p>
                     <p class="xpdj-tap3"><span class="xpdj-tap3s1">上期同比</span><span class="xpdj-tap3s2">{{topdata.xsMlAn || 0}}%<svg class="icon" aria-hidden="true" v-if='topdata.xsMlSort=="0"'>
                         <use xlink:href="#icon-jiantou1"></use>
                     </svg><svg class="icon" aria-hidden="true" v-if='topdata.xsMlSort=="1"'>
@@ -198,7 +198,7 @@
                 <div class="xpdj-ta">
                     <p class="xpdj-tap1">销售净利润<span>（万元）</span></p>
                     <p class="xpdj-tap2 xpdj-tap2org">{{topdata.xsLr || 0}}</p>
-                    <p class="xpdj-tap3"><span class="xpdj-tap3s1">上期金额</span><span class="xpdj-tap3s2">{{topdata.upperXsLr || 0}}</span></p>
+                    <p class="xpdj-tap3"><span class="xpdj-tap3s1">上期净利润</span><span class="xpdj-tap3s2">{{topdata.upperXsLr || 0}}</span></p>
                     <p class="xpdj-tap3"><span class="xpdj-tap3s1">上期同比</span><span class="xpdj-tap3s2">{{topdata.xsLrAn || 0}}%<svg class="icon" aria-hidden="true" v-if='topdata.xsLrSort=="0"'>
                         <use xlink:href="#icon-jiantou1"></use>
                     </svg><svg class="icon" aria-hidden="true" v-if='topdata.xsLrSort=="1"'>
@@ -228,8 +228,8 @@
                     </div>
                 </div>
                 <div class="xpdj-mr">
-                    <span class="w-ywxl-ddrdtbs1">当前数据</span>
-                    <span class="w-ywxl-ddrdtbs2">对比数据</span>
+                    <span class="w-ywxl-ddrdtbs1">公司数值</span>
+                    <span class="w-ywxl-ddrdtbs2">分布均值</span>
                 </div>
             </div>
             <div class="xpdj-c">
@@ -287,7 +287,7 @@
                     <div class="w-tab-search">
                         <wform :inline="true" :model="formdata3" label-position="right" class="demo-form-inline">
                             <form-item label="商品名称：">
-                                <winput v-model="formdata3.inpName" placeholder='订单号/客户名称/联系方式'></winput>
+                                <winput v-model="formdata3.inpName" placeholder=''></winput>
                             </form-item>
 
                             <form-item label="品类：">
@@ -302,7 +302,7 @@
                                 </wselect>
                             </form-item>
 
-                            <form-item label="爆/滞款：">
+                            <form-item label="排序：">
                                 <wselect v-model="formdata3.selectvalue3" placeholder="请选择" style="width:100px;">
                                     <woption label='爆款' value='0'></woption>
                                     <woption label='滞款' value='1'></woption>
@@ -700,137 +700,198 @@ export default {
     },
     created() {
         let _this = this;
-        _this.userId = _this.$store.state.userId;
+        if (!_this.$route.query.userId || !_this.$route.query.ticket || !_this.$route.query.userName) {
+
+            _this.$router.push({
+                name: 'NotFoundComponent'
+            });
+            return;
+        }
+
     },
     mounted() {
-        // var src='2017-01-31T16:00:00.000Z';
-        // console.log(new Date(src).getTime())
+
         let _this = this;
-        _this.$nextTick(function() {
+        var url = _this.adminApi.host+'/login/validate',
+            data = {
+                userId: _this.$route.query.userId,
+                ticket: _this.$route.query.ticket
+            },
+            loading = function() {
+                _this.loadingall = true;
+            },
+            success = function(data) {
+                if (data.code == '2') {
+                  _this.userId = _this.$route.query.userId;
+                  _this.$emit('userInfo',_this.$route.query.userName,data.data.vmsUrl);
+                  var data={
+                     'userId':_this.$route.query.userId,
+                     'ticket':_this.$route.query.ticket,
+                     'userName':_this.$route.query.userName,
+                   }
+                   _this.$store.commit('changeUserId',data)
+                   _this.$nextTick(function() {
 
-            var url = _this.adminApi.host + '/htyfctsaleorg/sale/detail/query/category',
-                data = {
+                       var url = _this.adminApi.host + '/htyfctsaleorg/sale/detail/query/category',
+                           data = {
 
-                },
-                loading = function() {
-                    _this.loadingall = true;
-                },
-                success = function(data) {
-                    if (data.code == '1') {
+                           },
+                           loading = function() {
+                               _this.loadingall = true;
+                           },
+                           success = function(data) {
+                               if (data.code == '1') {
 
-                        // _this.formdata3.pparr=data.data.detailBrand;
-                        _this.formdata3.plarr = data.data;
+                                   // _this.formdata3.pparr=data.data.detailBrand;
+                                   _this.formdata3.plarr = data.data;
 
-                    } else {
-                        Message({
-                            'message': data.msg,
-                            'type': 'error',
-                        });
-                    }
-                },
-                complete = function() {
-                    _this.loadingall = false;
+                               } else {
+                                   Message({
+                                       'message': data.msg,
+                                       'type': 'error',
+                                   });
+                               }
+                           },
+                           complete = function() {
+                               _this.loadingall = false;
+                           }
+                       _this.adminApi.getJsonp(url, data, loading, success, complete)
+                       var url = _this.adminApi.host + '/htyfctsaleorg/sale/hot/query/category',
+                           data = {
+
+                           },
+                           loading = function() {
+                               _this.loadingall = true;
+                           },
+                           success = function(data) {
+                               if (data.code == '1') {
+                                   _this.formdata4.plarr = data.data;
+                               } else {
+                                   Message({
+                                       'message': data.msg,
+                                       'type': 'error',
+                                   });
+                               }
+                           },
+                           complete = function() {
+                               _this.loadingall = false;
+                           }
+                       _this.adminApi.getJsonp(url, data, loading, success, complete)
+                       var url = _this.adminApi.host + '/htyfctsaleorg/sale/all',
+                           data = {
+                               'userId': _this.userId,
+                               'dateType': _this.formdata.radiovalue,
+                               'xzSort': _this.selectvalue,
+                               'listSort': _this.activeName,
+                               'prodSort': _this.formdata2.radiovalue,
+                               'detailSort': _this.formdata3.selectvalue3,
+                               // 'endTime':'201707'
+                           },
+                           loading = function() {
+                               _this.loadingall = true;
+                           },
+                           success = function(data) {
+                               if (data.code == '1') {
+                                   //console.log(JSON.stringify(data));
+                                   _this.topdata = data.data.saleCompareDTO;
+                                   _this.tableData = data.data.saleProdListDTO.saleProdDTOList;
+                                   _this.pagetotle1 = data.data.saleProdListDTO.saleProdnum;
+                                   _this.ajax1 = false;
+                                   var option = {
+                                       tooltip: {
+                                           trigger: 'axis',
+                                           axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                               type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                                           }
+                                       },
+                                       color: ['#ff7700', '#6c81b3'],
+                                       grid: {
+                                           top: '10',
+                                           left: '3%',
+                                           right: '4%',
+                                           bottom: '3%',
+                                           containLabel: true
+                                       },
+                                       xAxis: [{
+                                           type: 'category',
+                                           data: data.data.saleXzListDTO.xzBottomDate,
+                                           axisLine: {
+                                               lineStyle: {
+                                                   color: '#eee'
+                                               }
+                                           },
+                                           axisLabel: {
+                                               color: '#333'
+                                           },
+                                       }],
+                                       yAxis: [{
+                                           type: 'value',
+                                           axisLine: {
+                                               lineStyle: {
+                                                   color: '#eee'
+                                               }
+                                           },
+                                           axisLabel: {
+                                               color: '#333'
+                                           },
+                                           splitLine: {
+                                               lineStyle: {
+                                                   color: ['#eee'],
+                                               }
+                                           }
+                                       }],
+                                       series: [{
+                                           name: '当前数据',
+                                           barWidth: 10,
+                                           type: 'bar',
+                                           data: data.data.saleXzListDTO.xzBottom
+                                       }, {
+                                           name: '对比数据',
+                                           type: 'bar',
+                                           barWidth: 10,
+                                           data: data.data.saleXzListDTO.xzBottomPair
+                                       }]
+                                   };
+                                   _this.myChart = echarts.init(document.getElementById('main'));
+                                   _this.myChart.setOption(option);
+                               } else {
+                                   Message({
+                                       'message': data.msg,
+                                       'type': 'error',
+                                   });
+                               }
+                           },
+                           complete = function() {
+                               _this.loadingall = false;
+                           }
+                       _this.adminApi.getJsonp(url, data, loading, success, complete)
+
+                       $(window).resize(function() {
+                         if(_this.myChart)
+                         {
+                           _this.myChart.resize();
+                         }
+
+
+
+                       });
+                   })
+                } else {
+
+                    Message({
+                        'message': data.msg,
+                        'type': 'error',
+                        'onClose':function(){
+                          window.location.href=data.data.vmsUrl+'/login';
+                        }
+                    });
                 }
-            _this.adminApi.getJsonp(url, data, loading, success, complete)
-            var url = _this.adminApi.host + '/htyfctsaleorg/sale/hot/query/category',
-                data = {
+            },
+            complete = function() {
+               _this.loadingall = false;
+            }
+        _this.adminApi.getJsonp(url, data, loading, success, complete)
 
-                },
-                loading = function() {
-                    _this.loadingall = true;
-                },
-                success = function(data) {
-                    if (data.code == '1') {
-                        _this.formdata4.plarr = data.data;
-                    } else {
-                        Message({
-                            'message': data.msg,
-                            'type': 'error',
-                        });
-                    }
-                },
-                complete = function() {
-                    _this.loadingall = false;
-                }
-            _this.adminApi.getJsonp(url, data, loading, success, complete)
-            var url = _this.adminApi.host + '/htyfctsaleorg/sale/all',
-                data = {
-                    'userId': _this.userId,
-                    'dateType': _this.formdata.radiovalue,
-                    'xzSort': _this.selectvalue,
-                    'listSort': _this.activeName,
-                    'prodSort': _this.formdata2.radiovalue,
-                    'detailSort': _this.formdata3.selectvalue3,
-                    // 'endTime':'201707'
-                },
-                loading = function() {
-                    _this.loadingall = true;
-                },
-                success = function(data) {
-                    if (data.code == '1') {
-                        //console.log(JSON.stringify(data));
-                        _this.topdata = data.data.saleCompareDTO;
-                        _this.tableData = data.data.saleProdListDTO.saleProdDTOList;
-                        _this.pagetotle1 = data.data.saleProdListDTO.saleProdnum;
-                        _this.ajax1 = false;
-                        var option = {
-                            tooltip: {
-                                trigger: 'axis',
-                                axisPointer: { // 坐标轴指示器，坐标轴触发有效
-                                    type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
-                                }
-                            },
-                            color: ['#ff7700', '#6c81b3'],
-                            grid: {
-                                top: '10',
-                                left: '3%',
-                                right: '4%',
-                                bottom: '3%',
-                                containLabel: true
-                            },
-                            xAxis: [{
-                                type: 'category',
-                                data: data.data.saleXzListDTO.xzBottomDate
-                            }],
-                            yAxis: [{
-                                type: 'value'
-                            }],
-                            series: [{
-                                name: '当前数据',
-                                barWidth: 10,
-                                type: 'bar',
-                                data: data.data.saleXzListDTO.xzBottom
-                            }, {
-                                name: '对比数据',
-                                type: 'bar',
-                                barWidth: 10,
-                                data: data.data.saleXzListDTO.xzBottomPair
-                            }]
-                        };
-                        _this.myChart = echarts.init(document.getElementById('main'));
-                        _this.myChart.setOption(option);
-                    } else {
-                        Message({
-                            'message': data.msg,
-                            'type': 'error',
-                        });
-                    }
-                },
-                complete = function() {
-                    _this.loadingall = false;
-                }
-            _this.adminApi.getJsonp(url, data, loading, success, complete)
-
-            $(window).resize(function() {
-              if(_this.myChart)
-              {
-                _this.myChart.resize();
-              }
-
-
-
-            });
-        })
     },
     methods: {
         radiochange: function() {
@@ -1402,7 +1463,7 @@ export default {
             var data = {
                 'userId': _this.userId,
                 'xzSort': item,
-                'dateType': _this.formdata2.radiovalue
+                'dateType': _this.formdata.radiovalue
             };
             if (_this.mondisabled && _this.formdata.radiovalue == '0') {
                 var starttime = $('.el-input__inner:eq(0)', ".monthrange").val();

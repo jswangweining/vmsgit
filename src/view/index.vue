@@ -7,13 +7,12 @@
     min-width: 1300px;
     display: flex;
     flex-direction: column;
-
 }
 
 .w-hearder {
     position: relative;
     height: 2rem;
-    background-color: $top_bg_color;
+    background-color: #5977c1;
     overflow: hidden;
 }
 
@@ -122,12 +121,12 @@
                 <span class="el-dropdown-link">
                   <svg class="icon" aria-hidden="true">
                   <use xlink:href="#icon-yonghu"></use>
-                </svg><span class="w-username">你好，汇通达测试平台</span><i class="el-icon-caret-bottom el-icon--right"></i>
+                </svg><span class="w-username">你好，{{userName}}</span><i class="el-icon-caret-bottom el-icon--right"></i>
                 </span>
                 <dropdown-menu slot="dropdown">
                     <dropdown-item command='grxx'>个人信息</dropdown-item>
-                    <dropdown-item command='zhgl'>账号管理</dropdown-item>
-                    <dropdown-item command='zx'>注销</dropdown-item>
+                    <!-- <dropdown-item command='zhgl'>账号管理</dropdown-item> -->
+                    <!-- <dropdown-item command='zx'>注销</dropdown-item> -->
                 </dropdown-menu>
             </dropdown>
         </div>
@@ -135,11 +134,11 @@
 
     <div class="w-content">
         <div class="w-left">
-            <menulist :naveactive='naveactive' :subnamepath='subnamepath'></menulist>
+            <menulist :naveactive='naveactive' :subnamepath='subnamepath' :btnClick='btnClick'></menulist>
         </div>
         <div class="w-right">
             <transition name="fade" mode="out-in">
-                <router-view></router-view>
+                <router-view @userInfo='userInfo'></router-view>
             </transition>
         </div>
     </div>
@@ -163,27 +162,18 @@ import MessageBox from 'element-ui/packages/message-box/index.js'
 export default {
 
     data: () => ({
-        navelist: ['首页', '商品', '订单', '会员', '促销', '汇天眼'],
+        userName: '',
+        domin: '',
+        navelist: ['首页', '商品', '订单', '会员', '汇天眼'],
         naveactive: 5,
-        subnamepath:''
+        subnamepath: '',
+        btnClick: false
     }),
 
 
-    created(){
-
-      let _this=this;
-      if (!_this.$route.query.userId) {
-
-          _this.$router.push({
-              name: 'NotFoundComponent'
-          });
-          return;
-      }
-
-      _this.$store.commit('changeUserId', _this.$route.query.userId)
-        // _this.userId = _this.$store.state.userId;
-        //console.log(_this.$store.state)
-      _this.subnamepath=_this.$route.name;
+    created() {
+        let _this = this;
+        _this.subnamepath = _this.$route.name;
     },
     mounted() {
         var _this = this;
@@ -193,32 +183,66 @@ export default {
     },
     methods: {
         navclick: function(index, event) {
+
             var _this = this;
             var el = event.target;
-            $('.w-navc').removeClass('w-navc');
-            $(el).addClass('w-navc');
-            _this.naveactive = index;
-        },
-        dropdownclick: function(command,instance) {
-          let _this=this;
-            if (command == 'zx') {
-                MessageBox({
-                    'title': '提示',
-                    'message': '确认注销该账号并返回登录页面吗？',
-                    'type': 'warning',
-                    'showCancelButton': true,
-                    'callback': function(action) {
-                        if (action == 'confirm') {
-                            _this.adminApi.setState({});
-                            setTimeout(function() {
-                                _this.$router.push({
-                                    name: 'login'
-                                })
-                            }, 1000)
-                        }
-                    }
-                })
+            if (_this.btnClick) {
+                $('.w-navc').removeClass('w-navc');
+                $(el).addClass('w-navc');
+
+                switch (index) {
+                    case 0:
+                        window.location.href = _this.domin + '/system/success'
+                        break;
+                    case 1:
+                        window.location.href = _this.domin + '/pcm/showHTDProductInitPage?productType=1'
+                        break;
+                    case 2:
+                        window.location.href = _this.domin + '/HTDorder/manageOrder'
+                        break;
+                    case 3:
+                        window.location.href = _this.domin + '/member/showReviewMemberPage'
+                        break;
+                    default:
+                }
             }
+        },
+        userInfo: function(a, b) {
+            let _this = this;
+            _this.btnClick = true;
+            _this.userName = a;
+            _this.domin = b;
+        },
+        dropdownclick: function(command, instance) {
+            let _this = this;
+            if (command == 'grxx') {
+                if (_this.btnClick) {
+                    window.location.href = _this.domin + '/system/myInformation'
+                }
+            }
+            // if (command == 'zhgl') {
+            //   if(_this.btnClick){
+            //     window.location.href=_this.domin+''
+            //   }
+            // }
+            // if (command == 'zx') {
+            //     MessageBox({
+            //         'title': '提示',
+            //         'message': '确认注销该账号并返回登录页面吗？',
+            //         'type': 'warning',
+            //         'showCancelButton': true,
+            //         'callback': function(action) {
+            //             if (action == 'confirm') {
+            //                 _this.adminApi.setState({});
+            //                 setTimeout(function() {
+            //                     _this.$router.push({
+            //                         name: 'login'
+            //                     })
+            //                 }, 1000)
+            //             }
+            //         }
+            //     })
+            // }
         }
     },
     components: {

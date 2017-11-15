@@ -95,7 +95,7 @@
 import $ from 'jquery'
 
 export default {
-    props: ['naveactive','subnamepath'],
+    props: ['naveactive','subnamepath','btnClick'],
     data: () => ({
         subnavlist: [
             [{
@@ -219,9 +219,12 @@ export default {
         ],
 
     }),
+    watch:{
 
+    },
     mounted() {
       let _this=this;
+
       var arr=_this.subnavlist[_this.naveactive];
       var res=arr.forEach(function(item,index){
         if(item.rel==_this.subnamepath)
@@ -239,16 +242,23 @@ export default {
     },
     methods: {
         subnavclick: function(event, rel) {
+          
             var _this = this;
             var el = event.target;
-            $('.menulistitemc').removeClass('menulistitemc');
-            $(el).addClass('menulistitemc');
-            _this.$router.push({
-                name: rel,
-                query:{
-                  'userId': _this.$store.state.userId
-                }
-            })
+            if(_this.btnClick)
+            {
+              $('.menulistitemc').removeClass('menulistitemc');
+              $(el).addClass('menulistitemc');
+              _this.$router.push({
+                  name: rel,
+                  query:{
+                    'userId': _this.$store.state.userId,
+                    'ticket':_this.$store.state.ticket,
+                    'userName':_this.$store.state.ticket
+                  }
+              })
+            }
+
         }
     },
     components: {

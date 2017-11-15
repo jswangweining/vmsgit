@@ -33,16 +33,16 @@
 }
 
 .el-select .el-input__inner:focus {
-  border-color: #6c81b3 //
+  border-color: #5977C1//
 }
 
 .el-select-dropdown__item.selected {
   color: #fff;
-  background-color: #6c81b3//
+  background-color: #ddd//
 }
 
 .el-select-dropdown__item.selected.hover {
-  background-color: #6c81b3//
+  background-color: #5977C1//
 }
 
 
@@ -69,16 +69,26 @@
   background-color: #fff;
   background-image: none;
   border-radius: 4px;
-  border: 1px solid #bfcbd9;
+  border: 1px solid #ddd; //
   box-sizing: border-box;
   color: #1f2d3d;
   font-size: inherit;
-  height: 1.5rem;//
+  height: 1.5rem;
   line-height: 1;
   outline: 0;
   padding: 3px 10px;
   transition: border-color .2s cubic-bezier(.645, .045, .355, 1)
 }
+
+.el-input__inner:hover {
+  border-color: #5977C1 //
+}
+
+.el-input__inner:focus {
+  outline: 0;
+  border-color: #5977C1//
+}
+
 
 .el-dialog__headerbtn:focus .el-dialog__close, .el-dialog__headerbtn:hover .el-dialog__close {
   color: #ff7700//
@@ -169,9 +179,25 @@ margin: 0.5rem 0;
   list-style: none
 }
 
+.el-tabs__item {
+  padding: 0 16px;
+  height: 42px;
+  box-sizing: border-box;
+  line-height: 42px;
+  display: inline-block;
+  list-style: none;
+  font-size: 14px;
+  color: #999;//
+  position: relative
+}
+
+.el-tabs__item:hover {
+  color: #333;//
+  cursor: pointer
+}
 .el-tabs__item.is-active {
   font-weight: 600; //
-  color: #ff7700//
+  color: #333//
 }
 
 
@@ -199,10 +225,7 @@ margin: 0.5rem 0;
   border-color: #6c81b3
 }
 
-.el-input__inner:focus {
-  outline: 0;
-  border-color: #6c81b3//
-}
+
 
 
 .el-checkbox__input.is-checked .el-checkbox__inner {
@@ -220,5 +243,57 @@ margin: 0.5rem 0;
 }
 
 
+.el-button--small {
+  padding: 6px 7px;//
+  font-size: 12px;
+  border-radius: 2px//
+}
 
+
+.el-month-table td.current:not(.disabled) .cell {
+  background-color: #5977C1!important;
+  color: #fff
+}
+.el-year-table td.current:not(.disabled) .cell {
+  background-color: #5977C1!important;
+  color: #fff
+}
+
+.el-date-table td.today:before {
+  content: " ";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-top: .5em solid #5977C1; //
+  border-left: .5em solid transparent
+}
+
+.el-date-table td.available:hover {
+  background-color: #5977C1
+}
+
+.el-date-table td.current:not(.disabled), .el-date-table td.end-date, .el-date-table td.start-date {
+  background-color: #5977C1!important;
+  color: #fff
+}
+
+
+.el-table th {
+  white-space: nowrap;
+  overflow: hidden;
+  background-color: #ddd;//
+  text-align: left
+}
+
+.el-table__footer-wrapper thead div, .el-table__header-wrapper thead div {
+  background-color: #ddd;//
+  color: #333//
+}
+
+.el-table__fixed-header-wrapper thead div {
+  background-color: #ddd;//
+  color: #333//
+}
 
