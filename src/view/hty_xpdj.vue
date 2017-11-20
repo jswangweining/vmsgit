@@ -229,7 +229,7 @@
                 </div>
                 <div class="xpdj-mr">
                     <span class="w-ywxl-ddrdtbs1">公司数值</span>
-                    <span class="w-ywxl-ddrdtbs2">分布均值</span>
+                    <span class="w-ywxl-ddrdtbs2">分部均值</span>
                 </div>
             </div>
             <div class="xpdj-c">
@@ -269,13 +269,13 @@
                             </tablecolumn>
                             <tablecolumn prop="xsQty" label="销售数量" width='150'>
                             </tablecolumn>
-                            <tablecolumn prop="xsAmt" label="销售金额" width='150' sortable>
+                            <tablecolumn prop="xsAmt" label="销售金额" width='150'>
                             </tablecolumn>
-                            <tablecolumn prop="xsRatio" label="销售金额占比" width='150'>
+                            <tablecolumn prop="xsRatio" label="销售金额占比（%）" width='200'>
                             </tablecolumn>
                             <tablecolumn prop="xsAvg" label="平均毛利" width='200'>
                             </tablecolumn>
-                            <tablecolumn prop="xsAvgRatio" label="平均毛利率" fixed='right'>
+                            <tablecolumn prop="xsAvgRatio" label="平均毛利率（%）" width='200' fixed='right'>
                             </tablecolumn>
                         </wtable>
                     </div>
@@ -283,7 +283,7 @@
                         <wpager :total="pagetotle1" :current-page="cur_page1" layout="total, sizes, prev, pager, next, jumper" :page-sizes="[10, 15, 20]" :page-size="pagesize1" @current-change="handleCurrentChange1" @size-change="handleSizeChange1"></wpager>
                     </div>
                 </wtabpane>
-                <wtabpane label="在售商铺详情分析" name="1" key='在售商铺详情分析'>
+                <wtabpane label="在售商品详情分析" name="1" key='在售商品详情分析'>
                     <div class="w-tab-search">
                         <wform :inline="true" :model="formdata3" label-position="right" class="demo-form-inline">
                             <form-item label="商品名称：">
@@ -335,11 +335,12 @@
                             </tablecolumn>
                             <tablecolumn prop="mJcQty" label="库存数量" width='150'>
                             </tablecolumn>
-                            <tablecolumn prop="xsAmt" label="销售金额" width='150' sortable>
+                            <tablecolumn prop="xsAmt" label="销售金额" width='150'>
                             </tablecolumn>
                             <tablecolumn prop="xsDd" label="订单数" width='150'>
                             </tablecolumn>
-                            <tablecolumn prop="salesRing" label="销售额环比" width='150'>
+                            <tablecolumn prop="salesRing" label="销售额环比（%）" width='150'>
+
                             </tablecolumn>
 
                         </wtable>
@@ -382,7 +383,7 @@
                                     {{scope.row.minXsAmt}}-{{scope.row.maxXsAmt}}
                                 </template>
                             </tablecolumn>
-                            <tablecolumn prop="qtyAvg" label="平均月销量" width='150' sortable fixed='right'>
+                            <tablecolumn prop="qtyAvg" label="平均月销量" width='150'  fixed='right'>
                             </tablecolumn>
                         </wtable>
                     </div>
@@ -613,8 +614,8 @@ export default {
                                 'rows': _this.pagesize3,
                                 'page': _this.cur_page3,
                             };
-                            data.ppCode = _this.formdata3.ppvalue ? _this.formdata3.ppvalue : '';
-                            data.plCode = _this.formdata3.plvalue ? _this.formdata3.plvalue : '';
+                            data.ppCode = _this.formdata4.ppvalue ? _this.formdata4.ppvalue : '';
+                            data.plCode = _this.formdata4.plvalue ? _this.formdata4.plvalue : '';
 
                             if (_this.mondisabled && _this.formdata.radiovalue == '0') {
 
@@ -777,7 +778,9 @@ export default {
                                _this.loadingall = false;
                            }
                        _this.adminApi.getJsonp(url, data, loading, success, complete)
-                       var url = _this.adminApi.host + '/htyfctsaleorg/sale/all',
+
+                        var url = _this.adminApi.host + '/htyfctsaleorg/sale/all',
+
                            data = {
                                'userId': _this.userId,
                                'dateType': _this.formdata.radiovalue,
@@ -841,12 +844,12 @@ export default {
                                            }
                                        }],
                                        series: [{
-                                           name: '当前数据',
+                                           name: _this.selectvalue=="2" ? '公司数值%' : '公司数值',
                                            barWidth: 10,
                                            type: 'bar',
                                            data: data.data.saleXzListDTO.xzBottom
                                        }, {
-                                           name: '对比数据',
+                                           name: _this.selectvalue=="2" ? '分部均值%' : '分部均值',
                                            type: 'bar',
                                            barWidth: 10,
                                            data: data.data.saleXzListDTO.xzBottomPair
@@ -1068,18 +1071,39 @@ export default {
                                 },
                                 xAxis: [{
                                     type: 'category',
-                                    data: data.data.saleXzListDTO.xzBottomDate
+                                    data: data.data.saleXzListDTO.xzBottomDate,
+                                    axisLine: {
+                                        lineStyle: {
+                                            color: '#eee'
+                                        }
+                                    },
+                                    axisLabel: {
+                                        color: '#333'
+                                    },
                                 }],
                                 yAxis: [{
-                                    type: 'value'
+                                    type: 'value',
+                                    axisLine: {
+                                        lineStyle: {
+                                            color: '#eee'
+                                        }
+                                    },
+                                    axisLabel: {
+                                        color: '#333'
+                                    },
+                                    splitLine: {
+                                        lineStyle: {
+                                            color: ['#eee'],
+                                        }
+                                    }
                                 }],
                                 series: [{
-                                    name: '当前数据',
+                                    name: _this.selectvalue=="2" ? '公司数值%' : '公司数值',
                                     barWidth: 10,
                                     type: 'bar',
                                     data: data.data.saleXzListDTO.xzBottom
                                 }, {
-                                    name: '对比数据',
+                                    name: _this.selectvalue=="2" ? '分部均值%' : '分部均值',
                                     type: 'bar',
                                     barWidth: 10,
                                     data: data.data.saleXzListDTO.xzBottomPair
@@ -1182,18 +1206,39 @@ export default {
                             },
                             xAxis: [{
                                 type: 'category',
-                                data: data.data.saleXzListDTO.xzBottomDate
+                                data: data.data.saleXzListDTO.xzBottomDate,
+                                axisLine: {
+                                    lineStyle: {
+                                        color: '#eee'
+                                    }
+                                },
+                                axisLabel: {
+                                    color: '#333'
+                                },
                             }],
                             yAxis: [{
-                                type: 'value'
+                                type: 'value',
+                                axisLine: {
+                                    lineStyle: {
+                                        color: '#eee'
+                                    }
+                                },
+                                axisLabel: {
+                                    color: '#333'
+                                },
+                                splitLine: {
+                                    lineStyle: {
+                                        color: ['#eee'],
+                                    }
+                                }
                             }],
                             series: [{
-                                name: '当前数据',
+                                name: _this.selectvalue=="2" ? '公司数值%' : '公司数值',
                                 barWidth: 10,
                                 type: 'bar',
                                 data: data.data.saleXzListDTO.xzBottom
                             }, {
-                                name: '对比数据',
+                                name: _this.selectvalue=="2" ? '分部均值%' : '分部均值',
                                 type: 'bar',
                                 barWidth: 10,
                                 data: data.data.saleXzListDTO.xzBottomPair
@@ -1293,18 +1338,39 @@ export default {
                             },
                             xAxis: [{
                                 type: 'category',
-                                data: data.data.saleXzListDTO.xzBottomDate
+                                data: data.data.saleXzListDTO.xzBottomDate,
+                                axisLine: {
+                                    lineStyle: {
+                                        color: '#eee'
+                                    }
+                                },
+                                axisLabel: {
+                                    color: '#333'
+                                },
                             }],
                             yAxis: [{
-                                type: 'value'
+                                type: 'value',
+                                axisLine: {
+                                    lineStyle: {
+                                        color: '#eee'
+                                    }
+                                },
+                                axisLabel: {
+                                    color: '#333'
+                                },
+                                splitLine: {
+                                    lineStyle: {
+                                        color: ['#eee'],
+                                    }
+                                }
                             }],
                             series: [{
-                                name: '当前数据',
+                                name: _this.selectvalue=="2" ? '公司数值%' : '公司数值',
                                 barWidth: 10,
                                 type: 'bar',
                                 data: data.data.saleXzListDTO.xzBottom
                             }, {
-                                name: '对比数据',
+                                name: _this.selectvalue=="2" ? '分部均值%' : '分部均值',
                                 type: 'bar',
                                 barWidth: 10,
                                 data: data.data.saleXzListDTO.xzBottomPair
@@ -1425,18 +1491,39 @@ export default {
                                 },
                                 xAxis: [{
                                     type: 'category',
-                                    data: data.data.saleXzListDTO.xzBottomDate
+                                    data: data.data.saleXzListDTO.xzBottomDate,
+                                    axisLine: {
+                                        lineStyle: {
+                                            color: '#eee'
+                                        }
+                                    },
+                                    axisLabel: {
+                                        color: '#333'
+                                    },
                                 }],
                                 yAxis: [{
-                                    type: 'value'
+                                    type: 'value',
+                                    axisLine: {
+                                        lineStyle: {
+                                            color: '#eee'
+                                        }
+                                    },
+                                    axisLabel: {
+                                        color: '#333'
+                                    },
+                                    splitLine: {
+                                        lineStyle: {
+                                            color: ['#eee'],
+                                        }
+                                    }
                                 }],
                                 series: [{
-                                    name: '当前数据',
+                                    name: _this.selectvalue=="2" ? '公司数值%' : '公司数值',
                                     barWidth: 10,
                                     type: 'bar',
                                     data: data.data.saleXzListDTO.xzBottom
                                 }, {
-                                    name: '对比数据',
+                                    name: _this.selectvalue=="2" ? '分部均值%' : '分部均值',
                                     type: 'bar',
                                     barWidth: 10,
                                     data: data.data.saleXzListDTO.xzBottomPair
@@ -1478,6 +1565,7 @@ export default {
                 data.endTime = endtime.replace('-', '')
             }
             var url =  _this.adminApi.host+'/htyfctsaleorg/sale/xz/list',
+
                 loading = function() {
                     _this.myChart.showLoading({
                         'color': '#ff7700'
@@ -1485,40 +1573,62 @@ export default {
                 },
                 success = function(data) {
                     if (data.code == '1') {
-                        var option = {
-                            tooltip: {
-                                trigger: 'axis',
-                                axisPointer: { // 坐标轴指示器，坐标轴触发有效
-                                    type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
-                                }
-                            },
-                            color: ['#ff7700', '#6c81b3'],
-                            grid: {
-                                top: '10',
-                                left: '3%',
-                                right: '4%',
-                                bottom: '3%',
-                                containLabel: true
-                            },
-                            xAxis: [{
-                                type: 'category',
-                                data: data.data.xzBottomDate
-                            }],
-                            yAxis: [{
-                                type: 'value'
-                            }],
-                            series: [{
-                                name: '当前数据',
-                                barWidth: 10,
-                                type: 'bar',
-                                data: data.data.xzBottom
-                            }, {
-                                name: '对比数据',
-                                type: 'bar',
-                                barWidth: 10,
-                                data: data.data.xzBottomPair
-                            }]
-                        };
+
+                      var option = {
+                          tooltip: {
+                              trigger: 'axis',
+                              axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                  type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                              }
+                          },
+                          color: ['#ff7700', '#6c81b3'],
+                          grid: {
+                              top: '10',
+                              left: '3%',
+                              right: '4%',
+                              bottom: '3%',
+                              containLabel: true
+                          },
+                          xAxis: [{
+                              type: 'category',
+                              data: data.data.xzBottomDate,
+                              axisLine: {
+                                  lineStyle: {
+                                      color: '#eee'
+                                  }
+                              },
+                              axisLabel: {
+                                  color: '#333'
+                              },
+                          }],
+                          yAxis: [{
+                              type: 'value',
+                              axisLine: {
+                                  lineStyle: {
+                                      color: '#eee'
+                                  }
+                              },
+                              axisLabel: {
+                                  color: '#333'
+                              },
+                              splitLine: {
+                                  lineStyle: {
+                                      color: ['#eee'],
+                                  }
+                              }
+                          }],
+                          series: [{
+                              name: _this.selectvalue=="2" ? '公司数值%' : '公司数值',
+                              barWidth: 10,
+                              type: 'bar',
+                              data: data.data.xzBottom
+                          }, {
+                              name: _this.selectvalue=="2" ? '分部均值%' : '分部均值',
+                              type: 'bar',
+                              barWidth: 10,
+                              data: data.data.xzBottomPair
+                          }]
+                      };
                         _this.myChart = echarts.init(document.getElementById('main'));
                         _this.myChart.setOption(option);
                     } else {
@@ -1931,8 +2041,8 @@ export default {
                 'rows': _this.pagesize3,
                 'page': _this.cur_page3,
             };
-            data.ppCode = _this.formdata3.ppvalue ? _this.formdata3.ppvalue : '';
-            data.plCode = _this.formdata3.plvalue ? _this.formdata3.plvalue : '';
+            data.ppCode = _this.formdata4.ppvalue ? _this.formdata4.ppvalue : '';
+            data.plCode = _this.formdata4.plvalue ? _this.formdata4.plvalue : '';
 
             if (_this.mondisabled && _this.formdata.radiovalue == '0') {
 
@@ -1978,8 +2088,8 @@ export default {
                 'rows': _this.pagesize3,
                 'page': _this.cur_page3,
             };
-            data.ppCode = _this.formdata3.ppvalue ? _this.formdata3.ppvalue : '';
-            data.plCode = _this.formdata3.plvalue ? _this.formdata3.plvalue : '';
+            data.ppCode = _this.formdata4.ppvalue ? _this.formdata4.ppvalue : '';
+            data.plCode = _this.formdata4.plvalue ? _this.formdata4.plvalue : '';
 
             if (_this.mondisabled && _this.formdata.radiovalue == '0') {
 

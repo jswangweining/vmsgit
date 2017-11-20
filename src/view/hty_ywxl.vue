@@ -651,6 +651,7 @@
     border-bottom: 1px solid #f3f3f3;
     display: flex;
     align-items: center;
+
 }
 
 .rankingcbda1 {
@@ -1034,7 +1035,7 @@ export default {
         myChart2: '',
         myChart3: '',
         myChart3title: '',
-        selectvalue: '1',
+        selectvalue: '0',
         wholeName: [],
         wholeTop: [{}, {}, {}],
         wholeLeft: [{}, {}, {}]
@@ -1079,134 +1080,132 @@ export default {
                    'userName':_this.$route.query.userName,
                  }
                  _this.$store.commit('changeUserId',data)
+                 _this.$nextTick(function() {
+                     var url = _this.adminApi.host + '/htypctorg/index/handle',
+                         data = {
+                             'userId': _this.userId
+                         },
+                         loading = function() {
+                             //_this.loadingall = true;
+                         },
+                         success = function(data) {
+                             if (data.code == '1') {
 
-                _this.$nextTick(function() {
-                    var url = _this.adminApi.host + '/htypctorg/index/handle',
-                        data = {
-                            'userId': _this.userId
-                        },
-                        loading = function() {
-                            //_this.loadingall = true;
-                        },
-                        success = function(data) {
-                            if (data.code == '1') {
+                                 _this.topdata = data.data;
+                                 _this.statvalue = data.data.starNum
+                                 _this.myChart1 = echarts.init(document.getElementById('main'));
+                                 var option = {
+                                     tooltip: {
+                                         confine: true
+                                     },
+                                     radar: {
+                                         indicator: [{
+                                             text: '综合能力',
+                                             color: '#ff7700',
+                                             max: data.data.maxZhnl
+                                         }, {
+                                             text: '会员店价值',
+                                             max: data.data.maxCvmgz
+                                         }, {
+                                             text: '市盈率',
+                                             max: data.data.maxPegz
+                                         }, {
+                                             text: '市销率',
+                                             max: data.data.maxPsgz
+                                         }, {
+                                             text: '市净率',
+                                             max: data.data.maxPbgz
+                                         }],
+                                         center: screen.width > 1600 ? ['50%', '55%'] : ['50%', '50%'],
+                                         radius: screen.width > 1600 ? '70%' : '50%',
+                                         startAngle: 90,
+                                         splitNumber: 4,
+                                         name: {
+                                             formatter: '{value}',
+                                             textStyle: {
+                                                 color: '#999'
+                                             }
+                                         },
+                                         splitLine: {
+                                             lineStyle: {
+                                                 color: ['#eee']
+                                             }
+                                         },
+                                         splitArea: {
+                                             show: false
+                                         },
+                                         axisLine: {
+                                             lineStyle: {
+                                                 color: '#eee'
+                                             }
+                                         }
+                                     },
+                                     series: [{
+                                         type: 'radar',
+                                         tooltip: {
+                                             trigger: 'item'
+                                         },
+                                         itemStyle: {
+                                             normal: {
+                                                 color: "rgba(255,199,1)", // 图表中各个图区域的边框线拐点颜色
+                                                 lineStyle: {
+                                                     color: "#ff7700" // 图表中各个图区域的边框线颜色
+                                                 },
+                                                 areaStyle: {
+                                                     type: 'default',
+                                                     opacity: 0.5, // 图表中各个图区域的透明度
+                                                     color: "#ff7700" // 图表中各个图区域的颜色
+                                                 }
+                                             }
+                                         },
+                                         data: [{
+                                             value: [_this.topdata.zhnl, _this.topdata.cvmgz, _this.topdata.pegz, _this.topdata.psgz, _this.topdata.pbgz],
+                                             name: '当前平台估值'
+                                         }]
+                                     }, ]
+                                 }
+                                 _this.myChart1.setOption(option);
+                             } else {
+                                 Message({
+                                     'message': data.msg,
+                                     'type': 'error',
+                                 });
+                             }
+                         },
+                         complete = function() {
+                             // _this.loading = false;
+                         }
+                     _this.adminApi.getJsonp(url, data, loading, success, complete)
+                     _this.radiovalue = '0';
+                     var url = _this.adminApi.host + '/htypctorg/index/wholeSort',
+                         data = {
+                             'userId': _this.userId
+                         },
+                         loading = function() {
 
-                                _this.topdata = data.data;
-                                _this.statvalue = data.data.starNum
-                                _this.myChart1 = echarts.init(document.getElementById('main'));
-                                var option = {
-                                    tooltip: {
-                                        confine: true
-                                    },
-                                    radar: {
-                                        indicator: [{
-                                            text: '综合能力',
-                                            color: '#ff7700',
-                                            max: data.data.maxZhnl
-                                        }, {
-                                            text: '会员店价值',
-                                            max: data.data.maxCvmgz
-                                        }, {
-                                            text: '市盈率',
-                                            max: data.data.maxPegz
-                                        }, {
-                                            text: '市销率',
-                                            max: data.data.maxPsgz
-                                        }, {
-                                            text: '市净率',
-                                            max: data.data.maxPbgz
-                                        }],
-                                        center: screen.width > 1600 ? ['50%', '55%'] : ['50%', '50%'],
-                                        radius: screen.width > 1600 ? '70%' : '50%',
-                                        startAngle: 90,
-                                        splitNumber: 4,
-                                        name: {
-                                            formatter: '{value}',
-                                            textStyle: {
-                                                color: '#999'
-                                            }
-                                        },
-                                        splitLine: {
-                                            lineStyle: {
-                                                color: ['#eee']
-                                            }
-                                        },
-                                        splitArea: {
-                                            show: false
-                                        },
-                                        axisLine: {
-                                            lineStyle: {
-                                                color: '#eee'
-                                            }
-                                        }
-                                    },
-                                    series: [{
-                                        type: 'radar',
-                                        tooltip: {
-                                            trigger: 'item'
-                                        },
-                                        itemStyle: {
-                                            normal: {
-                                                color: "rgba(255,199,1)", // 图表中各个图区域的边框线拐点颜色
-                                                lineStyle: {
-                                                    color: "#ff7700" // 图表中各个图区域的边框线颜色
-                                                },
-                                                areaStyle: {
-                                                    type: 'default',
-                                                    opacity: 0.5, // 图表中各个图区域的透明度
-                                                    color: "#ff7700" // 图表中各个图区域的颜色
-                                                }
-                                            }
-                                        },
-                                        data: [{
-                                            value: [_this.topdata.zhnl, _this.topdata.cvmgz, _this.topdata.pegz, _this.topdata.psgz, _this.topdata.pbgz],
-                                            name: '当前平台估值'
-                                        }]
-                                    }, ]
-                                }
-                                _this.myChart1.setOption(option);
-                            } else {
-                                Message({
-                                    'message': data.msg,
-                                    'type': 'error',
-                                });
-                            }
-                        },
-                        complete = function() {
-                            // _this.loading = false;
-                        }
-                    _this.adminApi.getJsonp(url, data, loading, success, complete)
-                    _this.radiovalue = '0';
-                    var url = _this.adminApi.host + '/htypctorg/index/wholeSort',
-                        data = {
-                            'userId': _this.userId
-                        },
-                        loading = function() {
+                         },
+                         success = function(data) {
+                             if (data.code == '1') {
+                                 _this.wholeSort = data.data
+                             }
+                         },
+                         complete = function() {
 
-                        },
-                        success = function(data) {
-                            if (data.code == '1') {
-                                _this.wholeSort = data.data
-                            }
-                        },
-                        complete = function() {
+                         }
+                     _this.adminApi.getJsonp(url, data, loading, success, complete)
+                     $(window).resize(function() {
+                         if (_this.myChart1) {
+                             _this.myChart1.resize();
+                         }
+                         if (_this.myChart2) {
+                             _this.myChart2.resize();
+                         }
+                         if (_this.myChart3) {
+                             _this.myChart3.resize();
+                         }
 
-                        }
-                    _this.adminApi.getJsonp(url, data, loading, success, complete)
-                    $(window).resize(function() {
-                        if (_this.myChart1) {
-                            _this.myChart1.resize();
-                        }
-                        if (_this.myChart2) {
-                            _this.myChart2.resize();
-                        }
-                        if (_this.myChart3) {
-                            _this.myChart3.resize();
-                        }
-
-
-                    });
-                })
+                     });
+                 })
 
               } else {
                   Message({
@@ -1416,7 +1415,7 @@ export default {
                                             }
                                         }],
                                         series: [{
-                                            name: '收入',
+                                            name: _this.myChart3title.replace('趋势',''),
                                             type: 'line',
                                             stack: '总量',
                                             itemStyle: {
@@ -1911,7 +1910,7 @@ export default {
                                         }
                                     }],
                                     series: [{
-                                        name: '收入',
+                                        name: _this.myChart3title.replace('趋势',''),
                                         type: 'line',
                                         stack: '总量',
                                         itemStyle: {
@@ -2301,7 +2300,7 @@ export default {
                                             }
                                         }],
                                         series: [{
-                                            name: '收入',
+                                            name: _this.myChart3title.replace('趋势',''),
                                             type: 'line',
                                             stack: '总量',
                                             itemStyle: {

@@ -193,27 +193,29 @@ export default {
                 'name': '促销',
                 'rel': ''
             }],
+            // {
+            //     'name': '财务效率',
+            //     'rel': 'cwxl'
+            // },
             [{
                 'name': '业务效率',
                 'rel': 'ywxl'
-            }, {
-                'name': '财务效率',
-                'rel': 'cwxl'
-            }, {
+            },  {
                 'name': '选品定价',
                 'rel': 'xpdj'
-            }, {
-                'name': '用户分类',
-                'rel': 'yhfn'
             },
             {
-                'name': '用户分析',
+                'name': '会员概览',
                 'rel': 'yhfx'
-            }, {
-                'name': '目标用户管理',
+            },
+            {
+                'name': '会员对比',
+                'rel': 'yhfn'
+            },{
+                'name': '质量提升',
                 'rel': 'mbyhgl'
             }, {
-                'name': '用户行为',
+                'name': '商城热点',
                 'rel': 'yhxw'
             }]
         ],
@@ -242,7 +244,7 @@ export default {
     },
     methods: {
         subnavclick: function(event, rel) {
-          
+
             var _this = this;
             var el = event.target;
             if(_this.btnClick)
@@ -254,7 +256,7 @@ export default {
                   query:{
                     'userId': _this.$store.state.userId,
                     'ticket':_this.$store.state.ticket,
-                    'userName':_this.$store.state.ticket
+                    'userName':_this.$store.state.userName
                   }
               })
             }

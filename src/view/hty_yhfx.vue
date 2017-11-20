@@ -16,7 +16,7 @@
 
 <div v-loading.body='loadingall' class="bodyscroll">
     <div class="w-pos">
-        <span>首页</span>/<span>汇天眼</span>/<span class="w-pos-active">用户分析</span>
+        <span>首页</span>/<span>汇天眼</span>/<span class="w-pos-active">会员概览</span>
     </div>
     <div class="w-con">
         <div class="w-search">
@@ -110,7 +110,7 @@
                         </div>
                     </div>
                     <div class="w-pannelitemad">
-                        <div class="" id="main" style="width:100%; height:200px;">
+                        <div class="" id="mainyhfx" style="width:100%; height:200px;">
 
                         </div>
 
@@ -125,7 +125,7 @@
 
                     </div>
                     <div class="w-pannelitemad">
-                        <div class="" id="main2" style="width:100%; height:200px;">
+                        <div class="" id="mainyhfx2" style="width:100%; height:200px;">
 
                         </div>
                     </div>
@@ -156,6 +156,7 @@ export default {
     name: "",
     data: () => ({
       userId:'',
+      ajaxpost:'',
         loadingall: false,
         formdata: {
             'startmonth': '',
@@ -171,8 +172,8 @@ export default {
                     return time.getTime() >= Date.now() || time.getTime() < new Date(2016, 0, 1, 0, 0, 0)
                 }
         },
-        myChart:'',
-        myChart2:'',
+        myChartYhfx:'',
+        myChartYhfx2:'',
         wholePic: [{
           "name": " 超级老板采购",
           "value": "50"
@@ -219,7 +220,7 @@ export default {
                  }
                  _this.$store.commit('changeUserId',data)
                  _this.$nextTick(function() {
-                     _this.myChart = echarts.init(document.getElementById('main'));
+                    //  _this.myChartYhfx = echarts.init(document.getElementById('mainyhfx'));
                    var url = _this.adminApi.host + '/htycustall/cust/Analysis',
                        data = {
                          userId:_this.userId,
@@ -233,66 +234,7 @@ export default {
                        success = function(data) {
                            if (data.code == '1') {
                              _this.jsondata=data.data;
-                             // var option = {
-                             //     tooltip: {
-                             //         trigger: 'axis',
-                             //         axisPointer: { // 坐标轴指示器，坐标轴触发有效
-                             //             type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
-                             //         }
-                             //     },
-                             //     color: ['#ff7700', '#6c81b3'],
-                             //     grid: {
-                             //         top: '10',
-                             //         left: '3%',
-                             //         right: '4%',
-                             //         bottom: '3%',
-                             //         containLabel: true
-                             //     },
-                             //     xAxis: [{
-                             //         type: 'category',
-                             //         data: _this.jsondata.listName
-                             //     }],
-                             //     yAxis: [{
-                             //         type: 'value'
-                             //     }],
-                             //     series: [{
-                             //         name: '当前数据',
-                             //         barWidth: 5,
-                             //         type: 'bar',
-                             //         data: _this.jsondata.listDate,
-                             //         itemStyle: {
-                             //        normal: {
-                             //            color: new echarts.graphic.LinearGradient(
-                             //                0, 0, 0, 1,
-                             //                [
-                             //                    {offset: 0, color: '#ff7700'},
-                             //                    {offset: 0.5, color: '#ff9e48'},
-                             //                    {offset: 1, color: '#ffbb7f'}
-                             //                ]
-                             //            )
-                             //        },
-                             //    }
-                             //     }, {
-                             //         name: '分部平均值',
-                             //         type: 'bar',
-                             //         barWidth: 5,
-                             //         data: _this.jsondata.listPair,
-                             //         itemStyle: {
-                             //        normal: {
-                             //            color: new echarts.graphic.LinearGradient(
-                             //                0, 0, 0, 1,
-                             //                [
-                             //                    {offset: 0, color: '#6c81c3'},
-                             //                    {offset: 0.5, color: '#91a1c6'},
-                             //                    {offset: 1, color: '#b5bfd9'}
-                             //                ]
-                             //            )
-                             //        },
-                             //    }
-                             //     }]
-                             // };
-                             // _this.myChart = echarts.init(document.getElementById('main'));
-                             // _this.myChart.setOption(option);
+
                              var option2 = {
                                  tooltip: {
                                      trigger: 'item',
@@ -319,8 +261,122 @@ export default {
                                      data: _this.jsondata.map
                                  }]
                              };
-                             _this.myChart2 = echarts.init(document.getElementById('main2'));
-                             _this.myChart2.setOption(option2);
+                             _this.myChartYhfx2 = echarts.init(document.getElementById('mainyhfx2'));
+                             _this.myChartYhfx2.setOption(option2);
+
+                             var url = _this.adminApi.host + '/htycustall/cust/AnalysisVertical',
+                                 data = {
+                                   userId:_this.userId,
+                                   type:_this.formdata.radiovalue1,
+                                   bossType:_this.formdata.radiovalue2
+
+                                 },
+                                 loading = function() {
+                                   _this.myChartYhfx = echarts.init(document.getElementById('mainyhfx'));
+                                   _this.myChartYhfx.showLoading({
+                                       'color': '#ff7700'
+                                   });
+                                 },
+                                 success = function(data) {
+                                     if (data.code == '1') {
+                                       var option = {
+                                           tooltip: {
+                                               trigger: 'axis',
+                                               axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                                   type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                                               }
+                                           },
+                                           color: ['#ff7700', '#6c81b3'],
+                                           grid: {
+                                               top: '10',
+                                               left: '3%',
+                                               right: '4%',
+                                               bottom: '3%',
+                                               containLabel: true
+                                           },
+                                           xAxis: [{
+                                               type: 'category',
+                                               data: data.data.listName,
+                                               axisLine:{
+                                                 lineStyle:{
+                                                   color:'#eee'
+                                                 }
+                                               },
+                                               axisLabel:{
+                                                 color:'#333'
+                                               },
+
+                                           }],
+                                           yAxis: [{
+                                               type: 'value',
+                                               axisLine:{
+                                                 lineStyle:{
+                                                   color:'#eee'
+                                                 }
+                                               },
+                                               axisLabel:{
+                                                 color:'#333'
+                                               },
+                                               splitLine:{
+                                                 lineStyle:{
+                                                   color: ['#eee'],
+                                                 }
+                                               }
+                                           }],
+                                           series: [{
+                                               name: '当前数据',
+                                               barWidth: 5,
+                                               type: 'bar',
+                                               data: data.data.listDate,
+                                               itemStyle: {
+                                              normal: {
+                                                  color: new echarts.graphic.LinearGradient(
+                                                      0, 0, 0, 1,
+                                                      [
+                                                          {offset: 0, color: '#ff7700'},
+                                                          {offset: 0.5, color: '#ff9e48'},
+                                                          {offset: 1, color: '#ffbb7f'}
+                                                      ]
+                                                  )
+                                              },
+                                          }
+                                           }, {
+                                               name: '分部平均值',
+                                               type: 'bar',
+                                               barWidth: 5,
+                                               data: data.data.listPair,
+                                               itemStyle: {
+                                              normal: {
+                                                  color: new echarts.graphic.LinearGradient(
+                                                      0, 0, 0, 1,
+                                                      [
+                                                          {offset: 0, color: '#6c81c3'},
+                                                          {offset: 0.5, color: '#91a1c6'},
+                                                          {offset: 1, color: '#b5bfd9'}
+                                                      ]
+                                                  )
+                                              },
+                                          }
+                                           }]
+                                       };
+                                       if(_this.$route.name=='yhfx')
+                                       {
+                                         _this.myChartYhfx = echarts.init(document.getElementById('mainyhfx'));
+                                         _this.myChartYhfx.setOption(option);
+                                       }
+
+
+                                     } else {
+                                         Message({
+                                             'message': data.msg,
+                                             'type': 'error',
+                                         });
+                                     }
+                                 },
+                                 complete = function() {
+                                     _this.myChartYhfx.hideLoading();
+                                 }
+                             _this.adminApi.getJsonp(url, data, loading, success, complete)
                            } else {
                                Message({
                                    'message': data.msg,
@@ -333,123 +389,15 @@ export default {
                        }
                    _this.adminApi.getJsonp(url, data, loading, success, complete)
 
-                   var url = _this.adminApi.host + '/htycustall/cust/AnalysisVertical',
-                       data = {
-                         userId:_this.userId,
-                         type:_this.formdata.radiovalue1,
-                         bossType:_this.formdata.radiovalue2
 
-                       },
-                       loading = function() {
-                         _this.myChart.showLoading({
-                             'color': '#ff7700'
-                         });
-                       },
-                       success = function(data) {
-                           if (data.code == '1') {
-                             _this.jsondata=data.data;
-                             var option = {
-                                 tooltip: {
-                                     trigger: 'axis',
-                                     axisPointer: { // 坐标轴指示器，坐标轴触发有效
-                                         type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
-                                     }
-                                 },
-                                 color: ['#ff7700', '#6c81b3'],
-                                 grid: {
-                                     top: '10',
-                                     left: '3%',
-                                     right: '4%',
-                                     bottom: '3%',
-                                     containLabel: true
-                                 },
-                                 xAxis: [{
-                                     type: 'category',
-                                     data: _this.jsondata.listName,
-                                     axisLine:{
-                                       lineStyle:{
-                                         color:'#eee'
-                                       }
-                                     },
-                                     axisLabel:{
-                                       color:'#333'
-                                     },
-
-                                 }],
-                                 yAxis: [{
-                                     type: 'value',
-                                     axisLine:{
-                                       lineStyle:{
-                                         color:'#eee'
-                                       }
-                                     },
-                                     axisLabel:{
-                                       color:'#333'
-                                     },
-                                     splitLine:{
-                                       lineStyle:{
-                                         color: ['#eee'],
-                                       }
-                                     }
-                                 }],
-                                 series: [{
-                                     name: '当前数据',
-                                     barWidth: 5,
-                                     type: 'bar',
-                                     data: _this.jsondata.listDate,
-                                     itemStyle: {
-                                    normal: {
-                                        color: new echarts.graphic.LinearGradient(
-                                            0, 0, 0, 1,
-                                            [
-                                                {offset: 0, color: '#ff7700'},
-                                                {offset: 0.5, color: '#ff9e48'},
-                                                {offset: 1, color: '#ffbb7f'}
-                                            ]
-                                        )
-                                    },
-                                }
-                                 }, {
-                                     name: '分部平均值',
-                                     type: 'bar',
-                                     barWidth: 5,
-                                     data: _this.jsondata.listPair,
-                                     itemStyle: {
-                                    normal: {
-                                        color: new echarts.graphic.LinearGradient(
-                                            0, 0, 0, 1,
-                                            [
-                                                {offset: 0, color: '#6c81c3'},
-                                                {offset: 0.5, color: '#91a1c6'},
-                                                {offset: 1, color: '#b5bfd9'}
-                                            ]
-                                        )
-                                    },
-                                }
-                                 }]
-                             };
-                             _this.myChart = echarts.init(document.getElementById('main'));
-                             _this.myChart.setOption(option);
-
-                           } else {
-                               Message({
-                                   'message': data.msg,
-                                   'type': 'error',
-                               });
-                           }
-                       },
-                       complete = function() {
-                           _this.myChart.hideLoading();
-                       }
-                   _this.adminApi.getJsonp(url, data, loading, success, complete)
                    $(window).resize(function() {
-                     if(_this.myChart)
+                     if(_this.myChartYhfx)
                      {
-                       _this.myChart.resize();
+                       _this.myChartYhfx.resize();
                      }
-                     if(_this.myChart2)
+                     if(_this.myChartYhfx2)
                      {
-                       _this.myChart2.resize();
+                       _this.myChartYhfx2.resize();
                      }
 
 
@@ -529,67 +477,6 @@ export default {
             success = function(data) {
                 if (data.code == '1') {
                   _this.jsondata=data.data;
-                  var option = {
-                      tooltip: {
-                          trigger: 'axis',
-                          axisPointer: { // 坐标轴指示器，坐标轴触发有效
-                              type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
-                          }
-                      },
-                      color: ['#ff7700', '#6c81b3'],
-                      grid: {
-                          top: '10',
-                          left: '3%',
-                          right: '4%',
-                          bottom: '3%',
-                          containLabel: true
-                      },
-                      xAxis: [{
-                          type: 'category',
-                          data: _this.jsondata.listName
-                      }],
-                      yAxis: [{
-                          type: 'value'
-                      }],
-                      series: [{
-                          name: '当前数据',
-                          barWidth: 5,
-                          type: 'bar',
-                          data: _this.jsondata.listDate,
-                          itemStyle: {
-                         normal: {
-                             color: new echarts.graphic.LinearGradient(
-                                 0, 0, 0, 1,
-                                 [
-                                     {offset: 0, color: '#ff7700'},
-                                     {offset: 0.5, color: '#ff9e48'},
-                                     {offset: 1, color: '#ffbb7f'}
-                                 ]
-                             )
-                         },
-                     }
-                      }, {
-                          name: '分部平均值',
-                          type: 'bar',
-                          barWidth: 5,
-                          data: _this.jsondata.listPair,
-                          itemStyle: {
-                         normal: {
-                             color: new echarts.graphic.LinearGradient(
-                                 0, 0, 0, 1,
-                                 [
-                                     {offset: 0, color: '#6c81c3'},
-                                     {offset: 0.5, color: '#91a1c6'},
-                                     {offset: 1, color: '#b5bfd9'}
-                                 ]
-                             )
-                         },
-                     }
-                      }]
-                  };
-                    _this.myChart.clear();
-                  _this.myChart = echarts.init(document.getElementById('main'));
-                  _this.myChart.setOption(option);
                   var option2 = {
                       tooltip: {
                           trigger: 'item',
@@ -616,9 +503,122 @@ export default {
                           data: _this.jsondata.map
                       }]
                   };
-                    _this.myChart2.clear();
-                  _this.myChart2 = echarts.init(document.getElementById('main2'));
-                  _this.myChart2.setOption(option2);
+                  _this.myChartYhfx2.clear();
+                  _this.myChartYhfx2 = echarts.init(document.getElementById('mainyhfx2'));
+                  _this.myChartYhfx2.setOption(option2);
+                  var url = _this.adminApi.host + '/htycustall/cust/AnalysisVertical',
+                      data = {
+                        userId:_this.userId,
+                        type:_this.formdata.radiovalue1,
+                        bossType:_this.formdata.radiovalue2
+
+                      },
+                      loading = function() {
+                        _this.myChartYhfx = echarts.init(document.getElementById('mainyhfx'));
+                        _this.myChartYhfx.showLoading({
+                            'color': '#ff7700'
+                        });
+                      },
+                      success = function(data) {
+                          if (data.code == '1') {
+                            var option = {
+                                tooltip: {
+                                    trigger: 'axis',
+                                    axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                        type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                                    }
+                                },
+                                color: ['#ff7700', '#6c81b3'],
+                                grid: {
+                                    top: '10',
+                                    left: '3%',
+                                    right: '4%',
+                                    bottom: '3%',
+                                    containLabel: true
+                                },
+                                xAxis: [{
+                                    type: 'category',
+                                    data: data.data.listName,
+                                    axisLine:{
+                                      lineStyle:{
+                                        color:'#eee'
+                                      }
+                                    },
+                                    axisLabel:{
+                                      color:'#333'
+                                    },
+
+                                }],
+                                yAxis: [{
+                                    type: 'value',
+                                    axisLine:{
+                                      lineStyle:{
+                                        color:'#eee'
+                                      }
+                                    },
+                                    axisLabel:{
+                                      color:'#333'
+                                    },
+                                    splitLine:{
+                                      lineStyle:{
+                                        color: ['#eee'],
+                                      }
+                                    }
+                                }],
+                                series: [{
+                                    name: '当前数据',
+                                    barWidth: 5,
+                                    type: 'bar',
+                                    data: data.data.listDate,
+                                    itemStyle: {
+                                   normal: {
+                                       color: new echarts.graphic.LinearGradient(
+                                           0, 0, 0, 1,
+                                           [
+                                               {offset: 0, color: '#ff7700'},
+                                               {offset: 0.5, color: '#ff9e48'},
+                                               {offset: 1, color: '#ffbb7f'}
+                                           ]
+                                       )
+                                   },
+                               }
+                                }, {
+                                    name: '分部平均值',
+                                    type: 'bar',
+                                    barWidth: 5,
+                                    data: data.data.listPair,
+                                    itemStyle: {
+                                   normal: {
+                                       color: new echarts.graphic.LinearGradient(
+                                           0, 0, 0, 1,
+                                           [
+                                               {offset: 0, color: '#6c81c3'},
+                                               {offset: 0.5, color: '#91a1c6'},
+                                               {offset: 1, color: '#b5bfd9'}
+                                           ]
+                                       )
+                                   },
+                               }
+                                }]
+                            };
+                            if(_this.$route.name=='yhfx')
+                            {
+                              _this.myChartYhfx = echarts.init(document.getElementById('mainyhfx'));
+                              _this.myChartYhfx.setOption(option);
+                            }
+
+
+                          } else {
+                              Message({
+                                  'message': data.msg,
+                                  'type': 'error',
+                              });
+                          }
+                      },
+                      complete = function() {
+                          _this.myChartYhfx.hideLoading();
+                      }
+                  _this.adminApi.getJsonp(url, data, loading, success, complete)
                 } else {
                     Message({
                         'message': data.msg,
@@ -630,6 +630,8 @@ export default {
                 _this.loadingall = false;
             }
         _this.adminApi.getJsonp(url, data, loading, success, complete)
+
+
       },
       yhfxChange:function(){
         let _this=this;
@@ -652,7 +654,7 @@ export default {
         var url = _this.adminApi.host + '/htycustall/cust/AnalysisVertical',
 
             loading = function() {
-              _this.myChart.showLoading({
+              _this.myChartYhfx.showLoading({
                   'color': '#ff7700'
               });
             },
@@ -676,7 +678,7 @@ export default {
                       },
                       xAxis: [{
                           type: 'category',
-                          data: _this.jsondata.listName,
+                          data: data.data.listName,
                           axisLine:{
                             lineStyle:{
                               color:'#eee'
@@ -707,7 +709,7 @@ export default {
                           name: '当前数据',
                           barWidth: 5,
                           type: 'bar',
-                          data: _this.jsondata.listDate,
+                          data: data.data.listDate,
                           itemStyle: {
                          normal: {
                              color: new echarts.graphic.LinearGradient(
@@ -724,7 +726,7 @@ export default {
                           name: '分部平均值',
                           type: 'bar',
                           barWidth: 5,
-                          data: _this.jsondata.listPair,
+                          data: data.data.listPair,
                           itemStyle: {
                          normal: {
                              color: new echarts.graphic.LinearGradient(
@@ -739,9 +741,12 @@ export default {
                      }
                       }]
                   };
-                    _this.myChart.clear();
-                  _this.myChart = echarts.init(document.getElementById('main'));
-                  _this.myChart.setOption(option);
+
+
+
+                    _this.myChartYhfx.clear();
+                  _this.myChartYhfx = echarts.init(document.getElementById('mainyhfx'));
+                  _this.myChartYhfx.setOption(option);
 
                 } else {
                     Message({
@@ -751,10 +756,14 @@ export default {
                 }
             },
             complete = function() {
-                _this.myChart.hideLoading();
+                _this.myChartYhfx.hideLoading();
             }
         _this.adminApi.getJsonp(url, data, loading, success, complete)
       }
+    },
+    beforeDestroy() {
+      let _this=this;
+      // _this.ajaxpost='';
     },
     components: {
         wform,

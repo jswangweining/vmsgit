@@ -27,7 +27,7 @@
 .dbfx-trItem {
     width: 9rem;
     height: 3rem;
-    overflow: hidden;
+    // overflow: hidden;
     position: relative;
     margin-right: 0.5rem;
 }
@@ -116,7 +116,7 @@
     border: 1px solid #ccc;
     margin-right: 0.5rem;
     .dbfx-trItemr {
-        color: #ccc;
+        color: #666;
         span {
             font-size: 0.8rem;
         }
@@ -149,8 +149,8 @@
     left: 50%;
     width: 8rem;
     height: 8rem;
-    margin-left: -4rem;
-    margin-top: -4rem;
+    margin-left: -5rem;
+    margin-top: -6rem;
     background-color: #fef8ee;
     border: 1px solid #ff7700;
     border-radius: 100%;
@@ -184,8 +184,8 @@
     left: 50%;
     width: 8rem;
     height: 8rem;
-    margin-left: -4rem;
-    margin-top: -4rem;
+    margin-left: -5rem;
+    margin-top: -6rem;
     border: 1px solid #ff7700;
     border-radius: 100%;
     animation: scaleout 1s infinite;
@@ -435,6 +435,126 @@
 //   border-color: #7892d1;//
 //   color: #fff
 // }
+.w-arrow1 {
+  position: absolute;
+  width: 78px;
+  height: 49px;
+  background-image: url('../assets/img/arrow1.png');
+  margin-left: -88px;
+  margin-top: 25px;
+  z-index: 999
+}
+
+.w-arrow2 {
+  position: absolute;
+  width: 78px;
+  height: 49px;
+  background-image: url('../assets/img/arrow2.png');
+  margin-left: -88px;
+    margin-top: -25px;
+    z-index: 999
+}
+
+.w-arrow3 {
+  position: absolute;
+  width: 19px;
+  height: 13px;
+  background-image: url('../assets/img/arrow3.png');
+  margin-left: -19px;
+  margin-top: 25px;
+  z-index: 999
+}
+
+.w-arrow4 {
+  position: absolute;
+  width: 19px;
+  height: 13px;
+  background-image: url('../assets/img/arrow4.png');
+  margin-left: -19px;
+  margin-top: 25px;
+  z-index: 999
+}
+.w-arrow13 {
+  background-image: url('../assets/img/arrow13.png');
+}
+.w-arrow15 {
+  background-image: url('../assets/img/arrow15.png');
+}
+
+.w-arrow5 {
+  position: absolute;
+  width: 19px;
+  height: 19px;
+  background-image: url('../assets/img/arrow5.png');
+  margin-left: -19px;
+  margin-top: 60px;
+  z-index: 999
+}
+.w-arrow11 {
+  width: 16px;
+  height: 16px;
+  margin-left: -17px;
+    margin-top: 55px;
+  background-image: url('../assets/img/arrow11.png');
+}
+
+.w-arrow6 {
+  position: absolute;
+  width: 15px;
+  height: 21px;
+  background-image: url('../assets/img/arrow6.png');
+  margin-left: -15px;
+  margin-top: -19px;
+  z-index: 999
+}
+
+
+
+.w-arrow7 {
+  position: absolute;
+  width: 12px;
+  height: 18px;
+  background-image: url('../assets/img/arrow7.png');
+  margin-left: 70px;
+  margin-top: 50px;
+  z-index: 999
+}
+
+.w-arrow8 {
+  position: absolute;
+  width: 12px;
+  height: 18px;
+  background-image: url('../assets/img/arrow8.png');
+  margin-left: 70px;
+  margin-top: -14px;
+  z-index: 999
+}
+
+.w-arrow12 {
+  background-image: url('../assets/img/arrow12.png');
+}
+
+.w-arrow10 {
+    background-image: url('../assets/img/arrow10.png');
+}
+
+.w-arrow16 {
+    background-image: url('../assets/img/arrow16.png');
+}
+.w-arrow9 {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background-image: url('../assets/img/arrow9.png');
+  margin-left: -22px;
+  margin-top: -14px;
+  z-index: 999
+}
+
+.w-arrow14 {
+  margin-left: -16px;
+  background-image: url('../assets/img/arrow14.png');
+}
 
 </style>
 
@@ -600,6 +720,7 @@
                                     </div>
                                 </div>
                                 <div class="dbfx-trItem dbfx-trItemBlue" shu='shu4' heng='heng11'>
+
                                     <div class="dbfx-trIteml" style="line-height:0.75rem;">
                                         <div class="">
                                             净利润
@@ -715,6 +836,7 @@
                                 <div class="dbfx-trItem"></div>
                                 <div class="dbfx-trItem"></div>
                                 <div class="dbfx-trItem dbfx-trItemOrg">
+                                    <div class="w-arrow5"></div>
                                     <div class="dbfx-trIteml">
                                         成本总额
                                     </div>
@@ -732,7 +854,8 @@
 
                                     </div>
                                 </div>
-                                <div class="dbfx-trItem dbfx-trItemOrg" shu='shu1' heng='heng5'>
+                                <div class="dbfx-trItem dbfx-trItemOrg" shu='shu1' heng='heng5' henga='heng11'>
+                                  <div class="w-arrow7"></div>
                                     <div class="dbfx-trIteml">
                                         净利润
                                     </div>
@@ -752,6 +875,7 @@
                             </div>
                             <div class="dbfx-trline">
                                 <div class="dbfx-trItem dbfx-trItemBlue" shu='shu1' heng='heng2'>
+                                    <div class="w-arrow1"></div>
                                     <div class="dbfx-trIteml" style="line-height:0.75rem;">
                                         <div class="">
                                             总资产收益率
@@ -775,6 +899,7 @@
                                     </div>
                                 </div>
                                 <div class="dbfx-trItem dbfx-trItemBlue" shu='shu1' heng='heng5'>
+                                    <div class="w-arrow3"></div>
                                     <div class="dbfx-trIteml">
                                         销售净利率
                                     </div>
@@ -791,7 +916,8 @@
                                         </svg>
                                     </div>
                                 </div>
-                                <div class="dbfx-trItem dbfx-trItemOrg" shu='shu1' heng='heng3' henga='heng4' hengb='heng6'>
+                                <div class="dbfx-trItem dbfx-trItemOrg" shu='shu1' heng='heng3' henga='heng4' hengb='heng6' hengc='heng10'>
+                                    <div class="w-arrow3"></div>
                                     <div class="dbfx-trIteml">
                                         销售收入
                                     </div>
@@ -809,6 +935,7 @@
                                     </div>
                                 </div>
                                 <div class="dbfx-trItem dbfx-trItemOrg" heng='heng2'>
+                                  <div class="w-arrow4"></div>
                                     <div class="dbfx-trIteml">
                                         利润总额
                                     </div>
@@ -826,6 +953,7 @@
                                     </div>
                                 </div>
                                 <div class="dbfx-trItem dbfx-trItemOrg" heng='heng3'>
+                                  <div class="w-arrow4"></div>
                                     <div class="dbfx-trIteml">
                                         毛利润
                                     </div>
@@ -847,6 +975,7 @@
                                 <div class="dbfx-trItem"></div>
                                 <div class="dbfx-trItem dbfx-trItemBlue">
                                     <div class="dbfx-trIteml" style="line-height:0.75rem;">
+                                      <div class="w-arrow9"></div>
                                         <div class="">
                                             总资产
                                         </div>
@@ -867,7 +996,8 @@
                                         </svg>
                                     </div>
                                 </div>
-                                <div class="dbfx-trItem dbfx-trItemBlue">
+                                <div class="dbfx-trItem dbfx-trItemBlue" heng='heng2'>
+                                    <div class="w-arrow3"></div>
                                     <div class="dbfx-trIteml" style="line-height:0.75rem;">
                                         <div class="">
                                             平均资产
@@ -889,7 +1019,8 @@
                                         </svg>
                                     </div>
                                 </div>
-                                <div class="dbfx-trItem dbfx-trItemOrg">
+                                <div class="dbfx-trItem dbfx-trItemOrg" heng='heng6'>
+                                    <div class="w-arrow6"></div>
                                     <div class="dbfx-trIteml" style="line-height:0.75rem;">
                                         <div class="">
                                             费用总额
@@ -912,6 +1043,7 @@
                                     </div>
                                 </div>
                                 <div class="dbfx-trItem dbfx-trItemOrg" heng='heng4'>
+                                  <div class="w-arrow8"></div>
                                     <div class="dbfx-trIteml">
                                         营业利润
                                     </div>
@@ -931,6 +1063,7 @@
                             </div>
                             <div class="dbfx-trline">
                                 <div class="dbfx-trItem dbfx-trItemBlue" shu='shu1' heng='heng1'>
+                                    <div class="w-arrow2"></div>
                                     <div class="dbfx-trIteml">
                                         权益乘数
                                     </div>
@@ -948,6 +1081,9 @@
                                     </div>
                                 </div>
                                 <div class="dbfx-trItem dbfx-trItemGreen" shu='shu2' heng='heng7'>
+                                  <div class="w-arrow5 w-arrow11">
+
+                                  </div>
                                     <div class="dbfx-trIteml">
                                         资产总额
                                     </div>
@@ -967,6 +1103,7 @@
                                 <div class="dbfx-trItem"></div>
                                 <div class="dbfx-trItem"></div>
                                 <div class="dbfx-trItem dbfx-trItemOrg">
+                                  <div class="w-arrow8"></div>
                                     <div class="dbfx-trIteml">
                                         其他利润
                                     </div>
@@ -986,6 +1123,9 @@
                             </div>
                             <div class="dbfx-trline">
                                 <div class="dbfx-trItem dbfx-trItemBlue" shu='shu2' heng='heng7'>
+                                   <div class="w-arrow8 w-arrow10">
+
+                                   </div>
                                     <div class="dbfx-trIteml" style="line-height:0.75rem;">
                                         <div class="">
                                             资产
@@ -1008,7 +1148,10 @@
                                         </svg>
                                     </div>
                                 </div>
-                                <div class="dbfx-trItem dbfx-trItemGreen">
+                                <div class="dbfx-trItem dbfx-trItemGreen" shu='shu2'>
+                                  <div class="w-arrow8 w-arrow12">
+
+                                  </div>
                                     <div class="dbfx-trIteml" style="line-height:0.75rem;">
                                         <div class="">
                                             非流动
@@ -1018,10 +1161,10 @@
                                         </div>
                                     </div>
                                     <div class="dbfx-trItemr">
-                                        <span>{{cwxldata.dqLongAssets}}</span>%
+                                        <span>{{cwxldata.dqLongAssets}}</span>万元
                                     </div>
                                     <div class="dbfx-trItemd">
-                                        同比{{cwxldata.tbLongAssets}}万元
+                                        同比{{cwxldata.tbLongAssets}}
                                         <svg class="icon" aria-hidden="true" v-if='cwxldata.tbLongAssets<0'>
                                             <use xlink:href="#icon-jiantou1"></use>
                                         </svg>
@@ -1031,6 +1174,7 @@
                                     </div>
                                 </div>
                                 <div class="dbfx-trItem dbfx-trItemGreen" shu='shu2' heng='heng8'>
+                                  <div class="w-arrow4 w-arrow13" ></div>
                                     <div class="dbfx-trIteml">
                                         流动资产
                                     </div>
@@ -1048,6 +1192,7 @@
                                     </div>
                                 </div>
                                 <div class="dbfx-trItem dbfx-trItemGreen">
+                                    <div class="w-arrow4 w-arrow13" ></div>
                                     <div class="dbfx-trIteml">
                                         货币资金
                                     </div>
@@ -1065,6 +1210,7 @@
                                     </div>
                                 </div>
                                 <div class="dbfx-trItem dbfx-trItemGreen">
+                                    <div class="w-arrow4 w-arrow13" ></div>
                                     <div class="dbfx-trIteml">
                                         预付账款
                                     </div>
@@ -1084,6 +1230,7 @@
                             </div>
                             <div class="dbfx-trline">
                                 <div class="dbfx-trItem dbfx-trItemGray" shu='shu2' heng='heng7'>
+                                  <div class="w-arrow8 w-arrow16"></div>
                                     <div class="dbfx-trIteml">
                                         负债总额
                                     </div>
@@ -1101,6 +1248,7 @@
                                     </div>
                                 </div>
                                 <div class="dbfx-trItem dbfx-trItemGray">
+                                  <div class="w-arrow4 w-arrow15"></div>
                                     <div class="dbfx-trIteml">
                                         长期负债
                                     </div>
@@ -1118,6 +1266,7 @@
                                     </div>
                                 </div>
                                 <div class="dbfx-trItem dbfx-trItemGray" shu='shu2' heng='heng8' henga='heng9'>
+                                  <div class="w-arrow4 w-arrow15"></div>
                                     <div class="dbfx-trIteml">
                                         流动负债
                                     </div>
@@ -1135,6 +1284,7 @@
                                     </div>
                                 </div>
                                 <div class="dbfx-trItem dbfx-trItemGreen">
+                                    <div class="w-arrow9 w-arrow14" ></div>
                                     <div class="dbfx-trIteml">
                                         存货
                                     </div>
@@ -1152,6 +1302,7 @@
                                     </div>
                                 </div>
                                 <div class="dbfx-trItem dbfx-trItemGreen">
+                                    <div class="w-arrow4 w-arrow13" ></div>
                                     <div class="dbfx-trIteml">
                                         应收账款
                                     </div>
@@ -1172,7 +1323,7 @@
                         </div>
                     </div>
                 </wtabpane>
-                <wtabpane label="风险提示" name="1">
+                <wtabpane label="风险提示" name="1" v-if='tabdis'>
                     <div class="fxts_t" v-if='sysNum<30' :key='1'>
                         <div class="fxts_ta fxts_taRed">
                             <div class="fxts_tap1">
@@ -1188,7 +1339,7 @@
                         <div class="fxts_tb fxts_tbRed">
                             <div class="fxts_tbcon">
                                 <div class="fxts_tbcona">
-                                    <p class="fxts_tbconap1 fxts_tbconap1red">您的平台经营状况很不安全，建议实时关注</p>
+                                    <p class="fxts_tbconap1 fxts_tbconap1red">您的平台经营状况很不安全，请立即改善</p>
                                     <p class="fxts_tbconap2">你可以通过数据罗盘（data.htd.cn）了解平台经营更多数据</p>
                                 </div>
                                 <div class="fxts_tbconb">
@@ -1218,7 +1369,7 @@
                         <div class="fxts_tb fxts_tbOrg">
                             <div class="fxts_tbcon">
                                 <div class="fxts_tbcona">
-                                    <p class="fxts_tbconap1 fxts_tbconap1org">您的平台经营状况很不安全，建议实时关注</p>
+                                    <p class="fxts_tbconap1 fxts_tbconap1org">您的平台经营状况存在风险，建议实时关注</p>
                                     <p class="fxts_tbconap2">你可以通过数据罗盘（data.htd.cn）了解平台经营更多数据</p>
                                 </div>
                                 <div class="fxts_tbconb">
@@ -1248,7 +1399,7 @@
                         <div class="fxts_tb fxts_tbGreen">
                             <div class="fxts_tbcon">
                                 <div class="fxts_tbcona">
-                                    <p class="fxts_tbconap1 fxts_tbconap1green">您的平台经营状况很不安全，建议实时关注</p>
+                                    <p class="fxts_tbconap1 fxts_tbconap1green">恭喜您，您的平台经营状况优良</p>
                                     <p class="fxts_tbconap2">你可以通过数据罗盘（data.htd.cn）了解平台经营更多数据</p>
                                 </div>
                                 <div class="fxts_tbconb">
@@ -1437,7 +1588,7 @@
                                 </div>
 
                                 <div class="fxts_item_ditemd">
-                                    参考值：<span>{{sysdata.pxDiffRatioRe}}%</span>
+                                    参考值：<span>{{sysdata.pxDiffRatioRe}}</span>
                                 </div>
 
                                 <div class="fxts_item_ditemc">
@@ -1515,7 +1666,7 @@
                         </div>
                     </div>
                 </wtabpane>
-                <wtabpane label="业务支持" name="2">
+                <wtabpane label="业务支持" name="2" v-if='tabdis'>
                   <div class="fxts_t" v-if='ywzcNum<30'>
                       <div class="fxts_ta fxts_taRed">
                           <div class="fxts_tap1">
@@ -1531,7 +1682,7 @@
                       <div class="fxts_tb fxts_tbRed">
                           <div class="fxts_tbcon">
                               <div class="fxts_tbcona">
-                                  <p class="fxts_tbconap1 fxts_tbconap1red">您的平台经营状况很不安全，建议实时关注</p>
+                                  <p class="fxts_tbconap1 fxts_tbconap1red">您的平台经营状况很不安全，请立即改善</p>
                                   <p class="fxts_tbconap2">你可以通过数据罗盘（data.htd.cn）了解平台经营更多数据</p>
                               </div>
                               <div class="fxts_tbconb">
@@ -1561,7 +1712,7 @@
                       <div class="fxts_tb fxts_tbOrg">
                           <div class="fxts_tbcon">
                               <div class="fxts_tbcona">
-                                  <p class="fxts_tbconap1 fxts_tbconap1org">您的平台经营状况很不安全，建议实时关注</p>
+                                  <p class="fxts_tbconap1 fxts_tbconap1org">您的平台经营状况存在风险，建议实时关注</p>
                                   <p class="fxts_tbconap2">你可以通过数据罗盘（data.htd.cn）了解平台经营更多数据</p>
                               </div>
                               <div class="fxts_tbconb">
@@ -1591,7 +1742,7 @@
                       <div class="fxts_tb fxts_tbGreen">
                           <div class="fxts_tbcon">
                               <div class="fxts_tbcona">
-                                  <p class="fxts_tbconap1 fxts_tbconap1green">您的平台经营状况很不安全，建议实时关注</p>
+                                  <p class="fxts_tbconap1 fxts_tbconap1green">恭喜您，您的平台经营状况优良</p>
                                   <p class="fxts_tbconap2">你可以通过数据罗盘（data.htd.cn）了解平台经营更多数据</p>
                               </div>
                               <div class="fxts_tbconb">
@@ -1779,11 +1930,10 @@ export default {
         ajax2: false,
         ajax3: false,
         sysdata: '',
-        sysNum: 0,
+        sysNum: 6,
         ywzcNum:0,
         ywzcdata:'',
-
-
+        tabdis:false,
     }),
     computed: {},
     watch: {
@@ -2056,9 +2206,6 @@ export default {
         }
 
     },
-
-
-
     mounted() {
         let _this = this;
         var url = _this.adminApi.host+'/login/validate',
@@ -2094,19 +2241,18 @@ export default {
                            }
 
                            if ($(this).attr('heng')) {
+
                                var hengrel = $(this).attr('heng');
-                               $('.dbfx-trItem[shu=' + hengrel + ']').addClass('cwfxHover')
+
+                               $('.dbfx-trItem[heng=' + hengrel + ']').addClass('cwfxHover');
+
+                               $('.dbfx-trItem[henga=' + hengrel + ']').addClass('cwfxHover')
+                               $('.dbfx-trItem[hengb=' + hengrel + ']').addClass('cwfxHover')
+                               $('.dbfx-trItem[hengc=' + hengrel + ']').addClass('cwfxHover')
                            }
 
-                           if ($(this).attr('henga')) {
-                               var hengarel = $(this).attr('henga');
-                               $('.dbfx-trItem[shu=' + hengarel + ']').addClass('cwfxHover')
-                           }
+                          
 
-                           if ($(this).attr('hengb')) {
-                               var hengbrel = $(this).attr('hengb');
-                               $('.dbfx-trItem[shu=' + hengbrel + ']').addClass('cwfxHover')
-                           }
                        }, function() {
                            $('.cwfxHover').removeClass('cwfxHover')
                        })
@@ -2204,7 +2350,6 @@ export default {
                        _this.adminApi.getJsonp(url, data, loading, success, complete)
                    })
                 } else {
-
                     Message({
                         'message': data.msg,
                         'type': 'error',

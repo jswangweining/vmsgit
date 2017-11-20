@@ -25,7 +25,7 @@
 
 <div class="bodyscroll" v-loading.body='loadingall'>
     <div class="w-pos">
-        <span>首页</span>/<span>汇天眼</span>/<span class="w-pos-active">用户分类</span>
+        <span>首页</span>/<span>汇天眼</span>/<span class="w-pos-active">会员对比</span>
     </div>
     <div class="w-con">
         <div class="w-search">
@@ -37,7 +37,7 @@
                         <radio-group v-model="formdata.radiovalue" @change='radiochange'>
                             <wradio label="0">无对比</wradio>
                             <wradio label="1">时间段对比</wradio>
-                            <wradio label="2">维度对比</wradio>
+                            <!-- <wradio label="2">维度对比</wradio> -->
                         </radio-group>
                     </form-item>
                 </div>
@@ -449,10 +449,31 @@ export default {
                                        },
                                        xAxis: [{
                                            type: 'category',
-                                           data: data.data.chartBottom1
+                                           data: data.data.chartBottom1,
+                                           axisLine: {
+                                               lineStyle: {
+                                                   color: '#eee'
+                                               }
+                                           },
+                                           axisLabel: {
+                                               color: '#333'
+                                           },
                                        }],
                                        yAxis: [{
-                                           type: 'value'
+                                           type: 'value',
+                                           axisLine: {
+                                               lineStyle: {
+                                                   color: '#eee'
+                                               }
+                                           },
+                                           axisLabel: {
+                                               color: '#333'
+                                           },
+                                           splitLine: {
+                                               lineStyle: {
+                                                   color: ['#eee'],
+                                               }
+                                           }
                                        }],
                                        series: [{
                                            name: '当前数据',
@@ -496,10 +517,31 @@ export default {
                                        },
                                        xAxis: [{
                                            type: 'category',
-                                           data: data.data.chartBottom2
+                                           data: data.data.chartBottom2,
+                                           axisLine: {
+                                               lineStyle: {
+                                                   color: '#eee'
+                                               }
+                                           },
+                                           axisLabel: {
+                                               color: '#333'
+                                           },
                                        }],
                                        yAxis: [{
-                                           type: 'value'
+                                           type: 'value',
+                                           axisLine: {
+                                               lineStyle: {
+                                                   color: '#eee'
+                                               }
+                                           },
+                                           axisLabel: {
+                                               color: '#333'
+                                           },
+                                           splitLine: {
+                                               lineStyle: {
+                                                   color: ['#eee'],
+                                               }
+                                           }
                                        }],
                                        series: [{
                                            name: '当前数据',
@@ -549,10 +591,31 @@ export default {
                                        xAxis: [{
                                            type: 'category',
                                            boundaryGap: false,
-                                           data: data.data.chartBottom3
+                                           data: data.data.chartBottom3,
+                                           axisLine: {
+                                               lineStyle: {
+                                                   color: '#eee'
+                                               }
+                                           },
+                                           axisLabel: {
+                                               color: '#333'
+                                           },
                                        }],
                                        yAxis: [{
-                                           type: 'value'
+                                           type: 'value',
+                                           axisLine: {
+                                               lineStyle: {
+                                                   color: '#eee'
+                                               }
+                                           },
+                                           axisLabel: {
+                                               color: '#333'
+                                           },
+                                           splitLine: {
+                                               lineStyle: {
+                                                   color: ['#eee'],
+                                               }
+                                           }
                                        }],
                                        series: [{
                                            name: '当前数据',
@@ -592,10 +655,31 @@ export default {
                                        xAxis: [{
                                            type: 'category',
                                            boundaryGap: false,
-                                           data: data.data.chartBottom4
+                                           data: data.data.chartBottom4,
+                                           axisLine: {
+                                               lineStyle: {
+                                                   color: '#eee'
+                                               }
+                                           },
+                                           axisLabel: {
+                                               color: '#333'
+                                           },
                                        }],
                                        yAxis: [{
-                                           type: 'value'
+                                           type: 'value',
+                                           axisLine: {
+                                               lineStyle: {
+                                                   color: '#eee'
+                                               }
+                                           },
+                                           axisLabel: {
+                                               color: '#333'
+                                           },
+                                           splitLine: {
+                                               lineStyle: {
+                                                   color: ['#eee'],
+                                               }
+                                           }
                                        }],
                                        series: [{
                                            name: '当前数据',
@@ -635,10 +719,31 @@ export default {
                                        xAxis: [{
                                            type: 'category',
                                            boundaryGap: false,
-                                           data: data.data.chartBottom5
+                                           data: data.data.chartBottom5,
+                                           axisLine: {
+                                               lineStyle: {
+                                                   color: '#eee'
+                                               }
+                                           },
+                                           axisLabel: {
+                                               color: '#333'
+                                           },
                                        }],
                                        yAxis: [{
-                                           type: 'value'
+                                           type: 'value',
+                                           axisLine: {
+                                               lineStyle: {
+                                                   color: '#eee'
+                                               }
+                                           },
+                                           axisLabel: {
+                                               color: '#333'
+                                           },
+                                           splitLine: {
+                                               lineStyle: {
+                                                   color: ['#eee'],
+                                               }
+                                           }
                                        }],
                                        series: [{
                                            name: '当前数据',
@@ -684,10 +789,31 @@ export default {
                                        xAxis: [{
                                            type: 'category',
                                            boundaryGap: false,
-                                           data: data.data.chartBottom6
+                                           data: data.data.chartBottom6,
+                                           axisLine: {
+                                               lineStyle: {
+                                                   color: '#eee'
+                                               }
+                                           },
+                                           axisLabel: {
+                                               color: '#333'
+                                           },
                                        }],
                                        yAxis: [{
-                                           type: 'value'
+                                           type: 'value',
+                                           axisLine: {
+                                               lineStyle: {
+                                                   color: '#eee'
+                                               }
+                                           },
+                                           axisLabel: {
+                                               color: '#333'
+                                           },
+                                           splitLine: {
+                                               lineStyle: {
+                                                   color: ['#eee'],
+                                               }
+                                           }
                                        }],
                                        series: [{
                                            name: '当前数据',
@@ -751,8 +877,6 @@ export default {
 
                        });
                    })
-
-
                 } else {
                     Message({
                         'message': data.msg,
@@ -893,10 +1017,31 @@ export default {
                                 },
                                 xAxis: [{
                                     type: 'category',
-                                    data: data.data.chartBottom1
+                                    data: data.data.chartBottom1,
+                                    axisLine: {
+                                        lineStyle: {
+                                            color: '#eee'
+                                        }
+                                    },
+                                    axisLabel: {
+                                        color: '#333'
+                                    },
                                 }],
                                 yAxis: [{
-                                    type: 'value'
+                                    type: 'value',
+                                    axisLine: {
+                                        lineStyle: {
+                                            color: '#eee'
+                                        }
+                                    },
+                                    axisLabel: {
+                                        color: '#333'
+                                    },
+                                    splitLine: {
+                                        lineStyle: {
+                                            color: ['#eee'],
+                                        }
+                                    }
                                 }],
                                 series: [{
                                     name: '当前数据',
@@ -941,10 +1086,31 @@ export default {
                                 },
                                 xAxis: [{
                                     type: 'category',
-                                    data: data.data.chartBottom2
+                                    data: data.data.chartBottom2,
+                                    axisLine: {
+                                        lineStyle: {
+                                            color: '#eee'
+                                        }
+                                    },
+                                    axisLabel: {
+                                        color: '#333'
+                                    },
                                 }],
                                 yAxis: [{
-                                    type: 'value'
+                                    type: 'value',
+                                    axisLine: {
+                                        lineStyle: {
+                                            color: '#eee'
+                                        }
+                                    },
+                                    axisLabel: {
+                                        color: '#333'
+                                    },
+                                    splitLine: {
+                                        lineStyle: {
+                                            color: ['#eee'],
+                                        }
+                                    }
                                 }],
                                 series: [{
                                     name: '当前数据',
@@ -995,10 +1161,31 @@ export default {
                                 xAxis: [{
                                     type: 'category',
                                     boundaryGap: false,
-                                    data: data.data.chartBottom3
+                                    data: data.data.chartBottom3,
+                                    axisLine: {
+                                        lineStyle: {
+                                            color: '#eee'
+                                        }
+                                    },
+                                    axisLabel: {
+                                        color: '#333'
+                                    },
                                 }],
                                 yAxis: [{
-                                    type: 'value'
+                                    type: 'value',
+                                    axisLine: {
+                                        lineStyle: {
+                                            color: '#eee'
+                                        }
+                                    },
+                                    axisLabel: {
+                                        color: '#333'
+                                    },
+                                    splitLine: {
+                                        lineStyle: {
+                                            color: ['#eee'],
+                                        }
+                                    }
                                 }],
                                 series: [{
                                     name: '当前数据',
@@ -1039,10 +1226,31 @@ export default {
                                 xAxis: [{
                                     type: 'category',
                                     boundaryGap: false,
-                                    data: data.data.chartBottom4
+                                    data: data.data.chartBottom4,
+                                    axisLine: {
+                                        lineStyle: {
+                                            color: '#eee'
+                                        }
+                                    },
+                                    axisLabel: {
+                                        color: '#333'
+                                    },
                                 }],
                                 yAxis: [{
-                                    type: 'value'
+                                    type: 'value',
+                                    axisLine: {
+                                        lineStyle: {
+                                            color: '#eee'
+                                        }
+                                    },
+                                    axisLabel: {
+                                        color: '#333'
+                                    },
+                                    splitLine: {
+                                        lineStyle: {
+                                            color: ['#eee'],
+                                        }
+                                    }
                                 }],
                                 series: [{
                                     name: '当前数据',
@@ -1083,10 +1291,31 @@ export default {
                                 xAxis: [{
                                     type: 'category',
                                     boundaryGap: false,
-                                    data: data.data.chartBottom5
+                                    data: data.data.chartBottom5,
+                                    axisLine: {
+                                        lineStyle: {
+                                            color: '#eee'
+                                        }
+                                    },
+                                    axisLabel: {
+                                        color: '#333'
+                                    },
                                 }],
                                 yAxis: [{
-                                    type: 'value'
+                                    type: 'value',
+                                    axisLine: {
+                                        lineStyle: {
+                                            color: '#eee'
+                                        }
+                                    },
+                                    axisLabel: {
+                                        color: '#333'
+                                    },
+                                    splitLine: {
+                                        lineStyle: {
+                                            color: ['#eee'],
+                                        }
+                                    }
                                 }],
                                 series: [{
                                     name: '当前数据',
@@ -1133,10 +1362,31 @@ export default {
                                 xAxis: [{
                                     type: 'category',
                                     boundaryGap: false,
-                                    data: data.data.chartBottom6
+                                    data: data.data.chartBottom6,
+                                    axisLine: {
+                                        lineStyle: {
+                                            color: '#eee'
+                                        }
+                                    },
+                                    axisLabel: {
+                                        color: '#333'
+                                    },
                                 }],
                                 yAxis: [{
-                                    type: 'value'
+                                    type: 'value',
+                                    axisLine: {
+                                        lineStyle: {
+                                            color: '#eee'
+                                        }
+                                    },
+                                    axisLabel: {
+                                        color: '#333'
+                                    },
+                                    splitLine: {
+                                        lineStyle: {
+                                            color: ['#eee'],
+                                        }
+                                    }
                                 }],
                                 series: [{
                                     name: '当前数据',
@@ -1224,10 +1474,31 @@ export default {
                             },
                             xAxis: [{
                                 type: 'category',
-                                data: data.data.chartBottom1
+                                data: data.data.chartBottom1,
+                                axisLine: {
+                                    lineStyle: {
+                                        color: '#eee'
+                                    }
+                                },
+                                axisLabel: {
+                                    color: '#333'
+                                },
                             }],
                             yAxis: [{
-                                type: 'value'
+                                type: 'value',
+                                axisLine: {
+                                    lineStyle: {
+                                        color: '#eee'
+                                    }
+                                },
+                                axisLabel: {
+                                    color: '#333'
+                                },
+                                splitLine: {
+                                    lineStyle: {
+                                        color: ['#eee'],
+                                    }
+                                }
                             }],
                             series: [{
                                 name: '当前数据',
@@ -1293,10 +1564,31 @@ export default {
                             },
                             xAxis: [{
                                 type: 'category',
-                                data: data.data.chartBottom2
+                                data: data.data.chartBottom2,
+                                axisLine: {
+                                    lineStyle: {
+                                        color: '#eee'
+                                    }
+                                },
+                                axisLabel: {
+                                    color: '#333'
+                                },
                             }],
                             yAxis: [{
-                                type: 'value'
+                                type: 'value',
+                                axisLine: {
+                                    lineStyle: {
+                                        color: '#eee'
+                                    }
+                                },
+                                axisLabel: {
+                                    color: '#333'
+                                },
+                                splitLine: {
+                                    lineStyle: {
+                                        color: ['#eee'],
+                                    }
+                                }
                             }],
                             series: [{
                                 name: '当前数据',
@@ -1368,10 +1660,31 @@ export default {
                             xAxis: [{
                                 type: 'category',
                                 boundaryGap: false,
-                                data: data.data.chartBottom3
+                                data: data.data.chartBottom3,
+                                axisLine: {
+                                    lineStyle: {
+                                        color: '#eee'
+                                    }
+                                },
+                                axisLabel: {
+                                    color: '#333'
+                                },
                             }],
                             yAxis: [{
-                                type: 'value'
+                                type: 'value',
+                                axisLine: {
+                                    lineStyle: {
+                                        color: '#eee'
+                                    }
+                                },
+                                axisLabel: {
+                                    color: '#333'
+                                },
+                                splitLine: {
+                                    lineStyle: {
+                                        color: ['#eee'],
+                                    }
+                                }
                             }],
                             series: [{
                                 name: '当前数据',
@@ -1385,7 +1698,7 @@ export default {
 
                                 data: data.data.chartDate3
                             }, {
-                                name: '当前数据',
+                                name: '对比数据',
                                 type: 'line',
                                 stack: '总量',
                                 itemStyle: {
@@ -1423,10 +1736,31 @@ export default {
                             xAxis: [{
                                 type: 'category',
                                 boundaryGap: false,
-                                data: data.data.chartBottom4
+                                data: data.data.chartBottom4,
+                                axisLine: {
+                                    lineStyle: {
+                                        color: '#eee'
+                                    }
+                                },
+                                axisLabel: {
+                                    color: '#333'
+                                },
                             }],
                             yAxis: [{
-                                type: 'value'
+                                type: 'value',
+                                axisLine: {
+                                    lineStyle: {
+                                        color: '#eee'
+                                    }
+                                },
+                                axisLabel: {
+                                    color: '#333'
+                                },
+                                splitLine: {
+                                    lineStyle: {
+                                        color: ['#eee'],
+                                    }
+                                }
                             }],
                             series: [{
                                 name: '当前数据',
@@ -1478,10 +1812,31 @@ export default {
                             xAxis: [{
                                 type: 'category',
                                 boundaryGap: false,
-                                data: data.data.chartBottom5
+                                data: data.data.chartBottom5,
+                                axisLine: {
+                                    lineStyle: {
+                                        color: '#eee'
+                                    }
+                                },
+                                axisLabel: {
+                                    color: '#333'
+                                },
                             }],
                             yAxis: [{
-                                type: 'value'
+                                type: 'value',
+                                axisLine: {
+                                    lineStyle: {
+                                        color: '#eee'
+                                    }
+                                },
+                                axisLabel: {
+                                    color: '#333'
+                                },
+                                splitLine: {
+                                    lineStyle: {
+                                        color: ['#eee'],
+                                    }
+                                }
                             }],
                             series: [{
                                 name: '当前数据',
@@ -1545,10 +1900,31 @@ export default {
                             xAxis: [{
                                 type: 'category',
                                 boundaryGap: false,
-                                data: data.data.chartBottom6
+                                data: data.data.chartBottom6,
+                                axisLine: {
+                                    lineStyle: {
+                                        color: '#eee'
+                                    }
+                                },
+                                axisLabel: {
+                                    color: '#333'
+                                },
                             }],
                             yAxis: [{
-                                type: 'value'
+                                type: 'value',
+                                axisLine: {
+                                    lineStyle: {
+                                        color: '#eee'
+                                    }
+                                },
+                                axisLabel: {
+                                    color: '#333'
+                                },
+                                splitLine: {
+                                    lineStyle: {
+                                        color: ['#eee'],
+                                    }
+                                }
                             }],
                             series: [{
                                 name: '当前数据',
@@ -1656,10 +2032,31 @@ export default {
                             },
                             xAxis: [{
                                 type: 'category',
-                                data: data.data.chartBottom1
+                                data: data.data.chartBottom1,
+                                axisLine: {
+                                    lineStyle: {
+                                        color: '#eee'
+                                    }
+                                },
+                                axisLabel: {
+                                    color: '#333'
+                                },
                             }],
                             yAxis: [{
-                                type: 'value'
+                                type: 'value',
+                                axisLine: {
+                                    lineStyle: {
+                                        color: '#eee'
+                                    }
+                                },
+                                axisLabel: {
+                                    color: '#333'
+                                },
+                                splitLine: {
+                                    lineStyle: {
+                                        color: ['#eee'],
+                                    }
+                                }
                             }],
                             series: [{
                                 name: '当前数据',
@@ -1725,10 +2122,31 @@ export default {
                             },
                             xAxis: [{
                                 type: 'category',
-                                data: data.data.chartBottom2
+                                data: data.data.chartBottom2,
+                                axisLine: {
+                                    lineStyle: {
+                                        color: '#eee'
+                                    }
+                                },
+                                axisLabel: {
+                                    color: '#333'
+                                },
                             }],
                             yAxis: [{
-                                type: 'value'
+                                type: 'value',
+                                axisLine: {
+                                    lineStyle: {
+                                        color: '#eee'
+                                    }
+                                },
+                                axisLabel: {
+                                    color: '#333'
+                                },
+                                splitLine: {
+                                    lineStyle: {
+                                        color: ['#eee'],
+                                    }
+                                }
                             }],
                             series: [{
                                 name: '当前数据',
@@ -1800,10 +2218,31 @@ export default {
                             xAxis: [{
                                 type: 'category',
                                 boundaryGap: false,
-                                data: data.data.chartBottom3
+                                data: data.data.chartBottom3,
+                                axisLine: {
+                                    lineStyle: {
+                                        color: '#eee'
+                                    }
+                                },
+                                axisLabel: {
+                                    color: '#333'
+                                },
                             }],
                             yAxis: [{
-                                type: 'value'
+                                type: 'value',
+                                axisLine: {
+                                    lineStyle: {
+                                        color: '#eee'
+                                    }
+                                },
+                                axisLabel: {
+                                    color: '#333'
+                                },
+                                splitLine: {
+                                    lineStyle: {
+                                        color: ['#eee'],
+                                    }
+                                }
                             }],
                             series: [{
                                 name: '当前数据',
@@ -1855,10 +2294,31 @@ export default {
                             xAxis: [{
                                 type: 'category',
                                 boundaryGap: false,
-                                data: data.data.chartBottom4
+                                data: data.data.chartBottom4,
+                                axisLine: {
+                                    lineStyle: {
+                                        color: '#eee'
+                                    }
+                                },
+                                axisLabel: {
+                                    color: '#333'
+                                },
                             }],
                             yAxis: [{
-                                type: 'value'
+                                type: 'value',
+                                axisLine: {
+                                    lineStyle: {
+                                        color: '#eee'
+                                    }
+                                },
+                                axisLabel: {
+                                    color: '#333'
+                                },
+                                splitLine: {
+                                    lineStyle: {
+                                        color: ['#eee'],
+                                    }
+                                }
                             }],
                             series: [{
                                 name: '当前数据',
@@ -1910,10 +2370,31 @@ export default {
                             xAxis: [{
                                 type: 'category',
                                 boundaryGap: false,
-                                data: data.data.chartBottom5
+                                data: data.data.chartBottom5,
+                                axisLine: {
+                                    lineStyle: {
+                                        color: '#eee'
+                                    }
+                                },
+                                axisLabel: {
+                                    color: '#333'
+                                },
                             }],
                             yAxis: [{
-                                type: 'value'
+                                type: 'value',
+                                axisLine: {
+                                    lineStyle: {
+                                        color: '#eee'
+                                    }
+                                },
+                                axisLabel: {
+                                    color: '#333'
+                                },
+                                splitLine: {
+                                    lineStyle: {
+                                        color: ['#eee'],
+                                    }
+                                }
                             }],
                             series: [{
                                 name: '当前数据',
@@ -1977,10 +2458,31 @@ export default {
                             xAxis: [{
                                 type: 'category',
                                 boundaryGap: false,
-                                data: data.data.chartBottom6
+                                data: data.data.chartBottom6,
+                                axisLine: {
+                                    lineStyle: {
+                                        color: '#eee'
+                                    }
+                                },
+                                axisLabel: {
+                                    color: '#333'
+                                },
                             }],
                             yAxis: [{
-                                type: 'value'
+                                type: 'value',
+                                axisLine: {
+                                    lineStyle: {
+                                        color: '#eee'
+                                    }
+                                },
+                                axisLabel: {
+                                    color: '#333'
+                                },
+                                splitLine: {
+                                    lineStyle: {
+                                        color: ['#eee'],
+                                    }
+                                }
                             }],
                             series: [{
                                 name: '当前数据',

@@ -6,8 +6,25 @@
 }
 
 .w-ywxl-r-t span.span1 {
-margin-left: 0.5rem;
-font-size: 12px;
+    margin-left: 0.5rem;
+    font-size: 12px;
+}
+
+.w-tipa {
+    font-size: 0.8rem;
+    color: #f1f1f1;
+}
+
+.w-tipb {
+    color: #ababab;
+    font-size: 0.7rem;
+    margin-top: 20px;
+}
+
+.w-tipc {
+    color: #eee;
+    font-size: 0.7rem;
+    margin-top: 5px;
 }
 
 </style>
@@ -16,7 +33,7 @@ font-size: 12px;
 
 <div v-loading.body='loadingall' class="bodyscroll">
     <div class="w-pos">
-        <span>首页</span>/<span>汇天眼</span>/<span class="w-pos-active">目标用户管理</span>
+        <span>首页</span>/<span>汇天眼</span>/<span class="w-pos-active">质量提升</span>
     </div>
 
     <div class="w-con">
@@ -32,10 +49,55 @@ font-size: 12px;
                                         <wradio label="1">活跃会员店TOP10</wradio>
                                     </radio-group>
                                 </form-item>
-                                <form-item style="float:right; color:#6c81b3">
-                                    <i class="el-icon-information"></i>
-                                    <span class="atext">什么是活跃会员店</span>
-                                </form-item>
+                                <!-- <wtooltip class="item" effect="dark" placement="bottom">
+                                    <div slot="content" style=" margin-right:20px;">
+                                        <div class="w-tipa">
+                                            活跃会员店区间
+                                        </div>
+                                        <div class="w-tipb">
+                                            整体采购
+                                        </div>
+                                        <div class="w-tipc">
+                                            125,000元 - 300,000元
+                                        </div>
+                                        <div class="w-tipb">
+                                            线上采购
+                                        </div>
+                                        <div class="w-tipc">
+                                            55,000元 - 100,000元
+                                        </div>
+                                        <div class="w-tipb">
+                                            商城登录次数
+                                        </div>
+                                        <div class="w-tipc">
+                                            200次 - 500次
+                                        </div>
+                                        <div class="w-tipb">
+                                            超级老板登录次数
+                                        </div>
+                                        <div class="w-tipc">
+                                            50次 - 100次
+                                        </div>
+                                        <div class="w-tipb">
+                                            商品上架
+                                        </div>
+                                        <div class="w-tipc">
+                                            10件 - 30件
+                                        </div>
+                                        <div class="w-tipb">
+                                            贷款金额
+                                        </div>
+                                        <div class="w-tipc">
+                                            125,000 - 300,000
+                                        </div>
+                                    </div>
+                                    <form-item style="float:right; color:#6c81b3">
+
+                                        <i class="el-icon-information"></i>
+                                        <span class="atext">分部活跃会员店区间</span>
+
+                                    </form-item>
+                                </wtooltip> -->
                             </div>
                             <div class="">
                                 <form-item label="显示字段" style="margin:0px;">
@@ -92,10 +154,55 @@ font-size: 12px;
                                         <wradio label="1">VIP会员店TOP10</wradio>
                                     </radio-group>
                                 </form-item>
-                                <form-item style="float:right; color:#6c81b3">
-                                    <i class="el-icon-information"></i>
-                                    <span class="atext">什么是活跃会员店</span>
-                                </form-item>
+                                <!-- <wtooltip class="item" effect="dark" placement="bottom">
+                                    <div slot="content" style=" margin-right:20px;">
+                                        <div class="w-tipa">
+                                            活跃会员店区间
+                                        </div>
+                                        <div class="w-tipb">
+                                            整体采购
+                                        </div>
+                                        <div class="w-tipc">
+                                            125,000元 - 300,000元
+                                        </div>
+                                        <div class="w-tipb">
+                                            线上采购
+                                        </div>
+                                        <div class="w-tipc">
+                                            55,000元 - 100,000元
+                                        </div>
+                                        <div class="w-tipb">
+                                            商城登录次数
+                                        </div>
+                                        <div class="w-tipc">
+                                            200次 - 500次
+                                        </div>
+                                        <div class="w-tipb">
+                                            超级老板登录次数
+                                        </div>
+                                        <div class="w-tipc">
+                                            50次 - 100次
+                                        </div>
+                                        <div class="w-tipb">
+                                            商品上架
+                                        </div>
+                                        <div class="w-tipc">
+                                            10件 - 30件
+                                        </div>
+                                        <div class="w-tipb">
+                                            贷款金额
+                                        </div>
+                                        <div class="w-tipc">
+                                            125,000 - 300,000
+                                        </div>
+                                    </div>
+                                    <form-item style="float:right; color:#6c81b3">
+
+                                        <i class="el-icon-information"></i>
+                                        <span class="atext">分部活跃会员店区间</span>
+
+                                    </form-item>
+                                </wtooltip> -->
                             </div>
                             <div class="">
                                 <form-item style="float:right;">
@@ -156,23 +263,23 @@ font-size: 12px;
                     </div>
                     <div class="w-table">
                         <wtable border :data="tableData3">
-                          <tablecolumn label="排名" width='80' fixed>
-                              <template scope="scope">
-                                  {{scope.$index+1}}
-                              </template>
-                          </tablecolumn>
-                          <tablecolumn prop="custName" label="会员店名称" fixed show-overflow-tooltip min-width='200'>
-                          </tablecolumn>
-                          <tablecolumn prop="xsAmt" label="销售额" width='200'>
-                          </tablecolumn>
-                          <tablecolumn prop="sellPoint" label="销售额占比" width='200'>
-                          </tablecolumn>
-                          <tablecolumn prop="xsQty" label="购买频次" width='200'>
-                          </tablecolumn>
-                          <tablecolumn prop="lastDate" label="最近一次购买日期" width='200'>
-                          </tablecolumn>
-                          <tablecolumn prop="lastTime" label="间隔天数" width='200'>
-                          </tablecolumn>
+                            <tablecolumn label="排名" width='80' fixed>
+                                <template scope="scope">
+                                    {{scope.$index+1}}
+                                </template>
+                            </tablecolumn>
+                            <tablecolumn prop="custName" label="会员店名称" fixed show-overflow-tooltip min-width='200'>
+                            </tablecolumn>
+                            <tablecolumn prop="xsAmt" label="销售额" width='200'>
+                            </tablecolumn>
+                            <tablecolumn prop="sellPoint" label="销售额占比（%）" width='200' v-if='formdata3.radiovalue3=="0" || formdata3.radiovalue3=="1"'>
+                            </tablecolumn>
+                            <tablecolumn prop="xsQty" label="购买频次" width='200' v-if='formdata3.radiovalue3=="0" || formdata3.radiovalue3=="1"'>
+                            </tablecolumn>
+                            <tablecolumn prop="lastDate" label="最近一次购买日期" width='200'>
+                            </tablecolumn>
+                            <tablecolumn prop="lastTime" label="间隔天数" width='200'>
+                            </tablecolumn>
                             <tablecolumn label="近六个月趋势" width='200' align='center' fixed='right'>
                                 <template scope="scope">
                                     <wbutton type="info" size="small" icon='view' @click='tableView(scope.row.custCode,scope.row.custName)'>查看</wbutton>
@@ -193,7 +300,9 @@ font-size: 12px;
         <div class="rankingt" slot='title'>
             <div class="rankingta">
                 <div class="w-ywxl-r-t">
-                    销售占比会员店TOP近6个月趋势 <span class='span1'>{{tabledialogtitle}}</span>
+                    <span v-if='formdata3.radiovalue3=="0"'>销售占比会员店TOP近6个月趋势</span>
+                    <span v-if='formdata3.radiovalue3=="1"'>购买频次会员店TOP近6个月趋势</span>
+                    <span v-if='formdata3.radiovalue3=="2"'>购买间隔会员店TOP近6个月趋势</span> <span class='span1'>{{tabledialogtitle}}</span>
                 </div>
             </div>
         </div>
@@ -217,11 +326,11 @@ font-size: 12px;
                     </div>
                 </div>
                 <div class="rankingcbd">
-                    <div class="rankingcbda" style="height:1.5rem;" v-for='(item,index) in sortList'>
+                    <div class="rankingcbda" style="height:1.5rem; overflow:hidden" v-for='(item,index) in sortList'>
                         <div class="rankingcbda1">
                             {{index+1}}
                         </div>
-                        <div class="rankingcbda2">
+                        <div class="rankingcbda2" style=" height:40px; line-height:40px;">
                             {{item.custName}}
                         </div>
                         <div class="rankingcbda3" v-if='formdata3.radiovalue3=="0"'>
@@ -267,15 +376,17 @@ import wpager from 'element-ui/packages/pagination/src/pagination.js'
 import DatePicker from 'element-ui/packages/date-picker/src/picker/date-picker.js'
 import Message from 'element-ui/packages/Message/index.js'
 import wdialog from 'element-ui/packages/dialog/src/component.vue'
+import wtooltip from 'element-ui/packages/tooltip/index.js'
 
 export default {
     name: "",
     data: () => ({
+        userId: '',
         loadingall: false,
         dialogload: false,
         loadtab: false,
         tabledialog: false,
-        tabledialogtitle:'',
+        tabledialogtitle: '',
         activeName: '0',
         formdata1: {
             'radiovalue': '0',
@@ -291,7 +402,7 @@ export default {
                 return time.getTime() > Date.now() - 8.64e7 || time.getTime() < new Date(2016, 0, 1, 0, 0, 0)
             }
         },
-        sortList:[],
+        sortList: [],
         tableData1: [],
         tableData2: [],
         tableData3: [],
@@ -401,29 +512,45 @@ export default {
             return;
         }
     },
-    computed:{
-      dialogChartTitle:function(){
-        let _this=this;
-        switch (_this.formdata3.radiovalue3) {
-          case '0':
-          return '销售金额'
-            break;
+    computed: {
+        dialogChartTitle: function() {
+            let _this = this;
+            switch (_this.formdata3.radiovalue3) {
+                case '0':
+                    return '销售金额（单位：万元）'
+                    break;
 
-            case '1':
-            return '购买频次'
-              break;
+                case '1':
+                    return '购买频次（单位：次）'
+                    break;
 
-              case '2':
-              return '销售金额'
-                break;
-          default:
+                case '2':
+                    return '销售金额（单位：万元）'
+                    break;
+                default:
+            }
+        },
+        dialogChartTitle2: function() {
+            let _this = this;
+            switch (_this.formdata3.radiovalue3) {
+                case '0':
+                    return '销售金额'
+                    break;
 
+                case '1':
+                    return '次数'
+                    break;
+
+                case '2':
+                    return '销售金额'
+                    break;
+                default:
+            }
         }
-      }
     },
     mounted() {
         let _this = this;
-        var url = _this.adminApi.host+'/login/validate',
+        var url = _this.adminApi.host + '/login/validate',
             data = {
                 userId: _this.$route.query.userId,
                 ticket: _this.$route.query.ticket
@@ -434,41 +561,41 @@ export default {
             success = function(data) {
                 if (data.code == '2') {
 
-                  _this.userId = _this.$route.query.userId;
-                  _this.$emit('userInfo',_this.$route.query.userName,data.data.vmsUrl);
-                  var data={
-                     'userId':_this.$route.query.userId,
-                     'ticket':_this.$route.query.ticket,
-                     'userName':_this.$route.query.userName,
-                   }
-                   _this.$store.commit('changeUserId',data)
-                   _this.$nextTick(function() {
+                    _this.userId = _this.$route.query.userId;
+                    _this.$emit('userInfo', _this.$route.query.userName, data.data.vmsUrl);
+                    var data = {
+                        'userId': _this.$route.query.userId,
+                        'ticket': _this.$route.query.ticket,
+                        'userName': _this.$route.query.userName,
+                    }
+                    _this.$store.commit('changeUserId', data)
+                    _this.$nextTick(function() {
 
-                       var url = _this.adminApi.host + '/htycustall/cust/manager',
-                           data = {
-                               userId: _this.userId,
-                               pageType: _this.activeName,
-                               aliveType: _this.formdata1.radiovalue,
-                               // time:'201709'
-                           },
-                           loading = function() {
-                               _this.loadtab = true;
-                           },
-                           success = function(data) {
-                               if (data.code == '1') {
-                                   _this.tableData1 = data.data;
-                               } else {
-                                   Message({
-                                       'message': data.msg,
-                                       'type': 'error',
-                                   });
-                               }
-                           },
-                           complete = function() {
-                               _this.loadtab = false;
-                           }
-                       _this.adminApi.getJsonp(url, data, loading, success, complete)
-                   })
+                        var url = _this.adminApi.host + '/htycustall/cust/manager',
+                            data = {
+                                userId: _this.userId,
+                                pageType: _this.activeName,
+                                aliveType: _this.formdata1.radiovalue,
+                                // time:'201709'
+                            },
+                            loading = function() {
+                                _this.loadtab = true;
+                            },
+                            success = function(data) {
+                                if (data.code == '1') {
+                                    _this.tableData1 = data.data;
+                                } else {
+                                    Message({
+                                        'message': data.msg,
+                                        'type': 'error',
+                                    });
+                                }
+                            },
+                            complete = function() {
+                                _this.loadtab = false;
+                            }
+                        _this.adminApi.getJsonp(url, data, loading, success, complete)
+                    })
                 } else {
                     Message({
                         'message': data.msg,
@@ -480,105 +607,105 @@ export default {
                 }
             },
             complete = function() {
-               _this.loadingall = false;
+                _this.loadingall = false;
             }
         _this.adminApi.getJsonp(url, data, loading, success, complete)
 
     },
     methods: {
-        tableView: function(code,name) {
+        tableView: function(code, name) {
             let _this = this;
-             _this.tabledialog = true;
-             _this.tabledialogtitle=name;
+            _this.tabledialog = true;
+            _this.tabledialogtitle = name;
             var url = _this.adminApi.host + '/htycustall/cust/banner',
                 data = {
                     userId: _this.userId,
-                    custCode:code,
-                    sortType:_this.formdata3.radiovalue3
-                    // time:'201709'
+                    custCode: code,
+                    sortType: _this.formdata3.radiovalue3
+                        // time:'201709'
                 },
                 loading = function() {
-                    _this.dialogload=true
+                    _this.dialogload = true
 
                 },
                 success = function(data) {
                     if (data.code == '1') {
-                         _this.sortList = data.data.sortList;
+                        _this.sortList = data.data.sortList;
 
-                         _this.$nextTick(function() {
-                           var option3 = {
-                               title: {
-                                   show: true,
-                                   text:_this.dialogChartTitle
-                               },
-                               tooltip: {
-                                   trigger: 'axis',
-                                   axisPointer: {
-                                       type: 'cross',
-                                       label: {
-                                           backgroundColor: '#6a7985'
-                                       }
-                                   }
-                               },
-                               grid: {
-                                   top: '50',
-                                   left: '3%',
-                                   right: '4%',
-                                   bottom: '3%',
-                                   containLabel: true
-                               },
-                               xAxis: [{
-                                   type: 'category',
-                                   boundaryGap: false,
-                                   data: data.data.listName,
-                                   axisLine:{
-                                     lineStyle:{
-                                       color:'#eee'
-                                     }
-                                   },
-                                   axisLabel:{
-                                     color:'#333'
-                                   },
-                               }],
-                               yAxis: [{
-                                   type: 'value',
-                                   axisLine:{
-                                     lineStyle:{
-                                       color:'#eee'
-                                     }
-                                   },
-                                   axisLabel:{
-                                     color:'#333'
-                                   },
-                                   splitLine:{
-                                     lineStyle:{
-                                       color: ['#eee'],
-                                     }
-                                   }
-                               }],
-                               series: [{
-                                   name: '收入',
-                                   type: 'line',
-                                   stack: '总量',
-                                   itemStyle: {
-                                       normal: {
-                                           color: 'rgb(255, 119, 0)'
-                                       }
-                                   },
-                                   areaStyle: {
-                                       normal: {
-                                           color: 'rgb(255, 119, 0)',
-                                           opacity: 0.2 // 图表中各个图区域的透明度
+                        _this.$nextTick(function() {
+                            var option3 = {
+                                title: {
+                                    show: true,
+                                    text: _this.dialogChartTitle
+                                },
+                                tooltip: {
+                                    trigger: 'axis',
+                                    axisPointer: {
+                                        type: 'cross',
+                                        label: {
+                                            backgroundColor: '#6a7985'
+                                        }
+                                    }
+                                },
+                                grid: {
+                                    top: '50',
+                                    left: '3%',
+                                    right: '4%',
+                                    bottom: '3%',
+                                    containLabel: true
+                                },
+                                xAxis: [{
+                                    type: 'category',
+                                    boundaryGap: false,
+                                    data: data.data.listName,
+                                    axisLine: {
+                                        lineStyle: {
+                                            color: '#eee'
+                                        }
+                                    },
+                                    axisLabel: {
+                                        color: '#333'
+                                    },
+                                }],
+                                yAxis: [{
+                                    type: 'value',
+                                    axisLine: {
+                                        lineStyle: {
+                                            color: '#eee'
+                                        }
+                                    },
+                                    axisLabel: {
+                                        color: '#333'
+                                    },
+                                    splitLine: {
+                                        lineStyle: {
+                                            color: ['#eee'],
+                                        }
+                                    }
+                                }],
+                                series: [{
+                                    name: _this.dialogChartTitle2,
+                                    type: 'line',
+                                    stack: '总量',
+                                    itemStyle: {
+                                        normal: {
+                                            color: 'rgb(255, 119, 0)'
+                                        }
+                                    },
+                                    areaStyle: {
+                                        normal: {
+                                            color: 'rgb(255, 119, 0)',
+                                            opacity: 0.2 // 图表中各个图区域的透明度
 
-                                       }
-                                   },
-                                   data: data.data.listDate
-                               }, ]
-                           };
+                                        }
+                                    },
+                                    data: data.data.listDate
+                                }, ]
+                            };
 
-                           _this.myChart = echarts.init(document.getElementById('main'));
-                           _this.myChart.setOption(option3);
-                         })
+                            _this.myChart = echarts.init(document.getElementById('main'));
+                            _this.myChart.setOption(option3);
+                        })
                     } else {
                         Message({
                             'message': data.msg,
@@ -587,7 +714,7 @@ export default {
                     }
                 },
                 complete = function() {
-                  _this.dialogload=false
+                    _this.dialogload = false
                 }
             _this.adminApi.getJsonp(url, data, loading, success, complete)
 
@@ -653,96 +780,95 @@ export default {
                 }
             _this.adminApi.getJsonp(url, data, loading, success, complete)
         },
-        mbyhglChange3:function(){
-          let _this=this;
-          var data = {
-              userId: _this.userId,
-              sortType: _this.formdata3.radiovalue3,
-              dateTime: ''
-          };
+        mbyhglChange3: function() {
+            let _this = this;
+            var data = {
+                userId: _this.userId,
+                sortType: _this.formdata3.radiovalue3,
+                dateTime: ''
+            };
 
-          if (_this.formdata3.startmonth) {
-              var starttime = $('.el-input__inner:eq(0)', ".monthrange").val();
-              data.dateTime = starttime.replace('-', '');
-          }
-          var url = _this.adminApi.host + '/htycustall/cust/month',
+            if (_this.formdata3.startmonth) {
+                var starttime = $('.el-input__inner:eq(0)', ".monthrange").val();
+                data.dateTime = starttime.replace('-', '');
+            }
+            var url = _this.adminApi.host + '/htycustall/cust/month',
 
-              loading = function() {
-                  _this.loadtab = true;
-              },
-              success = function(data) {
-                  if (data.code == '1') {
-                      _this.tableData3 = data.data;
-                  } else {
-                      Message({
-                          'message': data.msg,
-                          'type': 'error',
-                      });
-                  }
-              },
-              complete = function() {
-                  _this.loadtab = false;
-              }
-          _this.adminApi.getJsonp(url, data, loading, success, complete)
+                loading = function() {
+                    _this.loadtab = true;
+                },
+                success = function(data) {
+                    if (data.code == '1') {
+                        _this.tableData3 = data.data;
+                    } else {
+                        Message({
+                            'message': data.msg,
+                            'type': 'error',
+                        });
+                    }
+                },
+                complete = function() {
+                    _this.loadtab = false;
+                }
+            _this.adminApi.getJsonp(url, data, loading, success, complete)
         },
-        mbyhglSearch:function(){
-          let _this=this;
-          if(!_this.formdata3.startmonth)
-          {
-            Message({
-                'message': '请选择月份查询',
-                'type': 'error',
-            });
-            return;
-          }
-          var starttime = $('.el-input__inner:eq(0)', ".monthrange").val();
-          var data = {
-              userId: _this.userId,
-              sortType: _this.formdata3.radiovalue3,
-              dateTime: starttime.replace('-', '')
-          };
+        mbyhglSearch: function() {
+            let _this = this;
+            if (!_this.formdata3.startmonth) {
+                Message({
+                    'message': '请选择月份查询',
+                    'type': 'error',
+                });
+                return;
+            }
+            var starttime = $('.el-input__inner:eq(0)', ".monthrange").val();
+            var data = {
+                userId: _this.userId,
+                sortType: _this.formdata3.radiovalue3,
+                dateTime: starttime.replace('-', '')
+            };
 
-          var url = _this.adminApi.host + '/htycustall/cust/month',
+            var url = _this.adminApi.host + '/htycustall/cust/month',
 
-              loading = function() {
-                  _this.loadtab = true;
-              },
-              success = function(data) {
-                  if (data.code == '1') {
-                      _this.tableData3 = data.data;
-                  } else {
-                      Message({
-                          'message': data.msg,
-                          'type': 'error',
-                      });
-                  }
-              },
-              complete = function() {
-                  _this.loadtab = false;
-              }
-          _this.adminApi.getJsonp(url, data, loading, success, complete)
+                loading = function() {
+                    _this.loadtab = true;
+                },
+                success = function(data) {
+                    if (data.code == '1') {
+                        _this.tableData3 = data.data;
+                    } else {
+                        Message({
+                            'message': data.msg,
+                            'type': 'error',
+                        });
+                    }
+                },
+                complete = function() {
+                    _this.loadtab = false;
+                }
+            _this.adminApi.getJsonp(url, data, loading, success, complete)
 
         },
-        outE1:function(){
-          let _this=this;
-          window.location.href=_this.adminApi.host+'/htycustall/cust/manager/downLoad?userId='+_this.userId+'&aliveType='+ _this.formdata1.radiovalue+'&pageType='+_this.activeName;
+        outE1: function() {
+            let _this = this;
+            window.location.href = _this.adminApi.host + '/htycustall/cust/manager/downLoad?userId=' + _this.userId + '&aliveType=' + _this.formdata1.radiovalue + '&pageType=' + _this.activeName;
         },
-        outE2:function(){
-          let _this=this;
-          window.location.href=_this.adminApi.host+'/htycustall/cust/manager/downLoad?userId='+_this.userId+'&aliveType='+ _this.formdata1.radiovalue2+'&pageType='+_this.activeName;
+        outE2: function() {
+            let _this = this;
+            window.location.href = _this.adminApi.host + '/htycustall/cust/manager/downLoad?userId=' + _this.userId + '&aliveType=' + _this.formdata1.radiovalue2 + '&pageType=' + _this.activeName;
         },
-        outE3:function(){
-          let _this=this;
-          var data = {
-              userId: _this.userId,
-              sortType: _this.formdata3.radiovalue3,
-              dateTime: ''
-          };
-          if (_this.formdata3.startmonth) {
-              var starttime = $('.el-input__inner:eq(0)', ".monthrange").val();
-              data.dateTime = starttime.replace('-', '');
-          }
-          window.location.href=_this.adminApi.host+'/htycustall/cust/month/downLoad?userId='+data.userId+'&sortType='+ data.sortType+'&dateTime='+data.dateTime;
+        outE3: function() {
+            let _this = this;
+            var data = {
+                userId: _this.userId,
+                sortType: _this.formdata3.radiovalue3,
+                dateTime: ''
+            };
+            if (_this.formdata3.startmonth) {
+                var starttime = $('.el-input__inner:eq(0)', ".monthrange").val();
+                data.dateTime = starttime.replace('-', '');
+            }
+            window.location.href = _this.adminApi.host + '/htycustall/cust/month/downLoad?userId=' + data.userId + '&sortType=' + data.sortType + '&dateTime=' + data.dateTime;
         }
     },
     components: {
@@ -760,7 +886,8 @@ export default {
         wpager,
         DatePicker,
         Message,
-        wdialog
+        wdialog,
+        wtooltip
     }
 }
 

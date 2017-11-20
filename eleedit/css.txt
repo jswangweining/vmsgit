@@ -283,12 +283,12 @@ margin: 0.5rem 0;
 .el-table th {
   white-space: nowrap;
   overflow: hidden;
-  background-color: #ddd;//
+  background-color: #fcfcfc;//
   text-align: left
 }
 
 .el-table__footer-wrapper thead div, .el-table__header-wrapper thead div {
-  background-color: #ddd;//
+  background-color: #fcfcfc;//
   color: #333//
 }
 
