@@ -436,102 +436,103 @@
 //   color: #fff
 // }
 .w-arrow1 {
-  position: absolute;
-  width: 78px;
-  height: 49px;
-  background-image: url('../assets/img/arrow1.png');
-  margin-left: -88px;
-  margin-top: 25px;
-  z-index: 999
+    position: absolute;
+    width: 78px;
+    height: 49px;
+    background-image: url('../assets/img/arrow1.png');
+    margin-left: -88px;
+    margin-top: 25px;
+    z-index: 999
 }
 
 .w-arrow2 {
-  position: absolute;
-  width: 78px;
-  height: 49px;
-  background-image: url('../assets/img/arrow2.png');
-  margin-left: -88px;
+    position: absolute;
+    width: 78px;
+    height: 49px;
+    background-image: url('../assets/img/arrow2.png');
+    margin-left: -88px;
     margin-top: -25px;
     z-index: 999
 }
 
 .w-arrow3 {
-  position: absolute;
-  width: 19px;
-  height: 13px;
-  background-image: url('../assets/img/arrow3.png');
-  margin-left: -19px;
-  margin-top: 25px;
-  z-index: 999
+    position: absolute;
+    width: 19px;
+    height: 13px;
+    background-image: url('../assets/img/arrow3.png');
+    margin-left: -19px;
+    margin-top: 25px;
+    z-index: 999
 }
 
 .w-arrow4 {
-  position: absolute;
-  width: 19px;
-  height: 13px;
-  background-image: url('../assets/img/arrow4.png');
-  margin-left: -19px;
-  margin-top: 25px;
-  z-index: 999
+    position: absolute;
+    width: 19px;
+    height: 13px;
+    background-image: url('../assets/img/arrow4.png');
+    margin-left: -19px;
+    margin-top: 25px;
+    z-index: 999
 }
+
 .w-arrow13 {
-  background-image: url('../assets/img/arrow13.png');
+    background-image: url('../assets/img/arrow13.png');
 }
+
 .w-arrow15 {
-  background-image: url('../assets/img/arrow15.png');
+    background-image: url('../assets/img/arrow15.png');
 }
 
 .w-arrow5 {
-  position: absolute;
-  width: 19px;
-  height: 19px;
-  background-image: url('../assets/img/arrow5.png');
-  margin-left: -19px;
-  margin-top: 60px;
-  z-index: 999
+    position: absolute;
+    width: 19px;
+    height: 19px;
+    background-image: url('../assets/img/arrow5.png');
+    margin-left: -19px;
+    margin-top: 60px;
+    z-index: 999
 }
+
 .w-arrow11 {
-  width: 16px;
-  height: 16px;
-  margin-left: -17px;
+    width: 16px;
+    height: 16px;
+    margin-left: -17px;
     margin-top: 55px;
-  background-image: url('../assets/img/arrow11.png');
+    background-image: url('../assets/img/arrow11.png');
 }
 
 .w-arrow6 {
-  position: absolute;
-  width: 15px;
-  height: 21px;
-  background-image: url('../assets/img/arrow6.png');
-  margin-left: -15px;
-  margin-top: -19px;
-  z-index: 999
+    position: absolute;
+    width: 15px;
+    height: 21px;
+    background-image: url('../assets/img/arrow6.png');
+    margin-left: -15px;
+    margin-top: -19px;
+    z-index: 999
 }
 
-
-
 .w-arrow7 {
-  position: absolute;
-  width: 12px;
-  height: 18px;
-  background-image: url('../assets/img/arrow7.png');
-  margin-left: 70px;
-  margin-top: 50px;
-  z-index: 999
+    position: absolute;
+    width: 12px;
+    height: 18px;
+    background-image: url('../assets/img/arrow7.png');
+    margin-left: 70px;
+    margin-top: 50px;
+    z-index: 999
 }
 
 .w-arrow8 {
-  position: absolute;
-  width: 12px;
-  height: 18px;
-  background-image: url('../assets/img/arrow8.png');
-  margin-left: 70px;
-  margin-top: -14px;
-  z-index: 999
+    position: absolute;
+    width: 12px;
+    height: 18px;
+    background-image: url('../assets/img/arrow8.png');
+    margin-left: 70px;
+    margin-top: -14px;
+    z-index: 999
 }
 
 .w-arrow12 {
-  background-image: url('../assets/img/arrow12.png');
+    background-image: url('../assets/img/arrow12.png');
 }
 
 .w-arrow10 {
@@ -541,19 +542,20 @@
 .w-arrow16 {
     background-image: url('../assets/img/arrow16.png');
 }
+
 .w-arrow9 {
-  position: absolute;
-  width: 16px;
-  height: 16px;
-  background-image: url('../assets/img/arrow9.png');
-  margin-left: -22px;
-  margin-top: -14px;
-  z-index: 999
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background-image: url('../assets/img/arrow9.png');
+    margin-left: -22px;
+    margin-top: -14px;
+    z-index: 999
 }
 
 .w-arrow14 {
-  margin-left: -16px;
-  background-image: url('../assets/img/arrow14.png');
+    margin-left: -16px;
+    background-image: url('../assets/img/arrow14.png');
 }
 
 </style>
@@ -564,15 +566,15 @@
     <div class="w-pos">
         <span>首页</span>/<span>汇天眼</span>/<span class="w-pos-active">财务效率</span>
     </div>
-    <div class="w-con">
+    <div class="w-con2flex">
         <div class="w-search">
             <wform :inline="true" :model="formdata" label-position="right" class="demo-form-inline">
                 <form-item label="选择日期：" class='cwxldate'>
-                    <date-picker type="date" v-model="formdata.date" placeholder="选择日期" :editable='false' :picker-options="pickerOptions" style="width:250px;">
+                    <date-picker type="date" v-model="formdata.date" :placeholder="datePlaceHolder" :editable='false' :picker-options="pickerOptions" style="width:250px;">
                     </date-picker>
                 </form-item>
                 <form-item label="">
-                  <!-- <button class="butSearch" @click='cwxlSearch()'></button> -->
+                    <!-- <button class="butSearch" @click='cwxlSearch()'></button> -->
                     <wbutton type="info" icon="search" size="small" @click='cwxlSearch()'></wbutton>
                 </form-item>
                 <form-item label="对比方式：" style="float:right">
@@ -580,7 +582,7 @@
                 </form-item>
             </wform>
         </div>
-        <div class="w-pannel" style="padding:0.5rem 1rem;">
+        <div class="w-pannel" style="padding:0.5rem 1rem; flex:1; margin-bottom:10px;">
             <wtabs v-model="activeName" v-loading='loadtab'>
                 <wtabpane label="杜邦分析" name="0">
                     <div class="dbfx-t">
@@ -855,7 +857,7 @@
                                     </div>
                                 </div>
                                 <div class="dbfx-trItem dbfx-trItemOrg" shu='shu1' heng='heng5' henga='heng11'>
-                                  <div class="w-arrow7"></div>
+                                    <div class="w-arrow7"></div>
                                     <div class="dbfx-trIteml">
                                         净利润
                                     </div>
@@ -935,7 +937,7 @@
                                     </div>
                                 </div>
                                 <div class="dbfx-trItem dbfx-trItemOrg" heng='heng2'>
-                                  <div class="w-arrow4"></div>
+                                    <div class="w-arrow4"></div>
                                     <div class="dbfx-trIteml">
                                         利润总额
                                     </div>
@@ -953,7 +955,7 @@
                                     </div>
                                 </div>
                                 <div class="dbfx-trItem dbfx-trItemOrg" heng='heng3'>
-                                  <div class="w-arrow4"></div>
+                                    <div class="w-arrow4"></div>
                                     <div class="dbfx-trIteml">
                                         毛利润
                                     </div>
@@ -975,7 +977,7 @@
                                 <div class="dbfx-trItem"></div>
                                 <div class="dbfx-trItem dbfx-trItemBlue">
                                     <div class="dbfx-trIteml" style="line-height:0.75rem;">
-                                      <div class="w-arrow9"></div>
+                                        <div class="w-arrow9"></div>
                                         <div class="">
                                             总资产
                                         </div>
@@ -1043,7 +1045,7 @@
                                     </div>
                                 </div>
                                 <div class="dbfx-trItem dbfx-trItemOrg" heng='heng4'>
-                                  <div class="w-arrow8"></div>
+                                    <div class="w-arrow8"></div>
                                     <div class="dbfx-trIteml">
                                         营业利润
                                     </div>
@@ -1081,9 +1083,9 @@
                                     </div>
                                 </div>
                                 <div class="dbfx-trItem dbfx-trItemGreen" shu='shu2' heng='heng7'>
-                                  <div class="w-arrow5 w-arrow11">
+                                    <div class="w-arrow5 w-arrow11">
 
-                                  </div>
+                                    </div>
                                     <div class="dbfx-trIteml">
                                         资产总额
                                     </div>
@@ -1103,7 +1105,7 @@
                                 <div class="dbfx-trItem"></div>
                                 <div class="dbfx-trItem"></div>
                                 <div class="dbfx-trItem dbfx-trItemOrg">
-                                  <div class="w-arrow8"></div>
+                                    <div class="w-arrow8"></div>
                                     <div class="dbfx-trIteml">
                                         其他利润
                                     </div>
@@ -1123,9 +1125,9 @@
                             </div>
                             <div class="dbfx-trline">
                                 <div class="dbfx-trItem dbfx-trItemBlue" shu='shu2' heng='heng7'>
-                                   <div class="w-arrow8 w-arrow10">
+                                    <div class="w-arrow8 w-arrow10">
 
-                                   </div>
+                                    </div>
                                     <div class="dbfx-trIteml" style="line-height:0.75rem;">
                                         <div class="">
                                             资产
@@ -1149,9 +1151,9 @@
                                     </div>
                                 </div>
                                 <div class="dbfx-trItem dbfx-trItemGreen" shu='shu2'>
-                                  <div class="w-arrow8 w-arrow12">
+                                    <div class="w-arrow8 w-arrow12">
 
-                                  </div>
+                                    </div>
                                     <div class="dbfx-trIteml" style="line-height:0.75rem;">
                                         <div class="">
                                             非流动
@@ -1174,7 +1176,7 @@
                                     </div>
                                 </div>
                                 <div class="dbfx-trItem dbfx-trItemGreen" shu='shu2' heng='heng8'>
-                                  <div class="w-arrow4 w-arrow13" ></div>
+                                    <div class="w-arrow4 w-arrow13"></div>
                                     <div class="dbfx-trIteml">
                                         流动资产
                                     </div>
@@ -1192,7 +1194,7 @@
                                     </div>
                                 </div>
                                 <div class="dbfx-trItem dbfx-trItemGreen">
-                                    <div class="w-arrow4 w-arrow13" ></div>
+                                    <div class="w-arrow4 w-arrow13"></div>
                                     <div class="dbfx-trIteml">
                                         货币资金
                                     </div>
@@ -1210,7 +1212,7 @@
                                     </div>
                                 </div>
                                 <div class="dbfx-trItem dbfx-trItemGreen">
-                                    <div class="w-arrow4 w-arrow13" ></div>
+                                    <div class="w-arrow4 w-arrow13"></div>
                                     <div class="dbfx-trIteml">
                                         预付账款
                                     </div>
@@ -1230,7 +1232,7 @@
                             </div>
                             <div class="dbfx-trline">
                                 <div class="dbfx-trItem dbfx-trItemGray" shu='shu2' heng='heng7'>
-                                  <div class="w-arrow8 w-arrow16"></div>
+                                    <div class="w-arrow8 w-arrow16"></div>
                                     <div class="dbfx-trIteml">
                                         负债总额
                                     </div>
@@ -1248,7 +1250,7 @@
                                     </div>
                                 </div>
                                 <div class="dbfx-trItem dbfx-trItemGray">
-                                  <div class="w-arrow4 w-arrow15"></div>
+                                    <div class="w-arrow4 w-arrow15"></div>
                                     <div class="dbfx-trIteml">
                                         长期负债
                                     </div>
@@ -1266,7 +1268,7 @@
                                     </div>
                                 </div>
                                 <div class="dbfx-trItem dbfx-trItemGray" shu='shu2' heng='heng8' henga='heng9'>
-                                  <div class="w-arrow4 w-arrow15"></div>
+                                    <div class="w-arrow4 w-arrow15"></div>
                                     <div class="dbfx-trIteml">
                                         流动负债
                                     </div>
@@ -1284,7 +1286,7 @@
                                     </div>
                                 </div>
                                 <div class="dbfx-trItem dbfx-trItemGreen">
-                                    <div class="w-arrow9 w-arrow14" ></div>
+                                    <div class="w-arrow9 w-arrow14"></div>
                                     <div class="dbfx-trIteml">
                                         存货
                                     </div>
@@ -1302,7 +1304,7 @@
                                     </div>
                                 </div>
                                 <div class="dbfx-trItem dbfx-trItemGreen">
-                                    <div class="w-arrow4 w-arrow13" ></div>
+                                    <div class="w-arrow4 w-arrow13"></div>
                                     <div class="dbfx-trIteml">
                                         应收账款
                                     </div>
@@ -1323,7 +1325,7 @@
                         </div>
                     </div>
                 </wtabpane>
-                <wtabpane label="风险提示" name="1" v-if='tabdis'>
+                <wtabpane label="风险提示" name="1">
                     <div class="fxts_t" v-if='sysNum<30' :key='1'>
                         <div class="fxts_ta fxts_taRed">
                             <div class="fxts_tap1">
@@ -1422,10 +1424,10 @@
                             <div class="fxts_item_ditem">
                                 <div class="fxts_item_ditema">
                                     <i class="el-icon-circle-check" style="color:#2cc689;" v-if='sysdata.xjYyRatioState==0'></i>
-                                    <i class="el-icon-warning" style="color:#ff5555" v-if='sysdata.xjYyRatioState==1'></i> 收营现金营业占比(收款)
+                                    <i class="el-icon-warning" style="color:#ff5555" v-if='sysdata.xjYyRatioState==1'></i> 收现金营业款占比（收款）
                                 </div>
                                 <div class="fxts_item_ditemb">
-                                    收现金营业占比（收款）
+                                    当月营业款/当月回款
                                 </div>
                                 <div class="fxts_item_ditemc">
                                     实际值：<span :class="[sysdata.xjYyRatioState==0?'fxts_item_ditemcs1':'fxts_item_ditemcs2']">{{sysdata.xjYyRatio}}%</span>
@@ -1442,10 +1444,10 @@
                             <div class="fxts_item_ditem">
                                 <div class="fxts_item_ditema">
                                     <i class="el-icon-circle-check" style="color:#2cc689;" v-if='sysdata.ys90RatioState==0'></i>
-                                    <i class="el-icon-warning" style="color:#ff5555" v-if='sysdata.ys90RatioState==1'></i> 超90天营收占比
+                                    <i class="el-icon-warning" style="color:#ff5555" v-if='sysdata.ys90RatioState==1'></i> 超90天应收占比
                                 </div>
                                 <div class="fxts_item_ditemb">
-                                    帐龄90天以上应收账款金额
+                                    账龄90天以上应收账款金额占比
                                 </div>
                                 <div class="fxts_item_ditemc">
                                     实际值：<span :class="[sysdata.ys90RatioState==0?'fxts_item_ditemcs1':'fxts_item_ditemcs2']">{{sysdata.ys90Ratio}}%</span>
@@ -1462,10 +1464,10 @@
                             <div class="fxts_item_ditem">
                                 <div class="fxts_item_ditema">
                                     <i class="el-icon-circle-check" style="color:#2cc689;" v-if='sysdata.hk15BgtRatioState==0'></i>
-                                    <i class="el-icon-warning" style="color:#ff5555" v-if='sysdata.hk15BgtRatioState==1'></i> 前15天汇款预算完成率
+                                    <i class="el-icon-warning" style="color:#ff5555" v-if='sysdata.hk15BgtRatioState==1'></i> 前15天回款预算完成率
                                 </div>
                                 <div class="fxts_item_ditemb">
-                                    合计/应收账款金额总计前15天汇款预算完成率
+                                    （1-15日本期回款合计）/预算销售规模*100%
                                 </div>
                                 <div class="fxts_item_ditemc">
                                     实际值：<span :class="[sysdata.hk15BgtRatioState==0?'fxts_item_ditemcs1':'fxts_item_ditemcs2']">{{sysdata.hk15BgtRatio}}%</span>
@@ -1485,7 +1487,7 @@
                                     <i class="el-icon-warning" style="color:#ff5555" v-if='sysdata.yf90RatioState==1'></i> 超90天预付占比
                                 </div>
                                 <div class="fxts_item_ditemb">
-                                    预算完成率=（1-15日本期回款合计）/预算销售规模*100%
+                                    账龄90天以上预付账款金额占比
                                 </div>
                                 <div class="fxts_item_ditemc">
                                     实际值：<span :class="[sysdata.yf90RatioState==0?'fxts_item_ditemcs1':'fxts_item_ditemcs2']">{{sysdata.yf90Ratio}}%</span>
@@ -1629,7 +1631,7 @@
                                     <i class="el-icon-warning" style="color:#ff5555" v-if='sysdata.overdueCustnumRatioState==1'></i> 供应链金融逾期家数占比
                                 </div>
                                 <div class="fxts_item_ditemb">
-                                  平台逾期客户数/平台贷款客户总数
+                                    平台逾期客户数/平台贷款客户总数
                                 </div>
                                 <div class="fxts_item_ditemc">
                                     实际值：<span :class="[sysdata.overdueCustnumRatioState==0?'fxts_item_ditemcs1':'fxts_item_ditemcs2']">{{sysdata.overdueCustnumRatio}}%</span>
@@ -1649,7 +1651,7 @@
                                     <i class="el-icon-warning" style="color:#ff5555" v-if='sysdata.over30RatioState==1'></i> 超30天个人借款占比
                                 </div>
                                 <div class="fxts_item_ditemb">
-                                  超30天个人借款/个人借款总额
+                                    超30天个人借款/个人借款总额
                                 </div>
                                 <div class="fxts_item_ditemc">
                                     实际值：<span :class="[sysdata.over30RatioState==0?'fxts_item_ditemcs1':'fxts_item_ditemcs2']">{{sysdata.over30Ratio}}%</span>
@@ -1666,224 +1668,224 @@
                         </div>
                     </div>
                 </wtabpane>
-                <wtabpane label="业务支持" name="2" v-if='tabdis'>
-                  <div class="fxts_t" v-if='ywzcNum<30'>
-                      <div class="fxts_ta fxts_taRed">
-                          <div class="fxts_tap1">
-                              {{ywzcNum}}
-                          </div>
-                          <div class="fxts_tap2">
-                              风险评分
-                          </div>
-                      </div>
-                      <div class="fxts_taOut fxts_taOutRed">
-
-                      </div>
-                      <div class="fxts_tb fxts_tbRed">
-                          <div class="fxts_tbcon">
-                              <div class="fxts_tbcona">
-                                  <p class="fxts_tbconap1 fxts_tbconap1red">您的平台经营状况很不安全，请立即改善</p>
-                                  <p class="fxts_tbconap2">你可以通过数据罗盘（data.htd.cn）了解平台经营更多数据</p>
-                              </div>
-                              <div class="fxts_tbconb">
-                                  共检查了 <span class="fxts_tbconap1red">6</span> 项
-                              </div>
-                              <div class="fxts_tbconc">
-                                  <i class="el-icon-warning" style="color:#ff5555"></i> 其中 <span class="fxts_tbconap1red">{{ywzcdata.num}}</span> 项风险指标需要关注
-                              </div>
-
-                              <div class="fxts_tbcond fxts_tbcondRed "></div>
-                          </div>
-                      </div>
-                  </div>
-
-                  <div class="fxts_t" v-if='ywzcNum<80 && ywzcNum>29'>
-                      <div class="fxts_ta fxts_taOrg">
-                          <div class="fxts_tap1">
-                              {{ywzcNum}}
-                          </div>
-                          <div class="fxts_tap2">
-                              风险评分
-                          </div>
-                      </div>
-                      <div class="fxts_taOut fxts_taOutOrg">
-
-                      </div>
-                      <div class="fxts_tb fxts_tbOrg">
-                          <div class="fxts_tbcon">
-                              <div class="fxts_tbcona">
-                                  <p class="fxts_tbconap1 fxts_tbconap1org">您的平台经营状况存在风险，建议实时关注</p>
-                                  <p class="fxts_tbconap2">你可以通过数据罗盘（data.htd.cn）了解平台经营更多数据</p>
-                              </div>
-                              <div class="fxts_tbconb">
-                                  共检查了 <span class="fxts_tbconap1org">6</span> 项
-                              </div>
-                              <div class="fxts_tbconc">
-                                  <i class="el-icon-warning" style="color:#ff5555"></i> 其中 <span class="fxts_tbconap1org">{{ywzcdata.num}}</span> 项风险指标需要关注
-                              </div>
-
-                              <div class="fxts_tbcond fxts_tbcondOrg "></div>
-                          </div>
-                      </div>
-                  </div>
-
-                  <div class="fxts_t" v-if='ywzcNum<101 && ywzcNum>79'>
-                      <div class="fxts_ta fxts_taGreen">
-                          <div class="fxts_tap1">
+                <wtabpane label="业务支持" name="2">
+                    <div class="fxts_t" v-if='ywzcNum<30'>
+                        <div class="fxts_ta fxts_taRed">
+                            <div class="fxts_tap1">
                                 {{ywzcNum}}
-                          </div>
-                          <div class="fxts_tap2">
-                              风险评分
-                          </div>
-                      </div>
-                      <div class="fxts_taOut fxts_taOutGreen">
+                            </div>
+                            <div class="fxts_tap2">
+                                风险评分
+                            </div>
+                        </div>
+                        <div class="fxts_taOut fxts_taOutRed">
 
-                      </div>
-                      <div class="fxts_tb fxts_tbGreen">
-                          <div class="fxts_tbcon">
-                              <div class="fxts_tbcona">
-                                  <p class="fxts_tbconap1 fxts_tbconap1green">恭喜您，您的平台经营状况优良</p>
-                                  <p class="fxts_tbconap2">你可以通过数据罗盘（data.htd.cn）了解平台经营更多数据</p>
-                              </div>
-                              <div class="fxts_tbconb">
-                                  共检查了 <span class="fxts_tbconap1green">6</span> 项
-                              </div>
-                              <div class="fxts_tbconc">
-                                  <i class="el-icon-warning" style="color:#ff5555"></i> 其中 <span class="fxts_tbconap1green">{{ywzcdata.num}}</span> 项风险指标需要关注
-                              </div>
+                        </div>
+                        <div class="fxts_tb fxts_tbRed">
+                            <div class="fxts_tbcon">
+                                <div class="fxts_tbcona">
+                                    <p class="fxts_tbconap1 fxts_tbconap1red">您的平台经营状况很不安全，请立即改善</p>
+                                    <p class="fxts_tbconap2">你可以通过数据罗盘（data.htd.cn）了解平台经营更多数据</p>
+                                </div>
+                                <div class="fxts_tbconb">
+                                    共检查了 <span class="fxts_tbconap1red">6</span> 项
+                                </div>
+                                <div class="fxts_tbconc">
+                                    <i class="el-icon-warning" style="color:#ff5555"></i> 其中 <span class="fxts_tbconap1red">{{ywzcdata.num}}</span> 项风险指标需要关注
+                                </div>
 
-                              <div class="fxts_tbcond fxts_tbcondGreen "></div>
-                          </div>
-                      </div>
-                  </div>
+                                <div class="fxts_tbcond fxts_tbcondRed "></div>
+                            </div>
+                        </div>
+                    </div>
 
-                  <div class="fxts_item">
-                      <div class="fxts_item_t">
+                    <div class="fxts_t" v-if='ywzcNum<80 && ywzcNum>29'>
+                        <div class="fxts_ta fxts_taOrg">
+                            <div class="fxts_tap1">
+                                {{ywzcNum}}
+                            </div>
+                            <div class="fxts_tap2">
+                                风险评分
+                            </div>
+                        </div>
+                        <div class="fxts_taOut fxts_taOutOrg">
 
-                      </div>
-                      <div class="fxts_item_d">
-                          <div class="fxts_item_ditem">
-                              <div class="fxts_item_ditema">
-                                  <i class="el-icon-circle-check" style="color:#2cc689;" v-if='ywzcdata.whiteRatioState==0'></i>
-                                  <i class="el-icon-warning" style="color:#ff5555" v-if='ywzcdata.whiteRatioState==1'></i> 白名单覆盖率
-                              </div>
-                              <div class="fxts_item_ditemb">
-                                  平台归属的白名单会员店数/平台归属整体会员店
-                              </div>
-                              <div class="fxts_item_ditemc">
-                                  实际值：<span :class="[ywzcdata.whiteRatioState==0?'fxts_item_ditemcs1':'fxts_item_ditemcs2']">{{ywzcdata.whiteRatio}}%</span>
-                              </div>
+                        </div>
+                        <div class="fxts_tb fxts_tbOrg">
+                            <div class="fxts_tbcon">
+                                <div class="fxts_tbcona">
+                                    <p class="fxts_tbconap1 fxts_tbconap1org">您的平台经营状况存在风险，建议实时关注</p>
+                                    <p class="fxts_tbconap2">你可以通过数据罗盘（data.htd.cn）了解平台经营更多数据</p>
+                                </div>
+                                <div class="fxts_tbconb">
+                                    共检查了 <span class="fxts_tbconap1org">6</span> 项
+                                </div>
+                                <div class="fxts_tbconc">
+                                    <i class="el-icon-warning" style="color:#ff5555"></i> 其中 <span class="fxts_tbconap1org">{{ywzcdata.num}}</span> 项风险指标需要关注
+                                </div>
 
-                              <div class="fxts_item_ditemd">
-                                  参考值：<span>{{ywzcdata.whiteRatioRe}}%</span>
-                              </div>
+                                <div class="fxts_tbcond fxts_tbcondOrg "></div>
+                            </div>
+                        </div>
+                    </div>
 
-                              <div class="fxts_item_ditemc">
-                                  状态：<span class="fxts_item_ditemcs1" v-if='ywzcdata.whiteRatioState==0'>正常</span><span class="fxts_item_ditemcs2" v-if='ywzcdata.whiteRatioState==1'>异常</span>
-                              </div>
-                          </div>
-                          <div class="fxts_item_ditem">
-                              <div class="fxts_item_ditema">
-                                  <i class="el-icon-circle-check" style="color:#2cc689;" v-if='ywzcdata.actWhiteRatioState==0'></i>
-                                  <i class="el-icon-warning" style="color:#ff5555" v-if='ywzcdata.actWhiteRatioState==1'></i> 白名单激活率
-                              </div>
-                              <div class="fxts_item_ditemb">
-                                  平台逾期客户数/平台贷款客户总数
-                              </div>
-                              <div class="fxts_item_ditemc">
-                                  实际值：<span :class="[ywzcdata.actWhiteRatioState==0?'fxts_item_ditemcs1':'fxts_item_ditemcs2']">{{ywzcdata.actWhiteRatio}}%</span>
-                              </div>
+                    <div class="fxts_t" v-if='ywzcNum<101 && ywzcNum>79'>
+                        <div class="fxts_ta fxts_taGreen">
+                            <div class="fxts_tap1">
+                                {{ywzcNum}}
+                            </div>
+                            <div class="fxts_tap2">
+                                风险评分
+                            </div>
+                        </div>
+                        <div class="fxts_taOut fxts_taOutGreen">
 
-                              <div class="fxts_item_ditemd">
-                                  参考值：<span>{{ywzcdata.actWhiteRatioRe}}%</span>
-                              </div>
+                        </div>
+                        <div class="fxts_tb fxts_tbGreen">
+                            <div class="fxts_tbcon">
+                                <div class="fxts_tbcona">
+                                    <p class="fxts_tbconap1 fxts_tbconap1green">恭喜您，您的平台经营状况优良</p>
+                                    <p class="fxts_tbconap2">你可以通过数据罗盘（data.htd.cn）了解平台经营更多数据</p>
+                                </div>
+                                <div class="fxts_tbconb">
+                                    共检查了 <span class="fxts_tbconap1green">6</span> 项
+                                </div>
+                                <div class="fxts_tbconc">
+                                    <i class="el-icon-warning" style="color:#ff5555"></i> 其中 <span class="fxts_tbconap1green">{{ywzcdata.num}}</span> 项风险指标需要关注
+                                </div>
 
-                              <div class="fxts_item_ditemc">
-                                  状态：<span class="fxts_item_ditemcs1" v-if='ywzcdata.actWhiteRatioState==0'>正常</span><span class="fxts_item_ditemcs2" v-if='ywzcdata.actWhiteRatioState==1'>异常</span>
-                              </div>
-                          </div>
-                          <div class="fxts_item_ditem">
-                              <div class="fxts_item_ditema">
-                                  <i class="el-icon-circle-check" style="color:#2cc689;" v-if='ywzcdata.whiteLoanRatioState==0'></i>
-                                  <i class="el-icon-warning" style="color:#ff5555" v-if='ywzcdata.whiteLoanRatioState==1'></i> 白名单转化率
-                              </div>
-                              <div class="fxts_item_ditemb">
-                                  超30天个人借款/个人借款总额
-                              </div>
-                              <div class="fxts_item_ditemc">
-                                  实际值：<span :class="[ywzcdata.whiteLoanRatioState==0?'fxts_item_ditemcs1':'fxts_item_ditemcs2']">{{ywzcdata.whiteLoanRatio}}%</span>
-                              </div>
+                                <div class="fxts_tbcond fxts_tbcondGreen "></div>
+                            </div>
+                        </div>
+                    </div>
 
-                              <div class="fxts_item_ditemd">
-                                  参考值：<span>{{ywzcdata.whiteLoanRatioRe}}%</span>
-                              </div>
+                    <div class="fxts_item">
+                        <div class="fxts_item_t">
 
-                              <div class="fxts_item_ditemc">
-                                  状态：<span class="fxts_item_ditemcs1" v-if='ywzcdata.whiteLoanRatioState==0'>正常</span><span class="fxts_item_ditemcs2" v-if='ywzcdata.whiteLoanRatioState==1'>异常</span>
-                              </div>
-                          </div>
-                          <div class="fxts_item_ditem">
-                              <div class="fxts_item_ditema">
-                                  <i class="el-icon-circle-check" style="color:#2cc689;" v-if='ywzcdata.monNewTicketRatioState==0'></i>
-                                  <i class="el-icon-warning" style="color:#ff5555" v-if='ywzcdata.monNewTicketRatioState==1'></i> 总部新办电票占比
-                              </div>
-                              <div class="fxts_item_ditemb">
-                                当月新办电票总额/当月新办款总额
-                              </div>
-                              <div class="fxts_item_ditemc">
-                                  实际值：<span :class="[ywzcdata.monNewTicketRatioState==0?'fxts_item_ditemcs1':'fxts_item_ditemcs2']">{{ywzcdata.monNewTicketRatio}}%</span>
-                              </div>
+                        </div>
+                        <div class="fxts_item_d">
+                            <div class="fxts_item_ditem">
+                                <div class="fxts_item_ditema">
+                                    <i class="el-icon-circle-check" style="color:#2cc689;" v-if='ywzcdata.whiteRatioState==0'></i>
+                                    <i class="el-icon-warning" style="color:#ff5555" v-if='ywzcdata.whiteRatioState==1'></i> 白名单覆盖率
+                                </div>
+                                <div class="fxts_item_ditemb">
+                                    白名单客户数/金融服务名单客户数
+                                </div>
+                                <div class="fxts_item_ditemc">
+                                    实际值：<span :class="[ywzcdata.whiteRatioState==0?'fxts_item_ditemcs1':'fxts_item_ditemcs2']">{{ywzcdata.whiteRatio}}%</span>
+                                </div>
 
-                              <div class="fxts_item_ditemd">
-                                  参考值：<span>{{ywzcdata.monNewTicketRatioRe}}%</span>
-                              </div>
+                                <div class="fxts_item_ditemd">
+                                    参考值：<span>{{ywzcdata.whiteRatioRe}}%</span>
+                                </div>
 
-                              <div class="fxts_item_ditemc">
-                                  状态：<span class="fxts_item_ditemcs1" v-if='ywzcdata.monNewTicketRatioState==0'>正常</span><span class="fxts_item_ditemcs2" v-if='ywzcdata.monNewTicketRatioState==1'>异常</span>
-                              </div>
-                          </div>
-                          <div class="fxts_item_ditem">
-                              <div class="fxts_item_ditema">
-                                  <i class="el-icon-circle-check" style="color:#2cc689;" v-if='ywzcdata.financialexpensesRatioState==0'></i>
-                                  <i class="el-icon-warning" style="color:#ff5555" v-if='ywzcdata.financialexpensesRatioState==1'></i> 财务费用率
-                              </div>
-                              <div class="fxts_item_ditemb">
-                                累计财务费用/累计销售收入
-                              </div>
-                              <div class="fxts_item_ditemc">
-                                  实际值：<span :class="[ywzcdata.financialexpensesRatioState==0?'fxts_item_ditemcs1':'fxts_item_ditemcs2']">{{ywzcdata.financialexpensesRatio}}%</span>
-                              </div>
+                                <div class="fxts_item_ditemc">
+                                    状态：<span class="fxts_item_ditemcs1" v-if='ywzcdata.whiteRatioState==0'>正常</span><span class="fxts_item_ditemcs2" v-if='ywzcdata.whiteRatioState==1'>异常</span>
+                                </div>
+                            </div>
+                            <div class="fxts_item_ditem">
+                                <div class="fxts_item_ditema">
+                                    <i class="el-icon-circle-check" style="color:#2cc689;" v-if='ywzcdata.actWhiteRatioState==0'></i>
+                                    <i class="el-icon-warning" style="color:#ff5555" v-if='ywzcdata.actWhiteRatioState==1'></i> 白名单激活率
+                                </div>
+                                <div class="fxts_item_ditemb">
+                                    白名单客户已激活数/会员店白名单数
+                                </div>
+                                <div class="fxts_item_ditemc">
+                                    实际值：<span :class="[ywzcdata.actWhiteRatioState==0?'fxts_item_ditemcs1':'fxts_item_ditemcs2']">{{ywzcdata.actWhiteRatio}}%</span>
+                                </div>
 
-                              <div class="fxts_item_ditemd">
-                                  参考值：<span>{{ywzcdata.financialexpensesRatioRe}}%</span>
-                              </div>
+                                <div class="fxts_item_ditemd">
+                                    参考值：<span>{{ywzcdata.actWhiteRatioRe}}%</span>
+                                </div>
 
-                              <div class="fxts_item_ditemc">
-                                  状态：<span class="fxts_item_ditemcs1" v-if='ywzcdata.financialexpensesRatioState==0'>正常</span><span class="fxts_item_ditemcs2" v-if='ywzcdata.financialexpensesRatioState==1'>异常</span>
-                              </div>
-                          </div>
-                          <div class="fxts_item_ditem">
-                              <div class="fxts_item_ditema">
-                                  <i class="el-icon-circle-check" style="color:#2cc689;" v-if='ywzcdata.tiecardmemberRatioState==0'></i>
-                                  <i class="el-icon-warning" style="color:#ff5555" v-if='ywzcdata.tiecardmemberRatioState==1'></i> 有效客户绑卡率
-                              </div>
-                              <div class="fxts_item_ditemb">
-                                累积已绑卡会员数/活跃会员数、累积绑卡数去支付系统后台数据
-                              </div>
-                              <div class="fxts_item_ditemc">
-                                  实际值：<span :class="[ywzcdata.tiecardmemberRatioState==0?'fxts_item_ditemcs1':'fxts_item_ditemcs2']">{{ywzcdata.tiecardmemberRatio}}%</span>
-                              </div>
+                                <div class="fxts_item_ditemc">
+                                    状态：<span class="fxts_item_ditemcs1" v-if='ywzcdata.actWhiteRatioState==0'>正常</span><span class="fxts_item_ditemcs2" v-if='ywzcdata.actWhiteRatioState==1'>异常</span>
+                                </div>
+                            </div>
+                            <div class="fxts_item_ditem">
+                                <div class="fxts_item_ditema">
+                                    <i class="el-icon-circle-check" style="color:#2cc689;" v-if='ywzcdata.whiteLoanRatioState==0'></i>
+                                    <i class="el-icon-warning" style="color:#ff5555" v-if='ywzcdata.whiteLoanRatioState==1'></i> 白名单转化率
+                                </div>
+                                <div class="fxts_item_ditemb">
+                                    放款客户数/白名单客户已激活数
+                                </div>
+                                <div class="fxts_item_ditemc">
+                                    实际值：<span :class="[ywzcdata.whiteLoanRatioState==0?'fxts_item_ditemcs1':'fxts_item_ditemcs2']">{{ywzcdata.whiteLoanRatio}}%</span>
+                                </div>
 
-                              <div class="fxts_item_ditemd">
-                                  参考值：<span>{{ywzcdata.tiecardmemberRatioRe}}%</span>
-                              </div>
+                                <div class="fxts_item_ditemd">
+                                    参考值：<span>{{ywzcdata.whiteLoanRatioRe}}%</span>
+                                </div>
 
-                              <div class="fxts_item_ditemc">
-                                  状态：<span class="fxts_item_ditemcs1" v-if='ywzcdata.tiecardmemberRatioState==0'>正常</span><span class="fxts_item_ditemcs2" v-if='ywzcdata.tiecardmemberRatioState==1'>异常</span>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
+                                <div class="fxts_item_ditemc">
+                                    状态：<span class="fxts_item_ditemcs1" v-if='ywzcdata.whiteLoanRatioState==0'>正常</span><span class="fxts_item_ditemcs2" v-if='ywzcdata.whiteLoanRatioState==1'>异常</span>
+                                </div>
+                            </div>
+                            <div class="fxts_item_ditem">
+                                <div class="fxts_item_ditema">
+                                    <i class="el-icon-circle-check" style="color:#2cc689;" v-if='ywzcdata.monNewTicketRatioState==0'></i>
+                                    <i class="el-icon-warning" style="color:#ff5555" v-if='ywzcdata.monNewTicketRatioState==1'></i> 总部新办电票占比
+                                </div>
+                                <div class="fxts_item_ditemb">
+                                    当月新办电票总额/当月新办款总额
+                                </div>
+                                <div class="fxts_item_ditemc">
+                                    实际值：<span :class="[ywzcdata.monNewTicketRatioState==0?'fxts_item_ditemcs1':'fxts_item_ditemcs2']">{{ywzcdata.monNewTicketRatio}}%</span>
+                                </div>
+
+                                <div class="fxts_item_ditemd">
+                                    参考值：<span>{{ywzcdata.monNewTicketRatioRe}}%</span>
+                                </div>
+
+                                <div class="fxts_item_ditemc">
+                                    状态：<span class="fxts_item_ditemcs1" v-if='ywzcdata.monNewTicketRatioState==0'>正常</span><span class="fxts_item_ditemcs2" v-if='ywzcdata.monNewTicketRatioState==1'>异常</span>
+                                </div>
+                            </div>
+                            <div class="fxts_item_ditem">
+                                <div class="fxts_item_ditema">
+                                    <i class="el-icon-circle-check" style="color:#2cc689;" v-if='ywzcdata.financialexpensesRatioState==0'></i>
+                                    <i class="el-icon-warning" style="color:#ff5555" v-if='ywzcdata.financialexpensesRatioState==1'></i> 财务费用率
+                                </div>
+                                <div class="fxts_item_ditemb">
+                                    累计财务费用/累计销售收入
+                                </div>
+                                <div class="fxts_item_ditemc">
+                                    实际值：<span :class="[ywzcdata.financialexpensesRatioState==0?'fxts_item_ditemcs1':'fxts_item_ditemcs2']">{{ywzcdata.financialexpensesRatio}}%</span>
+                                </div>
+
+                                <div class="fxts_item_ditemd">
+                                    参考值：<span>{{ywzcdata.financialexpensesRatioRe}}%</span>
+                                </div>
+
+                                <div class="fxts_item_ditemc">
+                                    状态：<span class="fxts_item_ditemcs1" v-if='ywzcdata.financialexpensesRatioState==0'>正常</span><span class="fxts_item_ditemcs2" v-if='ywzcdata.financialexpensesRatioState==1'>异常</span>
+                                </div>
+                            </div>
+                            <div class="fxts_item_ditem">
+                                <div class="fxts_item_ditema">
+                                    <i class="el-icon-circle-check" style="color:#2cc689;" v-if='ywzcdata.tiecardmemberRatioState==0'></i>
+                                    <i class="el-icon-warning" style="color:#ff5555" v-if='ywzcdata.tiecardmemberRatioState==1'></i> 有效客户绑卡率
+                                </div>
+                                <div class="fxts_item_ditemb">
+                                    累积已绑卡会员数/活跃会员数
+                                </div>
+                                <div class="fxts_item_ditemc">
+                                    实际值：<span :class="[ywzcdata.tiecardmemberRatioState==0?'fxts_item_ditemcs1':'fxts_item_ditemcs2']">{{ywzcdata.tiecardmemberRatio}}%</span>
+                                </div>
+
+                                <div class="fxts_item_ditemd">
+                                    参考值：<span>{{ywzcdata.tiecardmemberRatioRe}}%</span>
+                                </div>
+
+                                <div class="fxts_item_ditemc">
+                                    状态：<span class="fxts_item_ditemcs1" v-if='ywzcdata.tiecardmemberRatioState==0'>正常</span><span class="fxts_item_ditemcs2" v-if='ywzcdata.tiecardmemberRatioState==1'>异常</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </wtabpane>
             </wtabs>
         </div>
@@ -1921,6 +1923,7 @@ export default {
         },
         myChart1: '',
         cwxldata: '',
+        datePlaceHolder:'',
         pickerOptions: {
             disabledDate(time) {
                 return time.getTime() > Date.now() - 8.64e7 || time.getTime() < new Date(2016, 0, 1, 0, 0, 0)
@@ -1931,111 +1934,109 @@ export default {
         ajax3: false,
         sysdata: '',
         sysNum: 6,
-        ywzcNum:0,
-        ywzcdata:'',
-        tabdis:false,
+        ywzcNum: 0,
+        ywzcdata: '',
+        tabdis: false,
     }),
     computed: {},
     watch: {
-
         activeName: function(val, oldVal) {
             let _this = this;
             switch (val) {
                 case '0':
-                  if(_this.ajax1 && _this.cwxldata)
-                  {
-                    var data = {
-                        'userId': _this.userId,
-                    };
+                    if (_this.ajax1 && _this.cwxldata) {
+                        var data = {
+                            'userId': _this.userId,
+                        };
 
-                    if (_this.formdata.date) {
-                        var endtime = $('.el-input__inner:eq(0)', ".cwxldate").val();
-                        data.endTime = endtime.replace(/-/g, '')
-                    }
+                        if (_this.formdata.date) {
+                            var endtime = $('.el-input__inner:eq(0)', ".cwxldate").val();
+                            data.endTime = endtime.replace(/-/g, '')
+                        }
 
-                    var url =  _this.adminApi.host+'/htyfctzcfz/dupont/all',
+                        var url = _this.adminApi.host + '/htyfctzcfz/dupont/all',
 
-                        loading = function() {
-                            _this.loadingall = true;
-                        },
-                        success = function(data) {
-                            if (data.code == '1') {
-                                _this.cwxldata = data.data.dupontDTO;
-                                _this.myChart1 = echarts.init(document.getElementById('main'));
-                                var option = {
-                                    tooltip: {
-                                        confine: true
-                                    },
-                                    radar: [{
-
-                                        indicator: [{
-                                            text: '整体能力',
-                                            color: '#ff7700',
-                                            max: 5
-
-                                        }, {
-                                            text: '获利能力',
-                                            max: 5
-                                        }, {
-                                            text: '偿债能力',
-                                            max: 5
-                                        }, {
-                                            text: '运营能力',
-                                            max: 5
-                                        }, {
-                                            text: '成长能力',
-                                            max: 5
-                                        }],
-                                        center: screen.width > 1600 ? ['50%', '55%'] : ['50%', '50%'],
-                                        radius: screen.width > 1600 ? '70%' : '50%',
-                                        startAngle: 90,
-                                        splitNumber: 4,
-                                        name: {
-
-                                            formatter: '{value}',
-                                            textStyle: {
-                                                color: '#999'
-                                            }
-                                        }
-                                    }],
-                                    series: [{
-                                        type: 'radar',
+                            loading = function() {
+                                _this.loadingall = true;
+                            },
+                            success = function(data) {
+                                if (data.code == '1') {
+                                    _this.cwxldata = data.data.dupontDTO;
+                                    _this.myChart1 = echarts.init(document.getElementById('main'));
+                                    var option = {
                                         tooltip: {
-                                            trigger: 'item'
+                                            confine: true
                                         },
-                                        itemStyle: {
-                                            normal: {
-                                                color: "rgba(255,199,1)", // 图表中各个图区域的边框线拐点颜色
-                                                lineStyle: {
-                                                    color: "#ff7700" // 图表中各个图区域的边框线颜色
-                                                },
-                                                areaStyle: {
-                                                    type: 'default',
-                                                    opacity: 0.5, // 图表中各个图区域的透明度
-                                                    color: "#ff7700" // 图表中各个图区域的颜色
+                                        radar: [{
+
+                                            indicator: [{
+                                                text: '整体能力',
+                                                color: '#ff7700',
+                                                max: 5
+
+                                            }, {
+                                                text: '获利能力',
+                                                max: 5
+                                            }, {
+                                                text: '偿债能力',
+                                                max: 5
+                                            }, {
+                                                text: '运营能力',
+                                                max: 5
+                                            }, {
+                                                text: '成长能力',
+                                                max: 5
+                                            }],
+                                            center: screen.width > 1600 ? ['50%', '55%'] : ['50%', '50%'],
+                                            radius: screen.width > 1600 ? '70%' : '50%',
+                                            startAngle: 90,
+                                            splitNumber: 4,
+                                            name: {
+
+                                                formatter: '{value}',
+                                                textStyle: {
+                                                    color: '#999'
                                                 }
                                             }
-                                        },
-                                        data: [{
-                                            value: [data.data.dupontRadarDTO.whole, data.data.dupontRadarDTO.profit, data.data.dupontRadarDTO.sinking, data.data.dupontRadarDTO.operate, data.data.dupontRadarDTO.grow],
-                                            name: '当前平台估值'
-                                        }]
-                                    }, ]
+                                        }],
+                                        series: [{
+                                            type: 'radar',
+                                            tooltip: {
+                                                trigger: 'item'
+                                            },
+                                            itemStyle: {
+                                                normal: {
+                                                    color: "rgba(255,199,1)", // 图表中各个图区域的边框线拐点颜色
+                                                    lineStyle: {
+                                                        color: "#ff7700" // 图表中各个图区域的边框线颜色
+                                                    },
+                                                    areaStyle: {
+                                                        type: 'default',
+                                                        opacity: 0.5, // 图表中各个图区域的透明度
+                                                        color: "#ff7700" // 图表中各个图区域的颜色
+                                                    }
+                                                }
+                                            },
+                                            data: [{
+                                                value: [data.data.dupontRadarDTO.whole, data.data.dupontRadarDTO.profit, data.data.dupontRadarDTO.sinking, data.data.dupontRadarDTO.operate, data.data.dupontRadarDTO.grow],
+                                                name: '当前平台估值'
+                                            }]
+                                        }, ]
+                                    }
+                                    _this.myChart1.setOption(option);
+                                    _this.ajax1 = false;
+                                } else {
+                                    Message({
+                                        'message': data.msg,
+                                        'type': 'error',
+                                    });
                                 }
-                                _this.myChart1.setOption(option);
-                                _this.ajax1=false;
-                            } else {
-                                Message({
-                                    'message': data.msg,
-                                    'type': 'error',
-                                });
+                            },
+                            complete = function() {
+                                _this.loadingall = false;
                             }
-                        },
-                        complete = function() {
-                            _this.loadingall = false;
-                        }
-                    _this.adminApi.getJsonp(url, data, loading, success, complete)
-                  }
+                        _this.adminApi.getJsonp(url, data, loading, success, complete)
+                    }
                     break;
                 case '1':
                     if (!_this.sysdata) {
@@ -2049,7 +2050,7 @@ export default {
                             data.endTime = endtime.replace(/-/g, '')
                         }
 
-                        var url =  _this.adminApi.host+'/htyfctzcfz/finance/all',
+                        var url = _this.adminApi.host + '/htyfctzcfz/finance/all',
 
                             loading = function() {
                                 _this.loadingall = true;
@@ -2058,7 +2059,7 @@ export default {
                                 if (data.code == '1') {
                                     _this.sysNum = data.data.score;
                                     _this.sysdata = data.data;
-                                    _this.ajax2=false;
+                                    _this.ajax2 = false;
 
                                 } else {
                                     Message({
@@ -2075,125 +2076,125 @@ export default {
 
                     if (_this.ajax2 && _this.sysdata) {
 
-                      var data = {
-                          'userId': _this.userId,
-                      };
+                        var data = {
+                            'userId': _this.userId,
+                        };
 
-                      if (_this.formdata.date) {
-                          var endtime = $('.el-input__inner:eq(0)', ".cwxldate").val();
-                          data.endTime = endtime.replace(/-/g, '')
-                      }
+                        if (_this.formdata.date) {
+                            var endtime = $('.el-input__inner:eq(0)', ".cwxldate").val();
+                            data.endTime = endtime.replace(/-/g, '')
+                        }
 
-                      var url =  _this.adminApi.host+'/htyfctzcfz/finance/all',
+                        var url = _this.adminApi.host + '/htyfctzcfz/finance/all',
 
-                          loading = function() {
-                              _this.loadingall = true;
-                          },
-                          success = function(data) {
-                              if (data.code == '1') {
-                                  _this.sysNum = data.data.score;
-                                  _this.sysdata = data.data;
-                                  _this.ajax2=false;
-                              } else {
-                                  Message({
-                                      'message': data.msg,
-                                      'type': 'error',
-                                  });
-                              }
+                            loading = function() {
+                                _this.loadingall = true;
+                            },
+                            success = function(data) {
+                                if (data.code == '1') {
+                                    _this.sysNum = data.data.score;
+                                    _this.sysdata = data.data;
+                                    _this.ajax2 = false;
+                                } else {
+                                    Message({
+                                        'message': data.msg,
+                                        'type': 'error',
+                                    });
+                                }
 
-                          },
-                          complete = function() {
-                              _this.loadingall = false;
-                          }
-                      _this.adminApi.getJsonp(url, data, loading, success, complete)
+                            },
+                            complete = function() {
+                                _this.loadingall = false;
+                            }
+                        _this.adminApi.getJsonp(url, data, loading, success, complete)
                     }
 
                     break;
 
-                    case '2':
-                        if (!_this.ywzcdata) {
+                case '2':
+                    if (!_this.ywzcdata) {
 
-                            var data = {
-                                'userId': _this.userId,
-                            };
+                        var data = {
+                            'userId': _this.userId,
+                        };
 
-                            if (_this.formdata.date) {
-                                var endtime = $('.el-input__inner:eq(0)', ".cwxldate").val();
-                                data.endTime = endtime.replace(/-/g, '')
-                            }
+                        if (_this.formdata.date) {
+                            var endtime = $('.el-input__inner:eq(0)', ".cwxldate").val();
+                            data.endTime = endtime.replace(/-/g, '')
+                        }
 
-                            var url =  _this.adminApi.host+'/htyfctzcfz/support/all',
+                        var url = _this.adminApi.host + '/htyfctzcfz/support/all',
 
-                                loading = function() {
-                                    _this.loadingall = true;
-                                },
-                                success = function(data) {
-                                    if (data.code == '1') {
+                            loading = function() {
+                                _this.loadingall = true;
+                            },
+                            success = function(data) {
+                                if (data.code == '1') {
 
-                                        _this.ywzcNum = data.data.score;
-                                        _this.ywzcdata = data.data;
-                                        _this.ajax3=false;
+                                    _this.ywzcNum = data.data.score;
+                                    _this.ywzcdata = data.data;
+                                    _this.ajax3 = false;
 
-                                    } else {
-                                        Message({
-                                            'message': data.msg,
-                                            'type': 'error',
-                                        });
-                                    }
-                                },
-                                complete = function() {
-                                    _this.loadingall = false;
+                                } else {
+                                    Message({
+                                        'message': data.msg,
+                                        'type': 'error',
+                                    });
                                 }
-                            _this.adminApi.getJsonp(url, data, loading, success, complete)
+                            },
+                            complete = function() {
+                                _this.loadingall = false;
+                            }
+                        _this.adminApi.getJsonp(url, data, loading, success, complete)
+                    }
+
+                    if (_this.ajax3 && _this.ywzcdata) {
+
+                        var data = {
+                            'userId': _this.userId,
+                        };
+
+                        if (_this.formdata.date) {
+                            var endtime = $('.el-input__inner:eq(0)', ".cwxldate").val();
+                            data.endTime = endtime.replace(/-/g, '')
                         }
 
-                        if (_this.ajax3 && _this.ywzcdata) {
+                        var url = _this.adminApi.host + '/htyfctzcfz/support/all',
 
-                          var data = {
-                              'userId': _this.userId,
-                          };
+                            loading = function() {
+                                _this.loadingall = true;
+                            },
+                            success = function(data) {
+                                if (data.code == '1') {
+                                    _this.ywzcNum = data.data.score;
+                                    _this.ywzcdata = data.data;
+                                    _this.ajax3 = false;
 
-                          if (_this.formdata.date) {
-                              var endtime = $('.el-input__inner:eq(0)', ".cwxldate").val();
-                              data.endTime = endtime.replace(/-/g, '')
-                          }
+                                } else {
+                                    Message({
+                                        'message': data.msg,
+                                        'type': 'error',
+                                    });
+                                }
+                            },
+                            complete = function() {
+                                _this.loadingall = false;
+                            }
+                        _this.adminApi.getJsonp(url, data, loading, success, complete)
+                    }
 
-                          var url =  _this.adminApi.host+'/htyfctzcfz/support/all',
-
-                              loading = function() {
-                                  _this.loadingall = true;
-                              },
-                              success = function(data) {
-                                  if (data.code == '1') {
-                                      _this.ywzcNum = data.data.score;
-                                      _this.ywzcdata = data.data;
-                                      _this.ajax3=false;
-
-                                  } else {
-                                      Message({
-                                          'message': data.msg,
-                                          'type': 'error',
-                                      });
-                                  }
-                              },
-                              complete = function() {
-                                  _this.loadingall = false;
-                              }
-                          _this.adminApi.getJsonp(url, data, loading, success, complete)
-                        }
-
-                        break;
+                    break;
             }
         },
         formdata: {
-                handler: function(val) {
-                  let _this=this;
-                  _this.ajax1=true;
-                  _this.ajax2=true;
-                  _this.ajax3=true;
-                },
-                deep: true
-            }
+            handler: function(val) {
+                let _this = this;
+                _this.ajax1 = true;
+                _this.ajax2 = true;
+                _this.ajax3 = true;
+            },
+            deep: true
+        }
     },
     created() {
         let _this = this;
@@ -2205,10 +2206,16 @@ export default {
             return;
         }
 
+        var day1 = new Date();
+        day1.setTime(day1.getTime() - 24 * 60 * 60 * 1000);
+      _this.datePlaceHolder= day1.getFullYear() + "-" + (day1.getMonth() + 1) + "-" + day1.getDate();
+
+
+
     },
     mounted() {
         let _this = this;
-        var url = _this.adminApi.host+'/login/validate',
+        var url = _this.adminApi.host + '/login/validate',
             data = {
                 userId: _this.$route.query.userId,
                 ticket: _this.$route.query.ticket
@@ -2218,149 +2225,149 @@ export default {
             },
             success = function(data) {
                 if (data.code == '2') {
-                  _this.userId = _this.$route.query.userId;
-                  _this.$emit('userInfo',_this.$route.query.userName,data.data.vmsUrl);
-                  var data={
-                     'userId':_this.$route.query.userId,
-                     'ticket':_this.$route.query.ticket,
-                     'userName':_this.$route.query.userName,
-                   }
-                   _this.$store.commit('changeUserId',data)
-                   _this.$nextTick(function() {
-                       $('.dbfx-dlb').hover(function() {
-                           $('.dbfx-trItem[shu=shu1]').addClass('cwfxHover')
-                           $('.dbfx-trItem[heng=heng1]').addClass('cwfxHover')
-                       }, function() {
-                           $('.cwfxHover').removeClass('cwfxHover')
-                       })
+                    _this.userId = _this.$route.query.userId;
+                    _this.$emit('userInfo', _this.$route.query.userName, data.data.vmsUrl);
+                    var data = {
+                        'userId': _this.$route.query.userId,
+                        'ticket': _this.$route.query.ticket,
+                        'userName': _this.$route.query.userName,
+                    }
+                    _this.$store.commit('changeUserId', data)
+                    _this.$nextTick(function() {
+                        $('.dbfx-dlb').hover(function() {
+                            $('.dbfx-trItem[shu=shu1]').addClass('cwfxHover')
+                            $('.dbfx-trItem[heng=heng1]').addClass('cwfxHover')
+                        }, function() {
+                            $('.cwfxHover').removeClass('cwfxHover')
+                        })
 
-                       $('.dbfx-trItem').hover(function() {
-                           if ($(this).attr('shu')) {
-                               var shurel = $(this).attr('shu');
-                               $('.dbfx-trItem[shu=' + shurel + ']').addClass('cwfxHover')
-                           }
+                        $('.dbfx-trItem').hover(function() {
+                            if ($(this).attr('shu')) {
+                                var shurel = $(this).attr('shu');
+                                $('.dbfx-trItem[shu=' + shurel + ']').addClass('cwfxHover')
+                            }
 
-                           if ($(this).attr('heng')) {
+                            if ($(this).attr('heng')) {
 
-                               var hengrel = $(this).attr('heng');
+                                var hengrel = $(this).attr('heng');
 
-                               $('.dbfx-trItem[heng=' + hengrel + ']').addClass('cwfxHover');
+                                $('.dbfx-trItem[heng=' + hengrel + ']').addClass('cwfxHover');
 
-                               $('.dbfx-trItem[henga=' + hengrel + ']').addClass('cwfxHover')
-                               $('.dbfx-trItem[hengb=' + hengrel + ']').addClass('cwfxHover')
-                               $('.dbfx-trItem[hengc=' + hengrel + ']').addClass('cwfxHover')
-                           }
+                                $('.dbfx-trItem[henga=' + hengrel + ']').addClass('cwfxHover')
+                                $('.dbfx-trItem[hengb=' + hengrel + ']').addClass('cwfxHover')
+                                $('.dbfx-trItem[hengc=' + hengrel + ']').addClass('cwfxHover')
+                            }
 
-                          
 
-                       }, function() {
-                           $('.cwfxHover').removeClass('cwfxHover')
-                       })
 
-                       var data = {
-                           'userId': _this.userId,
-                       };
+                        }, function() {
+                            $('.cwfxHover').removeClass('cwfxHover')
+                        })
 
-                       if (_this.formdata.date) {
-                           var endtime = $('.el-input__inner:eq(0)', ".cwxldate").val();
-                           data.endTime = endtime.replace(/-/g, '')
-                       }
+                        var data = {
+                            'userId': _this.userId,
+                        };
 
-                       var url =  _this.adminApi.host+'/htyfctzcfz/dupont/all',
+                        if (_this.formdata.date) {
+                            var endtime = $('.el-input__inner:eq(0)', ".cwxldate").val();
+                            data.endTime = endtime.replace(/-/g, '')
+                        }
 
-                           loading = function() {
-                               _this.loadingall = true;
-                           },
-                           success = function(data) {
-                               if (data.code == '1') {
-                                   _this.ajax1=false;
-                                   _this.cwxldata = data.data.dupontDTO;
-                                   _this.myChart1 = echarts.init(document.getElementById('main'));
-                                   var option = {
-                                       tooltip: {
-                                           confine: true
-                                       },
-                                       radar: [{
+                        var url = _this.adminApi.host + '/htyfctzcfz/dupont/all',
 
-                                           indicator: [{
-                                               text: '整体能力',
-                                               color: '#ff7700',
-                                               max: 5
+                            loading = function() {
+                                _this.loadingall = true;
+                            },
+                            success = function(data) {
+                                if (data.code == '1') {
+                                    _this.ajax1 = false;
+                                    _this.cwxldata = data.data.dupontDTO;
+                                    _this.myChart1 = echarts.init(document.getElementById('main'));
+                                    var option = {
+                                        tooltip: {
+                                            confine: true
+                                        },
+                                        radar: [{
 
-                                           }, {
-                                               text: '获利能力',
-                                               max: 5
-                                           }, {
-                                               text: '偿债能力',
-                                               max: 5
-                                           }, {
-                                               text: '运营能力',
-                                               max: 5
-                                           }, {
-                                               text: '成长能力',
-                                               max: 5
-                                           }],
-                                           center: screen.width > 1600 ? ['50%', '55%'] : ['50%', '50%'],
-                                           radius: screen.width > 1600 ? '70%' : '50%',
-                                           startAngle: 90,
-                                           splitNumber: 4,
-                                           name: {
+                                            indicator: [{
+                                                text: '整体能力',
+                                                color: '#ff7700',
+                                                max: 5
 
-                                               formatter: '{value}',
-                                               textStyle: {
-                                                   color: '#999'
-                                               }
-                                           }
-                                       }],
-                                       series: [{
-                                           type: 'radar',
-                                           tooltip: {
-                                               trigger: 'item'
-                                           },
-                                           itemStyle: {
-                                               normal: {
-                                                   color: "rgba(255,199,1)", // 图表中各个图区域的边框线拐点颜色
-                                                   lineStyle: {
-                                                       color: "#ff7700" // 图表中各个图区域的边框线颜色
-                                                   },
-                                                   areaStyle: {
-                                                       type: 'default',
-                                                       opacity: 0.5, // 图表中各个图区域的透明度
-                                                       color: "#ff7700" // 图表中各个图区域的颜色
-                                                   }
-                                               }
-                                           },
-                                           data: [{
-                                               value: data.data.dupontRadarDTO ? [data.data.dupontRadarDTO.whole, data.data.dupontRadarDTO.profit, data.data.dupontRadarDTO.sinking, data.data.dupontRadarDTO.operate, data.data.dupontRadarDTO.grow] :[],
-                                               name: '当前平台估值'
-                                           }]
-                                       }, ]
-                                   }
-                                   _this.myChart1.setOption(option);
-                               } else {
-                                   Message({
-                                       'message': data.msg,
-                                       'type': 'error',
-                                   });
-                               }
-                           },
-                           complete = function() {
-                               _this.loadingall = false;
-                           }
-                       _this.adminApi.getJsonp(url, data, loading, success, complete)
-                   })
+                                            }, {
+                                                text: '获利能力',
+                                                max: 5
+                                            }, {
+                                                text: '偿债能力',
+                                                max: 5
+                                            }, {
+                                                text: '运营能力',
+                                                max: 5
+                                            }, {
+                                                text: '成长能力',
+                                                max: 5
+                                            }],
+                                            center: screen.width > 1600 ? ['50%', '55%'] : ['50%', '50%'],
+                                            radius: screen.width > 1600 ? '70%' : '50%',
+                                            startAngle: 90,
+                                            splitNumber: 4,
+                                            name: {
+
+                                                formatter: '{value}',
+                                                textStyle: {
+                                                    color: '#999'
+                                                }
+                                            }
+                                        }],
+                                        series: [{
+                                            type: 'radar',
+                                            tooltip: {
+                                                trigger: 'item'
+                                            },
+                                            itemStyle: {
+                                                normal: {
+                                                    color: "rgba(255,199,1)", // 图表中各个图区域的边框线拐点颜色
+                                                    lineStyle: {
+                                                        color: "#ff7700" // 图表中各个图区域的边框线颜色
+                                                    },
+                                                    areaStyle: {
+                                                        type: 'default',
+                                                        opacity: 0.5, // 图表中各个图区域的透明度
+                                                        color: "#ff7700" // 图表中各个图区域的颜色
+                                                    }
+                                                }
+                                            },
+                                            data: [{
+                                                value: data.data.dupontRadarDTO ? [data.data.dupontRadarDTO.whole, data.data.dupontRadarDTO.profit, data.data.dupontRadarDTO.sinking, data.data.dupontRadarDTO.operate, data.data.dupontRadarDTO.grow] : [],
+                                                name: '当前平台估值'
+                                            }]
+                                        }, ]
+                                    }
+                                    _this.myChart1.setOption(option);
+                                } else {
+                                    Message({
+                                        'message': data.msg,
+                                        'type': 'error',
+                                    });
+                                }
+                            },
+                            complete = function() {
+                                _this.loadingall = false;
+                            }
+                        _this.adminApi.getJsonp(url, data, loading, success, complete)
+                    })
                 } else {
                     Message({
                         'message': data.msg,
                         'type': 'error',
-                        'onClose':function(){
-                          window.location.href=data.data.vmsUrl+'/login';
+                        'onClose': function() {
+                            window.location.href = data.data.vmsUrl + '/login';
                         }
                     });
                 }
             },
             complete = function() {
-               _this.loadingall = false;
+                _this.loadingall = false;
             }
         _this.adminApi.getJsonp(url, data, loading, success, complete)
 
@@ -2382,14 +2389,14 @@ export default {
                         data.endTime = endtime.replace(/-/g, '')
                     }
 
-                    var url =  _this.adminApi.host+'/htyfctzcfz/dupont/all',
+                    var url = _this.adminApi.host + '/htyfctzcfz/dupont/all',
 
                         loading = function() {
                             _this.loadingall = true;
                         },
                         success = function(data) {
                             if (data.code == '1') {
-                              _this.ajax1=false;
+                                _this.ajax1 = false;
                                 _this.cwxldata = data.data.dupontDTO;
                                 _this.myChart1 = echarts.init(document.getElementById('main'));
                                 var option = {
@@ -2469,72 +2476,72 @@ export default {
                     break;
 
                 case '1':
-                var data = {
-                    'userId': _this.userId,
-                };
+                    var data = {
+                        'userId': _this.userId,
+                    };
 
-                if (_this.formdata.date) {
-                    var endtime = $('.el-input__inner:eq(0)', ".cwxldate").val();
-                    data.endTime = endtime.replace(/-/g, '')
-                }
-
-                var url =  _this.adminApi.host+'/htyfctzcfz/finance/all',
-
-                    loading = function() {
-                        _this.loadingall = true;
-                    },
-                    success = function(data) {
-                        if (data.code == '1') {
-                            _this.sysNum = data.data.score;
-                            _this.sysdata = data.data;
-                            _this.ajax2=false;
-
-                        } else {
-                            Message({
-                                'message': data.msg,
-                                'type': 'error',
-                            });
-                        }
-                    },
-                    complete = function() {
-                        _this.loadingall = false;
+                    if (_this.formdata.date) {
+                        var endtime = $('.el-input__inner:eq(0)', ".cwxldate").val();
+                        data.endTime = endtime.replace(/-/g, '')
                     }
-                _this.adminApi.getJsonp(url, data, loading, success, complete)
+
+                    var url = _this.adminApi.host + '/htyfctzcfz/finance/all',
+
+                        loading = function() {
+                            _this.loadingall = true;
+                        },
+                        success = function(data) {
+                            if (data.code == '1') {
+                                _this.sysNum = data.data.score;
+                                _this.sysdata = data.data;
+                                _this.ajax2 = false;
+
+                            } else {
+                                Message({
+                                    'message': data.msg,
+                                    'type': 'error',
+                                });
+                            }
+                        },
+                        complete = function() {
+                            _this.loadingall = false;
+                        }
+                    _this.adminApi.getJsonp(url, data, loading, success, complete)
                     break;
 
                 case '2':
-                var data = {
-                    'userId': _this.userId,
-                };
+                    var data = {
+                        'userId': _this.userId,
+                    };
 
-                if (_this.formdata.date) {
-                    var endtime = $('.el-input__inner:eq(0)', ".cwxldate").val();
-                    data.endTime = endtime.replace(/-/g, '')
-                }
-
-                var url =  _this.adminApi.host+'/htyfctzcfz/support/all',
-
-                    loading = function() {
-                        _this.loadingall = true;
-                    },
-                    success = function(data) {
-                        if (data.code == '1') {
-
-                            _this.ywzcNum = data.data.score;
-                            _this.ywzcdata = data.data;
-                            _this.ajax3=false;
-
-                        } else {
-                            Message({
-                                'message': data.msg,
-                                'type': 'error',
-                            });
-                        }
-                    },
-                    complete = function() {
-                        _this.loadingall = false;
+                    if (_this.formdata.date) {
+                        var endtime = $('.el-input__inner:eq(0)', ".cwxldate").val();
+                        data.endTime = endtime.replace(/-/g, '')
                     }
-                _this.adminApi.getJsonp(url, data, loading, success, complete)
+
+                    var url = _this.adminApi.host + '/htyfctzcfz/support/all',
+
+                        loading = function() {
+                            _this.loadingall = true;
+                        },
+                        success = function(data) {
+                            if (data.code == '1') {
+
+                                _this.ywzcNum = data.data.score;
+                                _this.ywzcdata = data.data;
+                                _this.ajax3 = false;
+
+                            } else {
+                                Message({
+                                    'message': data.msg,
+                                    'type': 'error',
+                                });
+                            }
+                        },
+                        complete = function() {
+                            _this.loadingall = false;
+                        }
+                    _this.adminApi.getJsonp(url, data, loading, success, complete)
                     break;
                 default:
 

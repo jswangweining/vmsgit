@@ -2,12 +2,12 @@
 
 .w-pannelitem {
     display: flex;
-    flex-wrap: wrap;
+    // flex-wrap: wrap;
     justify-content: space-between;
 }
 
 .w-pannelitema {
-    width: 49%;
+    flex: 1;
     border: 1px solid #f3f3f3;
     margin-bottom: 1rem;
 }
@@ -15,6 +15,8 @@
 .bodyscroll {
 
     height: 100%;
+    display: flex;
+    flex-direction: column;
     // overflow-x: auto;
     // overflow-y: auto;
 }
@@ -37,17 +39,17 @@
                         <radio-group v-model="formdata.radiovalue" @change='radiochange'>
                             <wradio label="0">无对比</wradio>
                             <wradio label="1">时间段对比</wradio>
-                            <!-- <wradio label="2">维度对比</wradio> -->
+                            <wradio label="2">维度对比</wradio>
                         </radio-group>
                     </form-item>
                 </div>
 
                 <div class="" v-if='formdata.radiovalue=="0"'>
                     <form-item label="查询时间" style="margin-top:0px;" class="radio0Month">
-                        <date-picker type="month" v-model="formdata.startmonth" placeholder="选择开始月份" :editable='false' :picker-options="pickerOptions1" @change='monthchange1' style="width:250px;">
+                        <date-picker type="month" v-model="formdata.startmonth" :placeholder="monthPlaceHolder" :editable='false' :picker-options="pickerOptions1" @change='monthchange1' style="width:250px;">
                         </date-picker>
                         <span class="w-searchs">至</span>
-                        <date-picker type="month" v-model="formdata.endmonth" placeholder="选择结束月份" :editable='false' :picker-options="pickerOptions1" @change='monthchange2' style="width:250px;">
+                        <date-picker type="month" v-model="formdata.endmonth" :placeholder="monthPlaceHolder" :editable='false' :picker-options="pickerOptions1" @change='monthchange2' style="width:250px;">
                         </date-picker>
                     </form-item>
 
@@ -57,16 +59,16 @@
                 </div>
 
                 <div class="" v-if='formdata.radiovalue=="1"'>
-                    <form-item label="会员时间" style="margin-top:0px;" class="w-date-range">
-                        <date-picker type="daterange" v-model="formdata.date" placeholder="选择周期" :editable='false' :picker-options="pickerOptions3">
+                    <form-item label="会员转化时间" style="margin-top:0px;" class="w-date-range">
+                        <date-picker type="daterange" v-model="formdata.date" placeholder="全部会员店" :editable='false' :picker-options="pickerOptions3">
                         </date-picker>
                     </form-item>
 
                     <form-item label="时间段：" style="margin-top:0px;" class="radio1Month">
-                        <date-picker type="month" v-model="formdata.startmonth2" placeholder="选择开始月份" :editable='false' :picker-options="pickerOptions1" style="width:250px;">
+                        <date-picker type="month" v-model="formdata.startmonth2" :placeholder="monthPlaceHolder" :editable='false' :picker-options="pickerOptions1" style="width:250px;">
                         </date-picker>
-                        <span class="w-searchs">至</span>
-                        <date-picker type="month" v-model="formdata.endmonth2" placeholder="选择结束月份" :editable='false' :picker-options="pickerOptions1" style="width:250px;">
+                        <span class="w-searchs">对比</span>
+                        <date-picker type="month" v-model="formdata.endmonth2" :placeholder="monthPlaceHolder" :editable='false' :picker-options="pickerOptions1" style="width:250px;">
                         </date-picker>
 
                         <wbutton type="info" size="small" @click='yhfnSearch2()'>对比</wbutton>
@@ -85,10 +87,10 @@
                         </wselect>
 
                         <form-item label="查询时间" style="margin-top:0px;" class="radio2Month">
-                            <date-picker type="month" v-model="formdata2.startmonth3" placeholder="选择开始月份" :editable='false' :picker-options="pickerOptions1" style="width:250px;" >
+                            <date-picker type="month" v-model="formdata2.startmonth3" :placeholder="monthPlaceHolder" :editable='false' :picker-options="pickerOptions1" style="width:250px;" >
                             </date-picker>
                             <span class="w-searchs">至</span>
-                            <date-picker type="month" v-model="formdata2.endmonth3" placeholder="选择结束月份" :editable='false' :picker-options="pickerOptions1" style="width:250px;">
+                            <date-picker type="month" v-model="formdata2.endmonth3" :placeholder="monthPlaceHolder" :editable='false' :picker-options="pickerOptions1" style="width:250px;">
                             </date-picker>
                         </form-item>
 
@@ -121,7 +123,7 @@
                 <div class="w-pannelitema">
                     <div class="w-ywxl-ddrdt">
                         <div class="w-ywxl-ddrdta">
-                            整体采购<span>（单位：万元）</span>
+                            整体采购
                         </div>
                         <div class="w-ywxl-ddrdtb">
                             <span class="w-ywxl-ddrdtbs1">当前数据</span>
@@ -136,10 +138,10 @@
                     </div>
                 </div>
 
-                <div class="w-pannelitema">
+                <div class="w-pannelitema" style="margin-left:15px;">
                     <div class="w-ywxl-ddrdt">
                         <div class="w-ywxl-ddrdta">
-                            线上采购<span>（单位：万元）</span>
+                            线上采购
                         </div>
                         <div class="w-ywxl-ddrdtb">
                             <span class="w-ywxl-ddrdtbs1">当前数据</span>
@@ -154,10 +156,14 @@
                     </div>
                 </div>
 
+            </div>
+
+              <div class="w-pannelitem">
+
                 <div class="w-pannelitema">
                     <div class="w-ywxl-ddrdt">
                         <div class="w-ywxl-ddrdta">
-                            商城登录频次<span>（单位：次）</span>
+                            商城登录频次
                         </div>
                         <div class="w-ywxl-ddrdtb">
                             <span class="w-ywxl-ddrdtbs1">当前数据</span>
@@ -172,10 +178,10 @@
                     </div>
                 </div>
 
-                <div class="w-pannelitema">
+                <div class="w-pannelitema" style="margin-left:15px;">
                     <div class="w-ywxl-ddrdt">
                         <div class="w-ywxl-ddrdta">
-                            超级老板登录频次<span>（单位：次）</span>
+                            超级老板登录频次
                         </div>
                         <div class="w-ywxl-ddrdtb">
                             <span class="w-ywxl-ddrdtbs1">当前数据</span>
@@ -190,10 +196,14 @@
                     </div>
                 </div>
 
+              </div>
+
+                <div class="w-pannelitem">
+
                 <div class="w-pannelitema">
                     <div class="w-ywxl-ddrdt">
                         <div class="w-ywxl-ddrdta">
-                            上架商品数<span>（单位：件）</span>
+                            上架商品数
                         </div>
                         <div class="w-ywxl-ddrdtb">
                             <span class="w-ywxl-ddrdtbs1">当前数据</span>
@@ -208,10 +218,10 @@
                     </div>
                 </div>
 
-                <div class="w-pannelitema">
+                <div class="w-pannelitema" style="margin-left:15px;">
                     <div class="w-ywxl-ddrdt">
                         <div class="w-ywxl-ddrdta">
-                            贷款金额<span>（单位：万元）</span>
+                            贷款金额
                         </div>
                         <div class="w-ywxl-ddrdtb">
                             <span class="w-ywxl-ddrdtbs1">当前数据</span>
@@ -327,7 +337,10 @@ export default {
         startdatevalue: '',
         enddatevalue: '',
         startdatevalue2: '',
-        enddatevalue2: ''
+        enddatevalue2: '',
+        currentYear:'',
+        currentMonth:'',
+        monthPlaceHolder:''
     }),
     computed: {},
     watch:{
@@ -399,6 +412,10 @@ export default {
             });
             return;
         }
+        var curDate = new Date();
+        _this.currentYear = curDate.getFullYear();
+        _this.currentMonth = curDate.getMonth() + 1;
+        _this.monthPlaceHolder = _this.currentYear + '-' + _this.currentMonth;
     },
     mounted() {
         let _this = this;
@@ -477,7 +494,7 @@ export default {
                                        }],
                                        series: [{
                                            name: '当前数据',
-                                           barWidth: 5,
+                                           barWidth: 7,
                                            type: 'bar',
                                            data: data.data.chartDate1,
                                            itemStyle: {
@@ -545,7 +562,7 @@ export default {
                                        }],
                                        series: [{
                                            name: '当前数据',
-                                           barWidth: 5,
+                                           barWidth: 7,
                                            type: 'bar',
                                            data: data.data.chartDate2,
                                            itemStyle: {
@@ -569,20 +586,15 @@ export default {
                                    _this.myChart2 = echarts.init(document.getElementById('main2'));
                                    _this.myChart2.setOption(option2);
                                    var option3 = {
-                                       title: {
-                                           show: false
-                                       },
                                        tooltip: {
                                            trigger: 'axis',
-                                           axisPointer: {
-                                               type: 'cross',
-                                               label: {
-                                                   backgroundColor: '#6a7985'
-                                               }
+                                           axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                               type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
                                            }
                                        },
+                                       color: ['#ff7700', '#6c81b3'],
                                        grid: {
-                                           top: 20,
+                                           top: '10',
                                            left: '3%',
                                            right: '4%',
                                            bottom: '3%',
@@ -590,7 +602,6 @@ export default {
                                        },
                                        xAxis: [{
                                            type: 'category',
-                                           boundaryGap: false,
                                            data: data.data.chartBottom3,
                                            axisLine: {
                                                lineStyle: {
@@ -619,34 +630,39 @@ export default {
                                        }],
                                        series: [{
                                            name: '当前数据',
-                                           type: 'line',
-                                           stack: '总量',
+                                           barWidth: 7,
+                                           type: 'bar',
+                                           data: data.data.chartDate3,
                                            itemStyle: {
                                                normal: {
-                                                   color: 'rgb(255, 119, 0)'
-                                               }
-                                           },
-
-                                           data: data.data.chartDate3
+                                                   color: new echarts.graphic.LinearGradient(
+                                                       0, 0, 0, 1, [{
+                                                           offset: 0,
+                                                           color: '#ff7700'
+                                                       }, {
+                                                           offset: 0.5,
+                                                           color: '#ff9e48'
+                                                       }, {
+                                                           offset: 1,
+                                                           color: '#ffbb7f'
+                                                       }]
+                                                   )
+                                               },
+                                           }
                                        }]
                                    };
                                    _this.myChart3 = echarts.init(document.getElementById('main3'));
                                    _this.myChart3.setOption(option3);
                                    var option4 = {
-                                       title: {
-                                           show: false
-                                       },
                                        tooltip: {
                                            trigger: 'axis',
-                                           axisPointer: {
-                                               type: 'cross',
-                                               label: {
-                                                   backgroundColor: '#6a7985'
-                                               }
+                                           axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                               type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
                                            }
                                        },
+                                       color: ['#ff7700', '#6c81b3'],
                                        grid: {
-                                           top: 20,
+                                           top: '10',
                                            left: '3%',
                                            right: '4%',
                                            bottom: '3%',
@@ -654,7 +670,6 @@ export default {
                                        },
                                        xAxis: [{
                                            type: 'category',
-                                           boundaryGap: false,
                                            data: data.data.chartBottom4,
                                            axisLine: {
                                                lineStyle: {
@@ -683,34 +698,39 @@ export default {
                                        }],
                                        series: [{
                                            name: '当前数据',
-                                           type: 'line',
-                                           stack: '总量',
+                                           barWidth: 7,
+                                           type: 'bar',
+                                           data: data.data.chartDate4,
                                            itemStyle: {
                                                normal: {
-                                                   color: 'rgb(255, 119, 0)'
-                                               }
-                                           },
-
-                                           data: data.data.chartDate4
+                                                   color: new echarts.graphic.LinearGradient(
+                                                       0, 0, 0, 1, [{
+                                                           offset: 0,
+                                                           color: '#ff7700'
+                                                       }, {
+                                                           offset: 0.5,
+                                                           color: '#ff9e48'
+                                                       }, {
+                                                           offset: 1,
+                                                           color: '#ffbb7f'
+                                                       }]
+                                                   )
+                                               },
+                                           }
                                        }]
                                    };
                                    _this.myChart4 = echarts.init(document.getElementById('main4'));
                                    _this.myChart4.setOption(option4);
                                    var option5 = {
-                                       title: {
-                                           show: false
-                                       },
                                        tooltip: {
                                            trigger: 'axis',
-                                           axisPointer: {
-                                               type: 'cross',
-                                               label: {
-                                                   backgroundColor: '#6a7985'
-                                               }
+                                           axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                               type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
                                            }
                                        },
+                                       color: ['#ff7700', '#6c81b3'],
                                        grid: {
-                                           top: 20,
+                                           top: '10',
                                            left: '3%',
                                            right: '4%',
                                            bottom: '3%',
@@ -718,7 +738,6 @@ export default {
                                        },
                                        xAxis: [{
                                            type: 'category',
-                                           boundaryGap: false,
                                            data: data.data.chartBottom5,
                                            axisLine: {
                                                lineStyle: {
@@ -747,40 +766,39 @@ export default {
                                        }],
                                        series: [{
                                            name: '当前数据',
-                                           type: 'line',
-                                           stack: '总量',
+                                           barWidth: 7,
+                                           type: 'bar',
+                                           data: data.data.chartDate5,
                                            itemStyle: {
                                                normal: {
-                                                   color: 'rgb(255, 119, 0)'
-                                               }
-                                           },
-                                           areaStyle: {
-                                               normal: {
-                                                   color: 'rgb(255, 119, 0)',
-                                                   opacity: 0.2 // 图表中各个图区域的透明度
-
-                                               }
-                                           },
-                                           data: data.data.chartDate5
-                                       }, ]
+                                                   color: new echarts.graphic.LinearGradient(
+                                                       0, 0, 0, 1, [{
+                                                           offset: 0,
+                                                           color: '#ff7700'
+                                                       }, {
+                                                           offset: 0.5,
+                                                           color: '#ff9e48'
+                                                       }, {
+                                                           offset: 1,
+                                                           color: '#ffbb7f'
+                                                       }]
+                                                   )
+                                               },
+                                           }
+                                       }]
                                    };
                                    _this.myChart5 = echarts.init(document.getElementById('main5'));
                                    _this.myChart5.setOption(option5);
                                    var option6 = {
-                                       title: {
-                                           show: false
-                                       },
                                        tooltip: {
                                            trigger: 'axis',
-                                           axisPointer: {
-                                               type: 'cross',
-                                               label: {
-                                                   backgroundColor: '#6a7985'
-                                               }
+                                           axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                               type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
                                            }
                                        },
+                                       color: ['#ff7700', '#6c81b3'],
                                        grid: {
-                                           top: 20,
+                                           top: '10',
                                            left: '3%',
                                            right: '4%',
                                            bottom: '3%',
@@ -788,7 +806,6 @@ export default {
                                        },
                                        xAxis: [{
                                            type: 'category',
-                                           boundaryGap: false,
                                            data: data.data.chartBottom6,
                                            axisLine: {
                                                lineStyle: {
@@ -817,22 +834,26 @@ export default {
                                        }],
                                        series: [{
                                            name: '当前数据',
-                                           type: 'line',
-                                           stack: '总量',
+                                           barWidth: 7,
+                                           type: 'bar',
+                                           data: data.data.chartDate6,
                                            itemStyle: {
                                                normal: {
-                                                   color: 'rgb(255, 119, 0)'
-                                               }
-                                           },
-                                           areaStyle: {
-                                               normal: {
-                                                   color: 'rgb(255, 119, 0)',
-                                                   opacity: 0.2 // 图表中各个图区域的透明度
-
-                                               }
-                                           },
-                                           data: data.data.chartDate6
-                                       }, ]
+                                                   color: new echarts.graphic.LinearGradient(
+                                                       0, 0, 0, 1, [{
+                                                           offset: 0,
+                                                           color: '#ff7700'
+                                                       }, {
+                                                           offset: 0.5,
+                                                           color: '#ff9e48'
+                                                       }, {
+                                                           offset: 1,
+                                                           color: '#ffbb7f'
+                                                       }]
+                                                   )
+                                               },
+                                           }
+                                       }]
                                    };
                                    _this.myChart6 = echarts.init(document.getElementById('main6'));
                                    _this.myChart6.setOption(option6);
@@ -1045,7 +1066,7 @@ export default {
                                 }],
                                 series: [{
                                     name: '当前数据',
-                                    barWidth: 5,
+                                    barWidth: 7,
                                     type: 'bar',
                                     data: data.data.chartDate1,
                                     itemStyle: {
@@ -1066,7 +1087,6 @@ export default {
                                     }
                                 }]
                             };
-                            _this.myChart1.clear();
                             _this.myChart1 = echarts.init(document.getElementById('main1'));
                             _this.myChart1.setOption(option1);
                             var option2 = {
@@ -1114,7 +1134,7 @@ export default {
                                 }],
                                 series: [{
                                     name: '当前数据',
-                                    barWidth: 5,
+                                    barWidth: 7,
                                     type: 'bar',
                                     data: data.data.chartDate2,
                                     itemStyle: {
@@ -1135,24 +1155,18 @@ export default {
                                     }
                                 }]
                             };
-                            _this.myChart2.clear();
                             _this.myChart2 = echarts.init(document.getElementById('main2'));
                             _this.myChart2.setOption(option2);
                             var option3 = {
-                                title: {
-                                    show: false
-                                },
                                 tooltip: {
                                     trigger: 'axis',
-                                    axisPointer: {
-                                        type: 'cross',
-                                        label: {
-                                            backgroundColor: '#6a7985'
-                                        }
+                                    axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                        type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
                                     }
                                 },
+                                color: ['#ff7700', '#6c81b3'],
                                 grid: {
-                                    top: 20,
+                                    top: '10',
                                     left: '3%',
                                     right: '4%',
                                     bottom: '3%',
@@ -1160,7 +1174,6 @@ export default {
                                 },
                                 xAxis: [{
                                     type: 'category',
-                                    boundaryGap: false,
                                     data: data.data.chartBottom3,
                                     axisLine: {
                                         lineStyle: {
@@ -1189,35 +1202,39 @@ export default {
                                 }],
                                 series: [{
                                     name: '当前数据',
-                                    type: 'line',
-                                    stack: '总量',
+                                    barWidth: 7,
+                                    type: 'bar',
+                                    data: data.data.chartDate3,
                                     itemStyle: {
                                         normal: {
-                                            color: 'rgb(255, 119, 0)'
-                                        }
-                                    },
-
-                                    data: data.data.chartDate3
+                                            color: new echarts.graphic.LinearGradient(
+                                                0, 0, 0, 1, [{
+                                                    offset: 0,
+                                                    color: '#ff7700'
+                                                }, {
+                                                    offset: 0.5,
+                                                    color: '#ff9e48'
+                                                }, {
+                                                    offset: 1,
+                                                    color: '#ffbb7f'
+                                                }]
+                                            )
+                                        },
+                                    }
                                 }]
                             };
-                            _this.myChart3.clear();
                             _this.myChart3 = echarts.init(document.getElementById('main3'));
                             _this.myChart3.setOption(option3);
                             var option4 = {
-                                title: {
-                                    show: false
-                                },
                                 tooltip: {
                                     trigger: 'axis',
-                                    axisPointer: {
-                                        type: 'cross',
-                                        label: {
-                                            backgroundColor: '#6a7985'
-                                        }
+                                    axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                        type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
                                     }
                                 },
+                                color: ['#ff7700', '#6c81b3'],
                                 grid: {
-                                    top: 20,
+                                    top: '10',
                                     left: '3%',
                                     right: '4%',
                                     bottom: '3%',
@@ -1225,7 +1242,6 @@ export default {
                                 },
                                 xAxis: [{
                                     type: 'category',
-                                    boundaryGap: false,
                                     data: data.data.chartBottom4,
                                     axisLine: {
                                         lineStyle: {
@@ -1254,35 +1270,39 @@ export default {
                                 }],
                                 series: [{
                                     name: '当前数据',
-                                    type: 'line',
-                                    stack: '总量',
+                                    barWidth: 7,
+                                    type: 'bar',
+                                    data: data.data.chartDate4,
                                     itemStyle: {
                                         normal: {
-                                            color: 'rgb(255, 119, 0)'
-                                        }
-                                    },
-
-                                    data: data.data.chartDate4
+                                            color: new echarts.graphic.LinearGradient(
+                                                0, 0, 0, 1, [{
+                                                    offset: 0,
+                                                    color: '#ff7700'
+                                                }, {
+                                                    offset: 0.5,
+                                                    color: '#ff9e48'
+                                                }, {
+                                                    offset: 1,
+                                                    color: '#ffbb7f'
+                                                }]
+                                            )
+                                        },
+                                    }
                                 }]
                             };
-                            _this.myChart4.clear();
                             _this.myChart4 = echarts.init(document.getElementById('main4'));
                             _this.myChart4.setOption(option4);
                             var option5 = {
-                                title: {
-                                    show: false
-                                },
                                 tooltip: {
                                     trigger: 'axis',
-                                    axisPointer: {
-                                        type: 'cross',
-                                        label: {
-                                            backgroundColor: '#6a7985'
-                                        }
+                                    axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                        type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
                                     }
                                 },
+                                color: ['#ff7700', '#6c81b3'],
                                 grid: {
-                                    top: 20,
+                                    top: '10',
                                     left: '3%',
                                     right: '4%',
                                     bottom: '3%',
@@ -1290,7 +1310,6 @@ export default {
                                 },
                                 xAxis: [{
                                     type: 'category',
-                                    boundaryGap: false,
                                     data: data.data.chartBottom5,
                                     axisLine: {
                                         lineStyle: {
@@ -1319,41 +1338,39 @@ export default {
                                 }],
                                 series: [{
                                     name: '当前数据',
-                                    type: 'line',
-                                    stack: '总量',
+                                    barWidth: 7,
+                                    type: 'bar',
+                                    data: data.data.chartDate5,
                                     itemStyle: {
                                         normal: {
-                                            color: 'rgb(255, 119, 0)'
-                                        }
-                                    },
-                                    areaStyle: {
-                                        normal: {
-                                            color: 'rgb(255, 119, 0)',
-                                            opacity: 0.2 // 图表中各个图区域的透明度
-
-                                        }
-                                    },
-                                    data: data.data.chartDate5
-                                }, ]
+                                            color: new echarts.graphic.LinearGradient(
+                                                0, 0, 0, 1, [{
+                                                    offset: 0,
+                                                    color: '#ff7700'
+                                                }, {
+                                                    offset: 0.5,
+                                                    color: '#ff9e48'
+                                                }, {
+                                                    offset: 1,
+                                                    color: '#ffbb7f'
+                                                }]
+                                            )
+                                        },
+                                    }
+                                }]
                             };
-                            _this.myChart5.clear();
                             _this.myChart5 = echarts.init(document.getElementById('main5'));
                             _this.myChart5.setOption(option5);
                             var option6 = {
-                                title: {
-                                    show: false
-                                },
                                 tooltip: {
                                     trigger: 'axis',
-                                    axisPointer: {
-                                        type: 'cross',
-                                        label: {
-                                            backgroundColor: '#6a7985'
-                                        }
+                                    axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                        type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
                                     }
                                 },
+                                color: ['#ff7700', '#6c81b3'],
                                 grid: {
-                                    top: 20,
+                                    top: '10',
                                     left: '3%',
                                     right: '4%',
                                     bottom: '3%',
@@ -1361,7 +1378,6 @@ export default {
                                 },
                                 xAxis: [{
                                     type: 'category',
-                                    boundaryGap: false,
                                     data: data.data.chartBottom6,
                                     axisLine: {
                                         lineStyle: {
@@ -1390,24 +1406,27 @@ export default {
                                 }],
                                 series: [{
                                     name: '当前数据',
-                                    type: 'line',
-                                    stack: '总量',
+                                    barWidth: 7,
+                                    type: 'bar',
+                                    data: data.data.chartDate6,
                                     itemStyle: {
                                         normal: {
-                                            color: 'rgb(255, 119, 0)'
-                                        }
-                                    },
-                                    areaStyle: {
-                                        normal: {
-                                            color: 'rgb(255, 119, 0)',
-                                            opacity: 0.2 // 图表中各个图区域的透明度
-
-                                        }
-                                    },
-                                    data: data.data.chartDate6
-                                }, ]
+                                            color: new echarts.graphic.LinearGradient(
+                                                0, 0, 0, 1, [{
+                                                    offset: 0,
+                                                    color: '#ff7700'
+                                                }, {
+                                                    offset: 0.5,
+                                                    color: '#ff9e48'
+                                                }, {
+                                                    offset: 1,
+                                                    color: '#ffbb7f'
+                                                }]
+                                            )
+                                        },
+                                    }
+                                }]
                             };
-                            _this.myChart6.clear();
                             _this.myChart6 = echarts.init(document.getElementById('main6'));
                             _this.myChart6.setOption(option6);
                         } else {
@@ -1502,7 +1521,7 @@ export default {
                             }],
                             series: [{
                                 name: '当前数据',
-                                barWidth: 5,
+                                barWidth: 7,
                                 type: 'bar',
                                 data: data.data.chartDate1,
                                 itemStyle: {
@@ -1524,7 +1543,7 @@ export default {
                             }, {
                                 name: '对比数据',
                                 type: 'bar',
-                                barWidth: 5,
+                                barWidth: 7,
                                 data: data.data.chartPair1,
                                 itemStyle: {
                                     normal: {
@@ -1592,7 +1611,7 @@ export default {
                             }],
                             series: [{
                                 name: '当前数据',
-                                barWidth: 5,
+                                barWidth: 7,
                                 type: 'bar',
                                 data: data.data.chartDate2,
                                 itemStyle: {
@@ -1614,7 +1633,7 @@ export default {
                             }, {
                                 name: '对比数据',
                                 type: 'bar',
-                                barWidth: 5,
+                                barWidth: 7,
                                 data: data.data.chartPair2,
                                 itemStyle: {
                                     normal: {
@@ -1638,20 +1657,15 @@ export default {
                         _this.myChart2 = echarts.init(document.getElementById('main2'));
                         _this.myChart2.setOption(option2);
                         var option3 = {
-                            title: {
-                                show: false
-                            },
                             tooltip: {
                                 trigger: 'axis',
-                                axisPointer: {
-                                    type: 'cross',
-                                    label: {
-                                        backgroundColor: '#6a7985'
-                                    }
+                                axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                    type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
                                 }
                             },
+                            color: ['#ff7700', '#6c81b3'],
                             grid: {
-                                top: 20,
+                                top: '10',
                                 left: '3%',
                                 right: '4%',
                                 bottom: '3%',
@@ -1659,7 +1673,6 @@ export default {
                             },
                             xAxis: [{
                                 type: 'category',
-                                boundaryGap: false,
                                 data: data.data.chartBottom3,
                                 axisLine: {
                                     lineStyle: {
@@ -1688,46 +1701,61 @@ export default {
                             }],
                             series: [{
                                 name: '当前数据',
-                                type: 'line',
-                                stack: '总量',
+                                barWidth: 7,
+                                type: 'bar',
+                                data: data.data.chartDate3,
                                 itemStyle: {
                                     normal: {
-                                        color: 'rgb(255, 119, 0)'
-                                    }
-                                },
-
-                                data: data.data.chartDate3
+                                        color: new echarts.graphic.LinearGradient(
+                                            0, 0, 0, 1, [{
+                                                offset: 0,
+                                                color: '#ff7700'
+                                            }, {
+                                                offset: 0.5,
+                                                color: '#ff9e48'
+                                            }, {
+                                                offset: 1,
+                                                color: '#ffbb7f'
+                                            }]
+                                        )
+                                    },
+                                }
                             }, {
                                 name: '对比数据',
-                                type: 'line',
-                                stack: '总量',
+                                type: 'bar',
+                                barWidth: 7,
+                                data: data.data.chartPair3,
                                 itemStyle: {
                                     normal: {
-                                        color: 'rgb(108, 129, 179)'
-                                    }
-                                },
-
-                                data: data.data.chartPair3
+                                        color: new echarts.graphic.LinearGradient(
+                                            0, 0, 0, 1, [{
+                                                offset: 0,
+                                                color: '#6c81c3'
+                                            }, {
+                                                offset: 0.5,
+                                                color: '#91a1c6'
+                                            }, {
+                                                offset: 1,
+                                                color: '#b5bfd9'
+                                            }]
+                                        )
+                                    },
+                                }
                             }]
                         };
                         _this.myChart3.clear();
                         _this.myChart3 = echarts.init(document.getElementById('main3'));
                         _this.myChart3.setOption(option3);
                         var option4 = {
-                            title: {
-                                show: false
-                            },
                             tooltip: {
                                 trigger: 'axis',
-                                axisPointer: {
-                                    type: 'cross',
-                                    label: {
-                                        backgroundColor: '#6a7985'
-                                    }
+                                axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                    type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
                                 }
                             },
+                            color: ['#ff7700', '#6c81b3'],
                             grid: {
-                                top: 20,
+                                top: '10',
                                 left: '3%',
                                 right: '4%',
                                 bottom: '3%',
@@ -1735,7 +1763,6 @@ export default {
                             },
                             xAxis: [{
                                 type: 'category',
-                                boundaryGap: false,
                                 data: data.data.chartBottom4,
                                 axisLine: {
                                     lineStyle: {
@@ -1764,46 +1791,61 @@ export default {
                             }],
                             series: [{
                                 name: '当前数据',
-                                type: 'line',
-                                stack: '总量',
+                                barWidth: 7,
+                                type: 'bar',
+                                data: data.data.chartDate4,
                                 itemStyle: {
                                     normal: {
-                                        color: 'rgb(255, 119, 0)'
-                                    }
-                                },
-
-                                data: data.data.chartDate4
+                                        color: new echarts.graphic.LinearGradient(
+                                            0, 0, 0, 1, [{
+                                                offset: 0,
+                                                color: '#ff7700'
+                                            }, {
+                                                offset: 0.5,
+                                                color: '#ff9e48'
+                                            }, {
+                                                offset: 1,
+                                                color: '#ffbb7f'
+                                            }]
+                                        )
+                                    },
+                                }
                             }, {
-                                name: '当前数据',
-                                type: 'line',
-                                stack: '总量',
+                                name: '对比数据',
+                                type: 'bar',
+                                barWidth: 7,
+                                data: data.data.chartPair4,
                                 itemStyle: {
                                     normal: {
-                                        color: 'rgb(108, 129, 179)'
-                                    }
-                                },
-
-                                data: data.data.chartPair4
+                                        color: new echarts.graphic.LinearGradient(
+                                            0, 0, 0, 1, [{
+                                                offset: 0,
+                                                color: '#6c81c3'
+                                            }, {
+                                                offset: 0.5,
+                                                color: '#91a1c6'
+                                            }, {
+                                                offset: 1,
+                                                color: '#b5bfd9'
+                                            }]
+                                        )
+                                    },
+                                }
                             }]
                         };
                         _this.myChart4.clear();
                         _this.myChart4 = echarts.init(document.getElementById('main4'));
                         _this.myChart4.setOption(option4);
                         var option5 = {
-                            title: {
-                                show: false
-                            },
                             tooltip: {
                                 trigger: 'axis',
-                                axisPointer: {
-                                    type: 'cross',
-                                    label: {
-                                        backgroundColor: '#6a7985'
-                                    }
+                                axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                    type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
                                 }
                             },
+                            color: ['#ff7700', '#6c81b3'],
                             grid: {
-                                top: 20,
+                                top: '10',
                                 left: '3%',
                                 right: '4%',
                                 bottom: '3%',
@@ -1811,7 +1853,6 @@ export default {
                             },
                             xAxis: [{
                                 type: 'category',
-                                boundaryGap: false,
                                 data: data.data.chartBottom5,
                                 axisLine: {
                                     lineStyle: {
@@ -1840,58 +1881,61 @@ export default {
                             }],
                             series: [{
                                 name: '当前数据',
-                                type: 'line',
-                                stack: '总量',
+                                barWidth: 7,
+                                type: 'bar',
+                                data: data.data.chartDate5,
                                 itemStyle: {
                                     normal: {
-                                        color: 'rgb(255, 119, 0)'
-                                    }
-                                },
-                                areaStyle: {
-                                    normal: {
-                                        color: 'rgb(255, 119, 0)',
-                                        opacity: 0.2 // 图表中各个图区域的透明度
-
-                                    }
-                                },
-                                data: data.data.chartDate5
+                                        color: new echarts.graphic.LinearGradient(
+                                            0, 0, 0, 1, [{
+                                                offset: 0,
+                                                color: '#ff7700'
+                                            }, {
+                                                offset: 0.5,
+                                                color: '#ff9e48'
+                                            }, {
+                                                offset: 1,
+                                                color: '#ffbb7f'
+                                            }]
+                                        )
+                                    },
+                                }
                             }, {
-                                name: '当前数据',
-                                type: 'line',
-                                stack: '总量',
+                                name: '对比数据',
+                                type: 'bar',
+                                barWidth: 7,
+                                data: data.data.chartPair5,
                                 itemStyle: {
                                     normal: {
-                                        color: 'rgb(108, 129, 179)'
-                                    }
-                                },
-                                areaStyle: {
-                                    normal: {
-                                        color: 'rgb(108, 129, 179)',
-                                        opacity: 0.2 // 图表中各个图区域的透明度
-
-                                    }
-                                },
-                                data: data.data.chartPair5
+                                        color: new echarts.graphic.LinearGradient(
+                                            0, 0, 0, 1, [{
+                                                offset: 0,
+                                                color: '#6c81c3'
+                                            }, {
+                                                offset: 0.5,
+                                                color: '#91a1c6'
+                                            }, {
+                                                offset: 1,
+                                                color: '#b5bfd9'
+                                            }]
+                                        )
+                                    },
+                                }
                             }]
                         };
                         _this.myChart5.clear();
                         _this.myChart5 = echarts.init(document.getElementById('main5'));
                         _this.myChart5.setOption(option5);
                         var option6 = {
-                            title: {
-                                show: false
-                            },
                             tooltip: {
                                 trigger: 'axis',
-                                axisPointer: {
-                                    type: 'cross',
-                                    label: {
-                                        backgroundColor: '#6a7985'
-                                    }
+                                axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                    type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
                                 }
                             },
+                            color: ['#ff7700', '#6c81b3'],
                             grid: {
-                                top: 20,
+                                top: '10',
                                 left: '3%',
                                 right: '4%',
                                 bottom: '3%',
@@ -1899,7 +1943,6 @@ export default {
                             },
                             xAxis: [{
                                 type: 'category',
-                                boundaryGap: false,
                                 data: data.data.chartBottom6,
                                 axisLine: {
                                     lineStyle: {
@@ -1928,38 +1971,46 @@ export default {
                             }],
                             series: [{
                                 name: '当前数据',
-                                type: 'line',
-                                stack: '总量',
+                                barWidth: 7,
+                                type: 'bar',
+                                data: data.data.chartDate6,
                                 itemStyle: {
                                     normal: {
-                                        color: 'rgb(255, 119, 0)'
-                                    }
-                                },
-                                areaStyle: {
-                                    normal: {
-                                        color: 'rgb(255, 119, 0)',
-                                        opacity: 0.2 // 图表中各个图区域的透明度
-
-                                    }
-                                },
-                                data: data.data.chartDate6
+                                        color: new echarts.graphic.LinearGradient(
+                                            0, 0, 0, 1, [{
+                                                offset: 0,
+                                                color: '#ff7700'
+                                            }, {
+                                                offset: 0.5,
+                                                color: '#ff9e48'
+                                            }, {
+                                                offset: 1,
+                                                color: '#ffbb7f'
+                                            }]
+                                        )
+                                    },
+                                }
                             }, {
-                                name: '当前数据',
-                                type: 'line',
-                                stack: '总量',
+                                name: '对比数据',
+                                type: 'bar',
+                                barWidth: 7,
+                                data: data.data.chartPair6,
                                 itemStyle: {
                                     normal: {
-                                        color: 'rgb(108, 129, 179)'
-                                    }
-                                },
-                                areaStyle: {
-                                    normal: {
-                                        color: 'rgb(108, 129, 179)',
-                                        opacity: 0.2 // 图表中各个图区域的透明度
-
-                                    }
-                                },
-                                data: data.data.chartPair6
+                                        color: new echarts.graphic.LinearGradient(
+                                            0, 0, 0, 1, [{
+                                                offset: 0,
+                                                color: '#6c81c3'
+                                            }, {
+                                                offset: 0.5,
+                                                color: '#91a1c6'
+                                            }, {
+                                                offset: 1,
+                                                color: '#b5bfd9'
+                                            }]
+                                        )
+                                    },
+                                }
                             }]
                         };
                         _this.myChart6.clear();
@@ -2014,7 +2065,6 @@ export default {
                 success = function(data) {
                     if (data.code == '1') {
                         _this.dispair = true;
-
                         var option1 = {
                             tooltip: {
                                 trigger: 'axis',
@@ -2060,7 +2110,7 @@ export default {
                             }],
                             series: [{
                                 name: '当前数据',
-                                barWidth: 5,
+                                barWidth: 7,
                                 type: 'bar',
                                 data: data.data.chartDate1,
                                 itemStyle: {
@@ -2082,7 +2132,7 @@ export default {
                             }, {
                                 name: '对比数据',
                                 type: 'bar',
-                                barWidth: 5,
+                                barWidth: 7,
                                 data: data.data.chartPair1,
                                 itemStyle: {
                                     normal: {
@@ -2150,7 +2200,7 @@ export default {
                             }],
                             series: [{
                                 name: '当前数据',
-                                barWidth: 5,
+                                barWidth: 7,
                                 type: 'bar',
                                 data: data.data.chartDate2,
                                 itemStyle: {
@@ -2172,7 +2222,7 @@ export default {
                             }, {
                                 name: '对比数据',
                                 type: 'bar',
-                                barWidth: 5,
+                                barWidth: 7,
                                 data: data.data.chartPair2,
                                 itemStyle: {
                                     normal: {
@@ -2196,20 +2246,15 @@ export default {
                         _this.myChart2 = echarts.init(document.getElementById('main2'));
                         _this.myChart2.setOption(option2);
                         var option3 = {
-                            title: {
-                                show: false
-                            },
                             tooltip: {
                                 trigger: 'axis',
-                                axisPointer: {
-                                    type: 'cross',
-                                    label: {
-                                        backgroundColor: '#6a7985'
-                                    }
+                                axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                    type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
                                 }
                             },
+                            color: ['#ff7700', '#6c81b3'],
                             grid: {
-                                top: 20,
+                                top: '10',
                                 left: '3%',
                                 right: '4%',
                                 bottom: '3%',
@@ -2217,7 +2262,6 @@ export default {
                             },
                             xAxis: [{
                                 type: 'category',
-                                boundaryGap: false,
                                 data: data.data.chartBottom3,
                                 axisLine: {
                                     lineStyle: {
@@ -2246,46 +2290,61 @@ export default {
                             }],
                             series: [{
                                 name: '当前数据',
-                                type: 'line',
-                                stack: '总量',
+                                barWidth: 7,
+                                type: 'bar',
+                                data: data.data.chartDate3,
                                 itemStyle: {
                                     normal: {
-                                        color: 'rgb(255, 119, 0)'
-                                    }
-                                },
-
-                                data: data.data.chartDate3
+                                        color: new echarts.graphic.LinearGradient(
+                                            0, 0, 0, 1, [{
+                                                offset: 0,
+                                                color: '#ff7700'
+                                            }, {
+                                                offset: 0.5,
+                                                color: '#ff9e48'
+                                            }, {
+                                                offset: 1,
+                                                color: '#ffbb7f'
+                                            }]
+                                        )
+                                    },
+                                }
                             }, {
-                                name: '当前数据',
-                                type: 'line',
-                                stack: '总量',
+                                name: '对比数据',
+                                type: 'bar',
+                                barWidth: 7,
+                                data: data.data.chartPair3,
                                 itemStyle: {
                                     normal: {
-                                        color: 'rgb(108, 129, 179)'
-                                    }
-                                },
-
-                                data: data.data.chartPair3
+                                        color: new echarts.graphic.LinearGradient(
+                                            0, 0, 0, 1, [{
+                                                offset: 0,
+                                                color: '#6c81c3'
+                                            }, {
+                                                offset: 0.5,
+                                                color: '#91a1c6'
+                                            }, {
+                                                offset: 1,
+                                                color: '#b5bfd9'
+                                            }]
+                                        )
+                                    },
+                                }
                             }]
                         };
                         _this.myChart3.clear();
                         _this.myChart3 = echarts.init(document.getElementById('main3'));
                         _this.myChart3.setOption(option3);
                         var option4 = {
-                            title: {
-                                show: false
-                            },
                             tooltip: {
                                 trigger: 'axis',
-                                axisPointer: {
-                                    type: 'cross',
-                                    label: {
-                                        backgroundColor: '#6a7985'
-                                    }
+                                axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                    type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
                                 }
                             },
+                            color: ['#ff7700', '#6c81b3'],
                             grid: {
-                                top: 20,
+                                top: '10',
                                 left: '3%',
                                 right: '4%',
                                 bottom: '3%',
@@ -2293,7 +2352,6 @@ export default {
                             },
                             xAxis: [{
                                 type: 'category',
-                                boundaryGap: false,
                                 data: data.data.chartBottom4,
                                 axisLine: {
                                     lineStyle: {
@@ -2322,46 +2380,61 @@ export default {
                             }],
                             series: [{
                                 name: '当前数据',
-                                type: 'line',
-                                stack: '总量',
+                                barWidth: 7,
+                                type: 'bar',
+                                data: data.data.chartDate4,
                                 itemStyle: {
                                     normal: {
-                                        color: 'rgb(255, 119, 0)'
-                                    }
-                                },
-
-                                data: data.data.chartDate4
+                                        color: new echarts.graphic.LinearGradient(
+                                            0, 0, 0, 1, [{
+                                                offset: 0,
+                                                color: '#ff7700'
+                                            }, {
+                                                offset: 0.5,
+                                                color: '#ff9e48'
+                                            }, {
+                                                offset: 1,
+                                                color: '#ffbb7f'
+                                            }]
+                                        )
+                                    },
+                                }
                             }, {
-                                name: '当前数据',
-                                type: 'line',
-                                stack: '总量',
+                                name: '对比数据',
+                                type: 'bar',
+                                barWidth: 7,
+                                data: data.data.chartPair4,
                                 itemStyle: {
                                     normal: {
-                                        color: 'rgb(108, 129, 179)'
-                                    }
-                                },
-
-                                data: data.data.chartPair4
+                                        color: new echarts.graphic.LinearGradient(
+                                            0, 0, 0, 1, [{
+                                                offset: 0,
+                                                color: '#6c81c3'
+                                            }, {
+                                                offset: 0.5,
+                                                color: '#91a1c6'
+                                            }, {
+                                                offset: 1,
+                                                color: '#b5bfd9'
+                                            }]
+                                        )
+                                    },
+                                }
                             }]
                         };
                         _this.myChart4.clear();
                         _this.myChart4 = echarts.init(document.getElementById('main4'));
                         _this.myChart4.setOption(option4);
                         var option5 = {
-                            title: {
-                                show: false
-                            },
                             tooltip: {
                                 trigger: 'axis',
-                                axisPointer: {
-                                    type: 'cross',
-                                    label: {
-                                        backgroundColor: '#6a7985'
-                                    }
+                                axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                    type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
                                 }
                             },
+                            color: ['#ff7700', '#6c81b3'],
                             grid: {
-                                top: 20,
+                                top: '10',
                                 left: '3%',
                                 right: '4%',
                                 bottom: '3%',
@@ -2369,7 +2442,6 @@ export default {
                             },
                             xAxis: [{
                                 type: 'category',
-                                boundaryGap: false,
                                 data: data.data.chartBottom5,
                                 axisLine: {
                                     lineStyle: {
@@ -2398,58 +2470,61 @@ export default {
                             }],
                             series: [{
                                 name: '当前数据',
-                                type: 'line',
-                                stack: '总量',
+                                barWidth: 7,
+                                type: 'bar',
+                                data: data.data.chartDate5,
                                 itemStyle: {
                                     normal: {
-                                        color: 'rgb(255, 119, 0)'
-                                    }
-                                },
-                                areaStyle: {
-                                    normal: {
-                                        color: 'rgb(255, 119, 0)',
-                                        opacity: 0.2 // 图表中各个图区域的透明度
-
-                                    }
-                                },
-                                data: data.data.chartDate5
+                                        color: new echarts.graphic.LinearGradient(
+                                            0, 0, 0, 1, [{
+                                                offset: 0,
+                                                color: '#ff7700'
+                                            }, {
+                                                offset: 0.5,
+                                                color: '#ff9e48'
+                                            }, {
+                                                offset: 1,
+                                                color: '#ffbb7f'
+                                            }]
+                                        )
+                                    },
+                                }
                             }, {
-                                name: '当前数据',
-                                type: 'line',
-                                stack: '总量',
+                                name: '对比数据',
+                                type: 'bar',
+                                barWidth: 7,
+                                data: data.data.chartPair5,
                                 itemStyle: {
                                     normal: {
-                                        color: 'rgb(108, 129, 179)'
-                                    }
-                                },
-                                areaStyle: {
-                                    normal: {
-                                        color: 'rgb(108, 129, 179)',
-                                        opacity: 0.2 // 图表中各个图区域的透明度
-
-                                    }
-                                },
-                                data: data.data.chartPair5
+                                        color: new echarts.graphic.LinearGradient(
+                                            0, 0, 0, 1, [{
+                                                offset: 0,
+                                                color: '#6c81c3'
+                                            }, {
+                                                offset: 0.5,
+                                                color: '#91a1c6'
+                                            }, {
+                                                offset: 1,
+                                                color: '#b5bfd9'
+                                            }]
+                                        )
+                                    },
+                                }
                             }]
                         };
                         _this.myChart5.clear();
                         _this.myChart5 = echarts.init(document.getElementById('main5'));
                         _this.myChart5.setOption(option5);
                         var option6 = {
-                            title: {
-                                show: false
-                            },
                             tooltip: {
                                 trigger: 'axis',
-                                axisPointer: {
-                                    type: 'cross',
-                                    label: {
-                                        backgroundColor: '#6a7985'
-                                    }
+                                axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                    type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
                                 }
                             },
+                            color: ['#ff7700', '#6c81b3'],
                             grid: {
-                                top: 20,
+                                top: '10',
                                 left: '3%',
                                 right: '4%',
                                 bottom: '3%',
@@ -2457,7 +2532,6 @@ export default {
                             },
                             xAxis: [{
                                 type: 'category',
-                                boundaryGap: false,
                                 data: data.data.chartBottom6,
                                 axisLine: {
                                     lineStyle: {
@@ -2486,38 +2560,46 @@ export default {
                             }],
                             series: [{
                                 name: '当前数据',
-                                type: 'line',
-                                stack: '总量',
+                                barWidth: 7,
+                                type: 'bar',
+                                data: data.data.chartDate6,
                                 itemStyle: {
                                     normal: {
-                                        color: 'rgb(255, 119, 0)'
-                                    }
-                                },
-                                areaStyle: {
-                                    normal: {
-                                        color: 'rgb(255, 119, 0)',
-                                        opacity: 0.2 // 图表中各个图区域的透明度
-
-                                    }
-                                },
-                                data: data.data.chartDate6
+                                        color: new echarts.graphic.LinearGradient(
+                                            0, 0, 0, 1, [{
+                                                offset: 0,
+                                                color: '#ff7700'
+                                            }, {
+                                                offset: 0.5,
+                                                color: '#ff9e48'
+                                            }, {
+                                                offset: 1,
+                                                color: '#ffbb7f'
+                                            }]
+                                        )
+                                    },
+                                }
                             }, {
-                                name: '当前数据',
-                                type: 'line',
-                                stack: '总量',
+                                name: '对比数据',
+                                type: 'bar',
+                                barWidth: 7,
+                                data: data.data.chartPair6,
                                 itemStyle: {
                                     normal: {
-                                        color: 'rgb(108, 129, 179)'
-                                    }
-                                },
-                                areaStyle: {
-                                    normal: {
-                                        color: 'rgb(108, 129, 179)',
-                                        opacity: 0.2 // 图表中各个图区域的透明度
-
-                                    }
-                                },
-                                data: data.data.chartPair6
+                                        color: new echarts.graphic.LinearGradient(
+                                            0, 0, 0, 1, [{
+                                                offset: 0,
+                                                color: '#6c81c3'
+                                            }, {
+                                                offset: 0.5,
+                                                color: '#91a1c6'
+                                            }, {
+                                                offset: 1,
+                                                color: '#b5bfd9'
+                                            }]
+                                        )
+                                    },
+                                }
                             }]
                         };
                         _this.myChart6.clear();

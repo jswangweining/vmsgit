@@ -36,79 +36,57 @@
         <span>首页</span>/<span>汇天眼</span>/<span class="w-pos-active">质量提升</span>
     </div>
 
-    <div class="w-con">
-        <div class="w-pannel" style="padding:0.5rem 1rem;">
-            <wtabs v-model="activeName" v-loading='loadtab' @tab-click='tabclick'>
+    <div class="w-con2flex" v-loading='loadtab'>
+        <div class="w-pannel" style="padding:0.5rem 1rem; flex:1; margin-bottom:10px;">
+            <wtabs v-model="activeName"  @tab-click='tabclick'>
                 <wtabpane label="活跃会员店分析" name="0">
                     <div class="w-tab-search">
                         <wform :inline="true" :model="formdata1" label-position="right" class="demo-form-inline">
                             <div class="">
                                 <form-item label="分析类型">
                                     <radio-group v-model="formdata1.radiovalue" @change='mbyhglChange'>
-                                        <wradio label="0">高潜会员店TOP10</wradio>
+                                        <wradio label="0">高潜活跃会员店TOP10</wradio>
                                         <wradio label="1">活跃会员店TOP10</wradio>
                                     </radio-group>
                                 </form-item>
-                                <!-- <wtooltip class="item" effect="dark" placement="bottom">
+                                <wtooltip class="item" effect="dark" placement="bottom">
                                     <div slot="content" style=" margin-right:20px;">
                                         <div class="w-tipa">
-                                            活跃会员店区间
+                                            同时满足以下条件即为活跃会员店:
                                         </div>
                                         <div class="w-tipb">
-                                            整体采购
+
                                         </div>
                                         <div class="w-tipc">
-                                            125,000元 - 300,000元
+                                          1、倒推365天，实际交易金额累计≥1万元
                                         </div>
                                         <div class="w-tipb">
-                                            线上采购
+
                                         </div>
                                         <div class="w-tipc">
-                                            55,000元 - 100,000元
+                                            2、汇掌柜网店开设，累计上架SKU≥10个
                                         </div>
                                         <div class="w-tipb">
-                                            商城登录次数
+
                                         </div>
                                         <div class="w-tipc">
-                                            200次 - 500次
-                                        </div>
-                                        <div class="w-tipb">
-                                            超级老板登录次数
-                                        </div>
-                                        <div class="w-tipc">
-                                            50次 - 100次
-                                        </div>
-                                        <div class="w-tipb">
-                                            商品上架
-                                        </div>
-                                        <div class="w-tipc">
-                                            10件 - 30件
-                                        </div>
-                                        <div class="w-tipb">
-                                            贷款金额
-                                        </div>
-                                        <div class="w-tipc">
-                                            125,000 - 300,000
+                                          3、累计发展有效在线粉丝≥10个
                                         </div>
                                     </div>
                                     <form-item style="float:right; color:#6c81b3">
 
                                         <i class="el-icon-information"></i>
-                                        <span class="atext">分部活跃会员店区间</span>
+                                        <span class="atext">活跃会员店定义</span>
 
                                     </form-item>
-                                </wtooltip> -->
+                                </wtooltip>
+
                             </div>
-                            <div class="">
-                                <form-item label="显示字段" style="margin:0px;">
-                                    <wcheckboxgroup v-model='formdata1.checkList'>
-                                        <wcheckbox label="整体采购"></wcheckbox>
-                                        <wcheckbox label="线上采购"></wcheckbox>
-                                        <wcheckbox label="商城登录"></wcheckbox>
-                                        <wcheckbox label="商品上架"></wcheckbox>
-                                        <wcheckbox label="贷款金额"></wcheckbox>
-                                        <wcheckbox label="有效粉丝"></wcheckbox>
-                                    </wcheckboxgroup>
+                            <div class="" >
+                                <form-item label="不活跃原因" style="margin:0px;" v-if='formdata1.radiovalue=="0"'>
+                                        <wcheckbox label="整体采购额" v-model="amtType" @change='checkChange'></wcheckbox>
+                                        <wcheckbox label="商品上架数" v-model="hzgType" @change='checkChange'></wcheckbox>
+                                        <wcheckbox label="有效粉丝数" v-model="fsType" @change='checkChange'></wcheckbox>
                                 </form-item>
                                 <form-item style="float:right;">
                                     <wbutton type="info" size="small" @click='outE1()'>导出</wbutton>
@@ -117,27 +95,27 @@
                         </wform>
                     </div>
                     <div class="w-table">
-                        <wtable border :data="tableData1">
-                            <tablecolumn label="排名" width='80' fixed>
+                        <wtable border :data="tableData1"  style="width: 100%">
+                            <tablecolumn label="排名" width='80' fixed='left' align='center'>
                                 <template scope="scope">
                                     {{scope.$index+1}}
                                 </template>
                             </tablecolumn>
                             <tablecolumn prop="custName" label="会员店名称" show-overflow-tooltip min-width='200' fixed>
                             </tablecolumn>
-                            <tablecolumn prop="amtAll" label="整体采购（元）" width='200' v-if='formdata1.checkList.indexOf("整体采购")>=0'>
+                            <tablecolumn prop="amtAll" label="整体采购（元）" width='200' header-align='center' align='right'>
                             </tablecolumn>
-                            <tablecolumn prop="amtOnline" label="线上采购（元）" width='200' v-if='formdata1.checkList.indexOf("线上采购")>=0'>
+                            <tablecolumn prop="amtOnline" label="线上采购（元）" width='200'  header-align='center' align='right'>
                             </tablecolumn>
-                            <tablecolumn prop="qtyB2b" label="商城登录" width='200' v-if='formdata1.checkList.indexOf("商城登录")>=0'>
+                            <tablecolumn prop="qtyB2b" label="商城登录" width='200'  header-align='center' align='right'>
                             </tablecolumn>
-                            <tablecolumn prop="qtyBoss" label="超级老板登录" width='200'>
+                            <tablecolumn prop="qtyBoss" label="超级老板登录" width='200'  header-align='center' align='right'>
                             </tablecolumn>
-                            <tablecolumn prop="qtyHzg" label="商品上架" width='100' v-if='formdata1.checkList.indexOf("商品上架")>=0'>
+                            <tablecolumn prop="qtyHzg" label="商品上架" width='100'  header-align='center' align='right'>
                             </tablecolumn>
-                            <tablecolumn prop="amtDk" label="贷款金额" width='200' v-if='formdata1.checkList.indexOf("贷款金额")>=0'>
+                            <tablecolumn prop="amtDk" label="贷款金额" width='200'  header-align='center' align='right'>
                             </tablecolumn>
-                            <tablecolumn prop="qtyFs" label="有效粉丝" width='100' v-if='formdata1.checkList.indexOf("有效粉丝")>=0'>
+                            <tablecolumn prop="qtyFs" label="有效粉丝" width='100'  header-align='center' align='right'>
                             </tablecolumn>
 
                         </wtable>
@@ -154,55 +132,7 @@
                                         <wradio label="1">VIP会员店TOP10</wradio>
                                     </radio-group>
                                 </form-item>
-                                <!-- <wtooltip class="item" effect="dark" placement="bottom">
-                                    <div slot="content" style=" margin-right:20px;">
-                                        <div class="w-tipa">
-                                            活跃会员店区间
-                                        </div>
-                                        <div class="w-tipb">
-                                            整体采购
-                                        </div>
-                                        <div class="w-tipc">
-                                            125,000元 - 300,000元
-                                        </div>
-                                        <div class="w-tipb">
-                                            线上采购
-                                        </div>
-                                        <div class="w-tipc">
-                                            55,000元 - 100,000元
-                                        </div>
-                                        <div class="w-tipb">
-                                            商城登录次数
-                                        </div>
-                                        <div class="w-tipc">
-                                            200次 - 500次
-                                        </div>
-                                        <div class="w-tipb">
-                                            超级老板登录次数
-                                        </div>
-                                        <div class="w-tipc">
-                                            50次 - 100次
-                                        </div>
-                                        <div class="w-tipb">
-                                            商品上架
-                                        </div>
-                                        <div class="w-tipc">
-                                            10件 - 30件
-                                        </div>
-                                        <div class="w-tipb">
-                                            贷款金额
-                                        </div>
-                                        <div class="w-tipc">
-                                            125,000 - 300,000
-                                        </div>
-                                    </div>
-                                    <form-item style="float:right; color:#6c81b3">
 
-                                        <i class="el-icon-information"></i>
-                                        <span class="atext">分部活跃会员店区间</span>
-
-                                    </form-item>
-                                </wtooltip> -->
                             </div>
                             <div class="">
                                 <form-item style="float:right;">
@@ -213,14 +143,14 @@
                     </div>
                     <div class="w-table">
                         <wtable border :data="tableData2">
-                            <tablecolumn label="排名" width='80' fixed>
+                            <tablecolumn label="排名" width='80' fixed align='center'>
                                 <template scope="scope">
                                     {{scope.$index+1}}
                                 </template>
                             </tablecolumn>
                             <tablecolumn prop="custName" label="会员店名称" show-overflow-tooltip min-width='200' fixed>
                             </tablecolumn>
-                            <tablecolumn prop="expireTime" label="结束日期" width='200'>
+                            <tablecolumn prop="expireTime" label="结束日期" width='200'  header-align='center' align='right'>
                             </tablecolumn>
                             <tablecolumn prop="areaProName" label="省" width='150'>
                             </tablecolumn>
@@ -249,7 +179,7 @@
                                 </form-item>
 
                                 <form-item label="选择月份" class="monthrange">
-                                    <date-picker type="month" v-model="formdata3.startmonth" placeholder="选择开始月份" :editable='false' :picker-options="pickerOptions" style="width:250px;">
+                                    <date-picker type="month" v-model="formdata3.startmonth" :placeholder="monthPlaceHolder" :editable='false' :picker-options="pickerOptions" style="width:250px;">
                                     </date-picker>
                                     <wbutton type="info" icon="search" size="small" @click='mbyhglSearch()'></wbutton>
                                 </form-item>
@@ -263,22 +193,22 @@
                     </div>
                     <div class="w-table">
                         <wtable border :data="tableData3">
-                            <tablecolumn label="排名" width='80' fixed>
+                            <tablecolumn label="排名" width='80' fixed align='center'>
                                 <template scope="scope">
                                     {{scope.$index+1}}
                                 </template>
                             </tablecolumn>
                             <tablecolumn prop="custName" label="会员店名称" fixed show-overflow-tooltip min-width='200'>
                             </tablecolumn>
-                            <tablecolumn prop="xsAmt" label="销售额" width='200'>
+                            <tablecolumn prop="xsAmt" label="销售额" width='200'  header-align='center' align='right'>
                             </tablecolumn>
-                            <tablecolumn prop="sellPoint" label="销售额占比（%）" width='200' v-if='formdata3.radiovalue3=="0" || formdata3.radiovalue3=="1"'>
+                            <tablecolumn prop="sellPoint" label="销售额占比（%）" width='200' v-if='formdata3.radiovalue3=="0" || formdata3.radiovalue3=="1"'  header-align='center' align='right'>
                             </tablecolumn>
-                            <tablecolumn prop="xsQty" label="购买频次" width='200' v-if='formdata3.radiovalue3=="0" || formdata3.radiovalue3=="1"'>
+                            <tablecolumn prop="xsQty" label="购买频次" width='200' v-if='formdata3.radiovalue3=="0" || formdata3.radiovalue3=="1"'  header-align='center' align='right'>
                             </tablecolumn>
-                            <tablecolumn prop="lastDate" label="最近一次购买日期" width='200'>
+                            <tablecolumn prop="lastDate" label="最近一次购买日期" width='200'  header-align='center' align='right'>
                             </tablecolumn>
-                            <tablecolumn prop="lastTime" label="间隔天数" width='200'>
+                            <tablecolumn prop="lastTime" label="间隔天数" width='200'  header-align='center' align='right'>
                             </tablecolumn>
                             <tablecolumn label="近六个月趋势" width='200' align='center' fixed='right'>
                                 <template scope="scope">
@@ -291,8 +221,6 @@
                 </wtabpane>
             </wtabs>
         </div>
-
-
     </div>
 
 
@@ -391,8 +319,11 @@ export default {
         formdata1: {
             'radiovalue': '0',
             'radiovalue2': '0',
-            'checkList': ['整体采购', '线上采购', '商城登录', '商品上架', '贷款金额', '有效粉丝']
+
         },
+        amtType:true,
+        hzgType:true,
+        fsType:true,
         formdata3: {
             'radiovalue3': '0',
             'startmonth': '',
@@ -407,23 +338,35 @@ export default {
         tableData2: [],
         tableData3: [],
         myChart: '',
-        wholeBottomPair: ["88.88", "88.88"],
-        wholeBottom: ["66.66", "66.66"],
-        wholeBottomDate: ["201705", "201709"],
+        currentYear:'',
+        currentMonth:'',
+        monthPlaceHolder:''
     }),
     watch: {
         activeName: function(val, oldVal) {
             let _this = this;
             switch (val) {
                 case '0':
-                    var url = _this.adminApi.host + '/htycustall/cust/manager',
-                        data = {
-                            userId: _this.userId,
-                            pageType: _this.activeName,
-                            aliveType: _this.formdata1.radiovalue,
-                            // time:'201709'
+                  var data = {
+                      userId: _this.userId,
+                      pageType: _this.activeName,
+                      aliveType: _this.formdata1.radiovalue,
+                  };
+                  if( _this.formdata1.radiovalue==0)
+                  {
+                    data.amtType=_this.amtType ? "1" : "0";
+                    data.hzgType=_this.hzgType ? "1" : "0";
+                    data.fsType=_this.fsType ? "1" : "0"
+                  }
 
-                        },
+                  if( _this.formdata1.radiovalue==1)
+                  {
+                    data.amtType="0";
+                    data.hzgType="0";
+                    data.fsType="0"
+                  }
+                    var url = _this.adminApi.host + '/htycustall/cust/manager',
+
                         loading = function() {
                             _this.loadtab = true;
                         },
@@ -444,13 +387,17 @@ export default {
                     _this.adminApi.getJsonp(url, data, loading, success, complete)
                     break;
                 case '1':
+                var data = {
+                    userId: _this.userId,
+                    pageType: _this.activeName,
+                    aliveType: _this.formdata1.radiovalue2,
+
+                };
+                data.amtType="0";
+                data.hzgType="0";
+                data.fsType="0"
                     var url = _this.adminApi.host + '/htycustall/cust/manager',
-                        data = {
-                            userId: _this.userId,
-                            pageType: _this.activeName,
-                            aliveType: _this.formdata1.radiovalue2,
-                            // time:'201709'
-                        },
+
                         loading = function() {
                             _this.loadtab = true;
                         },
@@ -511,6 +458,10 @@ export default {
             });
             return;
         }
+        var curDate = new Date();
+        _this.currentYear = curDate.getFullYear();
+        _this.currentMonth = curDate.getMonth() + 1;
+        _this.monthPlaceHolder = _this.currentYear + '-' + _this.currentMonth;
     },
     computed: {
         dialogChartTitle: function() {
@@ -571,12 +522,15 @@ export default {
                     _this.$store.commit('changeUserId', data)
                     _this.$nextTick(function() {
 
+
                         var url = _this.adminApi.host + '/htycustall/cust/manager',
                             data = {
                                 userId: _this.userId,
                                 pageType: _this.activeName,
                                 aliveType: _this.formdata1.radiovalue,
-                                // time:'201709'
+                                amtType:_this.amtType ? "1" : "0",
+                                hzgType:_this.hzgType ? "1" : "0",
+                                fsType:_this.fsType ? "1" : "0",
                             },
                             loading = function() {
                                 _this.loadtab = true;
@@ -726,13 +680,26 @@ export default {
         },
         mbyhglChange: function() {
             let _this = this;
+            var data = {
+                userId: _this.userId,
+                pageType: _this.activeName,
+                aliveType: _this.formdata1.radiovalue,
+            };
+            if( _this.formdata1.radiovalue==0)
+            {
+              data.amtType=_this.amtType ? "1" : "0";
+              data.hzgType=_this.hzgType ? "1" : "0";
+              data.fsType=_this.fsType ? "1" : "0"
+            }
+
+            if( _this.formdata1.radiovalue==1)
+            {
+              data.amtType="0";
+              data.hzgType="0";
+              data.fsType="0"
+            }
             var url = _this.adminApi.host + '/htycustall/cust/manager',
-                data = {
-                    userId: _this.userId,
-                    pageType: _this.activeName,
-                    aliveType: _this.formdata1.radiovalue,
-                    // time:'201709'
-                },
+
                 loading = function() {
                     _this.loadtab = true;
                 },
@@ -752,15 +719,53 @@ export default {
                 }
             _this.adminApi.getJsonp(url, data, loading, success, complete)
         },
+        checkChange:function(){
+
+          let _this=this;
+          var data = {
+              userId: _this.userId,
+              pageType: _this.activeName,
+              aliveType: _this.formdata1.radiovalue,
+          };
+
+            data.amtType=_this.amtType ? "1" : "0";
+            data.hzgType=_this.hzgType ? "1" : "0";
+            data.fsType=_this.fsType ? "1" : "0"
+
+          var url = _this.adminApi.host + '/htycustall/cust/manager',
+
+              loading = function() {
+                  _this.loadtab = true;
+              },
+              success = function(data) {
+                  if (data.code == '1') {
+
+                      _this.tableData1 = data.data;
+                  } else {
+                      Message({
+                          'message': data.msg,
+                          'type': 'error',
+                      });
+                  }
+              },
+              complete = function() {
+                  _this.loadtab = false;
+              }
+          _this.adminApi.getJsonp(url, data, loading, success, complete)
+        },
         mbyhglChange2: function() {
             let _this = this;
+            var data = {
+                userId: _this.userId,
+                pageType: _this.activeName,
+                aliveType: _this.formdata1.radiovalue2,
+
+            };
+            data.amtType="0";
+            data.hzgType="0";
+            data.fsType="0"
             var url = _this.adminApi.host + '/htycustall/cust/manager',
-                data = {
-                    userId: _this.userId,
-                    pageType: _this.activeName,
-                    aliveType: _this.formdata1.radiovalue2,
-                    // time:'201709'
-                },
+
                 loading = function() {
                     _this.loadtab = true;
                 },

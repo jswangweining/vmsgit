@@ -327,7 +327,7 @@
 }
 
 .w-ywxl-ddrtditem2p1 {
-    font-size: 0.6rem;
+    font-size: 0.7rem;
 }
 
 .w-ywxl-ddrtditem2p1s1 {
@@ -357,6 +357,10 @@
 .w-ywxl-ddrtditem2p2 {
     font-size: 1.2rem;
     color: #6c81b3;
+}
+
+.w-ywxl-ddrtditem2p3 {
+    font-size: 0.6rem;
 }
 
 .w-ywxl-ddrd {
@@ -634,7 +638,7 @@
         border-right: 1px solid #ff7700;
         background-color: #fff8f1;
         &:after {
-            content: '当前位置';
+            content: '当前排名';
             display: inline-block;
             float: right;
             height: 27px;
@@ -697,6 +701,11 @@
     flex-direction: column;
 }
 
+
+.ywxlDialog .el-dialog--small {
+  width: 535px;
+  height: 450px;
+}
 </style>
 
 <template>
@@ -809,7 +818,7 @@
                                     </div>
                                     <div class="w-ywxl-ddrtditem2" v-for='(item,index) in wholeTop'>
                                         <p class="w-ywxl-ddrtditem2p1"><span class="w-ywxl-ddrtditem2p1s1" v-if='index==0'></span><span class="w-ywxl-ddrtditem2p1s2" v-if='index==1'></span><span class="w-ywxl-ddrtditem2p1s3" v-if='index==2'></span>{{item.name}}</p>
-                                        <p class="w-ywxl-ddrtditem2p2">{{item.num}}</p>
+                                        <p class="w-ywxl-ddrtditem2p2">{{item.num}}<span v-if='monthtab=="0" && index!==0'>%</span></p>
                                         <p class="w-ywxl-ddrtditem2p3" v-if='monthtab==0 || monthtab==1'>同比{{item.pair}}%
                                             <svg class="icon" aria-hidden="true" v-if='item.index==0'>
                                                 <use xlink:href="#icon-jiantou1"></use>
@@ -931,7 +940,7 @@
 
 
 
-    <wdialog v-model="rankingshow" :top="dialogTop">
+    <wdialog v-model="rankingshow" :top="dialogTop" class="ywxlDialog">
         <div class="rankingt" slot='title'>
 
             <div class="rankingta">
@@ -972,7 +981,7 @@
                         排名
                     </div>
                     <div class="rankingcbtb">
-                        分部平台公司
+                        <span v-if='dialogradiovalue=="1"'>分部平台公司</span><span v-else>整体平台公司</span>
                     </div>
                 </div>
                 <div class="rankingcbd">
@@ -1096,6 +1105,7 @@ export default {
                                  _this.myChart1 = echarts.init(document.getElementById('main'));
                                  var option = {
                                      tooltip: {
+                                       show:false,
                                          confine: true
                                      },
                                      radar: {
@@ -1159,7 +1169,7 @@ export default {
                                              }
                                          },
                                          data: [{
-                                             value: [_this.topdata.zhnl, _this.topdata.cvmgz, _this.topdata.pegz, _this.topdata.psgz, _this.topdata.pbgz],
+                                             value: [_this.topdata.nowZhnl, _this.topdata.nowCvmgz, _this.topdata.nowPegz, _this.topdata.nowPsgz, _this.topdata.nowPbgz],
                                              name: '当前平台估值'
                                          }]
                                      }, ]

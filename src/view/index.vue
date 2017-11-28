@@ -111,7 +111,7 @@
         <div class="w-logo">
         </div>
         <ul class="w-nav">
-            <li v-for="(item,index) in navelist" @click='navclick(index,$event)' :class="index==5 ? 'w-navc' : ''">
+            <li v-for="(item,index) in navelist" @click='navclick(index,$event)' :class="index==4 ? 'w-navc' : ''">
                 {{item}}
             </li>
         </ul>

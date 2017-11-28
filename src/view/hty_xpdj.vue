@@ -111,10 +111,6 @@
     text-align: center;
 }
 
-.el-input.is-disabled .w-dataactive {
-    color: #ff5555;
-}
-
 // input.w-dataactive {
 //
 // }
@@ -134,31 +130,31 @@
                     <radio-group v-model="formdata.radiovalue" @change='radiochange'>
                         <wradio label="0">月度</wradio>
                         <wradio label="1">年度</wradio>
+                        <wradio label="2">季度</wradio>
                     </radio-group>
                 </form-item>
 
                 <form-item label="选择月度：" v-if='formdata.radiovalue==0' class="monthrange">
-                    <date-picker type="month" v-model="formdata.startmonth" placeholder="选择开始月份" :disabled='mondisabled' :editable='false' :picker-options="pickerOptions" @change='monthchange1' style="width:250px;">
+                    <date-picker type="month" v-model="formdata.searchMonth" :placeholder="monthPlaceHolder" :picker-options="pickerOptions" style="width:250px;">
                     </date-picker>
-                    <span class="w-searchs">至</span>
-                    <date-picker type="month" v-model="formdata.endmonth" placeholder="选择结束月份" :disabled='mondisabled' :editable='false' :picker-options="pickerOptions1" @change='monthchange2' style="width:250px;">
-                    </date-picker>
-
-                    <wbutton type="info" icon="search" size="small" @click='searchMonth()' v-if='!mondisabled'></wbutton>
-
-                    <wbutton type="info" icon="close" size="small" @click='closeMonth()' v-if='mondisabled'>清空月度范围</wbutton>
+                    <wbutton type="info" icon="search" size="small" @click='searchMonth()'></wbutton>
                 </form-item>
 
                 <form-item label="选择年度：" v-if='formdata.radiovalue==1' class="yearrange">
-                    <date-picker type="year" v-model="formdata.startyear" placeholder="选择开始年份" :disabled='yeardisabled' :editable='false' :picker-options="pickerOptions" @change='yearchange1' style="width:250px;">
+                    <date-picker type="year" v-model="formdata.startyear" :placeholder="yearPlaceHolder" :picker-options="pickerOptions" style="width:250px;">
                     </date-picker>
-                    <span class="w-searchs">至</span>
-                    <date-picker type="year" v-model="formdata.endyear" placeholder="选择结束年份" :disabled='yeardisabled' :editable='false' :picker-options="pickerOptions1" @change='yearchange2' style="width:250px;">
-                    </date-picker>
+                    <wbutton type="info" icon="search" size="small" @click='searchYear()'></wbutton>
+                </form-item>
 
-                    <wbutton type="info" icon="search" size="small" @click='searchYear()' v-if='!yeardisabled'></wbutton>
+                <form-item label="选择季度：" v-if='formdata.radiovalue==2'>
+                    <wselect v-model="currentQuarter" :placeholder='quarterPlaceHolder'>
+                        <woption label='第一季度' value='0'></woption>
+                        <woption label='第二季度' value='1'></woption>
+                        <woption label='第三季度' value='2'></woption>
+                        <woption label='第四季度' value='3'></woption>
 
-                    <wbutton type="info" icon="close" size="small" @click='closeYear()' v-if='yeardisabled'>清空时间范围</wbutton>
+                    </wselect>
+                    <wbutton type="info" icon="search" size="small" @click='searchQuarter()'></wbutton>
                 </form-item>
 
             </wform>
@@ -240,7 +236,7 @@
         </div>
 
         <div class="w-pannel">
-            <wtabs v-model="activeName" v-loading='loadtab' @tab-click='tabclick'>
+            <wtabs v-model="activeName" v-loading='loadtab'>
                 <wtabpane label="品牌品类销售分析" name="0" key="品牌品类销售分析">
                     <div class="w-tab-search">
                         <wform :inline="true" :model="formdata2" label-position="right" class="demo-form-inline">
@@ -265,17 +261,17 @@
                             <tablecolumn prop="ppName" label="品牌" show-overflow-tooltip min-width='300' v-if='formdata2.radiovalue=="1"' :key='4'>
                             </tablecolumn>
 
-                            <tablecolumn prop="xsPrice" label="销售单价" width='150'>
+                            <tablecolumn prop="xsPrice" label="销售单价" width='150'  header-align='center' align='right'>
                             </tablecolumn>
-                            <tablecolumn prop="xsQty" label="销售数量" width='150'>
+                            <tablecolumn prop="xsQty" label="销售数量" width='150'  header-align='center' align='right'>
                             </tablecolumn>
-                            <tablecolumn prop="xsAmt" label="销售金额" width='150'>
+                            <tablecolumn prop="xsAmt" label="销售金额" width='150'  header-align='center' align='right'>
                             </tablecolumn>
-                            <tablecolumn prop="xsRatio" label="销售金额占比（%）" width='200'>
+                            <tablecolumn prop="xsRatio" label="销售金额占比（%）" width='200'  header-align='center' align='right'>
                             </tablecolumn>
-                            <tablecolumn prop="xsAvg" label="平均毛利" width='200'>
+                            <tablecolumn prop="xsAvg" label="平均毛利" width='200'  header-align='center' align='right'>
                             </tablecolumn>
-                            <tablecolumn prop="xsAvgRatio" label="平均毛利率（%）" width='200' fixed='right'>
+                            <tablecolumn prop="xsAvgRatio" label="平均毛利率（%）" width='200' fixed='right'  header-align='center' align='right'>
                             </tablecolumn>
                         </wtable>
                     </div>
@@ -290,17 +286,19 @@
                                 <winput v-model="formdata3.inpName" placeholder=''></winput>
                             </form-item>
 
+                            <form-item label="品牌：">
+                                <wselect v-model="formdata3.ppvalue" placeholder="请选择" filterable clearable @change='ppchange1'>
+                                    <woption :label='item.brandName' :value='item.sortNum' v-for='(item,index) in formdata3.pparr'></woption>
+                                </wselect>
+                            </form-item>
+
                             <form-item label="品类：">
-                                <wselect v-model="formdata3.plvalue" placeholder="请选择" filterable clearable @change='plchange1'>
+                                <wselect v-model="formdata3.plvalue" placeholder="请选择" filterable clearable>
                                     <woption :label='item.brandName' :value='item.sortNum' v-for='(item,index) in formdata3.plarr'></woption>
                                 </wselect>
                             </form-item>
 
-                            <form-item label="品牌：">
-                                <wselect v-model="formdata3.ppvalue" placeholder="请选择" filterable clearable>
-                                    <woption :label='item.brandName' :value='item.sortNum' v-for='(item,index) in formdata3.pparr'></woption>
-                                </wselect>
-                            </form-item>
+
 
                             <form-item label="排序：">
                                 <wselect v-model="formdata3.selectvalue3" placeholder="请选择" style="width:100px;">
@@ -324,22 +322,22 @@
                             </tablecolumn>
                             <tablecolumn prop="sort" label="爆/滞款" width='200'>
                             </tablecolumn>
-                            <tablecolumn prop="xsPrice" label="销售单价（元）" width='150'>
+                            <tablecolumn prop="xsPrice" label="销售单价（元）" width='150'  header-align='center' align='right'>
                             </tablecolumn>
-                            <tablecolumn label="价格区间（元）" width='150'>
+                            <tablecolumn label="价格区间（元）" width='150'  header-align='center' align='right'>
                                 <template scope="scope">
                                     {{scope.row.minXsAmt}}-{{scope.row.maxXsAmt}}
                                 </template>
                             </tablecolumn>
-                            <tablecolumn prop="xsQty" label="销售数量" width='150'>
+                            <tablecolumn prop="xsQty" label="销售数量" width='150'  header-align='center' align='right'>
                             </tablecolumn>
-                            <tablecolumn prop="mJcQty" label="库存数量" width='150'>
+                            <tablecolumn prop="mJcQty" label="库存数量" width='150'  header-align='center' align='right'>
                             </tablecolumn>
-                            <tablecolumn prop="xsAmt" label="销售金额" width='150'>
+                            <tablecolumn prop="xsAmt" label="销售金额" width='150'  header-align='center' align='right'>
                             </tablecolumn>
-                            <tablecolumn prop="xsDd" label="订单数" width='150'>
+                            <tablecolumn prop="xsDd" label="订单数" width='150'  header-align='center' align='right'>
                             </tablecolumn>
-                            <tablecolumn prop="salesRing" label="销售额环比（%）" width='150'>
+                            <tablecolumn prop="salesRing" label="销售额环比（%）" width='150'  header-align='center' align='right'>
 
                             </tablecolumn>
 
@@ -352,14 +350,15 @@
                 <wtabpane label="爆款商品销售分析" name="2" key='爆款商品销售分析'>
                     <div class="w-tab-search">
                         <wform :inline="true" :model="formdata4" label-position="right" class="demo-form-inline" v-show='activeName=="2"'>
-                            <form-item label="品类：">
-                                <wselect v-model="formdata4.plvalue" placeholder="请选择" filterable clearable @change='plchange2'>
-                                    <woption :label='item.brandName' :value='item.sortNum' v-for='(item,index) in formdata4.plarr'></woption>
+
+                            <form-item label="品牌：">
+                                <wselect v-model="formdata4.ppvalue" placeholder="请选择" filterable clearable @change='ppchange2'>
+                                    <woption :label='item.brandName' :value='item.sortNum' v-for='(item,index) in formdata4.pparr'></woption>
                                 </wselect>
                             </form-item>
-                            <form-item label="品牌：">
-                                <wselect v-model="formdata4.ppvalue" placeholder="请选择" filterable clearable>
-                                    <woption :label='item.brandName' :value='item.sortNum' v-for='(item,index) in formdata4.pparr'></woption>
+                            <form-item label="品类：">
+                                <wselect v-model="formdata4.plvalue" placeholder="请选择" filterable clearable>
+                                    <woption :label='item.brandName' :value='item.sortNum' v-for='(item,index) in formdata4.plarr'></woption>
                                 </wselect>
                             </form-item>
 
@@ -378,12 +377,12 @@
                             </tablecolumn>
                             <tablecolumn prop="ppName" label="品牌" width='200'>
                             </tablecolumn>
-                            <tablecolumn label="价格区间（元）" width='150'>
+                            <tablecolumn label="价格区间（元）" width='150'  header-align='center' align='right'>
                                 <template scope="scope">
                                     {{scope.row.minXsAmt}}-{{scope.row.maxXsAmt}}
                                 </template>
                             </tablecolumn>
-                            <tablecolumn prop="qtyAvg" label="平均月销量" width='150'  fixed='right'>
+                            <tablecolumn prop="qtyAvg" label="平均月销量" width='150' fixed='right'  header-align='center' align='right'>
                             </tablecolumn>
                         </wtable>
                     </div>
@@ -430,24 +429,23 @@ export default {
         loadingall: false,
         formdata: {
             'radiovalue': '0',
-            'startmonth': '',
+            'searchMonth': '',
             'endmonth': '',
             'startyear': '',
             'endyear': '',
         },
-        mondisabled: false,
-        yeardisabled: false,
-
-        startdatevalue: '',
-        startyearvalue: '',
-        enddatevalue: '',
-        endyearvalue: '',
+        currentMonth: '',
+        lastMonth: '',
+        currentYear: '',
+        currentQuarter: '',
+        monthPlaceHolder: '',
+        yearPlaceHolder: '',
+        quarterPlaceHolder: '',
+        lastYearStart: '',
+        lastYearEnd: '',
+        lastQuarterStart: '',
+        lastQuarterEnd: '',
         pickerOptions: {
-            disabledDate(time) {
-                return time.getTime() > Date.now() - 8.64e7 || time.getTime() < new Date(2016, 0, 1, 0, 0, 0)
-            }
-        },
-        pickerOptions1: {
             disabledDate(time) {
                 return time.getTime() > Date.now() - 8.64e7 || time.getTime() < new Date(2016, 0, 1, 0, 0, 0)
             }
@@ -494,6 +492,7 @@ export default {
         cur_page3: 1,
         pagesize3: 10
     }),
+
     watch: {
         activeName: function(val, oldVal) {
             let _this = this;
@@ -511,21 +510,21 @@ export default {
                                 'prodSort': _this.formdata2.radiovalue,
                                 'page': _this.cur_page1
                             };
-                            if (_this.mondisabled && _this.formdata.radiovalue == '0') {
-
-                                var starttime = $('.el-input__inner:eq(0)', ".monthrange").val();
-                                var endtime = $('.el-input__inner:eq(1)', ".monthrange").val();
-                                data.startTime = starttime.replace('-', '');
-                                data.endTime = endtime.replace('-', '')
+                            if (_this.formdata.radiovalue == '0') {
+                                data.startTime = _this.lastMonth;
+                                data.endTime = _this.lastMonth;
                             }
-                            if (_this.yeardisabled && _this.formdata.radiovalue == '1') {
-                                var starttime = $('.el-input__inner:eq(0)', ".yearrange").val() + "01";
-                                var endtime = $('.el-input__inner:eq(1)', ".yearrange").val() + "12";
-                                data.startTime = starttime.replace('-', '');
-                                data.endTime = endtime.replace('-', '')
+                            if (_this.formdata.radiovalue == '1') {
+                                data.startTime = _this.lastYearStart;
+                                data.endTime = _this.lastYearEnd;
                             }
 
-                            var url =  _this.adminApi.host+'/htyfctsaleorg/sale/prod/list',
+                            if (_this.formdata.radiovalue == '2') {
+                                data.startTime = _this.lastQuarterStart;
+                                data.endTime = _this.lastQuarterEnd;
+                            }
+
+                            var url = _this.adminApi.host + '/htyfctsaleorg/sale/prod/list',
 
                                 loading = function() {
                                     _this.loadtab = true;
@@ -567,20 +566,20 @@ export default {
                             data.ppCode = _this.formdata3.ppvalue ? _this.formdata3.ppvalue : '';
                             data.plCode = _this.formdata3.plvalue ? _this.formdata3.plvalue : '';
 
-                            if (_this.mondisabled && _this.formdata.radiovalue == '0') {
+                            if (_this.formdata.radiovalue == '0') {
+                                data.startTime = _this.lastMonth;
+                                data.endTime = _this.lastMonth;
+                            }
+                            if (_this.formdata.radiovalue == '1') {
+                                data.startTime = _this.lastYearStart;
+                                data.endTime = _this.lastYearEnd;
+                            }
 
-                                var starttime = $('.el-input__inner:eq(0)', ".monthrange").val();
-                                var endtime = $('.el-input__inner:eq(1)', ".monthrange").val();
-                                data.startTime = starttime.replace('-', '');
-                                data.endTime = endtime.replace('-', '')
+                            if (_this.formdata.radiovalue == '2') {
+                                data.startTime = _this.lastQuarterStart;
+                                data.endTime = _this.lastQuarterEnd;
                             }
-                            if (_this.yeardisabled && _this.formdata.radiovalue == '1') {
-                                var starttime = $('.el-input__inner:eq(0)', ".yearrange").val() + "01";
-                                var endtime = $('.el-input__inner:eq(1)', ".yearrange").val() + "12";
-                                data.startTime = starttime.replace('-', '');
-                                data.endTime = endtime.replace('-', '')
-                            }
-                            var url =  _this.adminApi.host+'/htyfctsaleorg/sale/detail/list',
+                            var url = _this.adminApi.host + '/htyfctsaleorg/sale/detail/list',
 
                                 loading = function() {
                                     _this.loadtab = true;
@@ -617,20 +616,20 @@ export default {
                             data.ppCode = _this.formdata4.ppvalue ? _this.formdata4.ppvalue : '';
                             data.plCode = _this.formdata4.plvalue ? _this.formdata4.plvalue : '';
 
-                            if (_this.mondisabled && _this.formdata.radiovalue == '0') {
+                            if (_this.formdata.radiovalue == '0') {
+                                data.startTime = _this.lastMonth;
+                                data.endTime = _this.lastMonth;
+                            }
+                            if (_this.formdata.radiovalue == '1') {
+                                data.startTime = _this.lastYearStart;
+                                data.endTime = _this.lastYearEnd;
+                            }
 
-                                var starttime = $('.el-input__inner:eq(0)', ".monthrange").val();
-                                var endtime = $('.el-input__inner:eq(1)', ".monthrange").val();
-                                data.startTime = starttime.replace('-', '');
-                                data.endTime = endtime.replace('-', '')
+                            if (_this.formdata.radiovalue == '2') {
+                                data.startTime = _this.lastQuarterStart;
+                                data.endTime = _this.lastQuarterEnd;
                             }
-                            if (_this.yeardisabled && _this.formdata.radiovalue == '1') {
-                                var starttime = $('.el-input__inner:eq(0)', ".yearrange").val() + "01";
-                                var endtime = $('.el-input__inner:eq(1)', ".yearrange").val() + "12";
-                                data.startTime = starttime.replace('-', '');
-                                data.endTime = endtime.replace('-', '')
-                            }
-                            var url =  _this.adminApi.host+'/htyfctsaleorg/sale/hot/list',
+                            var url = _this.adminApi.host + '/htyfctsaleorg/sale/hot/list',
 
                                 loading = function() {
                                     _this.loadtab = true;
@@ -661,7 +660,7 @@ export default {
             }
 
         },
-        mondisabled: function(val, oldVal) {
+        lastMonth: function(val, oldVal) {
             let _this = this;
             if (val !== oldVal && _this.formdata.radiovalue == '0') {
                 if (_this.activeName == '0') {
@@ -677,27 +676,43 @@ export default {
                     _this.ajax2 = true;
                 }
             }
-
         },
-        yeardisabled: function(val, oldVal) {
-                let _this = this;
-                if (val !== oldVal && _this.formdata.radiovalue == '1') {
-                    if (_this.activeName == '0') {
-                        _this.ajax2 = true;
-                        _this.ajax3 = true;
-                    }
-                    if (_this.activeName == '1') {
-                        _this.ajax1 = true;
-                        _this.ajax3 = true;
-                    }
-                    if (_this.activeName == '2') {
-                        _this.ajax1 = true;
-                        _this.ajax2 = true;
-                    }
-
+        lastYearStart: function(val, oldVal) {
+            let _this = this;
+            if (val !== oldVal && _this.formdata.radiovalue == '1') {
+                if (_this.activeName == '0') {
+                    _this.ajax2 = true;
+                    _this.ajax3 = true;
+                }
+                if (_this.activeName == '1') {
+                    _this.ajax1 = true;
+                    _this.ajax3 = true;
+                }
+                if (_this.activeName == '2') {
+                    _this.ajax1 = true;
+                    _this.ajax2 = true;
                 }
 
             }
+        },
+        lastQuarterStart: function(val, oldVal) {
+            let _this = this;
+            if (val !== oldVal && _this.formdata.radiovalue == '2') {
+                if (_this.activeName == '0') {
+                    _this.ajax2 = true;
+                    _this.ajax3 = true;
+                }
+                if (_this.activeName == '1') {
+                    _this.ajax1 = true;
+                    _this.ajax3 = true;
+                }
+                if (_this.activeName == '2') {
+                    _this.ajax1 = true;
+                    _this.ajax2 = true;
+                }
+
+            }
+        }
     },
     created() {
         let _this = this;
@@ -709,11 +724,45 @@ export default {
             return;
         }
 
+        var curDate = new Date();
+        _this.currentYear = curDate.getFullYear();
+        _this.currentMonth = curDate.getMonth() + 1;
+        _this.monthPlaceHolder = _this.currentYear + '-' + _this.currentMonth;
+        _this.yearPlaceHolder = _this.currentYear + '';
+
+        switch (_this.currentMonth) {
+            case 1:
+            case 2:
+            case 3:
+                _this.quarterPlaceHolder = '第一季度'
+                    //_this.currentQuarter='0'
+                break;
+            case 4:
+            case 5:
+            case 6:
+                _this.quarterPlaceHolder = '第二季度'
+                    //_this.currentQuarter='1'
+                break;
+            case 7:
+            case 8:
+            case 9:
+                _this.quarterPlaceHolder = '第三季度'
+                    //_this.currentQuarter='2'
+                break;
+            case 10:
+            case 11:
+            case 12:
+                _this.quarterPlaceHolder = '第四季度'
+                    //_this.currentQuarter='3'
+                break;
+            default:
+
+        }
     },
     mounted() {
 
         let _this = this;
-        var url = _this.adminApi.host+'/login/validate',
+        var url = _this.adminApi.host + '/login/validate',
             data = {
                 userId: _this.$route.query.userId,
                 ticket: _this.$route.query.ticket
@@ -723,175 +772,173 @@ export default {
             },
             success = function(data) {
                 if (data.code == '2') {
-                  _this.userId = _this.$route.query.userId;
-                  _this.$emit('userInfo',_this.$route.query.userName,data.data.vmsUrl);
-                  var data={
-                     'userId':_this.$route.query.userId,
-                     'ticket':_this.$route.query.ticket,
-                     'userName':_this.$route.query.userName,
-                   }
-                   _this.$store.commit('changeUserId',data)
-                   _this.$nextTick(function() {
+                    _this.userId = _this.$route.query.userId;
+                    _this.$emit('userInfo', _this.$route.query.userName, data.data.vmsUrl);
+                    var data = {
+                        'userId': _this.$route.query.userId,
+                        'ticket': _this.$route.query.ticket,
+                        'userName': _this.$route.query.userName,
+                    }
+                    _this.$store.commit('changeUserId', data)
+                    _this.$nextTick(function() {
 
-                       var url = _this.adminApi.host + '/htyfctsaleorg/sale/detail/query/category',
-                           data = {
+                        var url = _this.adminApi.host + '/htyfctsaleorg/sale/detail/query/brand',
 
-                           },
-                           loading = function() {
-                               _this.loadingall = true;
-                           },
-                           success = function(data) {
-                               if (data.code == '1') {
+                            data = {
 
-                                   // _this.formdata3.pparr=data.data.detailBrand;
-                                   _this.formdata3.plarr = data.data;
+                            },
+                            loading = function() {
+                                _this.loadingall = true;
+                            },
+                            success = function(data) {
+                                if (data.code == '1') {
 
-                               } else {
-                                   Message({
-                                       'message': data.msg,
-                                       'type': 'error',
-                                   });
-                               }
-                           },
-                           complete = function() {
-                               _this.loadingall = false;
-                           }
-                       _this.adminApi.getJsonp(url, data, loading, success, complete)
-                       var url = _this.adminApi.host + '/htyfctsaleorg/sale/hot/query/category',
-                           data = {
+                                    _this.formdata3.pparr = data.data;
 
-                           },
-                           loading = function() {
-                               _this.loadingall = true;
-                           },
-                           success = function(data) {
-                               if (data.code == '1') {
-                                   _this.formdata4.plarr = data.data;
-                               } else {
-                                   Message({
-                                       'message': data.msg,
-                                       'type': 'error',
-                                   });
-                               }
-                           },
-                           complete = function() {
-                               _this.loadingall = false;
-                           }
-                       _this.adminApi.getJsonp(url, data, loading, success, complete)
+                                } else {
+                                    Message({
+                                        'message': data.msg,
+                                        'type': 'error',
+                                    });
+                                }
+                            },
+                            complete = function() {
+                                _this.loadingall = false;
+                            }
+                        _this.adminApi.getJsonp(url, data, loading, success, complete)
+
+                        var url = _this.adminApi.host + '/htyfctsaleorg/sale/hot/query/brand',
+                            data = {
+
+                            },
+                            loading = function() {
+                                _this.loadingall = true;
+                            },
+                            success = function(data) {
+                                if (data.code == '1') {
+                                    _this.formdata4.pparr = data.data;
+                                } else {
+                                    Message({
+                                        'message': data.msg,
+                                        'type': 'error',
+                                    });
+                                }
+                            },
+                            complete = function() {
+                                _this.loadingall = false;
+                            }
+                        _this.adminApi.getJsonp(url, data, loading, success, complete)
 
                         var url = _this.adminApi.host + '/htyfctsaleorg/sale/all',
 
-                           data = {
-                               'userId': _this.userId,
-                               'dateType': _this.formdata.radiovalue,
-                               'xzSort': _this.selectvalue,
-                               'listSort': _this.activeName,
-                               'prodSort': _this.formdata2.radiovalue,
-                               'detailSort': _this.formdata3.selectvalue3,
-                               // 'endTime':'201707'
-                           },
-                           loading = function() {
-                               _this.loadingall = true;
-                           },
-                           success = function(data) {
-                               if (data.code == '1') {
-                                   //console.log(JSON.stringify(data));
-                                   _this.topdata = data.data.saleCompareDTO;
-                                   _this.tableData = data.data.saleProdListDTO.saleProdDTOList;
-                                   _this.pagetotle1 = data.data.saleProdListDTO.saleProdnum;
-                                   _this.ajax1 = false;
-                                   var option = {
-                                       tooltip: {
-                                           trigger: 'axis',
-                                           axisPointer: { // 坐标轴指示器，坐标轴触发有效
-                                               type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
-                                           }
-                                       },
-                                       color: ['#ff7700', '#6c81b3'],
-                                       grid: {
-                                           top: '10',
-                                           left: '3%',
-                                           right: '4%',
-                                           bottom: '3%',
-                                           containLabel: true
-                                       },
-                                       xAxis: [{
-                                           type: 'category',
-                                           data: data.data.saleXzListDTO.xzBottomDate,
-                                           axisLine: {
-                                               lineStyle: {
-                                                   color: '#eee'
-                                               }
-                                           },
-                                           axisLabel: {
-                                               color: '#333'
-                                           },
-                                       }],
-                                       yAxis: [{
-                                           type: 'value',
-                                           axisLine: {
-                                               lineStyle: {
-                                                   color: '#eee'
-                                               }
-                                           },
-                                           axisLabel: {
-                                               color: '#333'
-                                           },
-                                           splitLine: {
-                                               lineStyle: {
-                                                   color: ['#eee'],
-                                               }
-                                           }
-                                       }],
-                                       series: [{
-                                           name: _this.selectvalue=="2" ? '公司数值%' : '公司数值',
-                                           barWidth: 10,
-                                           type: 'bar',
-                                           data: data.data.saleXzListDTO.xzBottom
-                                       }, {
-                                           name: _this.selectvalue=="2" ? '分部均值%' : '分部均值',
-                                           type: 'bar',
-                                           barWidth: 10,
-                                           data: data.data.saleXzListDTO.xzBottomPair
-                                       }]
-                                   };
-                                   _this.myChart = echarts.init(document.getElementById('main'));
-                                   _this.myChart.setOption(option);
-                               } else {
-                                   Message({
-                                       'message': data.msg,
-                                       'type': 'error',
-                                   });
-                               }
-                           },
-                           complete = function() {
-                               _this.loadingall = false;
-                           }
-                       _this.adminApi.getJsonp(url, data, loading, success, complete)
+                            data = {
+                                'userId': _this.userId,
+                                'dateType': _this.formdata.radiovalue,
+                                'xzSort': _this.selectvalue,
+                                'listSort': _this.activeName,
+                                'prodSort': _this.formdata2.radiovalue,
+                                'detailSort': _this.formdata3.selectvalue3,
+                                // 'endTime':'201707'
+                            },
+                            loading = function() {
+                                _this.loadingall = true;
+                            },
+                            success = function(data) {
+                                if (data.code == '1') {
+                                    //console.log(JSON.stringify(data));
+                                    _this.topdata = data.data.saleCompareDTO;
+                                    _this.tableData = data.data.saleProdListDTO.saleProdDTOList;
+                                    _this.pagetotle1 = data.data.saleProdListDTO.saleProdnum;
+                                    _this.ajax1 = false;
+                                    var option = {
+                                        tooltip: {
+                                            trigger: 'axis',
+                                            axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                                type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                                            }
+                                        },
+                                        color: ['#ff7700', '#6c81b3'],
+                                        grid: {
+                                            top: '10',
+                                            left: '3%',
+                                            right: '4%',
+                                            bottom: '3%',
+                                            containLabel: true
+                                        },
+                                        xAxis: [{
+                                            type: 'category',
+                                            data: data.data.saleXzListDTO.xzBottomDate,
+                                            axisLine: {
+                                                lineStyle: {
+                                                    color: '#eee'
+                                                }
+                                            },
+                                            axisLabel: {
+                                                color: '#333'
+                                            },
+                                        }],
+                                        yAxis: [{
+                                            type: 'value',
+                                            axisLine: {
+                                                lineStyle: {
+                                                    color: '#eee'
+                                                }
+                                            },
+                                            axisLabel: {
+                                                color: '#333'
+                                            },
+                                            splitLine: {
+                                                lineStyle: {
+                                                    color: ['#eee'],
+                                                }
+                                            }
+                                        }],
+                                        series: [{
+                                            name: _this.selectvalue == "2" ? '公司数值%' : '公司数值',
+                                            barWidth: 10,
+                                            type: 'bar',
+                                            data: data.data.saleXzListDTO.xzBottom
+                                        }, {
+                                            name: _this.selectvalue == "2" ? '分部均值%' : '分部均值',
+                                            type: 'bar',
+                                            barWidth: 10,
+                                            data: data.data.saleXzListDTO.xzBottomPair
+                                        }]
+                                    };
+                                    _this.myChart = echarts.init(document.getElementById('main'));
+                                    _this.myChart.setOption(option);
+                                } else {
+                                    Message({
+                                        'message': data.msg,
+                                        'type': 'error',
+                                    });
+                                }
+                            },
+                            complete = function() {
+                                _this.loadingall = false;
+                            }
+                        _this.adminApi.getJsonp(url, data, loading, success, complete)
 
-                       $(window).resize(function() {
-                         if(_this.myChart)
-                         {
-                           _this.myChart.resize();
-                         }
+                        $(window).resize(function() {
+                            if (_this.myChart) {
+                                _this.myChart.resize();
+                            }
 
-
-
-                       });
-                   })
+                        });
+                    })
                 } else {
 
                     Message({
                         'message': data.msg,
                         'type': 'error',
-                        'onClose':function(){
-                          window.location.href=data.data.vmsUrl+'/login';
+                        'onClose': function() {
+                            window.location.href = data.data.vmsUrl + '/login';
                         }
                     });
                 }
             },
             complete = function() {
-               _this.loadingall = false;
+                _this.loadingall = false;
             }
         _this.adminApi.getJsonp(url, data, loading, success, complete)
 
@@ -900,107 +947,22 @@ export default {
         radiochange: function() {
             let _this = this;
         },
-        monthchange1: function(val) {
-            let _this = this;
-            _this.startdatevalue = new Date(val).getTime();
-            if (_this.enddatevalue) {
-                if (_this.startdatevalue > _this.enddatevalue) {
-                    Message({
-                        'message': '结束时间不能低于开始时间',
-                        'type': 'error',
-                    });
-                    _this.formdata.startmonth = '';
-                }
-            }
-
-        },
-        monthchange2: function(val) {
-            let _this = this;
-            _this.enddatevalue = new Date(val).getTime();;
-            if (_this.startdatevalue) {
-                if (_this.startdatevalue > _this.enddatevalue) {
-                    Message({
-                        'message': '结束时间不能低于开始时间',
-                        'type': 'error',
-                    });
-                    _this.formdata.endmonth = '';
-                }
-            }
-        },
-        yearchange1: function(val) {
-            let _this = this;
-            _this.startyearvalue = new Date(val).getTime();
-            if (_this.endyearvalue) {
-                if (_this.startyearvalue > _this.endyearvalue) {
-                    Message({
-                        'message': '结束时间不能低于开始时间',
-                        'type': 'error',
-                    });
-                    _this.formdata.startyear = '';
-                }
-            }
-
-        },
-        yearchange2: function(val) {
-            let _this = this;
-            _this.endyearvalue = new Date(val).getTime();;
-            if (_this.startyearvalue) {
-                if (_this.startyearvalue > _this.endyearvalue) {
-                    Message({
-                        'message': '结束时间不能低于开始时间',
-                        'type': 'error',
-                    });
-                    _this.formdata.endyear = '';
-                }
-            }
-        },
-        tabclick: function(tab) {
-            let _this = this;
-
-            switch (_this.activeName) {
-                case "0":
-
-                    break;
-                case "1":
-
-                    break;
-                case "2":
-
-                    break;
-                default:
-
-            }
-
-        },
         searchMonth: function() {
             let _this = this;
-            if (_this.formdata.startmonth && !_this.formdata.endmonth) {
+            if (!_this.formdata.searchMonth) {
                 Message({
-                    'message': '请选择结束时间',
-                    'type': 'error',
-                });
-
-            } else if (!_this.formdata.startmonth && _this.formdata.endmonth) {
-                Message({
-                    'message': '请选择开始时间',
-                    'type': 'error',
-                });
-            } else if (!_this.formdata.startmonth && !_this.formdata.endmonth) {
-                Message({
-                    'message': '请选择时间段查询',
+                    'message': '请选择查询月份',
                     'type': 'error',
                 });
             } else {
-                $('.el-input__inner', '.el-date-editor--month').addClass('w-dataactive');
-                var starttime = $('.el-input__inner:eq(0)', ".monthrange").val();
-                var endtime = $('.el-input__inner:eq(1)', ".monthrange").val();
 
+                var starttime = $('.el-input__inner:eq(0)', ".monthrange").val();
                 var data = {
                     'userId': _this.userId,
                     'xzSort': _this.selectvalue,
                     'listSort': _this.activeName,
                     'startTime': starttime.replace('-', ''),
-                    'endTime': endtime.replace('-', ''),
+                    'endTime': starttime.replace('-', ''),
                     'dateType': _this.formdata.radiovalue,
                     'detailSort': _this.formdata3.selectvalue3,
                 };
@@ -1031,13 +993,14 @@ export default {
                     data.rows = _this.pagesize3;
                 }
 
-                var url =  _this.adminApi.host+'/htyfctsaleorg/sale/all',
+                var url = _this.adminApi.host + '/htyfctsaleorg/sale/all',
+
                     loading = function() {
                         _this.loadingall = true;
                     },
                     success = function(data) {
                         if (data.code == '1') {
-                            _this.mondisabled = true;
+                            _this.lastMonth = starttime.replace('-', '');
                             _this.topdata = data.data.saleCompareDTO;
                             if (_this.activeName == '0') {
                                 _this.tableData = data.data.saleProdListDTO.saleProdDTOList;
@@ -1053,7 +1016,6 @@ export default {
                                 _this.tableData3 = data.data.saleHotListDTO.saleHotDTOList;
                                 _this.pagetotle3 = data.data.saleHotListDTO.saleHostnum;
                             }
-
                             var option = {
                                 tooltip: {
                                     trigger: 'axis',
@@ -1098,17 +1060,18 @@ export default {
                                     }
                                 }],
                                 series: [{
-                                    name: _this.selectvalue=="2" ? '公司数值%' : '公司数值',
+                                    name: _this.selectvalue == "2" ? '公司数值%' : '公司数值',
                                     barWidth: 10,
                                     type: 'bar',
                                     data: data.data.saleXzListDTO.xzBottom
                                 }, {
-                                    name: _this.selectvalue=="2" ? '分部均值%' : '分部均值',
+                                    name: _this.selectvalue == "2" ? '分部均值%' : '分部均值',
                                     type: 'bar',
                                     barWidth: 10,
                                     data: data.data.saleXzListDTO.xzBottomPair
                                 }]
                             };
+                            _this.myChart.clear();
                             _this.myChart = echarts.init(document.getElementById('main'));
                             _this.myChart.setOption(option);
                         } else {
@@ -1125,302 +1088,24 @@ export default {
 
             }
         },
-        closeMonth: function() {
-            let _this = this;
-
-            var data = {
-                'userId': _this.userId,
-                'xzSort': _this.selectvalue,
-                'listSort': _this.activeName,
-                'dateType': _this.formdata.radiovalue,
-                'detailSort': _this.formdata3.selectvalue3
-            };
-            if (data.listSort == '0') {
-                _this.cur_page1 = 1;
-                data.prodSort = _this.formdata2.radiovalue;
-                data.page = _this.cur_page1;
-                data.rows = _this.pagesize1;
-
-            }
-
-            if (data.listSort == '1') {
-                _this.cur_page2 = 1;
-                data.prodSort = _this.formdata2.radiovalue;
-                data.prodName = _this.formdata3.inpName ? _this.formdata3.inpName : '';
-                data.ppCode = _this.formdata3.ppvalue ? _this.formdata3.ppvalue : '';
-                data.plCode = _this.formdata3.plvalue ? _this.formdata3.plvalue : '';
-                data.page = _this.cur_page2;
-                data.rows = _this.pagesize2;
-
-            }
-            if (data.listSort == '2') {
-                _this.cur_page3 = 1;
-                data.prodSort = _this.formdata2.radiovalue;
-                data.ppCode = _this.formdata4.ppvalue ? _this.formdata4.ppvalue : '';
-                data.plCode = _this.formdata4.plvalue ? _this.formdata4.plvalue : '';
-                data.page = _this.cur_page3;
-                data.rows = _this.pagesize3;
-            }
-            var url =  _this.adminApi.host+'/htyfctsaleorg/sale/all',
-
-                loading = function() {
-                    _this.loadingall = true;
-                },
-                success = function(data) {
-                    if (data.code == '1') {
-                        _this.mondisabled = false;
-                        $('.el-input__inner', '.el-date-editor--month').removeClass('w-dataactive');
-                        _this.formdata.startmonth = '';
-                        _this.formdata.endmonth = '';
-
-                        _this.topdata = data.data.saleCompareDTO;
-                        if (_this.activeName == '0') {
-                            _this.tableData = data.data.saleProdListDTO.saleProdDTOList;
-                            _this.pagetotle1 = data.data.saleProdListDTO.saleProdnum;
-                        }
-
-                        if (_this.activeName == '1') {
-                            _this.tableData2 = data.data.saleDetailListDTO.saleDetailDTOList;
-                            _this.pagetotle2 = data.data.saleDetailListDTO.detainum;
-                        }
-
-                        if (_this.activeName == '2') {
-                            _this.tableData3 = data.data.saleHotListDTO.saleHotDTOList;
-                            _this.pagetotle3 = data.data.saleHotListDTO.saleHostnum;
-                        }
-
-                        var option = {
-                            tooltip: {
-                                trigger: 'axis',
-                                axisPointer: { // 坐标轴指示器，坐标轴触发有效
-                                    type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
-                                }
-                            },
-                            color: ['#ff7700', '#6c81b3'],
-                            grid: {
-                                top: '10',
-                                left: '3%',
-                                right: '4%',
-                                bottom: '3%',
-                                containLabel: true
-                            },
-                            xAxis: [{
-                                type: 'category',
-                                data: data.data.saleXzListDTO.xzBottomDate,
-                                axisLine: {
-                                    lineStyle: {
-                                        color: '#eee'
-                                    }
-                                },
-                                axisLabel: {
-                                    color: '#333'
-                                },
-                            }],
-                            yAxis: [{
-                                type: 'value',
-                                axisLine: {
-                                    lineStyle: {
-                                        color: '#eee'
-                                    }
-                                },
-                                axisLabel: {
-                                    color: '#333'
-                                },
-                                splitLine: {
-                                    lineStyle: {
-                                        color: ['#eee'],
-                                    }
-                                }
-                            }],
-                            series: [{
-                                name: _this.selectvalue=="2" ? '公司数值%' : '公司数值',
-                                barWidth: 10,
-                                type: 'bar',
-                                data: data.data.saleXzListDTO.xzBottom
-                            }, {
-                                name: _this.selectvalue=="2" ? '分部均值%' : '分部均值',
-                                type: 'bar',
-                                barWidth: 10,
-                                data: data.data.saleXzListDTO.xzBottomPair
-                            }]
-                        };
-                        _this.myChart = echarts.init(document.getElementById('main'));
-                        _this.myChart.setOption(option);
-                    } else {
-                        Message({
-                            'message': data.msg,
-                            'type': 'error',
-                        });
-                    }
-
-                },
-                complete = function() {
-                    _this.loadingall = false;
-                }
-            _this.adminApi.getJsonp(url, data, loading, success, complete)
-        },
-        closeYear: function() {
-            let _this = this;
-            var data = {
-                'userId': _this.userId,
-                'xzSort': _this.selectvalue,
-                'listSort': _this.activeName,
-                'dateType': _this.formdata.radiovalue,
-                'detailSort': _this.formdata3.selectvalue3
-            };
-            if (data.listSort == '0') {
-                _this.cur_page1 = 1;
-                data.prodSort = _this.formdata2.radiovalue;
-                data.page = _this.cur_page1;
-                data.rows = _this.pagesize1;
-
-            }
-
-            if (data.listSort == '1') {
-                _this.cur_page2 = 1;
-                data.prodSort = _this.formdata2.radiovalue;
-                data.prodName = _this.formdata3.inpName ? _this.formdata3.inpName : '';
-                data.ppCode = _this.formdata3.ppvalue ? _this.formdata3.ppvalue : '';
-                data.plCode = _this.formdata3.plvalue ? _this.formdata3.plvalue : '';
-                data.page = _this.cur_page2;
-                data.rows = _this.pagesize2;
-
-            }
-            if (data.listSort == '2') {
-                _this.cur_page3 = 1;
-                data.prodSort = _this.formdata2.radiovalue;
-                data.ppCode = _this.formdata4.ppvalue ? _this.formdata4.ppvalue : '';
-                data.plCode = _this.formdata4.plvalue ? _this.formdata4.plvalue : '';
-                data.page = _this.cur_page3;
-                data.rows = _this.pagesize3;
-            }
-
-            var url =  _this.adminApi.host+'/htyfctsaleorg/sale/all',
-
-                loading = function() {
-                    _this.loadingall = true;
-                },
-                success = function(data) {
-                    if (data.code == '1') {
-                        $('.el-input__inner', '.el-date-editor--year').removeClass('w-dataactive');
-                        _this.yeardisabled = false;
-                        _this.formdata.startyear = '';
-                        _this.formdata.endyear = '';
-                        _this.topdata = data.data.saleCompareDTO;
-                        if (_this.activeName == '0') {
-                            _this.tableData = data.data.saleProdListDTO.saleProdDTOList;
-                            _this.pagetotle1 = data.data.saleProdListDTO.saleProdnum;
-                        }
-
-                        if (_this.activeName == '1') {
-                            _this.tableData2 = data.data.saleDetailListDTO.saleDetailDTOList;
-                            _this.pagetotle2 = data.data.saleDetailListDTO.detainum;
-                        }
-
-                        if (_this.activeName == '2') {
-                            _this.tableData3 = data.data.saleHotListDTO.saleHotDTOList;
-                            _this.pagetotle3 = data.data.saleHotListDTO.saleHostnum;
-                        }
-                        var option = {
-                            tooltip: {
-                                trigger: 'axis',
-                                axisPointer: { // 坐标轴指示器，坐标轴触发有效
-                                    type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
-                                }
-                            },
-                            color: ['#ff7700', '#6c81b3'],
-                            grid: {
-                                top: '10',
-                                left: '3%',
-                                right: '4%',
-                                bottom: '3%',
-                                containLabel: true
-                            },
-                            xAxis: [{
-                                type: 'category',
-                                data: data.data.saleXzListDTO.xzBottomDate,
-                                axisLine: {
-                                    lineStyle: {
-                                        color: '#eee'
-                                    }
-                                },
-                                axisLabel: {
-                                    color: '#333'
-                                },
-                            }],
-                            yAxis: [{
-                                type: 'value',
-                                axisLine: {
-                                    lineStyle: {
-                                        color: '#eee'
-                                    }
-                                },
-                                axisLabel: {
-                                    color: '#333'
-                                },
-                                splitLine: {
-                                    lineStyle: {
-                                        color: ['#eee'],
-                                    }
-                                }
-                            }],
-                            series: [{
-                                name: _this.selectvalue=="2" ? '公司数值%' : '公司数值',
-                                barWidth: 10,
-                                type: 'bar',
-                                data: data.data.saleXzListDTO.xzBottom
-                            }, {
-                                name: _this.selectvalue=="2" ? '分部均值%' : '分部均值',
-                                type: 'bar',
-                                barWidth: 10,
-                                data: data.data.saleXzListDTO.xzBottomPair
-                            }]
-                        };
-                        _this.myChart = echarts.init(document.getElementById('main'));
-                        _this.myChart.setOption(option);
-                    } else {
-                        Message({
-                            'message': data.msg,
-                            'type': 'error',
-                        });
-                    }
-
-                },
-                complete = function() {
-                    _this.loadingall = false;
-                }
-            _this.adminApi.getJsonp(url, data, loading, success, complete)
-
-        },
         searchYear: function() {
             let _this = this;
-            if (_this.formdata.startyear && !_this.formdata.endyear) {
+            if (!_this.formdata.startyear) {
                 Message({
-                    'message': '请选择结束时间',
+                    'message': '请选择查询年份',
                     'type': 'error',
                 });
 
-            } else if (!_this.formdata.startyear && _this.formdata.endyear) {
-                Message({
-                    'message': '请选择开始时间',
-                    'type': 'error',
-                });
-            } else if (!_this.formdata.startyear && !_this.formdata.endyear) {
-                Message({
-                    'message': '请选择时间段查询',
-                    'type': 'error',
-                });
             } else {
-                $('.el-input__inner', '.el-date-editor--year').addClass('w-dataactive');
                 var starttime = $('.el-input__inner:eq(0)', ".yearrange").val() + "01";
-                var endtime = $('.el-input__inner:eq(1)', ".yearrange").val() + "12";
+                var endtime = $('.el-input__inner:eq(0)', ".yearrange").val() + "12";
                 var data = {
                     'userId': _this.userId,
                     'dateType': _this.formdata.radiovalue,
                     'xzSort': _this.selectvalue,
                     'listSort': _this.activeName,
-                    'startTime': starttime.replace('-', ''),
-                    'endTime': endtime.replace('-', ''),
+                    'startTime': starttime,
+                    'endTime': endtime,
                     'detailSort': _this.formdata3.selectvalue3
                 };
 
@@ -1451,14 +1136,15 @@ export default {
                     data.rows = _this.pagesize3;
                 }
 
-                var url =  _this.adminApi.host+'/htyfctsaleorg/sale/all',
+                var url = _this.adminApi.host + '/htyfctsaleorg/sale/all',
 
                     loading = function() {
                         _this.loadingall = true;
                     },
                     success = function(data) {
                         if (data.code == '1') {
-                            _this.yeardisabled = true;
+                            _this.lastYearStart = starttime;
+                            _this.lastYearEnd = endtime;
                             _this.topdata = data.data.saleCompareDTO;
                             if (_this.activeName == '0') {
                                 _this.tableData = data.data.saleProdListDTO.saleProdDTOList;
@@ -1518,17 +1204,18 @@ export default {
                                     }
                                 }],
                                 series: [{
-                                    name: _this.selectvalue=="2" ? '公司数值%' : '公司数值',
+                                    name: _this.selectvalue == "2" ? '公司数值%' : '公司数值',
                                     barWidth: 10,
                                     type: 'bar',
                                     data: data.data.saleXzListDTO.xzBottom
                                 }, {
-                                    name: _this.selectvalue=="2" ? '分部均值%' : '分部均值',
+                                    name: _this.selectvalue == "2" ? '分部均值%' : '分部均值',
                                     type: 'bar',
                                     barWidth: 10,
                                     data: data.data.saleXzListDTO.xzBottomPair
                                 }]
                             };
+                            _this.myChart.clear();
                             _this.myChart = echarts.init(document.getElementById('main'));
                             _this.myChart.setOption(option);
                         } else {
@@ -1542,8 +1229,198 @@ export default {
                         _this.loadingall = false;
                     }
                 _this.adminApi.getJsonp(url, data, loading, success, complete)
-                    //_this.yeardisabled = true
+
             }
+        },
+        searchQuarter: function() {
+            let _this = this;
+            var starttime;
+            var endtime;
+            switch (_this.currentQuarter) {
+                case '0':
+                    starttime = _this.currentYear + '01';
+                    endtime = _this.currentYear + '03';
+                    break;
+                case '1':
+                    starttime = _this.currentYear + '04';
+                    endtime = _this.currentYear + '06';
+                    break;
+                case '2':
+                    starttime = _this.currentYear + '07';
+                    endtime = _this.currentYear + '09';
+                    break;
+                case '3':
+                    starttime = _this.currentYear + '10';
+                    endtime = _this.currentYear + '12';
+                    break;
+                default:
+            }
+            var data = {
+                'userId': _this.userId,
+                'dateType': _this.formdata.radiovalue,
+                'xzSort': _this.selectvalue,
+                'listSort': _this.activeName,
+                'startTime': starttime,
+                'endTime': endtime,
+                'detailSort': _this.formdata3.selectvalue3
+            };
+
+            if (data.listSort == '0') {
+                _this.cur_page1 = 1;
+                data.prodSort = _this.formdata2.radiovalue;
+                data.page = _this.cur_page1;
+                data.rows = _this.pagesize1;
+
+            }
+
+            if (data.listSort == '1') {
+                _this.cur_page2 = 1;
+                data.prodSort = _this.formdata2.radiovalue;
+                data.prodName = _this.formdata3.inpName ? _this.formdata3.inpName : '';
+                data.ppCode = _this.formdata3.ppvalue ? _this.formdata3.ppvalue : '';
+                data.plCode = _this.formdata3.plvalue ? _this.formdata3.plvalue : '';
+                data.page = _this.cur_page2;
+                data.rows = _this.pagesize2;
+
+            }
+            if (data.listSort == '2') {
+                _this.cur_page3 = 1;
+                data.prodSort = _this.formdata2.radiovalue;
+                data.ppCode = _this.formdata4.ppvalue ? _this.formdata4.ppvalue : '';
+                data.plCode = _this.formdata4.plvalue ? _this.formdata4.plvalue : '';
+                data.page = _this.cur_page3;
+                data.rows = _this.pagesize3;
+            }
+
+            var url = _this.adminApi.host + '/htyfctsaleorg/sale/all',
+
+
+                loading = function() {
+                    _this.loadingall = true;
+                },
+                success = function(data) {
+                    if (data.code == '1') {
+                        _this.lastQuarterStart = starttime;
+                        _this.lastQuarterEnd = endtime;
+                        _this.topdata = data.data.saleCompareDTO;
+                        if (_this.activeName == '0') {
+                            _this.tableData = data.data.saleProdListDTO.saleProdDTOList;
+                            _this.pagetotle1 = data.data.saleProdListDTO.saleProdnum;
+                        }
+
+                        if (_this.activeName == '1') {
+                            _this.tableData2 = data.data.saleDetailListDTO.saleDetailDTOList;
+                            _this.pagetotle2 = data.data.saleDetailListDTO.detainum;
+                        }
+
+                        if (_this.activeName == '2') {
+                            _this.tableData3 = data.data.saleHotListDTO.saleHotDTOList;
+                            _this.pagetotle3 = data.data.saleHotListDTO.saleHostnum;
+                        }
+
+                        var option = {
+                            title: {
+                                show: false
+                            },
+                            tooltip: {
+                                trigger: 'axis',
+                                axisPointer: {
+                                    type: 'cross',
+                                    label: {
+                                        backgroundColor: '#6a7985'
+                                    }
+                                }
+                            },
+                            grid: {
+                                top: 20,
+                                left: '3%',
+                                right: '4%',
+                                bottom: '3%',
+                                containLabel: true
+                            },
+                            xAxis: [{
+                                type: 'category',
+                                boundaryGap: false,
+                                data: data.data.saleXzListDTO.xzBottomDate,
+                                axisLine: {
+                                    lineStyle: {
+                                        color: '#eee'
+                                    }
+                                },
+                                axisLabel: {
+                                    color: '#333'
+                                },
+
+
+                            }],
+                            yAxis: [{
+                                type: 'value',
+                                axisLine: {
+                                    lineStyle: {
+                                        color: '#eee'
+                                    }
+                                },
+                                axisLabel: {
+                                    color: '#333'
+                                },
+                                splitLine: {
+                                    lineStyle: {
+                                        color: ['#eee'],
+                                    }
+                                }
+                            }],
+                            series: [{
+                                 name: '公司数值',
+                                type: 'line',
+                                // stack: '总量',
+                                itemStyle: {
+                                    normal: {
+                                        color: 'rgb(255, 119, 0)'
+                                    }
+                                },
+                                areaStyle: {
+                                    normal: {
+                                        color: 'rgb(255, 119, 0)',
+                                        opacity: 0.2 // 图表中各个图区域的透明度
+
+                                    }
+                                },
+                                data: data.data.saleXzListDTO.xzBottom
+                            },
+                            {
+                                name: '分部均值',
+                                type: 'line',
+                                // stack: '总量',
+                                itemStyle: {
+                                    normal: {
+                                        color: 'rgb(108, 129, 179)'
+                                    }
+                                },
+                                areaStyle: {
+                                    normal: {
+                                        color: 'rgb(108, 129, 179)',
+                                        opacity: 0.2 // 图表中各个图区域的透明度
+                                    }
+                                },
+                                data: data.data.saleXzListDTO.xzBottomPair
+                            }]
+                        };
+
+                        _this.myChart.clear();
+                        _this.myChart = echarts.init(document.getElementById('main'));
+                        _this.myChart.setOption(option);
+                    } else {
+                        Message({
+                            'message': data.msg,
+                            'type': 'error',
+                        });
+                    }
+                },
+                complete = function() {
+                    _this.loadingall = false;
+                }
+            _this.adminApi.getJsonp(url, data, loading, success, complete)
+
         },
         selectchange: function(item) {
             let _this = this;
@@ -1552,20 +1429,20 @@ export default {
                 'xzSort': item,
                 'dateType': _this.formdata.radiovalue
             };
-            if (_this.mondisabled && _this.formdata.radiovalue == '0') {
-                var starttime = $('.el-input__inner:eq(0)', ".monthrange").val();
-                var endtime = $('.el-input__inner:eq(1)', ".monthrange").val();
-                data.startTime = starttime.replace('-', '');
-                data.endTime = endtime.replace('-', '')
+            if (_this.formdata.radiovalue == '0') {
+                data.startTime = _this.lastMonth;
+                data.endTime = _this.lastMonth;
             }
-            if (_this.yeardisabled && _this.formdata.radiovalue == '1') {
-                var starttime = $('.el-input__inner:eq(0)', ".yearrange").val() + "01";
-                var endtime = $('.el-input__inner:eq(1)', ".yearrange").val() + "12";
-                data.startTime = starttime.replace('-', '');
-                data.endTime = endtime.replace('-', '')
+            if (_this.formdata.radiovalue == '1') {
+                data.startTime = _this.lastYearStart;
+                data.endTime = _this.lastYearEnd;
             }
-            var url =  _this.adminApi.host+'/htyfctsaleorg/sale/xz/list',
 
+            if (_this.formdata.radiovalue == '2') {
+                data.startTime = _this.lastQuarterStart;
+                data.endTime = _this.lastQuarterEnd;
+            }
+            var url = _this.adminApi.host + '/htyfctsaleorg/sale/xz/list',
                 loading = function() {
                     _this.myChart.showLoading({
                         'color': '#ff7700'
@@ -1573,62 +1450,155 @@ export default {
                 },
                 success = function(data) {
                     if (data.code == '1') {
+                      var option;
+                      if(_this.formdata.radiovalue=='0' || _this.formdata.radiovalue=='1')
+                      {
+                        option = {
+                            tooltip: {
+                                trigger: 'axis',
+                                axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                    type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                                }
+                            },
+                            color: ['#ff7700', '#6c81b3'],
+                            grid: {
+                                top: '10',
+                                left: '3%',
+                                right: '4%',
+                                bottom: '3%',
+                                containLabel: true
+                            },
+                            xAxis: [{
+                                type: 'category',
+                                data: data.data.xzBottomDate,
+                                axisLine: {
+                                    lineStyle: {
+                                        color: '#eee'
+                                    }
+                                },
+                                axisLabel: {
+                                    color: '#333'
+                                },
+                            }],
+                            yAxis: [{
+                                type: 'value',
+                                axisLine: {
+                                    lineStyle: {
+                                        color: '#eee'
+                                    }
+                                },
+                                axisLabel: {
+                                    color: '#333'
+                                },
+                                splitLine: {
+                                    lineStyle: {
+                                        color: ['#eee'],
+                                    }
+                                }
+                            }],
+                            series: [{
+                                name: _this.selectvalue == "2" ? '公司数值%' : '公司数值',
+                                barWidth: 10,
+                                type: 'bar',
+                                data: data.data.xzBottom
+                            }, {
+                                name: _this.selectvalue == "2" ? '分部均值%' : '分部均值',
+                                type: 'bar',
+                                barWidth: 10,
+                                data: data.data.xzBottomPair
+                            }]
+                        };
+                      }
+                      else {
+                         option = {
+                            title: {
+                                show: false
+                            },
+                            tooltip: {
+                                trigger: 'axis',
+                                axisPointer: {
+                                    type: 'cross',
+                                    label: {
+                                        backgroundColor: '#6a7985'
+                                    }
+                                }
+                            },
+                            grid: {
+                                top: 20,
+                                left: '3%',
+                                right: '4%',
+                                bottom: '3%',
+                                containLabel: true
+                            },
+                            xAxis: [{
+                                type: 'category',
+                                boundaryGap: false,
+                                data: data.data.xzBottomDate,
+                                axisLine: {
+                                    lineStyle: {
+                                        color: '#eee'
+                                    }
+                                },
+                                axisLabel: {
+                                    color: '#333'
+                                },
 
-                      var option = {
-                          tooltip: {
-                              trigger: 'axis',
-                              axisPointer: { // 坐标轴指示器，坐标轴触发有效
-                                  type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
-                              }
-                          },
-                          color: ['#ff7700', '#6c81b3'],
-                          grid: {
-                              top: '10',
-                              left: '3%',
-                              right: '4%',
-                              bottom: '3%',
-                              containLabel: true
-                          },
-                          xAxis: [{
-                              type: 'category',
-                              data: data.data.xzBottomDate,
-                              axisLine: {
-                                  lineStyle: {
-                                      color: '#eee'
-                                  }
-                              },
-                              axisLabel: {
-                                  color: '#333'
-                              },
-                          }],
-                          yAxis: [{
-                              type: 'value',
-                              axisLine: {
-                                  lineStyle: {
-                                      color: '#eee'
-                                  }
-                              },
-                              axisLabel: {
-                                  color: '#333'
-                              },
-                              splitLine: {
-                                  lineStyle: {
-                                      color: ['#eee'],
-                                  }
-                              }
-                          }],
-                          series: [{
-                              name: _this.selectvalue=="2" ? '公司数值%' : '公司数值',
-                              barWidth: 10,
-                              type: 'bar',
-                              data: data.data.xzBottom
-                          }, {
-                              name: _this.selectvalue=="2" ? '分部均值%' : '分部均值',
-                              type: 'bar',
-                              barWidth: 10,
-                              data: data.data.xzBottomPair
-                          }]
-                      };
+
+                            }],
+                            yAxis: [{
+                                type: 'value',
+                                axisLine: {
+                                    lineStyle: {
+                                        color: '#eee'
+                                    }
+                                },
+                                axisLabel: {
+                                    color: '#333'
+                                },
+                                splitLine: {
+                                    lineStyle: {
+                                        color: ['#eee'],
+                                    }
+                                }
+                            }],
+                            series: [{
+                                 name: '公司数值',
+                                type: 'line',
+                                // stack: '总量',
+                                itemStyle: {
+                                    normal: {
+                                        color: 'rgb(255, 119, 0)'
+                                    }
+                                },
+                                areaStyle: {
+                                    normal: {
+                                        color: 'rgb(255, 119, 0)',
+                                        opacity: 0.2 // 图表中各个图区域的透明度
+
+                                    }
+                                },
+                                data: data.data.xzBottom
+                            },
+                            {
+                                name: '分部均值',
+                                type: 'line',
+                                // stack: '总量',
+                                itemStyle: {
+                                    normal: {
+                                        color: 'rgb(108, 129, 179)'
+                                    }
+                                },
+                                areaStyle: {
+                                    normal: {
+                                        color: 'rgb(108, 129, 179)',
+                                        opacity: 0.2 // 图表中各个图区域的透明度
+                                    }
+                                },
+                                data: data.data.xzBottomPair
+                            }]
+                        }
+                      }
+                        _this.myChart.clear();
                         _this.myChart = echarts.init(document.getElementById('main'));
                         _this.myChart.setOption(option);
                     } else {
@@ -1642,7 +1612,6 @@ export default {
                     _this.myChart.hideLoading();
                 }
             _this.adminApi.getJsonp(url, data, loading, success, complete)
-
         },
         radiochangepp: function(item) {
 
@@ -1655,20 +1624,20 @@ export default {
                 'prodSort': item,
                 'page': _this.cur_page1
             };
-            if (_this.mondisabled && _this.formdata.radiovalue == '0') {
+            if (_this.formdata.radiovalue == '0') {
+                data.startTime = _this.lastMonth;
+                data.endTime = _this.lastMonth;
+            }
+            if (_this.formdata.radiovalue == '1') {
+                data.startTime = _this.lastYearStart;
+                data.endTime = _this.lastYearEnd;
+            }
 
-                var starttime = $('.el-input__inner:eq(0)', ".monthrange").val();
-                var endtime = $('.el-input__inner:eq(1)', ".monthrange").val();
-                data.startTime = starttime.replace('-', '');
-                data.endTime = endtime.replace('-', '')
+            if (_this.formdata.radiovalue == '2') {
+                data.startTime = _this.lastQuarterStart;
+                data.endTime = _this.lastQuarterEnd;
             }
-            if (_this.yeardisabled && _this.formdata.radiovalue == '1') {
-                var starttime = $('.el-input__inner:eq(0)', ".yearrange").val() + "01";
-                var endtime = $('.el-input__inner:eq(1)', ".yearrange").val() + "12";
-                data.startTime = starttime.replace('-', '');
-                data.endTime = endtime.replace('-', '')
-            }
-            var url =  _this.adminApi.host+'/htyfctsaleorg/sale/prod/list',
+            var url = _this.adminApi.host + '/htyfctsaleorg/sale/prod/list',
 
                 loading = function() {
                     _this.loadtab = true;
@@ -1692,20 +1661,22 @@ export default {
             _this.adminApi.getJsonp(url, data, loading, success, complete)
 
         },
-        plchange1: function(item) {
+        ppchange1: function(item) {
             let _this = this;
-            var url =  _this.adminApi.host+'/htyfctsaleorg/sale/query/brand',
+            var url = _this.adminApi.host + '/htyfctsaleorg/sale/query/category',
+
                 data = {
                     'type': _this.activeName,
-                    'plCode': item
+                    'ppCode': item
                 },
                 loading = function() {
                     _this.loading = true;
                 },
                 success = function(data) {
                     if (data.code == '1') {
-                        _this.formdata3.ppvalue = '';
-                        _this.formdata3.pparr = data.data;
+
+                        _this.formdata3.plvalue = '';
+                        _this.formdata3.plarr = data.data;
                     } else {
                         Message({
                             'message': data.msg,
@@ -1718,20 +1689,20 @@ export default {
                 }
             _this.adminApi.getJsonp(url, data, loading, success, complete)
         },
-        plchange2: function(item) {
+        ppchange2: function(item) {
             let _this = this;
-            var url =  _this.adminApi.host+'/htyfctsaleorg/sale/query/brand',
+            var url = _this.adminApi.host + '/htyfctsaleorg/sale/query/category',
                 data = {
                     'type': _this.activeName,
-                    'plCode': item
+                    'ppCode': item
                 },
                 loading = function() {
                     _this.loading = true;
                 },
                 success = function(data) {
                     if (data.code == '1') {
-                        _this.formdata4.ppvalue = '';
-                        _this.formdata4.pparr = data.data;
+                        _this.formdata4.plvalue = '';
+                        _this.formdata4.plarr = data.data;
                     } else {
                         Message({
                             'message': data.msg,
@@ -1759,19 +1730,20 @@ export default {
             data.ppCode = _this.formdata3.ppvalue ? _this.formdata3.ppvalue : '';
             data.plCode = _this.formdata3.plvalue ? _this.formdata3.plvalue : '';
 
-            if (_this.mondisabled && _this.formdata.radiovalue == '0') {
-                var starttime = $('.el-input__inner:eq(0)', ".monthrange").val();
-                var endtime = $('.el-input__inner:eq(1)', ".monthrange").val();
-                data.startTime = starttime.replace('-', '');
-                data.endTime = endtime.replace('-', '')
+            if (_this.formdata.radiovalue == '0') {
+                data.startTime = _this.lastMonth;
+                data.endTime = _this.lastMonth;
             }
-            if (_this.yeardisabled && _this.formdata.radiovalue == '1') {
-                var starttime = $('.el-input__inner:eq(0)', ".yearrange").val() + "01";
-                var endtime = $('.el-input__inner:eq(1)', ".yearrange").val() + "12";
-                data.startTime = starttime.replace('-', '');
-                data.endTime = endtime.replace('-', '')
+            if (_this.formdata.radiovalue == '1') {
+                data.startTime = _this.lastYearStart;
+                data.endTime = _this.lastYearEnd;
             }
-            var url =  _this.adminApi.host+'/htyfctsaleorg/sale/detail/list',
+
+            if (_this.formdata.radiovalue == '2') {
+                data.startTime = _this.lastQuarterStart;
+                data.endTime = _this.lastQuarterEnd;
+            }
+            var url = _this.adminApi.host + '/htyfctsaleorg/sale/detail/list',
 
                 loading = function() {
                     _this.loadtab = true;
@@ -1803,20 +1775,20 @@ export default {
             data.ppCode = _this.formdata4.ppvalue ? _this.formdata4.ppvalue : '';
             data.plCode = _this.formdata4.plvalue ? _this.formdata4.plvalue : '';
 
-            if (_this.mondisabled && _this.formdata.radiovalue == '0') {
+            if (_this.formdata.radiovalue == '0') {
+                data.startTime = _this.lastMonth;
+                data.endTime = _this.lastMonth;
+            }
+            if (_this.formdata.radiovalue == '1') {
+                data.startTime = _this.lastYearStart;
+                data.endTime = _this.lastYearEnd;
+            }
 
-                var starttime = $('.el-input__inner:eq(0)', ".monthrange").val();
-                var endtime = $('.el-input__inner:eq(1)', ".monthrange").val();
-                data.startTime = starttime.replace('-', '');
-                data.endTime = endtime.replace('-', '')
+            if (_this.formdata.radiovalue == '2') {
+                data.startTime = _this.lastQuarterStart;
+                data.endTime = _this.lastQuarterEnd;
             }
-            if (_this.yeardisabled && _this.formdata.radiovalue == '1') {
-                var starttime = $('.el-input__inner:eq(0)', ".yearrange").val() + "01";
-                var endtime = $('.el-input__inner:eq(1)', ".yearrange").val() + "12";
-                data.startTime = starttime.replace('-', '');
-                data.endTime = endtime.replace('-', '')
-            }
-            var url =  _this.adminApi.host+'/htyfctsaleorg/sale/hot/list',
+            var url = _this.adminApi.host + '/htyfctsaleorg/sale/hot/list',
 
                 loading = function() {
                     _this.loadtab = true;
@@ -1849,19 +1821,20 @@ export default {
                 'page': _this.cur_page1
             };
 
-            if (_this.mondisabled && _this.formdata.radiovalue == '0') {
-                var starttime = $('.el-input__inner:eq(0)', ".monthrange").val();
-                var endtime = $('.el-input__inner:eq(1)', ".monthrange").val();
-                data.startTime = starttime.replace('-', '');
-                data.endTime = endtime.replace('-', '')
+            if (_this.formdata.radiovalue == '0') {
+                data.startTime = _this.lastMonth;
+                data.endTime = _this.lastMonth;
             }
-            if (_this.yeardisabled && _this.formdata.radiovalue == '1') {
-                var starttime = $('.el-input__inner:eq(0)', ".yearrange").val() + "01";
-                var endtime = $('.el-input__inner:eq(1)', ".yearrange").val() + "12";
-                data.startTime = starttime.replace('-', '');
-                data.endTime = endtime.replace('-', '')
+            if (_this.formdata.radiovalue == '1') {
+                data.startTime = _this.lastYearStart;
+                data.endTime = _this.lastYearEnd;
             }
-            var url =  _this.adminApi.host+'/htyfctsaleorg/sale/prod/list',
+
+            if (_this.formdata.radiovalue == '2') {
+                data.startTime = _this.lastQuarterStart;
+                data.endTime = _this.lastQuarterEnd;
+            }
+            var url = _this.adminApi.host + '/htyfctsaleorg/sale/prod/list',
 
                 loading = function() {
                     _this.loadtab = true;
@@ -1894,19 +1867,20 @@ export default {
                 'prodSort': _this.formdata2.radiovalue,
                 'page': _this.cur_page1
             };
-            if (_this.mondisabled && _this.formdata.radiovalue == '0') {
-                var starttime = $('.el-input__inner:eq(0)', ".monthrange").val();
-                var endtime = $('.el-input__inner:eq(1)', ".monthrange").val();
-                data.startTime = starttime.replace('-', '');
-                data.endTime = endtime.replace('-', '')
+            if (_this.formdata.radiovalue == '0') {
+                data.startTime = _this.lastMonth;
+                data.endTime = _this.lastMonth;
             }
-            if (_this.yeardisabled && _this.formdata.radiovalue == '1') {
-                var starttime = $('.el-input__inner:eq(0)', ".yearrange").val() + "01";
-                var endtime = $('.el-input__inner:eq(1)', ".yearrange").val() + "12";
-                data.startTime = starttime.replace('-', '');
-                data.endTime = endtime.replace('-', '')
+            if (_this.formdata.radiovalue == '1') {
+                data.startTime = _this.lastYearStart;
+                data.endTime = _this.lastYearEnd;
             }
-            var url =  _this.adminApi.host+'/htyfctsaleorg/sale/prod/list',
+
+            if (_this.formdata.radiovalue == '2') {
+                data.startTime = _this.lastQuarterStart;
+                data.endTime = _this.lastQuarterEnd;
+            }
+            var url = _this.adminApi.host + '/htyfctsaleorg/sale/prod/list',
 
                 loading = function() {
                     _this.loadtab = true;
@@ -1945,20 +1919,20 @@ export default {
 
 
 
-            if (_this.mondisabled && _this.formdata.radiovalue == '0') {
+            if (_this.formdata.radiovalue == '0') {
+                data.startTime = _this.lastMonth;
+                data.endTime = _this.lastMonth;
+            }
+            if (_this.formdata.radiovalue == '1') {
+                data.startTime = _this.lastYearStart;
+                data.endTime = _this.lastYearEnd;
+            }
 
-                var starttime = $('.el-input__inner:eq(0)', ".monthrange").val();
-                var endtime = $('.el-input__inner:eq(1)', ".monthrange").val();
-                data.startTime = starttime.replace('-', '');
-                data.endTime = endtime.replace('-', '')
+            if (_this.formdata.radiovalue == '2') {
+                data.startTime = _this.lastQuarterStart;
+                data.endTime = _this.lastQuarterEnd;
             }
-            if (_this.yeardisabled && _this.formdata.radiovalue == '1') {
-                var starttime = $('.el-input__inner:eq(0)', ".yearrange").val() + "01";
-                var endtime = $('.el-input__inner:eq(1)', ".yearrange").val() + "12";
-                data.startTime = starttime.replace('-', '');
-                data.endTime = endtime.replace('-', '')
-            }
-            var url =  _this.adminApi.host+'/htyfctsaleorg/sale/detail/list',
+            var url = _this.adminApi.host + '/htyfctsaleorg/sale/detail/list',
 
                 loading = function() {
                     _this.loadtab = true;
@@ -1996,20 +1970,20 @@ export default {
             data.ppCode = _this.formdata3.ppvalue ? _this.formdata3.ppvalue : '';
             data.plCode = _this.formdata3.plvalue ? _this.formdata3.plvalue : '';
 
-            if (_this.mondisabled && _this.formdata.radiovalue == '0') {
+            if (_this.formdata.radiovalue == '0') {
+                data.startTime = _this.lastMonth;
+                data.endTime = _this.lastMonth;
+            }
+            if (_this.formdata.radiovalue == '1') {
+                data.startTime = _this.lastYearStart;
+                data.endTime = _this.lastYearEnd;
+            }
 
-                var starttime = $('.el-input__inner:eq(0)', ".monthrange").val();
-                var endtime = $('.el-input__inner:eq(1)', ".monthrange").val();
-                data.startTime = starttime.replace('-', '');
-                data.endTime = endtime.replace('-', '')
+            if (_this.formdata.radiovalue == '2') {
+                data.startTime = _this.lastQuarterStart;
+                data.endTime = _this.lastQuarterEnd;
             }
-            if (_this.yeardisabled && _this.formdata.radiovalue == '1') {
-                var starttime = $('.el-input__inner:eq(0)', ".yearrange").val() + "01";
-                var endtime = $('.el-input__inner:eq(1)', ".yearrange").val() + "12";
-                data.startTime = starttime.replace('-', '');
-                data.endTime = endtime.replace('-', '')
-            }
-            var url =  _this.adminApi.host+'/htyfctsaleorg/sale/detail/list',
+            var url = _this.adminApi.host + '/htyfctsaleorg/sale/detail/list',
 
                 loading = function() {
                     _this.loadtab = true;
@@ -2044,20 +2018,20 @@ export default {
             data.ppCode = _this.formdata4.ppvalue ? _this.formdata4.ppvalue : '';
             data.plCode = _this.formdata4.plvalue ? _this.formdata4.plvalue : '';
 
-            if (_this.mondisabled && _this.formdata.radiovalue == '0') {
+            if (_this.formdata.radiovalue == '0') {
+                data.startTime = _this.lastMonth;
+                data.endTime = _this.lastMonth;
+            }
+            if (_this.formdata.radiovalue == '1') {
+                data.startTime = _this.lastYearStart;
+                data.endTime = _this.lastYearEnd;
+            }
 
-                var starttime = $('.el-input__inner:eq(0)', ".monthrange").val();
-                var endtime = $('.el-input__inner:eq(1)', ".monthrange").val();
-                data.startTime = starttime.replace('-', '');
-                data.endTime = endtime.replace('-', '')
+            if (_this.formdata.radiovalue == '2') {
+                data.startTime = _this.lastQuarterStart;
+                data.endTime = _this.lastQuarterEnd;
             }
-            if (_this.yeardisabled && _this.formdata.radiovalue == '1') {
-                var starttime = $('.el-input__inner:eq(0)', ".yearrange").val() + "01";
-                var endtime = $('.el-input__inner:eq(1)', ".yearrange").val() + "12";
-                data.startTime = starttime.replace('-', '');
-                data.endTime = endtime.replace('-', '')
-            }
-            var url =  _this.adminApi.host+'/htyfctsaleorg/sale/hot/list',
+            var url = _this.adminApi.host + '/htyfctsaleorg/sale/hot/list',
 
                 loading = function() {
                     _this.loadtab = true;
@@ -2091,20 +2065,20 @@ export default {
             data.ppCode = _this.formdata4.ppvalue ? _this.formdata4.ppvalue : '';
             data.plCode = _this.formdata4.plvalue ? _this.formdata4.plvalue : '';
 
-            if (_this.mondisabled && _this.formdata.radiovalue == '0') {
+            if (_this.formdata.radiovalue == '0') {
+                data.startTime = _this.lastMonth;
+                data.endTime = _this.lastMonth;
+            }
+            if (_this.formdata.radiovalue == '1') {
+                data.startTime = _this.lastYearStart;
+                data.endTime = _this.lastYearEnd;
+            }
 
-                var starttime = $('.el-input__inner:eq(0)', ".monthrange").val();
-                var endtime = $('.el-input__inner:eq(1)', ".monthrange").val();
-                data.startTime = starttime.replace('-', '');
-                data.endTime = endtime.replace('-', '')
+            if (_this.formdata.radiovalue == '2') {
+                data.startTime = _this.lastQuarterStart;
+                data.endTime = _this.lastQuarterEnd;
             }
-            if (_this.yeardisabled && _this.formdata.radiovalue == '1') {
-                var starttime = $('.el-input__inner:eq(0)', ".yearrange").val() + "01";
-                var endtime = $('.el-input__inner:eq(1)', ".yearrange").val() + "12";
-                data.startTime = starttime.replace('-', '');
-                data.endTime = endtime.replace('-', '')
-            }
-            var url =  _this.adminApi.host+'/htyfctsaleorg/sale/hot/list',
+            var url = _this.adminApi.host + '/htyfctsaleorg/sale/hot/list',
 
                 loading = function() {
                     _this.loadtab = true;

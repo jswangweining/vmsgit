@@ -18,7 +18,7 @@
                     <div class="w-tab-search">
                         <wform :inline="true" :model="formdata1" label-position="right" class="demo-form-inline">
                             <form-item label="周期" class="w-date-range">
-                                <date-picker type="daterange" v-model="formdata1.date" placeholder="选择周期" :editable='false' :picker-options="pickerOptions">
+                                <date-picker type="daterange" v-model="formdata1.date" :placeholder="monthPlaceHolder" :editable='false' :picker-options="pickerOptions">
                                 </date-picker>
                             </form-item>
 
@@ -61,7 +61,7 @@
                     </div>
                 </div>
 
-                <div class="w-pannelitema">
+                <div class="w-pannelitema" style="margin-left:15px;">
                     <div class="w-ywxl-ddrdt">
                         <div class="w-ywxl-ddrdta">
                             搜索关键词TOP10（次）
@@ -75,6 +75,10 @@
 
                     </div>
                 </div>
+
+              </div>
+
+              <div class="w-pannelitem">
 
                 <div class="w-pannelitema">
                     <div class="w-ywxl-ddrdt">
@@ -91,7 +95,7 @@
                     </div>
                 </div>
 
-                <div class="w-pannelitema">
+                <div class="w-pannelitema" style="margin-left:15px;">
                     <div class="w-ywxl-ddrdt">
                         <div class="w-ywxl-ddrdta">
                             成交单品排行TOP10（次）
@@ -105,6 +109,10 @@
 
                     </div>
                 </div>
+
+              </div>
+
+              <div class="w-pannelitem">
 
                 <div class="w-pannelitema">
                     <div class="w-ywxl-ddrdt">
@@ -121,7 +129,7 @@
                     </div>
                 </div>
 
-                <div class="w-pannelitema">
+                <div class="w-pannelitema" style="margin-left:15px;">
                     <div class="w-ywxl-ddrdt">
                         <div class="w-ywxl-ddrdta">
                             用户复购漏斗TOP10（次）
@@ -206,6 +214,10 @@ export default {
         myChart4: '',
         myChart5: '',
         myChart6: '',
+        currentYear:'',
+        currentMonth:'',
+        monthPlaceHolder:''
+
     }),
     created() {
         let _this = this;
@@ -215,6 +227,10 @@ export default {
             });
             return;
         }
+        var curDate = new Date();
+        _this.currentYear = curDate.getFullYear();
+        _this.currentMonth = curDate.getMonth() + 1;
+        _this.monthPlaceHolder = _this.currentYear + '-' + _this.currentMonth;
     },
     mounted() {
         let _this = this;

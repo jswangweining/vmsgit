@@ -193,14 +193,16 @@ export default {
                 'name': '促销',
                 'rel': ''
             }],
-            // {
-            //     'name': '财务效率',
-            //     'rel': 'cwxl'
-            // },
+
             [{
                 'name': '业务效率',
                 'rel': 'ywxl'
-            },  {
+            },
+            {
+                'name': '财务效率',
+                'rel': 'cwxl'
+            },
+            {
                 'name': '选品定价',
                 'rel': 'xpdj'
             },
@@ -244,7 +246,6 @@ export default {
     },
     methods: {
         subnavclick: function(event, rel) {
-
             var _this = this;
             var el = event.target;
             if(_this.btnClick)
