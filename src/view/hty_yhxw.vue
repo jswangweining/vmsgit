@@ -579,7 +579,8 @@ export default {
                                         },
                                         yAxis: {
                                             type: 'category',
-                                            data: [data.data.b2bConvFunnelList[0]+','+data.data.b2bSaleCityProdperCentList[0],data.data.b2bConvFunnelList[1]+','+data.data.b2bSaleCityProdperCentList[1],data.data.b2bConvFunnelList[2]+','+data.data.b2bSaleCityProdperCentList[2],data.data.b2bConvFunnelList[3]+','+data.data.b2bSaleCityProdperCentList[3],data.data.b2bConvFunnelList[4]+','+data.data.b2bSaleCityProdperCentList[4]],
+                                            data:data.data.b2bConvFunnelList,
+                                            // data: [data.data.b2bConvFunnelList[0]+','+data.data.b2bSaleCityProdperCentList[0],data.data.b2bConvFunnelList[1]+','+data.data.b2bSaleCityProdperCentList[1],data.data.b2bConvFunnelList[2]+','+data.data.b2bSaleCityProdperCentList[2],data.data.b2bConvFunnelList[3]+','+data.data.b2bSaleCityProdperCentList[3],data.data.b2bConvFunnelList[4]+','+data.data.b2bSaleCityProdperCentList[4]],
                                             inverse: true,
                                             axisLine: {
                                                 lineStyle: {
@@ -608,7 +609,8 @@ export default {
                                                     )
                                                 },
                                             },
-                                            data: [data.data.b2bConvFunnelNumList[0],data.data.b2bConvFunnelNumList[1],data.data.b2bConvFunnelNumList[2],data.data.b2bConvFunnelNumList[3],data.data.b2bConvFunnelNumList[4]],
+                                            // data:data.data.b2bConvFunnelNumList,
+                                            data: data.data.b2bConvFunnelNumList? [data.data.b2bConvFunnelNumList[0],data.data.b2bConvFunnelNumList[1],data.data.b2bConvFunnelNumList[2],data.data.b2bConvFunnelNumList[3],data.data.b2bConvFunnelNumList[4]] : [],
                                             barWidth: 5,
                                         }, ]
                                     };
@@ -1065,7 +1067,8 @@ export default {
                             },
                             yAxis: {
                                 type: 'category',
-                                data: [data.data.b2bConvFunnelList[0]+','+data.data.b2bSaleCityProdperCentList[0],data.data.b2bConvFunnelList[1]+','+data.data.b2bSaleCityProdperCentList[1],data.data.b2bConvFunnelList[2]+','+data.data.b2bSaleCityProdperCentList[2],data.data.b2bConvFunnelList[3]+','+data.data.b2bSaleCityProdperCentList[3],data.data.b2bConvFunnelList[4]+','+data.data.b2bSaleCityProdperCentList[4]],
+                                // data:data.data.b2bConvFunnelList,
+                                data: data.data.b2bConvFunnelList ? [data.data.b2bConvFunnelList[0]+','+data.data.b2bSaleCityProdperCentList[0],data.data.b2bConvFunnelList[1]+','+data.data.b2bSaleCityProdperCentList[1],data.data.b2bConvFunnelList[2]+','+data.data.b2bSaleCityProdperCentList[2],data.data.b2bConvFunnelList[3]+','+data.data.b2bSaleCityProdperCentList[3],data.data.b2bConvFunnelList[4]+','+data.data.b2bSaleCityProdperCentList[4]]:[],
                                 inverse: true,
                                 axisLine: {
                                     lineStyle: {
@@ -1134,7 +1137,7 @@ export default {
                             yAxis: {
                                 type: 'category',
                                 data: data.data.b2bRepeatBuyList,
-                                inverse: true,
+                                // inverse: true,
                                 axisLine: {
                                     lineStyle: {
                                         color: '#eee'

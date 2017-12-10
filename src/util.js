@@ -3,9 +3,9 @@ import $ from 'jquery'
 export default {
 
   //端口
-  host: 'http://172.16.1.220:8080/argus',
+  // host: 'http://172.16.1.220:8080/argus',
   // host: 'http://171.16.46.115:8080/argus',
-  // host: 'http://eye.htd.cn/argus',
+  host: 'http://eye.htd.cn/argus',
   //获取当前状态
   getState: function() {
     var stateText = localStorage.getItem('$state') || "{}";

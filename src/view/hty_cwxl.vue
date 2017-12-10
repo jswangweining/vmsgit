@@ -1,5 +1,7 @@
 <style lang="scss">
 
+@import "../assets/scss/cwxl.scss";
+
 .dbfx-t {
     height: 12.5rem;
     display: flex;
@@ -230,17 +232,17 @@
     color: #fff;
 }
 
-.fxts_taRed {
-    background-image: url('../assets/img/redinner.png');
-}
-
-.fxts_taOrg {
-    background-image: url('../assets/img/orginner.png');
-}
-
-.fxts_taGreen {
-    background-image: url('../assets/img/greeninner.png');
-}
+// .fxts_taRed {
+//     background-image: url("../assets/img/redinner.png");
+// }
+//
+// .fxts_taOrg {
+//     background-image: url("../assets/img/orginner.png");
+// }
+//
+// .fxts_taGreen {
+//     background-image: url("../assets/img/greeninner.png");
+// }
 
 .fxts_taOut {
     position: absolute;

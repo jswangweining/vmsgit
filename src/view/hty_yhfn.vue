@@ -39,7 +39,7 @@
                         <radio-group v-model="formdata.radiovalue" @change='radiochange'>
                             <wradio label="0">无对比</wradio>
                             <wradio label="1">时间段对比</wradio>
-                            <wradio label="2">维度对比</wradio>
+                            <!-- <wradio label="2">维度对比</wradio> -->
                         </radio-group>
                     </form-item>
                 </div>

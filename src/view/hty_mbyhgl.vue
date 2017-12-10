@@ -95,17 +95,17 @@
                         </wform>
                     </div>
                     <div class="w-table">
-                        <wtable border :data="tableData1"  style="width: 100%">
-                            <tablecolumn label="排名" width='80' fixed='left' align='center'>
+                        <wtable border :data="tableData1">
+                            <tablecolumn label="排名" width='80' fixed='left' align='center' >
                                 <template scope="scope">
                                     {{scope.$index+1}}
                                 </template>
                             </tablecolumn>
                             <tablecolumn prop="custName" label="会员店名称" show-overflow-tooltip min-width='200' fixed>
                             </tablecolumn>
-                            <tablecolumn prop="amtAll" label="整体采购（元）" width='200' header-align='center' align='right'>
+                          <tablecolumn prop="amtAll" label="整体采购（元）" width='200'>
                             </tablecolumn>
-                            <tablecolumn prop="amtOnline" label="线上采购（元）" width='200'  header-align='center' align='right'>
+                              <tablecolumn prop="amtOnline" label="线上采购（元）" width='200'  header-align='center' align='right'>
                             </tablecolumn>
                             <tablecolumn prop="qtyB2b" label="商城登录" width='200'  header-align='center' align='right'>
                             </tablecolumn>
@@ -115,7 +115,7 @@
                             </tablecolumn>
                             <tablecolumn prop="amtDk" label="贷款金额" width='200'  header-align='center' align='right'>
                             </tablecolumn>
-                            <tablecolumn prop="qtyFs" label="有效粉丝" width='100'  header-align='center' align='right'>
+                            <tablecolumn prop="qtyFs" fixed='right' label="有效粉丝" width='100'  header-align='center' align='right'>
                             </tablecolumn>
 
                         </wtable>
@@ -359,12 +359,7 @@ export default {
                     data.fsType=_this.fsType ? "1" : "0"
                   }
 
-                  if( _this.formdata1.radiovalue==1)
-                  {
-                    data.amtType="0";
-                    data.hzgType="0";
-                    data.fsType="0"
-                  }
+
                     var url = _this.adminApi.host + '/htycustall/cust/manager',
 
                         loading = function() {
@@ -393,9 +388,7 @@ export default {
                     aliveType: _this.formdata1.radiovalue2,
 
                 };
-                data.amtType="0";
-                data.hzgType="0";
-                data.fsType="0"
+
                     var url = _this.adminApi.host + '/htycustall/cust/manager',
 
                         loading = function() {
@@ -692,12 +685,7 @@ export default {
               data.fsType=_this.fsType ? "1" : "0"
             }
 
-            if( _this.formdata1.radiovalue==1)
-            {
-              data.amtType="0";
-              data.hzgType="0";
-              data.fsType="0"
-            }
+
             var url = _this.adminApi.host + '/htycustall/cust/manager',
 
                 loading = function() {
@@ -761,9 +749,7 @@ export default {
                 aliveType: _this.formdata1.radiovalue2,
 
             };
-            data.amtType="0";
-            data.hzgType="0";
-            data.fsType="0"
+          
             var url = _this.adminApi.host + '/htycustall/cust/manager',
 
                 loading = function() {

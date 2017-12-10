@@ -315,7 +315,9 @@
 }
 
 .w-ywxl-ddrtditem {
-    flex: 1;
+    // flex: 1;
+    width: 290px;
+    height: 100%;
 }
 
 .w-ywxl-ddrtditem2 {
@@ -1266,36 +1268,174 @@ export default {
 
                             switch (_this.radiovalue) {
                                 case "0":
-                                    if (_this.monthtab == 0 || _this.monthtab == 1) {
+                                    if (_this.monthtab == 0 ) {
                                         var option2 = {
                                             tooltip: {
-                                                trigger: 'item',
-                                                formatter: "{a} <br/>{b}: {c} ({d}%)"
+                                                trigger: 'axis',
+                                                axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                                    type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                                                }
                                             },
-                                            series: [{
-                                                name: _this.myChart2title,
-                                                type: 'pie',
-                                                radius: ['50%', '70%'],
-                                                center: ['50%', '50%'],
-                                                avoidLabelOverlap: false,
-                                                color: ['#6c81b3', '#ff7700', '#2cc689'],
-                                                label: {
-                                                    normal: {
-                                                        show: false,
-                                                        position: 'center'
-                                                    },
-                                                },
-                                                labelLine: {
-                                                    normal: {
-                                                        show: false
+                                            color: ['#ff7700', '#6c81b3'],
+                                            grid: {
+                                                top: '10',
+                                                left: '0',
+                                                right: '10',
+                                                bottom: '10',
+                                                containLabel: true,
+
+                                            },
+                                            xAxis: [{
+                                                type: 'category',
+                                                data: ['总营业收入','支出总额','利润总额'],
+                                                axisLine: {
+                                                    lineStyle: {
+                                                        color: '#eee',
+
                                                     }
                                                 },
-                                                data: data.data.wholePic
-                                            }]
+                                                axisLabel: {
+                                                    color: '#333',
+
+                                                },
+
+                                            }],
+                                             yAxis: [{
+                                              show:false,
+
+                                                type: 'value',
+                                                axisLine: {
+                                                    lineStyle: {
+                                                        color: '#eee'
+                                                    }
+                                                },
+                                                axisLabel: {
+                                                    color: '#333'
+                                                },
+                                                splitLine: {
+                                                    lineStyle: {
+                                                        color: ['#eee'],
+                                                    }
+                                                }
+                                            }],
+                                            series: [{
+                                                name: '当前数据',
+                                                barWidth: 10,
+                                                type: 'bar',
+                                                data: [{
+                                                  name:'',
+                                                  value:data.data.wholeIncomeRatio[0],
+                                                  itemStyle: {
+                                                      normal: {
+                                                          color: new echarts.graphic.LinearGradient(
+                                                              0, 0, 0, 1, [{
+                                                                  offset: 0,
+                                                                  color: '#6c81b3'
+                                                              }, {
+                                                                  offset: 0.5,
+                                                                  color: '#7c96d2'
+                                                              }, {
+                                                                  offset: 1,
+                                                                  color: '#88a6ed'
+                                                              }]
+                                                          )
+                                                      },
+                                                  }
+                                                },{
+                                                  name:'',
+                                                  value:data.data.wholeIncomeRatio[1],
+                                                  itemStyle: {
+                                                      normal: {
+                                                          color: new echarts.graphic.LinearGradient(
+                                                              0, 0, 0, 1, [{
+                                                                  offset: 0,
+                                                                  color: '#ff7700'
+                                                              }, {
+                                                                  offset: 0.5,
+                                                                  color: '#ff9e48'
+                                                              }, {
+                                                                  offset: 1,
+                                                                  color: '#ffbb7f'
+                                                              }]
+                                                          )
+                                                      },
+                                                  }
+                                                },
+                                                {
+                                                  name:'',
+                                                  value:data.data.wholeIncomeRatio[2],
+                                                  itemStyle: {
+                                                      normal: {
+                                                          color: new echarts.graphic.LinearGradient(
+                                                              0, 0, 0, 1, [{
+                                                                  offset: 0,
+                                                                  color: '#2cc689'
+                                                              }, {
+                                                                  offset: 0.5,
+                                                                  color: '#2fda96'
+                                                              }, {
+                                                                  offset: 1,
+                                                                  color: '#33f3a7'
+                                                              }]
+                                                          )
+                                                      },
+                                                  }
+                                                }],
+                                                itemStyle: {
+                                                    normal: {
+                                                        color: new echarts.graphic.LinearGradient(
+                                                            0, 0, 0, 1, [{
+                                                                offset: 0,
+                                                                color: '#ff7700'
+                                                            }, {
+                                                                offset: 0.5,
+                                                                color: '#ff9e48'
+                                                            }, {
+                                                                offset: 1,
+                                                                color: '#ffbb7f'
+                                                            }]
+                                                        )
+                                                    },
+                                                }
+                                            },
+                                            ]
                                         };
                                         _this.myChart2.clear();
                                         _this.myChart2 = echarts.init(document.getElementById('main2'));
                                         _this.myChart2.setOption(option2);
+                                    }
+                                    else if(_this.monthtab == 1)
+                                    {
+                                      var option2 = {
+                                          tooltip: {
+                                              trigger: 'item',
+                                              formatter: "{a} <br/>{b}: {c} ({d}%)"
+                                          },
+                                          series: [{
+                                              name: _this.myChart2title,
+                                              type: 'pie',
+                                              radius: ['50%', '70%'],
+                                              center: ['50%', '50%'],
+                                              avoidLabelOverlap: false,
+                                              color: ['#6c81b3', '#ff7700', '#2cc689'],
+                                              label: {
+                                                  normal: {
+                                                      show: false,
+                                                      position: 'center'
+                                                  },
+                                              },
+                                              labelLine: {
+                                                  normal: {
+                                                      show: false
+                                                  }
+                                              },
+                                              data: data.data.wholePic
+                                          }]
+                                      };
+                                      _this.myChart2.clear();
+                                      _this.myChart2 = echarts.init(document.getElementById('main2'));
+                                      _this.myChart2.setOption(option2);
+
                                     } else {
                                         var option2 = {
                                             tooltip: {
@@ -1416,8 +1556,10 @@ export default {
                                                 }
                                             },
                                             axisLabel: {
-                                                color: '#333'
+                                                color: '#333',
+                                                // formatter: '{value} %',
                                             },
+
                                             splitLine: {
                                                 lineStyle: {
                                                     color: ['#eee'],
@@ -1431,7 +1573,8 @@ export default {
                                             itemStyle: {
                                                 normal: {
                                                     color: 'rgb(255, 119, 0)'
-                                                }
+                                                },
+                                                // formatter: '{b}\n{c}%'
                                             },
                                             areaStyle: {
                                                 normal: {
@@ -1449,33 +1592,135 @@ export default {
 
                                     break;
                                 case "1":
-                                    if (_this.monthtab == 0 || _this.monthtab == 1) {
-                                        var option2 = {
-                                            tooltip: {
-                                                trigger: 'item',
-                                                formatter: "{a} <br/>{b}: {c} ({d}%)"
-                                            },
-                                            series: [{
-                                                name: _this.myChart2title,
-                                                type: 'pie',
-                                                radius: ['50%', '70%'],
-                                                center: ['50%', '50%'],
-                                                avoidLabelOverlap: false,
-                                                color: ['#6c81b3', '#ff7700', '#2cc689'],
-                                                label: {
+                                    if (_this.monthtab == 0) {
+                                      var option2 = {
+                                          tooltip: {
+                                              trigger: 'axis',
+                                              axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                                  type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                                              }
+                                          },
+                                          color: ['#ff7700', '#6c81b3'],
+                                          grid: {
+                                              top: '10',
+                                              left: '10',
+                                              right: '10',
+                                              bottom: '10',
+                                              containLabel: true
+                                          },
+                                          xAxis: [{
+                                              type: 'category',
+                                              data: ['总营业收入','支出总额','利润总额'],
+                                              axisLine: {
+                                                  lineStyle: {
+                                                      color: '#eee',
+
+                                                  }
+                                              },
+                                              axisLabel: {
+                                                  color: '#333',
+
+                                              },
+                                          }],
+                                           yAxis: [{
+                                            show:false,
+                                              type: 'value',
+                                              axisLine: {
+                                                  lineStyle: {
+                                                      color: '#eee'
+                                                  }
+                                              },
+                                              axisLabel: {
+                                                  color: '#333'
+                                              },
+                                              splitLine: {
+                                                  lineStyle: {
+                                                      color: ['#eee'],
+                                                  }
+                                              }
+                                          }],
+                                          series: [{
+                                              name: '当前数据',
+                                              barWidth: 10,
+                                              type: 'bar',
+                                              data: [{
+                                                name:'',
+                                                value:data.data.wholeIncomeRatio[0],
+                                                itemStyle: {
                                                     normal: {
-                                                        show: false,
-                                                        position: 'center'
+                                                        color: new echarts.graphic.LinearGradient(
+                                                            0, 0, 0, 1, [{
+                                                                offset: 0,
+                                                                color: '#6c81b3'
+                                                            }, {
+                                                                offset: 0.5,
+                                                                color: '#7c96d2'
+                                                            }, {
+                                                                offset: 1,
+                                                                color: '#88a6ed'
+                                                            }]
+                                                        )
                                                     },
-                                                },
-                                                labelLine: {
+                                                }
+                                              },{
+                                                name:'',
+                                                value:data.data.wholeIncomeRatio[1],
+                                                itemStyle: {
                                                     normal: {
-                                                        show: false
-                                                    }
-                                                },
-                                                data: data.data.wholePic
-                                            }]
-                                        };
+                                                        color: new echarts.graphic.LinearGradient(
+                                                            0, 0, 0, 1, [{
+                                                                offset: 0,
+                                                                color: '#ff7700'
+                                                            }, {
+                                                                offset: 0.5,
+                                                                color: '#ff9e48'
+                                                            }, {
+                                                                offset: 1,
+                                                                color: '#ffbb7f'
+                                                            }]
+                                                        )
+                                                    },
+                                                }
+                                              },
+                                              {
+                                                name:'',
+                                                value:data.data.wholeIncomeRatio[2],
+                                                itemStyle: {
+                                                    normal: {
+                                                        color: new echarts.graphic.LinearGradient(
+                                                            0, 0, 0, 1, [{
+                                                                offset: 0,
+                                                                color: '#2cc689'
+                                                            }, {
+                                                                offset: 0.5,
+                                                                color: '#2fda96'
+                                                            }, {
+                                                                offset: 1,
+                                                                color: '#33f3a7'
+                                                            }]
+                                                        )
+                                                    },
+                                                }
+                                              }],
+                                              itemStyle: {
+                                                  normal: {
+                                                      color: new echarts.graphic.LinearGradient(
+                                                          0, 0, 0, 1, [{
+                                                              offset: 0,
+                                                              color: '#ff7700'
+                                                          }, {
+                                                              offset: 0.5,
+                                                              color: '#ff9e48'
+                                                          }, {
+                                                              offset: 1,
+                                                              color: '#ffbb7f'
+                                                          }]
+                                                      )
+                                                  },
+                                              }
+                                          },
+                                          ]
+                                      };
                                         _this.myChart2.clear();
                                         _this.myChart2 = echarts.init(document.getElementById('main2'));
                                         _this.myChart2.setOption(option2);
@@ -1524,7 +1769,7 @@ export default {
                                             }],
                                             series: [{
                                                 name: '当前数据',
-                                                barWidth: 5,
+                                                barWidth: 10,
                                                 type: 'bar',
                                                 data: data.data.wholeBottom,
                                                 itemStyle: {
@@ -1546,7 +1791,7 @@ export default {
                                             }, {
                                                 name: '对比数据',
                                                 type: 'bar',
-                                                barWidth: 5,
+                                                barWidth: 10,
                                                 data: data.data.wholeBottomPair,
                                                 itemStyle: {
                                                     normal: {
@@ -1569,7 +1814,128 @@ export default {
                                         _this.myChart3.clear();
                                         _this.myChart3 = echarts.init(document.getElementById('main3'));
                                         _this.myChart3.setOption(option3);
-                                    } else {
+                                    }
+                                    else if (_this.monthtab == 1){
+                                      var option2 = {
+                                          tooltip: {
+                                              trigger: 'item',
+                                              formatter: "{a} <br/>{b}: {c} ({d}%)"
+                                          },
+                                          series: [{
+                                              name: _this.myChart2title,
+                                              type: 'pie',
+                                              radius: ['50%', '70%'],
+                                              center: ['50%', '50%'],
+                                              avoidLabelOverlap: false,
+                                              color: ['#6c81b3', '#ff7700', '#2cc689'],
+                                              label: {
+                                                  normal: {
+                                                      show: false,
+                                                      position: 'center'
+                                                  },
+                                              },
+                                              labelLine: {
+                                                  normal: {
+                                                      show: false
+                                                  }
+                                              },
+                                              data: data.data.wholePic
+                                          }]
+                                      };
+                                      _this.myChart2.clear();
+                                      _this.myChart2 = echarts.init(document.getElementById('main2'));
+                                      _this.myChart2.setOption(option2);
+                                      var option3 = {
+                                          tooltip: {
+                                              trigger: 'axis',
+                                              axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                                  type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                                              }
+                                          },
+                                          color: ['#ff7700', '#6c81b3'],
+                                          grid: {
+                                              top: '10',
+                                              left: '3%',
+                                              right: '4%',
+                                              bottom: '3%',
+                                              containLabel: true
+                                          },
+                                          xAxis: [{
+                                              type: 'category',
+                                              data: data.data.wholeBottomDate,
+                                              axisLine: {
+                                                  lineStyle: {
+                                                      color: '#eee'
+                                                  }
+                                              },
+                                              axisLabel: {
+                                                  color: '#333'
+                                              },
+                                          }],
+                                          yAxis: [{
+                                              type: 'value',
+                                              axisLine: {
+                                                  lineStyle: {
+                                                      color: '#eee'
+                                                  }
+                                              },
+                                              axisLabel: {
+                                                  color: '#333'
+                                              },
+                                              splitLine: {
+                                                  lineStyle: {
+                                                      color: ['#eee'],
+                                                  }
+                                              }
+                                          }],
+                                          series: [{
+                                              name: '当前数据',
+                                              barWidth: 10,
+                                              type: 'bar',
+                                              data: data.data.wholeBottom,
+                                              itemStyle: {
+                                                  normal: {
+                                                      color: new echarts.graphic.LinearGradient(
+                                                          0, 0, 0, 1, [{
+                                                              offset: 0,
+                                                              color: '#ff7700'
+                                                          }, {
+                                                              offset: 0.5,
+                                                              color: '#ff9e48'
+                                                          }, {
+                                                              offset: 1,
+                                                              color: '#ffbb7f'
+                                                          }]
+                                                      )
+                                                  },
+                                              }
+                                          }, {
+                                              name: '对比数据',
+                                              type: 'bar',
+                                              barWidth: 10,
+                                              data: data.data.wholeBottomPair,
+                                              itemStyle: {
+                                                  normal: {
+                                                      color: new echarts.graphic.LinearGradient(
+                                                          0, 0, 0, 1, [{
+                                                              offset: 0,
+                                                              color: '#6c81c3'
+                                                          }, {
+                                                              offset: 0.5,
+                                                              color: '#91a1c6'
+                                                          }, {
+                                                              offset: 1,
+                                                              color: '#b5bfd9'
+                                                          }]
+                                                      )
+                                                  },
+                                              }
+                                          }]
+                                      };
+                                      _this.myChart3.clear();
+                                      _this.myChart3 = echarts.init(document.getElementById('main3'));
+                                      _this.myChart3.setOption(option3);
+                                    }else {
                                         var option2 = {
                                             tooltip: {
                                                 trigger: 'axis',
@@ -1690,7 +2056,7 @@ export default {
                                             }],
                                             series: [{
                                                 name: '当前数据',
-                                                barWidth: 5,
+                                                barWidth: 10,
                                                 type: 'bar',
                                                 data: data.data.wholeBottom,
                                                 itemStyle: {
@@ -1760,38 +2126,175 @@ export default {
 
                         switch (_this.radiovalue) {
                             case "0":
-                                if (_this.monthtab == 0 || _this.monthtab == 1) {
+                                if (_this.monthtab == 0 ) {
                                     var option2 = {
                                         tooltip: {
-                                            trigger: 'item',
-                                            formatter: "{a} <br/>{b}: {c} ({d}%)"
+                                            trigger: 'axis',
+                                            axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                                type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                                            }
                                         },
-                                        series: [{
-                                            name: _this.myChart2title,
-                                            type: 'pie',
-                                            radius: ['50%', '70%'],
-                                            center: ['50%', '50%'],
-                                            avoidLabelOverlap: false,
-                                            color: ['#6c81b3', '#ff7700', '#2cc689'],
-                                            label: {
-                                                normal: {
-                                                    show: false,
-                                                    position: 'center'
-                                                },
-                                            },
-                                            labelLine: {
-                                                normal: {
-                                                    show: false
+                                        color: ['#ff7700', '#6c81b3'],
+                                        grid: {
+                                            top: '10',
+                                            left: '0',
+                                            right: '10',
+                                            bottom: '10',
+                                            containLabel: true,
+
+                                        },
+                                        xAxis: [{
+                                            type: 'category',
+                                            data: ['总营业收入','支出总额','利润总额'],
+                                            axisLine: {
+                                                lineStyle: {
+                                                    color: '#eee',
+
                                                 }
                                             },
-                                            data: data.data.wholePic
-                                        }]
+                                            axisLabel: {
+                                                color: '#333',
+
+                                            },
+
+                                        }],
+                                         yAxis: [{
+                                          show:false,
+
+                                            type: 'value',
+                                            axisLine: {
+                                                lineStyle: {
+                                                    color: '#eee'
+                                                }
+                                            },
+                                            axisLabel: {
+                                                color: '#333'
+                                            },
+                                            splitLine: {
+                                                lineStyle: {
+                                                    color: ['#eee'],
+                                                }
+                                            }
+                                        }],
+                                        series: [{
+                                            name: '当前数据',
+                                            barWidth: 10,
+                                            type: 'bar',
+                                            data: [{
+                                              name:'',
+                                              value:data.data.wholeIncomeRatio[0],
+                                              itemStyle: {
+                                                  normal: {
+                                                      color: new echarts.graphic.LinearGradient(
+                                                          0, 0, 0, 1, [{
+                                                              offset: 0,
+                                                              color: '#6c81b3'
+                                                          }, {
+                                                              offset: 0.5,
+                                                              color: '#7c96d2'
+                                                          }, {
+                                                              offset: 1,
+                                                              color: '#88a6ed'
+                                                          }]
+                                                      )
+                                                  },
+                                              }
+                                            },{
+                                              name:'',
+                                              value:data.data.wholeIncomeRatio[1],
+                                              itemStyle: {
+                                                  normal: {
+                                                      color: new echarts.graphic.LinearGradient(
+                                                          0, 0, 0, 1, [{
+                                                              offset: 0,
+                                                              color: '#ff7700'
+                                                          }, {
+                                                              offset: 0.5,
+                                                              color: '#ff9e48'
+                                                          }, {
+                                                              offset: 1,
+                                                              color: '#ffbb7f'
+                                                          }]
+                                                      )
+                                                  },
+                                              }
+                                            },
+                                            {
+                                              name:'',
+                                              value:data.data.wholeIncomeRatio[2],
+                                              itemStyle: {
+                                                  normal: {
+                                                      color: new echarts.graphic.LinearGradient(
+                                                          0, 0, 0, 1, [{
+                                                              offset: 0,
+                                                              color: '#2cc689'
+                                                          }, {
+                                                              offset: 0.5,
+                                                              color: '#2fda96'
+                                                          }, {
+                                                              offset: 1,
+                                                              color: '#33f3a7'
+                                                          }]
+                                                      )
+                                                  },
+                                              }
+                                            }],
+                                            itemStyle: {
+                                                normal: {
+                                                    color: new echarts.graphic.LinearGradient(
+                                                        0, 0, 0, 1, [{
+                                                            offset: 0,
+                                                            color: '#ff7700'
+                                                        }, {
+                                                            offset: 0.5,
+                                                            color: '#ff9e48'
+                                                        }, {
+                                                            offset: 1,
+                                                            color: '#ffbb7f'
+                                                        }]
+                                                    )
+                                                },
+                                            }
+                                        },
+                                        ]
                                     };
                                     _this.myChart2.clear();
                                     _this.myChart2 = echarts.init(document.getElementById('main2'));
                                     _this.myChart2.setOption(option2);
-                                } else {
+                                }
+                                else if(_this.monthtab == 1)
+                                {
+                                  var option2 = {
+                                      tooltip: {
+                                          trigger: 'item',
+                                          formatter: "{a} <br/>{b}: {c} ({d}%)"
+                                      },
+                                      series: [{
+                                          name: _this.myChart2title,
+                                          type: 'pie',
+                                          radius: ['50%', '70%'],
+                                          center: ['50%', '50%'],
+                                          avoidLabelOverlap: false,
+                                          color: ['#6c81b3', '#ff7700', '#2cc689'],
+                                          label: {
+                                              normal: {
+                                                  show: false,
+                                                  position: 'center'
+                                              },
+                                          },
+                                          labelLine: {
+                                              normal: {
+                                                  show: false
+                                              }
+                                          },
+                                          data: data.data.wholePic
+                                      }]
+                                  };
+                                  _this.myChart2.clear();
+                                  _this.myChart2 = echarts.init(document.getElementById('main2'));
+                                  _this.myChart2.setOption(option2);
 
+                                } else {
                                     var option2 = {
                                         tooltip: {
                                             trigger: 'axis',
@@ -1944,33 +2447,135 @@ export default {
 
                                 break;
                             case "1":
-                                if (_this.monthtab == 0 || _this.monthtab == 1) {
-                                    var option2 = {
-                                        tooltip: {
-                                            trigger: 'item',
-                                            formatter: "{a} <br/>{b}: {c} ({d}%)"
-                                        },
-                                        series: [{
-                                            name: _this.myChart2title,
-                                            type: 'pie',
-                                            radius: ['50%', '70%'],
-                                            center: ['50%', '50%'],
-                                            avoidLabelOverlap: false,
-                                            color: ['#6c81b3', '#ff7700', '#2cc689'],
-                                            label: {
+                                if (_this.monthtab == 0) {
+                                  var option2 = {
+                                      tooltip: {
+                                          trigger: 'axis',
+                                          axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                              type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                                          }
+                                      },
+                                      color: ['#ff7700', '#6c81b3'],
+                                      grid: {
+                                          top: '10',
+                                          left: '10',
+                                          right: '10',
+                                          bottom: '10',
+                                          containLabel: true
+                                      },
+                                      xAxis: [{
+                                          type: 'category',
+                                          data: ['总营业收入','支出总额','利润总额'],
+                                          axisLine: {
+                                              lineStyle: {
+                                                  color: '#eee',
+
+                                              }
+                                          },
+                                          axisLabel: {
+                                              color: '#333',
+
+                                          },
+                                      }],
+                                       yAxis: [{
+                                        show:false,
+                                          type: 'value',
+                                          axisLine: {
+                                              lineStyle: {
+                                                  color: '#eee'
+                                              }
+                                          },
+                                          axisLabel: {
+                                              color: '#333'
+                                          },
+                                          splitLine: {
+                                              lineStyle: {
+                                                  color: ['#eee'],
+                                              }
+                                          }
+                                      }],
+                                      series: [{
+                                          name: '当前数据',
+                                          barWidth: 10,
+                                          type: 'bar',
+                                          data: [{
+                                            name:'',
+                                            value:data.data.wholeIncomeRatio[0],
+                                            itemStyle: {
                                                 normal: {
-                                                    show: false,
-                                                    position: 'center'
+                                                    color: new echarts.graphic.LinearGradient(
+                                                        0, 0, 0, 1, [{
+                                                            offset: 0,
+                                                            color: '#6c81b3'
+                                                        }, {
+                                                            offset: 0.5,
+                                                            color: '#7c96d2'
+                                                        }, {
+                                                            offset: 1,
+                                                            color: '#88a6ed'
+                                                        }]
+                                                    )
                                                 },
-                                            },
-                                            labelLine: {
+                                            }
+                                          },{
+                                            name:'',
+                                            value:data.data.wholeIncomeRatio[1],
+                                            itemStyle: {
                                                 normal: {
-                                                    show: false
-                                                }
-                                            },
-                                            data: data.data.wholePic
-                                        }]
-                                    };
+                                                    color: new echarts.graphic.LinearGradient(
+                                                        0, 0, 0, 1, [{
+                                                            offset: 0,
+                                                            color: '#ff7700'
+                                                        }, {
+                                                            offset: 0.5,
+                                                            color: '#ff9e48'
+                                                        }, {
+                                                            offset: 1,
+                                                            color: '#ffbb7f'
+                                                        }]
+                                                    )
+                                                },
+                                            }
+                                          },
+                                          {
+                                            name:'',
+                                            value:data.data.wholeIncomeRatio[2],
+                                            itemStyle: {
+                                                normal: {
+                                                    color: new echarts.graphic.LinearGradient(
+                                                        0, 0, 0, 1, [{
+                                                            offset: 0,
+                                                            color: '#2cc689'
+                                                        }, {
+                                                            offset: 0.5,
+                                                            color: '#2fda96'
+                                                        }, {
+                                                            offset: 1,
+                                                            color: '#33f3a7'
+                                                        }]
+                                                    )
+                                                },
+                                            }
+                                          }],
+                                          itemStyle: {
+                                              normal: {
+                                                  color: new echarts.graphic.LinearGradient(
+                                                      0, 0, 0, 1, [{
+                                                          offset: 0,
+                                                          color: '#ff7700'
+                                                      }, {
+                                                          offset: 0.5,
+                                                          color: '#ff9e48'
+                                                      }, {
+                                                          offset: 1,
+                                                          color: '#ffbb7f'
+                                                      }]
+                                                  )
+                                              },
+                                          }
+                                      },
+                                      ]
+                                  };
                                     _this.myChart2.clear();
                                     _this.myChart2 = echarts.init(document.getElementById('main2'));
                                     _this.myChart2.setOption(option2);
@@ -2019,7 +2624,7 @@ export default {
                                         }],
                                         series: [{
                                             name: '当前数据',
-                                            barWidth: 5,
+                                            barWidth: 10,
                                             type: 'bar',
                                             data: data.data.wholeBottom,
                                             itemStyle: {
@@ -2041,7 +2646,7 @@ export default {
                                         }, {
                                             name: '对比数据',
                                             type: 'bar',
-                                            barWidth: 5,
+                                            barWidth: 10,
                                             data: data.data.wholeBottomPair,
                                             itemStyle: {
                                                 normal: {
@@ -2064,7 +2669,128 @@ export default {
                                     _this.myChart3.clear();
                                     _this.myChart3 = echarts.init(document.getElementById('main3'));
                                     _this.myChart3.setOption(option3);
-                                } else {
+                                }
+                                else if (_this.monthtab == 1){
+                                  var option2 = {
+                                      tooltip: {
+                                          trigger: 'item',
+                                          formatter: "{a} <br/>{b}: {c} ({d}%)"
+                                      },
+                                      series: [{
+                                          name: _this.myChart2title,
+                                          type: 'pie',
+                                          radius: ['50%', '70%'],
+                                          center: ['50%', '50%'],
+                                          avoidLabelOverlap: false,
+                                          color: ['#6c81b3', '#ff7700', '#2cc689'],
+                                          label: {
+                                              normal: {
+                                                  show: false,
+                                                  position: 'center'
+                                              },
+                                          },
+                                          labelLine: {
+                                              normal: {
+                                                  show: false
+                                              }
+                                          },
+                                          data: data.data.wholePic
+                                      }]
+                                  };
+                                  _this.myChart2.clear();
+                                  _this.myChart2 = echarts.init(document.getElementById('main2'));
+                                  _this.myChart2.setOption(option2);
+                                  var option3 = {
+                                      tooltip: {
+                                          trigger: 'axis',
+                                          axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                              type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                                          }
+                                      },
+                                      color: ['#ff7700', '#6c81b3'],
+                                      grid: {
+                                          top: '10',
+                                          left: '3%',
+                                          right: '4%',
+                                          bottom: '3%',
+                                          containLabel: true
+                                      },
+                                      xAxis: [{
+                                          type: 'category',
+                                          data: data.data.wholeBottomDate,
+                                          axisLine: {
+                                              lineStyle: {
+                                                  color: '#eee'
+                                              }
+                                          },
+                                          axisLabel: {
+                                              color: '#333'
+                                          },
+                                      }],
+                                      yAxis: [{
+                                          type: 'value',
+                                          axisLine: {
+                                              lineStyle: {
+                                                  color: '#eee'
+                                              }
+                                          },
+                                          axisLabel: {
+                                              color: '#333'
+                                          },
+                                          splitLine: {
+                                              lineStyle: {
+                                                  color: ['#eee'],
+                                              }
+                                          }
+                                      }],
+                                      series: [{
+                                          name: '当前数据',
+                                          barWidth: 10,
+                                          type: 'bar',
+                                          data: data.data.wholeBottom,
+                                          itemStyle: {
+                                              normal: {
+                                                  color: new echarts.graphic.LinearGradient(
+                                                      0, 0, 0, 1, [{
+                                                          offset: 0,
+                                                          color: '#ff7700'
+                                                      }, {
+                                                          offset: 0.5,
+                                                          color: '#ff9e48'
+                                                      }, {
+                                                          offset: 1,
+                                                          color: '#ffbb7f'
+                                                      }]
+                                                  )
+                                              },
+                                          }
+                                      }, {
+                                          name: '对比数据',
+                                          type: 'bar',
+                                          barWidth: 10,
+                                          data: data.data.wholeBottomPair,
+                                          itemStyle: {
+                                              normal: {
+                                                  color: new echarts.graphic.LinearGradient(
+                                                      0, 0, 0, 1, [{
+                                                          offset: 0,
+                                                          color: '#6c81c3'
+                                                      }, {
+                                                          offset: 0.5,
+                                                          color: '#91a1c6'
+                                                      }, {
+                                                          offset: 1,
+                                                          color: '#b5bfd9'
+                                                      }]
+                                                  )
+                                              },
+                                          }
+                                      }]
+                                  };
+                                  _this.myChart3.clear();
+                                  _this.myChart3 = echarts.init(document.getElementById('main3'));
+                                  _this.myChart3.setOption(option3);
+                                }else {
                                     var option2 = {
                                         tooltip: {
                                             trigger: 'axis',
@@ -2185,7 +2911,7 @@ export default {
                                         }],
                                         series: [{
                                             name: '当前数据',
-                                            barWidth: 5,
+                                            barWidth: 10,
                                             type: 'bar',
                                             data: data.data.wholeBottom,
                                             itemStyle: {
@@ -2381,7 +3107,7 @@ export default {
                                             }],
                                             series: [{
                                                 name: '当前数据',
-                                                barWidth: 5,
+                                                barWidth: 10,
                                                 type: 'bar',
                                                 data: data.data.wholeBottom,
                                                 itemStyle: {
@@ -2403,7 +3129,7 @@ export default {
                                             }, {
                                                 name: '对比数据',
                                                 type: 'bar',
-                                                barWidth: 5,
+                                                barWidth: 10,
                                                 data: data.data.wholeBottomPair,
                                                 itemStyle: {
                                                     normal: {
@@ -2473,7 +3199,7 @@ export default {
                                             }],
                                             series: [{
                                                 name: '当前数据',
-                                                barWidth: 5,
+                                                barWidth: 10,
                                                 type: 'bar',
                                                 data: data.data.wholeBottom,
                                                 itemStyle: {

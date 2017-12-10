@@ -287,8 +287,8 @@
                             </form-item>
 
                             <form-item label="品牌：">
-                                <wselect v-model="formdata3.ppvalue" placeholder="请选择" filterable clearable @change='ppchange1'>
-                                    <woption :label='item.brandName' :value='item.sortNum' v-for='(item,index) in formdata3.pparr'></woption>
+                                <wselect v-model="formdata3.ppvalue" placeholder="请输入品牌" filterable remote clearable @change='ppchange1' :remote-method="remoteMethod" :loading="selectLoading">
+                                    <woption :label='item.brandName' :value='item.sortNum' v-for='(item,index) in selectOption1' ></woption>
                                 </wselect>
                             </form-item>
 
@@ -352,8 +352,8 @@
                         <wform :inline="true" :model="formdata4" label-position="right" class="demo-form-inline" v-show='activeName=="2"'>
 
                             <form-item label="品牌：">
-                                <wselect v-model="formdata4.ppvalue" placeholder="请选择" filterable clearable @change='ppchange2'>
-                                    <woption :label='item.brandName' :value='item.sortNum' v-for='(item,index) in formdata4.pparr'></woption>
+                                <wselect v-model="formdata4.ppvalue" placeholder="请输入品牌" filterable remote clearable clearable @change='ppchange2' :remote-method="remoteMethod2" :loading="selectLoading">
+                                    <woption :label='item.brandName' :value='item.sortNum' v-for='(item,index) in selectOption2'></woption>
                                 </wselect>
                             </form-item>
                             <form-item label="品类：">
@@ -490,7 +490,10 @@ export default {
         pagesize2: 10,
         pagetotle3: 0,
         cur_page3: 1,
-        pagesize3: 10
+        pagesize3: 10,
+        selectLoading:false,
+        selectOption1:[],
+        selectOption2:[]
     }),
 
     watch: {
@@ -943,6 +946,7 @@ export default {
         _this.adminApi.getJsonp(url, data, loading, success, complete)
 
     },
+
     methods: {
         radiochange: function() {
             let _this = this;
@@ -2099,6 +2103,41 @@ export default {
                     _this.loadtab = false;
                 }
             _this.adminApi.getJsonp(url, data, loading, success, complete)
+        },
+
+        remoteMethod:function(val){
+          let _this=this;
+
+            if (val !== '') {
+              _this.selectLoading=true;
+              _this.selectOption1 = _this.formdata3.pparr.filter(item => {
+                return item.brandName.toLowerCase().indexOf(val.toLowerCase()) > -1;
+              });
+
+                _this.selectLoading = false;
+            }
+            else {
+              _this.selectOption1=[]
+            }
+
+
+        },
+        remoteMethod2:function(val){
+          let _this=this;
+
+            if (val !== '') {
+              _this.selectLoading=true;
+              _this.selectOption2 = _this.formdata4.pparr.filter(item => {
+                return item.brandName.toLowerCase().indexOf(val.toLowerCase()) > -1;
+              });
+
+                _this.selectLoading = false;
+            }
+            else {
+              _this.selectOption2=[]
+            }
+
+
         }
     },
     components: {

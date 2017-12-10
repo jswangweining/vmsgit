@@ -21,7 +21,7 @@
   float: left;
   height: 200px;
 
-  margin-top: 10px;
+  margin-top: 50px;
 }
 .w-pannelitemadFa {
   padding-left: 0.5rem;
@@ -266,7 +266,7 @@ export default {
                                             type: 'scroll',
                                             orient: 'vertical',
                                             right: 0,
-                                            top: 10,
+                                            top: 50,
                                             bottom: 20,
 
                                             data: _this.jsondata.map
@@ -278,38 +278,7 @@ export default {
                                             center: ['40%', '50%'],
                                             avoidLabelOverlap: false,
                                             color: ['#ff7700', '#ff5555', '#2cc689', '#6c81b3'],
-                                            // label: {
-                                            //     normal: {
-                                            //         formatter: ' {b|{b}：}{c}  {per|{d}%}  ',
-                                            //         backgroundColor: '#eee',
-                                            //         borderColor: '#aaa',
-                                            //         borderWidth: 1,
-                                            //         borderRadius: 4,
-                                            //         // shadowBlur:3,
-                                            //         // shadowOffsetX: 2,
-                                            //         // shadowOffsetY: 2,
-                                            //         // shadowColor: '#999',
-                                            //         // padding: [0, 7],
-                                            //         rich: {
-                                            //             a: {
-                                            //                 color: '#999',
-                                            //                 lineHeight: 20,
-                                            //                 align: 'center'
-                                            //             },
-                                            //
-                                            //             b: {
-                                            //                 fontSize: 12,
-                                            //                 lineHeight: 20
-                                            //             },
-                                            //             per: {
-                                            //                 color: '#eee',
-                                            //                 backgroundColor: '#334455',
-                                            //                 padding: [2, 4],
-                                            //                 borderRadius: 2
-                                            //             }
-                                            //         }
-                                            //     }
-                                            // },
+
                                             label: {
                                                 normal: {
                                                     show: false,
@@ -547,6 +516,15 @@ export default {
                             tooltip: {
                                 trigger: 'item',
                                 formatter: "{a} <br/>{b}: ({d}%)"
+                            },
+                            legend: {
+                                type: 'scroll',
+                                orient: 'vertical',
+                                right: 0,
+                                top: 50,
+                                bottom: 20,
+
+                                data: _this.jsondata.map
                             },
                             series: [{
                                 name: '会员采购占比',
