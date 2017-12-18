@@ -1543,6 +1543,7 @@ export default {
                                                 }
                                             },
                                             axisLabel: {
+                                              
                                                 color: '#333'
                                             },
 
