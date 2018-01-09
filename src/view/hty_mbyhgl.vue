@@ -749,7 +749,7 @@ export default {
                 aliveType: _this.formdata1.radiovalue2,
 
             };
-          
+
             var url = _this.adminApi.host + '/htycustall/cust/manager',
 
                 loading = function() {

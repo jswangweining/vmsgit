@@ -219,6 +219,10 @@ export default {
             }, {
                 'name': '商城热点',
                 'rel': 'yhxw'
+            },
+            {
+                'name': '商品数据分析',
+                'rel': 'spsjfx'
             }]
         ],
 

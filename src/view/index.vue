@@ -23,6 +23,7 @@
     width: 183px;
     height: 20px;
     background-image: url("../assets/img/title-logo.png");
+
     // background-image: url(../static/img/logol.png);
     // background-size: 260px 60px;
 }
@@ -151,6 +152,8 @@
 import $ from 'jquery'
 import '../assets/fonts/iconfont'
 
+
+
 import menulist from '../components/menulist.vue'
 
 //elementui
@@ -158,6 +161,8 @@ import dropdown from 'element-ui/packages/dropdown/src/dropdown.vue'
 import DropdownMenu from 'element-ui/packages/dropdown/src/dropdown-menu.vue'
 import DropdownItem from 'element-ui/packages/dropdown/src/dropdown-item.vue'
 import MessageBox from 'element-ui/packages/message-box/index.js'
+
+
 
 export default {
 

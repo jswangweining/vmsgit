@@ -18,7 +18,7 @@ export default {
   },
   //jsonp请求
   getJsonp: function(url, datas, loading, callback, complete) {
-    $.ajax({
+     var ajaxJsonp=$.ajax({
       url: url,
       jsonp: "callback",
       dataType: "jsonp",
@@ -29,6 +29,8 @@ export default {
       },
       complete: complete,
     }).done(callback)
+
+    return ajaxJsonp;
   },
   //判断是否登陆
   islogin: function() {
