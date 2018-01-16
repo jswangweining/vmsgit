@@ -794,6 +794,8 @@
                                 <p class="w-ywxl-ddlap1">{{item.name}}<span v-if='index==0 || index==1'>（万元）</span><span v-if='index==2'>（家）</span></p>
                                 <p class="w-ywxl-ddlap2">{{item.num}}</p>
                                 <p class="w-ywxl-ddlap3">同比{{item.pair}}%
+
+                                    
                                     <svg class="icon" aria-hidden="true" v-if='item.index==0'>
                                         <use xlink:href="#icon-jiantou1"></use>
                                     </svg>
@@ -1543,7 +1545,7 @@ export default {
                                                 }
                                             },
                                             axisLabel: {
-                                              
+
                                                 color: '#333'
                                             },
 

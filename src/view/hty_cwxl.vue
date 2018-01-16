@@ -1592,7 +1592,7 @@
                                 </div>
 
                                 <div class="fxts_item_ditemd">
-                                    参考值：<span>{{sysdata.pxDiffRatioRe}}</span>
+                                    参考值：<span>10%</span>
                                 </div>
 
                                 <div class="fxts_item_ditemc">

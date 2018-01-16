@@ -1,0 +1,16 @@
+{
+  "code": "1",
+  "msg": "成功！",
+  "data": {
+    "prodNum": 413,
+    "prodNumDown": 249,
+    "prodNumSale": 23,
+    "prodNumBx": 358,
+    "prodNumQy": 55,
+    "prodNumWk": 0,
+    "prodNumDownWk": 0,
+    "prodNumSaleWk": 0,
+    "prodNumBxWk": 0,
+    "prodNumQyWk": 0
+  }
+}

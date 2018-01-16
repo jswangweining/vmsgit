@@ -340,7 +340,8 @@ export default {
         myChart: '',
         currentYear:'',
         currentMonth:'',
-        monthPlaceHolder:''
+        monthPlaceHolder:'',
+        ajaxJonsp:''
     }),
     watch: {
         activeName: function(val, oldVal) {
@@ -564,6 +565,11 @@ export default {
             let _this = this;
             _this.tabledialog = true;
             _this.tabledialogtitle = name;
+
+            if(_this.ajaxJonsp)
+            {
+              _this.ajaxJonsp.abort();
+            }
             var url = _this.adminApi.host + '/htycustall/cust/banner',
                 data = {
                     userId: _this.userId,
@@ -663,7 +669,7 @@ export default {
                 complete = function() {
                     _this.dialogload = false
                 }
-            _this.adminApi.getJsonp(url, data, loading, success, complete)
+            _this.ajaxJonsp=_this.adminApi.getJsonp(url, data, loading, success, complete)
 
 
 
