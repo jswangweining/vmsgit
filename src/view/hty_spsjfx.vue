@@ -814,7 +814,6 @@ export default {
 
 
                     break;
-
                 case '3':
                     if (_this.ajax4) {
                         var data = {
@@ -846,7 +845,6 @@ export default {
 
                     break;
                 default:
-
             }
         }
     },
@@ -878,7 +876,6 @@ export default {
             },
             success = function(data) {
                 if (data.code == '2') {
-
                     _this.userId = _this.$route.query.userId;
                     _this.$emit('userInfo', _this.$route.query.userName, data.data.vmsUrl);
                     var data = {
